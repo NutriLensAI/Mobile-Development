@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.dicoding.picodiploma.loginwithanimation"
+    namespace = "com.capstone.mobiledevelopment.nutrilens"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.dicoding.picodiploma.loginwithanimation"
+        applicationId = "com.capstone.mobiledevelopment.nutrilens"
         minSdk = 21
         targetSdk = 34
         versionCode = 1

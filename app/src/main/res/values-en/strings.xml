@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LoginWithAnimation</string>
+    <string name="app_name">Nutrilens</string>
     <string name="signup">Signup</string>
     <string name="login">Login</string>
     <string name="message_welcome_page">Want to learn Android, iOS, Machine Learning, Cloud, Front-End, Back-End, and other IT fields? Do it at Dicoding!</string>

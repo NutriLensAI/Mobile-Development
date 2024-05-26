@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LoginWithAnimation</string>
+    <string name="app_name">Nutrilens</string>
     <string name="signup">Daftar</string>
     <string name="login">Masuk</string>
     <string name="message_welcome_page">Mau belajar Android, iOS, Machine Learning, Cloud, Front-End, Back-End, dan bidang IT lainnya? Di Dicoding aja!</string>
@@ -51,5 +51,6 @@
     <string name="hybrid_type" translatable="false">Hybrid</string>
     <string name="Location_with">Kirim Dengan Lokasi</string>
     <string name="location_error">Lokasi tidak ditemukan</string>
+    <string name="dont_have_an_account">Tidak punya akun ?</string>
 
 </resources>

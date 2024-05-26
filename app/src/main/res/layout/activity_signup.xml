@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:srcCompat="@drawable/image_signup" />
+        app:srcCompat="@drawable/image_9" />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -29,10 +29,12 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
+        tools:visibility="invisible" />
 
     <TextView
         android:id="@+id/nameTextView"
@@ -42,8 +44,10 @@
         android:layout_marginTop="8dp"
         android:text="@string/name"
         android:textColor="@color/black"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        tools:visibility="invisible" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nameEditTextLayout"
@@ -53,6 +57,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         app:errorEnabled="true"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView"
@@ -63,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/name"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,8 +81,10 @@
         android:layout_marginTop="16dp"
         android:text="@string/email"
         android:textColor="@color/black"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameEditTextLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/nameEditTextLayout"
+        tools:visibility="invisible" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailEditTextLayout"
@@ -85,6 +94,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         app:errorEnabled="true"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailTextView"
@@ -95,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,8 +118,10 @@
         android:layout_marginTop="8dp"
         android:text="@string/password"
         android:textColor="@color/black"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
+        tools:visibility="invisible" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordEditTextLayout"
@@ -119,12 +132,14 @@
         android:layout_marginEnd="32dp"
         app:endIconMode="password_toggle"
         app:errorEnabled="true"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextView"
         app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
-        <com.dicoding.picodiploma.loginwithanimation.view.customview.PasswordEditText
+        <com.capstone.mobiledevelopment.nutrilens.view.customview.PasswordEditText
             android:id="@+id/ed_register_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -132,6 +147,7 @@
             android:ems="10"
             android:focusable="true"
             android:gravity="center_vertical"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
@@ -148,7 +164,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:backgroundTint="@color/navy"
+        android:backgroundTint="@color/dark_green"
         android:text="@string/signup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
