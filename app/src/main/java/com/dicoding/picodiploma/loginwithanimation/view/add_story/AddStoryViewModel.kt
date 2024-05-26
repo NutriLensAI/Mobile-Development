@@ -39,7 +39,7 @@ class AddStoryViewModel(private val userRepository: UserRepository,
         }
     }
 
-    fun uploadImage( token: String ,imageFile: File, description: String) {
+    fun uploadImage( token: String ,imageFile: File, description: String, lat: Float, lon: Float) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
@@ -50,7 +50,7 @@ class AddStoryViewModel(private val userRepository: UserRepository,
                     imageFile.name,
                     requestImageFile
                 )
-                val successResponse = storyRepository.uploadImage(token,multipartBody, requestBody)
+                val successResponse = storyRepository.uploadImage(token,multipartBody, requestBody, lat, lon)
                 _uploadResult.value = Result.Success(successResponse)
             } catch (e: Exception) {
                 handleUploadError(e)

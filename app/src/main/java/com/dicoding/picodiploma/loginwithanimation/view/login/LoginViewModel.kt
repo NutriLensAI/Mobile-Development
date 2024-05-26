@@ -43,7 +43,9 @@ class LoginViewModel(
                 Log.d(TAG, "Login started")
                 val response = userRepository.login(email, password)
                 _loginResult.value = Result.Success(response)
-                updateToken(response.loginResult?.token ?: "") // Update token in StoryRepository
+                val token = response.loginResult?.token ?: ""
+                updateToken(token) // Update token in StoryRepository
+                saveSession(UserModel(email, token)) // Save session
                 Log.d(TAG, "Login successful")
             } catch (e: Exception) {
                 handleLoginError(e)
@@ -52,6 +54,21 @@ class LoginViewModel(
             }
         }
     }
+
+    fun saveSessionAndNavigate(user: UserModel, token: String): LiveData<Boolean> {
+        val result = MutableLiveData<Boolean>()
+        viewModelScope.launch {
+            try {
+                userRepository.saveSession(user)
+                storyRepository.updateToken(token)
+                result.postValue(true)
+            } catch (e: Exception) {
+                result.postValue(false)
+            }
+        }
+        return result
+    }
+
     private fun handleLoginError(e: Exception) {
         val errorMessage = when (e) {
             is HttpException -> {

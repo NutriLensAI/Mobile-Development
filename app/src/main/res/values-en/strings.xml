@@ -4,7 +4,7 @@
     <string name="signup">Signup</string>
     <string name="login">Login</string>
     <string name="message_welcome_page">Want to learn Android, iOS, Machine Learning, Cloud, Front-End, Back-End, and other IT fields? Do it at Dicoding!</string>
-    <string name="title_welcome_page">Welcome to NutriLens</string>
+    <string name="title_welcome_page">Welcome at Dicoding!</string>
     <string name="title_signup_page">" Complete your data below"</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

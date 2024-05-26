@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 android {
@@ -36,6 +37,14 @@ android {
         viewBinding = true
         buildConfig= true
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+            animationsDisabled = true
+
+        }
+    }
     lint {
         checkAllWarnings = true
         warningsAsErrors = false
@@ -52,9 +61,16 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+    testImplementation(libs.junit)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //room
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.room.compiler)
 
     //datastore
     implementation(libs.datastore.preferences)
@@ -72,7 +88,18 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
-    //Ucrop
-    implementation (libs.yalantis.ucrop)
+    //paging
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation (libs.androidx.room.paging)
+
+    //testing
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
+
+    //special instrumentation testing
+    androidTestImplementation(libs.androidx.core.testing) // InstantTaskExecutorRule
+    androidTestImplementation(libs.kotlinx.coroutines.test) //TestDispatcher
 
 }

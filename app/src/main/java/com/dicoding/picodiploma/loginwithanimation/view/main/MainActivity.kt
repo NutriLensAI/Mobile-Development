@@ -3,19 +3,23 @@ package com.dicoding.picodiploma.loginwithanimation.view.main
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.loginwithanimation.R
+import com.dicoding.picodiploma.loginwithanimation.data.reponse.StoriesResponse
 import com.dicoding.picodiploma.loginwithanimation.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.loginwithanimation.view.adapter.StoryAdapter
 import com.dicoding.picodiploma.loginwithanimation.view.add_story.AddStoryActivity
+import com.dicoding.picodiploma.loginwithanimation.view.maps.MapsActivity
 import com.dicoding.picodiploma.loginwithanimation.view.settings.SettingsActivity
-import com.dicoding.picodiploma.loginwithanimation.view.utils.Result
 import com.dicoding.picodiploma.loginwithanimation.view.utils.ViewModelFactory
 import com.dicoding.picodiploma.loginwithanimation.view.welcome.WelcomeActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,8 +36,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.rvList.setHasFixedSize(true)
-        binding.rvList.layoutManager = LinearLayoutManager(this)
+        setupView()
+        setupRecyclerView()
+        observeSession()
+        observeViewModel()
+
+        binding.Mapsbutton.setOnClickListener {
+            viewModel.getStories().observe(this) { response ->
+                if (response != null) {
+                    navigateToMapsActivity(response)
+                } else {
+                    Log.e(TAG, "Stories response is null")
+                }
+            }
+        }
+
         binding.Settingsbutton.setOnClickListener {
             navigateToSettingsActivity()
         }
@@ -43,28 +60,6 @@ class MainActivity : AppCompatActivity() {
             navigateToAddStoryActivity()
         }
 
-        viewModel.token.observe(this) { token ->
-            if (!token.isNullOrEmpty()) {
-                viewModel.getStories()
-            }
-        }
-
-        viewModel.getStories()
-        observeSession()
-        setupView()
-        setupRecyclerView()
-        observeViewModel()
-    }
-
-    private fun observeSession() {
-        viewModel.getSession().observe(this) { user ->
-            if (!user.isLogin) {
-                startActivity(Intent(this, WelcomeActivity::class.java))
-                finish()
-            } else {
-                viewModel.fetchToken() // Fetch token when session changes
-            }
-        }
     }
 
     private fun setupView() {
@@ -79,40 +74,47 @@ class MainActivity : AppCompatActivity() {
         }
         supportActionBar?.hide()
     }
+
     private fun setupRecyclerView() {
         adapter = StoryAdapter()
         binding.rvList.adapter = adapter
         binding.rvList.layoutManager = LinearLayoutManager(this)
+
+        adapter.addLoadStateListener { loadState ->
+            binding.progressBar3.isVisible = loadState.source.refresh is LoadState.Loading
+
+            val errorState = loadState.source.append as? LoadState.Error
+                ?: loadState.source.prepend as? LoadState.Error
+                ?: loadState.source.refresh as? LoadState.Error
+
+            errorState?.let {
+                showErrorMessage(it.error.localizedMessage ?: getString(R.string.try_again))
+            }
+        }
+    }
+
+    private fun observeSession() {
+        viewModel.getSession().observe(this) { user ->
+            if (user == null || !user.isLogin) {
+                startActivity(Intent(this, WelcomeActivity::class.java))
+                finish()
+            } else {
+                viewModel.fetchToken()
+            }
+        }
     }
 
     private fun observeViewModel() {
-        // Observe loading state
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
-                binding.progressBar3.visibility = View.VISIBLE // Show progress bar
+                binding.progressBar3.visibility = View.VISIBLE
             } else {
-                binding.progressBar3.visibility = View.GONE // Hide progress bar
+                binding.progressBar3.visibility = View.GONE
             }
         }
-
-        // Observe stories result
-        viewModel.storiesResult.observe(this) { result ->
-            if (result is Result.Success) {
-                val stories = result.value.listStory
-                adapter.submitList(stories)
-            } else if (result is Result.Failure) {
-                val errorMessage = result.error.message
-                if (errorMessage != null) {
-                    showErrorMessage(errorMessage)
-                }
-                // Ensure loading state is also updated when there's a failure
-                hideLoading()
-            }
+        viewModel.storiesPagingData.observe(this) { pagingData ->
+            adapter.submitData(lifecycle, pagingData)
         }
-    }
-
-    private fun hideLoading() {
-        binding.progressBar3.visibility = View.GONE
     }
 
     private fun showErrorMessage(errorMessage: String) {
@@ -129,8 +131,13 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getStories()
+    private fun navigateToMapsActivity(response: StoriesResponse) {
+        val intent = Intent(this, MapsActivity::class.java)
+        intent.putExtra("storiesResponse", response)
+        startActivity(intent)
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }

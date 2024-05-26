@@ -159,9 +159,16 @@ class LoginActivity : AppCompatActivity() {
                 // Get user-provided email from the EditText
                 val email = binding.edLoginEmail.text.toString()
 
-                viewModel.saveSession(UserModel(email, token)) // Pass the UserModel and the StoryRepository instance
-                viewModel.updateToken(token) // Update token in the ViewModel
-                navigateToMainActivity() // Navigate to main activity
+                val user = UserModel(email, token)
+
+                // Save session and update token
+                viewModel.saveSessionAndNavigate(user, token).observe(this) { isSaved ->
+                    if (isSaved) {
+                        navigateToMainActivity() // Navigate to main activity only after saving session and updating token
+                    } else {
+                        showFailureToast(getString(R.string.login_failed))
+                    }
+                }
 
             } else {
                 // Handle login failure
@@ -175,7 +182,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToMainActivity() {
-        Toast.makeText(this,getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)

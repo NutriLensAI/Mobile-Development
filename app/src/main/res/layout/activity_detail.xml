@@ -19,22 +19,43 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <TextView
-        android:id="@+id/tv_detail_name"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tv_detail_name_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/judul"
-        android:textSize="34sp"
-        app:layout_constraintStart_toStartOf="@+id/iv_detail_photo"
-        app:layout_constraintTop_toBottomOf="@+id/iv_detail_photo" />
+        android:layout_marginEnd="16dp"
+        android:hint="@string/judul"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_detail_photo">
 
-    <TextView
-        android:id="@+id/tv_detail_description"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tv_detail_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/judul"
+            android:textSize="34sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tv_detail_description_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="@string/deskrip"
-        app:layout_constraintStart_toStartOf="@+id/tv_detail_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />
+        android:layout_marginEnd="16dp"
+        android:hint="@string/deskrip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_name_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tv_detail_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/deskrip"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

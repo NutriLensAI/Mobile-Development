@@ -10,12 +10,13 @@
         android:id="@+id/tv_dicoding"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/dicoding"
         android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/Mapsbutton"
+        app:layout_constraintStart_toStartOf="@+id/rv_list"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -49,7 +50,7 @@
         android:layout_marginEnd="24dp"
         android:contentDescription="Settings Button"
         app:icon="@drawable/baseline_menu_48"
-        app:iconTint="@color/material_dynamic_neutral20"
+        app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/tv_dicoding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_dicoding" />
@@ -65,4 +66,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <Button
+        android:id="@+id/Mapsbutton"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        app:icon="@android:drawable/ic_dialog_map"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/Settingsbutton"
+        app:layout_constraintEnd_toStartOf="@+id/Settingsbutton"
+        app:layout_constraintTop_toTopOf="@+id/Settingsbutton"
+        app:layout_constraintVertical_bias="0.2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
