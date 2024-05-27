@@ -39,30 +39,30 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".view.maps.MapsActivity"
+            android:name="com.capstone.mobiledevelopment.nutrilens.view.maps.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
 
         <activity
-            android:name=".view.add_story.AddStoryActivity"
+            android:name="com.capstone.mobiledevelopment.nutrilens.view.add_story.AddStoryActivity"
             android:exported="false" />
         <activity
-            android:name=".view.detail.DetailActivity"
+            android:name="com.capstone.mobiledevelopment.nutrilens.view.detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".view.settings.SettingsActivity"
+            android:name="com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".view.welcome.WelcomeActivity"
+            android:name="com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".view.signup.SignupActivity"
+            android:name="com.capstone.mobiledevelopment.nutrilens.view.signup.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".view.login.LoginActivity"
+            android:name="com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".view.main.MainActivity"
+            android:name="com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
