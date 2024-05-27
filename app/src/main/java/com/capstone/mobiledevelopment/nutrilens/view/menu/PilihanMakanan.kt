@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.view.addstory.AddStoryActivity
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -61,6 +62,14 @@ class PilihanMakanan : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+
+                R.id.navigation_add -> {
+                    val intent = Intent(this@PilihanMakanan, AddStoryActivity::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_add)
+                    startActivity(intent)
+                    true
+                }
+
                 R.id.navigation_food -> {
                     true
                 }

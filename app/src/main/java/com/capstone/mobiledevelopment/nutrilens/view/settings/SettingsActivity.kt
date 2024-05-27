@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivitySettingsBinding
+import com.capstone.mobiledevelopment.nutrilens.view.addstory.AddStoryActivity
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.menu.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.menu.PilihanMakanan
@@ -56,6 +57,13 @@ class SettingsActivity : AppCompatActivity() {
                 R.id.navigation_documents -> {
                     val intent = Intent(this@SettingsActivity, CatatanMakanan::class.java)
                     intent.putExtra("selected_item", R.id.navigation_documents)
+                    startActivity(intent)
+                    true
+                }
+
+                R.id.navigation_add -> {
+                    val intent = Intent(this@SettingsActivity, AddStoryActivity::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_add)
                     startActivity(intent)
                     true
                 }

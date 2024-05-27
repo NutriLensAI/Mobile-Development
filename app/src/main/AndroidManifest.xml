@@ -49,10 +49,6 @@
         <activity
             android:name=".view.signup.SignupWelcome"
             android:exported="false" />
-
-        <activity
-            android:name=".view.detail.DetailActivity"
-            android:exported="false" />
         <activity
             android:name=".view.settings.SettingsActivity"
             android:exported="false" />
@@ -77,6 +73,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".view.addstory.AddStoryActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
