@@ -21,9 +21,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
 import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
@@ -50,7 +50,7 @@ class MainViewModelTest {
 
     private lateinit var viewModel: MainViewModel
 
-    @Before
+    @BeforeEach
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
@@ -61,7 +61,7 @@ class MainViewModelTest {
         viewModel = MainViewModel(userRepository, storyRepository)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun testFetchToken() = runTest {
         val email = "dummy_email"
         val token = "dummy_token"
@@ -73,7 +73,7 @@ class MainViewModelTest {
         assertEquals(token, viewModel.token.getOrAwaitValue())
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun testGetStories_success() = runTest {
         val email = "dummy_email"
         val token = "dummy_token"
@@ -101,7 +101,7 @@ class MainViewModelTest {
         assertEquals(storyItems[0], differ.snapshot()[0])
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun testGetStories_noData() = runTest {
         val email = "dummy_email"
         val token = "dummy_token"
