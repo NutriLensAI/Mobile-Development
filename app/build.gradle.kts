@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.play.services.location)
+    implementation(libs.androidx.fragment.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,9 +74,11 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
-    //Ucrop
-    implementation (libs.yalantis.ucrop)
-
+    //cardview
     implementation (libs.androidx.cardview)
+
+    //viewpager
+    implementation (libs.androidx.viewpager2)
+
 
 }

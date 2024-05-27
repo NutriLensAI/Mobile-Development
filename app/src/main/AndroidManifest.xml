@@ -75,7 +75,7 @@
         </activity>
 
         <activity
-            android:name=".view.addstory.AddStoryActivity"
+            android:name=".view.addstory.AddFoodActivity"
             android:exported="false" />
 
         <provider

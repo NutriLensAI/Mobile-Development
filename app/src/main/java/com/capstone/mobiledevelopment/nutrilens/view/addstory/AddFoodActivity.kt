@@ -18,7 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddStoryBinding
-import com.capstone.mobiledevelopment.nutrilens.view.add_story.AddStoryViewModel
+import com.capstone.mobiledevelopment.nutrilens.view.add_story.AddFoodViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.menu.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.menu.PilihanMakanan
@@ -28,15 +28,14 @@ import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.utils.getImageUri
 import com.capstone.mobiledevelopment.nutrilens.view.utils.reduceFileImage
 import com.capstone.mobiledevelopment.nutrilens.view.utils.uriToFile
-import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
 
-class AddStoryActivity : AppCompatActivity() {
+class AddFoodActivity : AppCompatActivity() {
     private var currentImageUri: Uri? = null
     private lateinit var binding: ActivityAddStoryBinding
     private val CAMERA_PERMISSION_REQUEST_CODE = 101
-    private val viewModel by viewModels<AddStoryViewModel> {
+    private val viewModel by viewModels<AddFoodViewModel> {
         ViewModelFactory.getInstance(this)
     }
 
@@ -71,28 +70,28 @@ class AddStoryActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_food -> {
-                    val intent = Intent(this@AddStoryActivity, PilihanMakanan::class.java)
+                    val intent = Intent(this@AddFoodActivity, PilihanMakanan::class.java)
                     intent.putExtra("selected_item", R.id.navigation_food)
                     startActivity(intent)
                     true
                 }
 
                 R.id.navigation_profile -> {
-                    val intent = Intent(this@AddStoryActivity, SettingsActivity::class.java)
+                    val intent = Intent(this@AddFoodActivity, SettingsActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_profile)
                     startActivity(intent)
                     true
                 }
 
                 R.id.navigation_stats -> {
-                    val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
+                    val intent = Intent(this@AddFoodActivity, MainActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_stats)
                     startActivity(intent)
                     true
                 }
 
                 R.id.navigation_documents -> {
-                    val intent = Intent(this@AddStoryActivity, CatatanMakanan::class.java)
+                    val intent = Intent(this@AddFoodActivity, CatatanMakanan::class.java)
                     intent.putExtra("selected_item", R.id.navigation_documents)
                     startActivity(intent)
                     true
@@ -174,7 +173,7 @@ class AddStoryActivity : AppCompatActivity() {
     private fun uploadImage() {
         currentImageUri?.let { uri ->
             val token = "Bearer ${viewModel.getToken()}"
-            val imageFile = uriToFile(uri, this@AddStoryActivity).reduceFileImage()
+            val imageFile = uriToFile(uri, this@AddFoodActivity).reduceFileImage()
             val descriptionEditText = findViewById<EditText>(R.id.ed_add_description)
             val description = descriptionEditText.text.toString()
                 proceedWithImageUpload(token, imageFile, description, 0.0f, 0.0f)

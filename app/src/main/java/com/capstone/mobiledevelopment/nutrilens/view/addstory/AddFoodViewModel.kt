@@ -20,8 +20,8 @@ import retrofit2.HttpException
 import java.io.File
 import java.io.IOException
 
-class AddStoryViewModel(private val userRepository: UserRepository,
-                        private val storyRepository: StoryRepository) : ViewModel() {
+class AddFoodViewModel(private val userRepository: UserRepository,
+                       private val storyRepository: StoryRepository) : ViewModel() {
 
     private val _uploadResult = MutableLiveData<Result<StoriesResponse>>()
     val uploadResult: LiveData<Result<StoriesResponse>> = _uploadResult
