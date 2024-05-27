@@ -140,21 +140,11 @@
         app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
         <com.capstone.mobiledevelopment.nutrilens.view.customview.PasswordEditText
-            android:id="@+id/ed_register_password"
+            android:id="@+id/edRegisterPassword"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
+            android:layout_height="wrap_content"
             android:ems="10"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="normal" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

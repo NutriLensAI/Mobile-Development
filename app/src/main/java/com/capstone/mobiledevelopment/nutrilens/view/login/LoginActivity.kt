@@ -3,21 +3,20 @@ package com.capstone.mobiledevelopment.nutrilens.view.login
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityLoginBinding
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
+import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupWelcome
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
@@ -38,7 +37,6 @@ class LoginActivity : AppCompatActivity() {
         setupView()
         setupAction()
         observeLoginResult()
-        passwordValidation()
     }
 
     override fun onResume() {
@@ -48,11 +46,27 @@ class LoginActivity : AppCompatActivity() {
 
     private fun playAnimations() {
         val zoomInAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
-        val zoomOutAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_out)
         val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-        val fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
-        val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
-        val slideDownAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_down)
+
+        // Add AnimationListener to fadeInAnimation to keep the TextView visible after animation
+        fadeInAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {
+                // Do nothing
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                binding.titleTextView.visibility = View.VISIBLE
+                binding.messageTextView.visibility = View.VISIBLE
+                binding.emailTextView.visibility = View.VISIBLE
+                binding.emailEditTextLayout.visibility = View.VISIBLE
+                binding.passwordTextView.visibility = View.VISIBLE
+                binding.passwordEditTextLayout.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) {
+                // Do nothing
+            }
+        })
 
         val imageViewAnimationSet = AnimationSet(true)
         imageViewAnimationSet.addAnimation(zoomInAnimation)
@@ -78,13 +92,13 @@ class LoginActivity : AppCompatActivity() {
         binding.passwordEditTextLayout.startAnimation(passwordTextViewAnimationSet)
 
         val signupButtonAnimationSet = AnimationSet(true)
+        val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
         signupButtonAnimationSet.addAnimation(slideUpAnimation)
         binding.loginButton.startAnimation(signupButtonAnimationSet)
     }
 
     private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        @Suppress("DEPRECATION") if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
             window.setFlags(
@@ -114,37 +128,12 @@ class LoginActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE // Hide progress bar
             }
         }
-    }
 
-    private fun passwordValidation() {
-        passwordEditTextLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM // Set end icon mode to custom
-
-        passwordEditTextLayout.editText?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Do nothing
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // Check if the password is less than 8 characters
-                if (s.toString().length < 8) {
-                    // Set the custom error indicator
-                    val errorDrawable = ContextCompat.getDrawable(this@LoginActivity, R.drawable.error_indicator)
-                    passwordEditTextLayout.error = getString(R.string.password_error)
-                    passwordEditTextLayout.isErrorEnabled = true
-                    passwordEditTextLayout.errorIconDrawable = errorDrawable
-
-                } else {
-                    // Clear the error message and error indicator
-                    passwordEditTextLayout.error = null
-                    passwordEditTextLayout.isErrorEnabled = false
-
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                // Do nothing
-            }
-        })
+        // Add OnClickListener to signUpTextView to navigate to SignupActivity
+        binding.signUpTextView.setOnClickListener {
+            val intent = Intent(this, SignupWelcome::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun observeLoginResult() {
@@ -159,21 +148,21 @@ class LoginActivity : AppCompatActivity() {
                 // Get user-provided email from the EditText
                 val email = binding.edLoginEmail.text.toString()
 
-                val user = UserModel(email, token)
-
-                // Save session and update token
-                viewModel.saveSessionAndNavigate(user, token).observe(this) { isSaved ->
-                    if (isSaved) {
-                        navigateToMainActivity() // Navigate to main activity only after saving session and updating token
-                    } else {
-                        showFailureToast(getString(R.string.login_failed))
-                    }
-                }
+                viewModel.saveSession(
+                    UserModel(
+                        email, token
+                    )
+                ) // Pass the UserModel and the StoryRepository instance
+                viewModel.updateToken(token) // Update token in the ViewModel
+                navigateToMainActivity() // Navigate to main activity
 
             } else {
                 // Handle login failure
                 val message = when (result) {
-                    is Result.Failure -> getString(R.string.login_failed) + " [" + result.error.message + "]. " + getString(R.string.try_again)
+                    is Result.Failure -> getString(R.string.login_failed) + " [" + result.error.message + "]. " + getString(
+                        R.string.try_again
+                    )
+
                     else -> getString(R.string.login_failed) + ". " + getString(R.string.try_again)
                 }
                 showFailureToast(message)
@@ -192,5 +181,4 @@ class LoginActivity : AppCompatActivity() {
     private fun showFailureToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
 }

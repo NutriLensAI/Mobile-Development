@@ -27,13 +27,13 @@ data class ListStoryItem(
 	val createdAt: String? = null,
 
 	@field:SerializedName("name")
-	val name: String,
+	val name: String? = null,
 
 	@field:SerializedName("description")
 	val description: String? = null,
 
 	@field:SerializedName("lon")
-	val lon: Double? = null,
+	val lon:  Double?  = null,
 
 	@field:SerializedName("id")
 	val id: String? = null,

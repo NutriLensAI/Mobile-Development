@@ -11,8 +11,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivitySettingsBinding
+import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
+import com.capstone.mobiledevelopment.nutrilens.view.menu.CatatanMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.menu.PilihanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SettingsActivity : AppCompatActivity() {
     private val viewModel by viewModels<SettingsViewModel> {
@@ -31,6 +35,38 @@ class SettingsActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_food)
+        bottomNavigationView.selectedItemId = selectedItemId
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_stats -> {
+                    val intent = Intent(this@SettingsActivity, MainActivity::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_stats)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_food -> {
+                    val intent = Intent(this@SettingsActivity, PilihanMakanan::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_food)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_documents -> {
+                    val intent = Intent(this@SettingsActivity, CatatanMakanan::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_documents)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_profile -> {
+                    true
+                }
+                else -> false
+            }
+        }
+
+
         observeEmail()
         setupView()
         setupAction()
@@ -52,7 +88,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun observeEmail() {
         viewModel.userEmail.observe(this) { userEmail ->
             val greetingMessage = getString(R.string.greeting, userEmail)
-            binding.nameTextView.text = greetingMessage
+            binding.profileName.text = greetingMessage
         }
     }
 

@@ -50,10 +50,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center"
-                        android:paddingTop="16dp">
+                        android:layout_marginTop="8dp"
+                        android:gravity="center">
 
-                        <!-- Carbs -->
+                        <!-- Carbs Progress -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -65,17 +65,45 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Carbs"
-                                android:textColor="#33AFFF"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                                android:textColor="@android:color/holo_blue_light"
+                                android:textSize="14sp"
+                                android:gravity="center" />
 
-                            <TextView
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="65/100 g"
-                                android:paddingTop="4dp" />
+                                android:layout_marginTop="8dp">
+
+                                <ProgressBar
+                                    android:id="@+id/carbsProgressBar"
+                                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                    android:layout_width="82dp"
+                                    android:layout_height="78dp"
+                                    android:layout_gravity="center"
+                                    android:indeterminate="false"
+                                    android:max="100"
+                                    android:progress="75"
+                                    android:progressDrawable="@drawable/circular_progress_bar_blue"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/carbsValueTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="   75\n/100 g"
+                                    android:textColor="@android:color/holo_blue_light"
+                                    android:textSize="14sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
 
-                        <!-- Fat -->
+                        <!-- Fat Progress -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -87,17 +115,45 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Fat"
-                                android:textColor="#FFA500"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                                android:textColor="@android:color/holo_orange_light"
+                                android:textSize="14sp"
+                                android:gravity="center" />
 
-                            <TextView
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="65/100 g"
-                                android:paddingTop="4dp" />
+                                android:layout_marginTop="8dp">
+
+                                <ProgressBar
+                                    android:id="@+id/fatProgressBar"
+                                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                    android:layout_width="82dp"
+                                    android:layout_height="78dp"
+                                    android:layout_gravity="center"
+                                    android:indeterminate="false"
+                                    android:max="100"
+                                    android:progress="100"
+                                    android:progressDrawable="@drawable/circular_progress_bar_orange"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/fatValueTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="  100\n/100 g"
+                                    android:textColor="@android:color/holo_orange_light"
+                                    android:textSize="14sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
 
-                        <!-- Protein -->
+                        <!-- Protein Progress -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -109,14 +165,42 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Protein"
-                                android:textColor="#FF6347"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                                android:textColor="@android:color/holo_red_light"
+                                android:textSize="14sp"
+                                android:gravity="center" />
 
-                            <TextView
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="65/100 g"
-                                android:paddingTop="4dp" />
+                                android:layout_marginTop="8dp">
+
+                                <ProgressBar
+                                    android:id="@+id/proteinProgressBar"
+                                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                    android:layout_width="82dp"
+                                    android:layout_height="78dp"
+                                    android:layout_gravity="center"
+                                    android:indeterminate="false"
+                                    android:max="100"
+                                    android:progress="100"
+                                    android:progressDrawable="@drawable/circular_progress_bar_red"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/proteinValueTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="  100\n/100 g"
+                                    android:textColor="@android:color/holo_red_light"
+                                    android:textSize="14sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

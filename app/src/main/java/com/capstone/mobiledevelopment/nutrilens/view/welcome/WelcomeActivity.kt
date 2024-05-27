@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityWelcomeBinding
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity
-import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupActivity
+import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupWelcome
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
@@ -79,7 +79,7 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
         binding.signupButton.setOnClickListener {
-            startActivity(Intent(this, SignupActivity::class.java))
+            startActivity(Intent(this, SignupWelcome::class.java))
         }
     }
 }

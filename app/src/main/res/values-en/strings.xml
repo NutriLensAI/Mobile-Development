@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Nutrilens</string>
+    <string name="app_name">NutriLens</string>
     <string name="signup">Signup</string>
     <string name="login">Login</string>
     <string name="message_welcome_page">Want to learn Android, iOS, Machine Learning, Cloud, Front-End, Back-End, and other IT fields? Do it at Dicoding!</string>
-    <string name="title_welcome_page">Welcome at Dicoding!</string>
+    <string name="title_welcome_page">Welcome to NutriLens</string>
     <string name="title_signup_page">" Complete your data below"</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -42,5 +42,8 @@
     <string name="location_enabled">"You are viewing news and stories around your location "</string>
     <string name="location_disabled">"You're viewing news and stories on the go "</string>
     <string name="location_now">Select to change location</string>
-    <string name="dont_have_an_account">Don\'t have an account yet?</string>
+    <string name="dont_have_an_account">Don\'t Have Account?</string>
+    <string name="sugar">Sugar</string>
+    <string name="cholesterol">Cholesterol</string>
+    <string name="drink">Drink</string>
 </resources>

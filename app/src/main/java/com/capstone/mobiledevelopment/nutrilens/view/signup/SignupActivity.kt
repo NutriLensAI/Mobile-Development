@@ -1,5 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.view.signup
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -7,18 +8,18 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivitySignupBinding
+import com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
-
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
@@ -32,8 +33,6 @@ class SignupActivity : AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
         passwordEditTextLayout = findViewById(R.id.passwordEditTextLayout)
-
-        passwordValidation()
         setupView()
         setupAction()
         observeRegisterResult()
@@ -46,11 +45,29 @@ class SignupActivity : AppCompatActivity() {
 
     private fun playAnimations() {
         val zoomInAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
-        val zoomOutAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_out)
         val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-        val fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
-        val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
-        val slideDownAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_down)
+
+        fadeInAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {
+                // Do nothing
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                binding.imageView.visibility = View.VISIBLE
+                binding.titleTextView.visibility = View.VISIBLE
+                binding.nameTextView.visibility = View.VISIBLE
+                binding.nameEditTextLayout.visibility = View.VISIBLE
+                binding.emailTextView.visibility = View.VISIBLE
+                binding.emailEditTextLayout.visibility = View.VISIBLE
+                binding.passwordTextView.visibility = View.VISIBLE
+                binding.passwordEditTextLayout.visibility = View.VISIBLE
+                binding.signupButton.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) {
+                // Do nothing
+            }
+        })
 
         val imageViewAnimationSet = AnimationSet(true)
         imageViewAnimationSet.addAnimation(zoomInAnimation)
@@ -77,39 +94,9 @@ class SignupActivity : AppCompatActivity() {
         binding.passwordEditTextLayout.startAnimation(passwordTextViewAnimationSet)
 
         val signupButtonAnimationSet = AnimationSet(true)
+        val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
         signupButtonAnimationSet.addAnimation(slideUpAnimation)
         binding.signupButton.startAnimation(signupButtonAnimationSet)
-    }
-
-    private fun passwordValidation() {
-        passwordEditTextLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM // Set end icon mode to custom
-
-        passwordEditTextLayout.editText?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Do nothing
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // Check if the password is less than 8 characters
-                if (s.toString().length < 8) {
-                    // Set the custom error indicator
-                    val errorDrawable = ContextCompat.getDrawable(this@SignupActivity, R.drawable.error_indicator)
-                    passwordEditTextLayout.error = getString(R.string.password_error)
-                    passwordEditTextLayout.isErrorEnabled = true
-                    passwordEditTextLayout.errorIconDrawable = errorDrawable
-
-                } else {
-                    // Clear the error message and error indicator
-                    passwordEditTextLayout.error = null
-                    passwordEditTextLayout.isErrorEnabled = false
-
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                // Do nothing
-            }
-        })
     }
 
     private fun setupView() {
@@ -158,7 +145,7 @@ class SignupActivity : AppCompatActivity() {
                     is Result.Failure -> getString(R.string.registration_failed) + " [" + result.error.message + "]. " + getString(R.string.try_again)
                     else -> getString(R.string.registration_failed) + ". " + getString(R.string.try_again)
                 }
-                showFailureDialog( message)
+                showFailureDialog(message)
             }
         }
     }
@@ -169,6 +156,9 @@ class SignupActivity : AppCompatActivity() {
             setTitle(getString(R.string.success_dialog_title))
             setMessage(message)
             setPositiveButton(getString(R.string.success_dialog_button)) { _, _ ->
+                // Move to LoginActivity
+                val intent = Intent(this@SignupActivity, LoginActivity::class.java)
+                startActivity(intent)
                 finish()
             }
             create()

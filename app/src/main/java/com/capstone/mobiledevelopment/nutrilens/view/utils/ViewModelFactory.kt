@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StoryRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection
-import com.capstone.mobiledevelopment.nutrilens.view.add_story.AddStoryViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsViewModel
@@ -31,9 +30,6 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(SettingsViewModel::class.java) -> {
                 SettingsViewModel(userRepository) as T
-            }
-            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
-                AddStoryViewModel(userRepository,storyRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
