@@ -20,8 +20,9 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddStoryBinding
 import com.capstone.mobiledevelopment.nutrilens.view.add_story.AddFoodViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
-import com.capstone.mobiledevelopment.nutrilens.view.menu.CatatanMakanan
-import com.capstone.mobiledevelopment.nutrilens.view.menu.PilihanMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
+import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
@@ -29,6 +30,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.utils.getImageUri
 import com.capstone.mobiledevelopment.nutrilens.view.utils.reduceFileImage
 import com.capstone.mobiledevelopment.nutrilens.view.utils.uriToFile
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.File
 
 class AddFoodActivity : AppCompatActivity() {
@@ -64,9 +66,15 @@ class AddFoodActivity : AppCompatActivity() {
             binding.cameraButton.isEnabled = true
         }
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_stats)
+        // Initialize the custom bottom navigation view
+        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
+        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
+
+        // Set the selected item
+        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_add)
         bottomNavigationView.selectedItemId = selectedItemId
+
+        // Set the navigation item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_food -> {
@@ -75,34 +83,38 @@ class AddFoodActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
-
                 R.id.navigation_profile -> {
                     val intent = Intent(this@AddFoodActivity, SettingsActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_profile)
                     startActivity(intent)
                     true
                 }
-
-                R.id.navigation_stats -> {
-                    val intent = Intent(this@AddFoodActivity, MainActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_stats)
-                    startActivity(intent)
-                    true
-                }
-
                 R.id.navigation_documents -> {
                     val intent = Intent(this@AddFoodActivity, CatatanMakanan::class.java)
                     intent.putExtra("selected_item", R.id.navigation_documents)
                     startActivity(intent)
                     true
                 }
+                R.id.navigation_stats -> {
+                    val intent = Intent(this@AddFoodActivity, MainActivity::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_stats)
+                    startActivity(intent)
+                    true
+                }
                 R.id.navigation_add -> {
+                    // Already in AddFoodActivity, do nothing
                     true
                 }
                 else -> false
             }
         }
+
+        // Add the FAB click listener
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener {
+            // Already in AddFoodActivity, do nothing or perform other actions if needed
         }
+    }
 
     override fun onResume() {
         super.onResume()

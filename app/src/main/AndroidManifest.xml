@@ -23,31 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginWithAnimation">
         <activity
-            android:name=".view.menu.CatatanMakanan"
+            android:name=".view.catatan.CatatanMakanan"
             android:exported="false" />
         <activity
-            android:name=".view.menu.PilihanMakanan"
-            android:exported="false" />
-        <activity
-            android:name=".view.signup.Signup7"
-            android:exported="false" />
-        <activity
-            android:name=".view.signup.Signup6"
-            android:exported="false" />
-        <activity
-            android:name=".view.signup.Signup5"
-            android:exported="false" />
-        <activity
-            android:name=".view.signup.Signup4"
-            android:exported="false" />
-        <activity
-            android:name=".view.signup.Signup3"
-            android:exported="false" />
-        <activity
-            android:name=".view.signup.Signup2"
-            android:exported="false" />
-        <activity
-            android:name=".view.signup.SignupWelcome"
+            android:name=".view.pilihan.PilihanMakanan"
             android:exported="false" />
         <activity
             android:name=".view.settings.SettingsActivity"
@@ -57,9 +36,6 @@
             android:exported="false" />
         <activity
             android:name=".view.signup.SignupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.signup.Signup1"
             android:exported="false" />
         <activity
             android:name=".view.login.LoginActivity"

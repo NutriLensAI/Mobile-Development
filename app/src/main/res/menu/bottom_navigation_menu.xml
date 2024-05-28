@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_stats"
@@ -9,9 +10,11 @@
         android:title="Food"/>
     <item
         android:id="@+id/navigation_add"
+        android:checkable="false"
+        android:enabled="false"
         android:icon="@drawable/ic_add"
         android:title="Add"
-        android:enabled="true" />
+        android:visible="false" />
     <item
         android:id="@+id/navigation_documents"
         android:icon="@drawable/ic_documents"

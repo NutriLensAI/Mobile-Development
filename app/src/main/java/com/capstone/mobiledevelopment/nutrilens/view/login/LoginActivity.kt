@@ -16,7 +16,7 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityLoginBinding
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
-import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupWelcome
+import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
@@ -131,7 +131,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Add OnClickListener to signUpTextView to navigate to SignupActivity
         binding.signUpTextView.setOnClickListener {
-            val intent = Intent(this, SignupWelcome::class.java)
+            val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
     }

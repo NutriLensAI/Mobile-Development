@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.add_story.AddStoryActivity">
+    tools:context=".view.addstory.AddFoodActivity">
 
     <ImageView
         android:id="@+id/iv_story_image"
@@ -39,12 +39,11 @@
 
     <EditText
         android:id="@+id/ed_add_description"
-        android:layout_width="372dp"
+        android:layout_width="0dp"
         android:layout_height="202dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:autofillHints=""
         android:hint="@string/description_story"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,10 +56,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/upload"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_add_description" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_add_description"
+        app:layout_constraintVertical_bias="0.191" />
 
     <ProgressBar
         android:id="@+id/progressBar5"
@@ -74,21 +75,13 @@
         app:layout_constraintTop_toTopOf="@+id/iv_story_image"
         tools:visibility="invisible" />
 
-    <!-- Center Button with Surrounding Buttons -->
+    <!-- Include Custom Bottom Navigation Layout -->
     <include
         layout="@layout/bottom_navigation_layout"
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="157dp"
-        tools:layout_editor_absoluteY="252dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.view.menu
+package com.capstone.mobiledevelopment.nutrilens.view.catatan
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.addstory.AddFoodActivity
+import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
+import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CatatanMakanan : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +45,10 @@ class CatatanMakanan : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Initialize the custom bottom navigation view
+        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
+        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_stats)
         bottomNavigationView.selectedItemId = selectedItemId
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
@@ -69,18 +74,20 @@ class CatatanMakanan : AppCompatActivity() {
                     true
                 }
 
-                R.id.navigation_add -> {
-                    val intent = Intent(this@CatatanMakanan, AddFoodActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_add)
-                    startActivity(intent)
-                    true
-                }
                 R.id.navigation_documents -> {
                     // Activity ini sudah halaman statistik
                     true
                 }
+
                 else -> false
             }
+        }
+
+        // Add the FAB click listener
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener {
+            val intent = Intent(this@CatatanMakanan, AddFoodActivity::class.java)
+            startActivity(intent)
         }
     }
 }

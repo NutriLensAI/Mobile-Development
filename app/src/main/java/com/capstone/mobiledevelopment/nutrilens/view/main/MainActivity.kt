@@ -11,35 +11,42 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
 import com.capstone.mobiledevelopment.nutrilens.view.addstory.AddFoodActivity
 //import com.capstone.mobiledevelopment.nutrilens.view.adapter.StoryAdapter
-import com.capstone.mobiledevelopment.nutrilens.view.menu.CatatanMakanan
-import com.capstone.mobiledevelopment.nutrilens.view.menu.PilihanMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
+import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
-
     private lateinit var binding: ActivityMainBinding
-    //private lateinit var adapter: StoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Observing token and fetching stories
         viewModel.token.observe(this) { token ->
             if (!token.isNullOrEmpty()) {
                 viewModel.getStories()
             }
         }
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        // Initialize the custom bottom navigation view
+        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
+        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
+
+        // Set the selected item
         val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_stats)
         bottomNavigationView.selectedItemId = selectedItemId
+
+        // Set the navigation item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_food -> {
@@ -48,42 +55,38 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
-
                 R.id.navigation_profile -> {
                     val intent = Intent(this@MainActivity, SettingsActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_profile)
                     startActivity(intent)
                     true
                 }
-
                 R.id.navigation_documents -> {
                     val intent = Intent(this@MainActivity, CatatanMakanan::class.java)
                     intent.putExtra("selected_item", R.id.navigation_documents)
                     startActivity(intent)
                     true
                 }
-
-                R.id.navigation_add -> {
-                    val intent = Intent(this@MainActivity, AddFoodActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_add)
-                    startActivity(intent)
-                    true
-                }
-
                 R.id.navigation_stats -> {
-                    // Activity ini sudah halaman statistik
+                    // Already on the stats screen
                     true
                 }
-
                 else -> false
             }
         }
 
+        // Add the FAB click listener
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener {
+            val intent = Intent(this@MainActivity, AddFoodActivity::class.java)
+            startActivity(intent)
+        }
 
+        // Additional setup
         viewModel.getStories()
         observeSession()
         setupView()
-       // setupRecyclerView()
+        // setupRecyclerView()
     }
 
     private fun observeSession() {
