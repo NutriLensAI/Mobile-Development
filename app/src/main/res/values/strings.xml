@@ -52,6 +52,15 @@
     <string name="drink">Jumlah Air</string>
     <string name="user_avatar" translatable="false">user_avatar</string>
     <string name="profile_image">profile_image</string>
+    <string name="menu_image">menu_image\n</string>
+    <string name="close">close\n</string>
+    <string name="flash">flash</string>
+    <string name="take_a_picture">take_a_picture</string>
+    <string name="capture">picture</string>
+    <string name="makanan_image_desc">makanan_image_desc\n</string>
+    <string name="breakfast">breakfast\n</string>
+    <string name="lunch">lunch</string>
+    <string name="dinner">dinner</string>
 
     <string-array name="meal_types">
         <item>Breakfast</item>
