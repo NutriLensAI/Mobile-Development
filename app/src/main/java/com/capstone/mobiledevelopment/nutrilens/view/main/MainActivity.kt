@@ -7,17 +7,18 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
 import com.capstone.mobiledevelopment.nutrilens.view.addstory.AddFoodActivity
-//import com.capstone.mobiledevelopment.nutrilens.view.adapter.StoryAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.getStories()
         observeSession()
         setupView()
-        // setupRecyclerView()
+        setupRecyclerView()
     }
 
     private fun observeSession() {
@@ -113,8 +114,16 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-    //private fun setupRecyclerView() {
-        //adapter = StoryAdapter()
-   // }
+    private fun setupRecyclerView() {
+        val menuList = listOf(
+            MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
+            MenuItem("Cholesterol", R.drawable.ic_cholesterol, "100 mg/dL", "Cholesterol Numbers and What They Mean"),
+            MenuItem("Steps", R.drawable.ic_steps, "5,000/10,000 steps", "How much should you walk every day?"),
+            MenuItem("Drink", R.drawable.ic_drink, "1500 ml", "How much should you drink every day?")
+        )
 
+        val adapter = MenuAdapter(menuList)
+        binding.menuRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        binding.menuRecyclerView.adapter = adapter
+    }
 }

@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.settings.SettingsActivity">
+    tools:context=".view.settings.SettingsActivity"
+    android:background="#F5F5F5">
 
     <!-- Back Button -->
     <ImageButton

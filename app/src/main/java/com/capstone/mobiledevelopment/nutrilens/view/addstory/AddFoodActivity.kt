@@ -1,229 +1,228 @@
 package com.capstone.mobiledevelopment.nutrilens.view.addstory
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
-import android.view.View
-import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.*
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddStoryBinding
-import com.capstone.mobiledevelopment.nutrilens.view.add_story.AddFoodViewModel
-import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
-import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
-import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
-import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
-import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
-import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
+import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddFoodBinding
+import com.capstone.mobiledevelopment.nutrilens.ingredients.HasilMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
-import com.capstone.mobiledevelopment.nutrilens.view.utils.getImageUri
-import com.capstone.mobiledevelopment.nutrilens.view.utils.reduceFileImage
-import com.capstone.mobiledevelopment.nutrilens.view.utils.uriToFile
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AddFoodActivity : AppCompatActivity() {
-    private var currentImageUri: Uri? = null
-    private lateinit var binding: ActivityAddStoryBinding
-    private val CAMERA_PERMISSION_REQUEST_CODE = 101
-    private val viewModel by viewModels<AddFoodViewModel> {
+    private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
+    private lateinit var binding: ActivityAddFoodBinding
+    private var imageCapture: ImageCapture? = null
+    private var flashEnabled = false
+    private lateinit var outputDirectory: File
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityAddStoryBinding.inflate(layoutInflater)
+        binding = ActivityAddFoodBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.galleryButton.setOnClickListener { startGallery() }
-        binding.cameraButton.setOnClickListener { startCamera() }
-        binding.buttonAdd.setOnClickListener { uploadImage() }
+        outputDirectory = getOutputDirectory()
 
-        // Request camera permission if not granted
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        // Request camera permissions
+        if (allPermissionsGranted()) {
+            startCamera()
+        } else {
             ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.CAMERA),
-                CAMERA_PERMISSION_REQUEST_CODE
+                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
             )
-        } else {
-            binding.cameraButton.isEnabled = true
         }
 
-        // Initialize the custom bottom navigation view
-        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
-        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
-
-        // Set the selected item
-        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_add)
-        bottomNavigationView.selectedItemId = selectedItemId
-
-        // Set the navigation item selected listener
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_food -> {
-                    val intent = Intent(this@AddFoodActivity, PilihanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_food)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_profile -> {
-                    val intent = Intent(this@AddFoodActivity, SettingsActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_profile)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_documents -> {
-                    val intent = Intent(this@AddFoodActivity, CatatanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_documents)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_stats -> {
-                    val intent = Intent(this@AddFoodActivity, MainActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_stats)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_add -> {
-                    // Already in AddFoodActivity, do nothing
-                    true
-                }
-                else -> false
-            }
+        val closeButton: ImageButton = findViewById(R.id.closeButton)
+        closeButton.setOnClickListener {
+            finish()
         }
 
-        // Add the FAB click listener
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener {
-            // Already in AddFoodActivity, do nothing or perform other actions if needed
+        val flashButton: ImageButton = findViewById(R.id.flashButton)
+        flashButton.setOnClickListener {
+            flashEnabled = !flashEnabled
+            updateFlashButtonIcon(flashButton)
+            startCamera()
+        }
+
+        val captureButton: ImageButton = findViewById(R.id.captureButton)
+        captureButton.setOnClickListener {
+            takePhoto()
+        }
+
+        val galleryButton: ImageButton = findViewById(R.id.galleryButton)
+        galleryButton.setOnClickListener {
+            openGallery()
+        }
+
+        val takePictureText: TextView = findViewById(R.id.takePictureText)
+        takePictureText.setOnClickListener {
+            takePhoto()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        showImage()
-    }
-
-    // Handle the result of the camera permission request
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            CAMERA_PERMISSION_REQUEST_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Camera permission granted
-                    binding.cameraButton.isEnabled = true
-                } else {
-                    // Camera permission denied
-                    Toast.makeText(
-                        this,
-                        "Camera permission is required to proceed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-    }
-
-    private fun startGallery() {
-        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-    }
-
-    private val launcherGallery = registerForActivityResult(
-        ActivityResultContracts.PickVisualMedia()
-    ) { uri: Uri? ->
-        if (uri != null) {
-            currentImageUri = uri
-            showImage()
-        } else {
-            Log.d("Photo Picker", "No media selected")
-        }
-    }
-
-
-    private fun showImage() {
-        // TODO: Display the image corresponding to the currentImageUri.
-        currentImageUri?.let {
-            Log.d("Image URI", "showImage: $it")
-            binding.ivStoryImage.setImageURI(it)
-        }
+    private fun updateFlashButtonIcon(flashButton: ImageButton) {
+        val icon = if (flashEnabled) R.drawable.ic_flash_on else R.drawable.ic_flash_off
+        flashButton.setImageResource(icon)
     }
 
     private fun startCamera() {
-        currentImageUri = getImageUri(this)
-        launcherIntentCamera.launch(currentImageUri!!)
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        cameraProviderFuture.addListener(Runnable {
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
+            val preview = Preview.Builder().build().also {
+                it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+            }
+
+            imageCapture = ImageCapture.Builder()
+                .setFlashMode(if (flashEnabled) ImageCapture.FLASH_MODE_ON else ImageCapture.FLASH_MODE_OFF)
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                .setTargetRotation(this.windowManager.defaultDisplay.rotation)
+                .build()
+
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(
+                    this, cameraSelector, preview, imageCapture
+                )
+            } catch (exc: Exception) {
+                Log.e(TAG, "Use case binding failed", exc)
+            }
+        }, ContextCompat.getMainExecutor(this))
     }
 
-    private val launcherIntentCamera = registerForActivityResult(
-        ActivityResultContracts.TakePicture()
-    ) { isSuccess ->
-        if (isSuccess) {
-            showImage()
-        }
+    private fun takePhoto() {
+        val imageCapture = imageCapture ?: return
+
+        val photoFile = File(
+            outputDirectory,
+            SimpleDateFormat(FILENAME_FORMAT, Locale.US)
+                .format(System.currentTimeMillis()) + ".jpg"
+        )
+
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onError(exc: ImageCaptureException) {
+                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                    Toast.makeText(baseContext, "Photo capture failed: ${exc.message}", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
+                    val msg = "Photo capture succeeded: $savedUri"
+                    Log.d(TAG, msg)
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    // Save the image to gallery
+                    savePhotoToGallery(photoFile)
+                    // Navigate to HasilMakananActivity with the saved image URI
+                    navigateToHasilMakanan(savedUri)
+                }
+            }
+        )
     }
 
-    private fun uploadImage() {
-        currentImageUri?.let { uri ->
-            val token = "Bearer ${viewModel.getToken()}"
-            val imageFile = uriToFile(uri, this@AddFoodActivity).reduceFileImage()
-            val descriptionEditText = findViewById<EditText>(R.id.ed_add_description)
-            val description = descriptionEditText.text.toString()
-                proceedWithImageUpload(token, imageFile, description, 0.0f, 0.0f)
+    private fun savePhotoToGallery(photoFile: File) {
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, photoFile.name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/${resources.getString(R.string.app_name)}")
             }
         }
 
-    private fun proceedWithImageUpload(token: String, imageFile: File, description: String, lat: Float, lon: Float) {
-        viewModel.uploadImage(token, imageFile, description, lat, lon)
-        observeUploadResult()
-    }
+        val resolver = applicationContext.contentResolver
+        val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 
-    private fun observeUploadResult() {
-        viewModel.uploadResult.observe(this) { result ->
-            val successMessage = getString(R.string.upload_success)
-            val failureMessage = getString(R.string.upload_failure)
-            if (result is Result.Success) {
-                showToast(successMessage)
-                showLoading(false)
-                navigateToMainActivity()
-            } else if (result is Result.Failure) {
-                val errorMessage = "$failureMessage: ${result.error.message}"
-                showToast(errorMessage)
-                showLoading(false)
+        uri?.let {
+            resolver.openOutputStream(it).use { outputStream ->
+                photoFile.inputStream().use { inputStream ->
+                    inputStream.copyTo(outputStream!!)
+                }
             }
         }
     }
 
-    private fun navigateToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+    private fun navigateToHasilMakanan(imageUri: Uri) {
+        val intent = Intent(this, HasilMakanan::class.java).apply {
+            putExtra("image_uri", imageUri.toString())
+        }
         startActivity(intent)
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar5.visibility = if (isLoading) View.VISIBLE else View.GONE
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, REQUEST_CODE_GALLERY)
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK) {
+            data?.data?.let { uri ->
+                navigateToHasilMakanan(uri)
+            }
+        }
+    }
+
+    private fun getOutputDirectory(): File {
+        val mediaDir = externalMediaDirs.firstOrNull()?.let {
+            File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
+        }
+        return if (mediaDir != null && mediaDir.exists())
+            mediaDir else filesDir
+    }
+
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            baseContext, it
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (allPermissionsGranted()) {
+                startCamera()
+            } else {
+                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
+
+    companion object {
+        private const val TAG = "AddFoodActivity"
+        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        private const val REQUEST_CODE_GALLERY = 20
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     }
 }
