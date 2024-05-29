@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.dicoding.picodiploma.loginwithanimation"
+    namespace = "com.capstone.mobiledevelopment.nutrilens"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.dicoding.picodiploma.loginwithanimation"
+        applicationId = "com.capstone.mobiledevelopment.nutrilens"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
@@ -76,6 +76,5 @@ dependencies {
     implementation (libs.yalantis.ucrop)
 
     implementation (libs.androidx.cardview)
-    implementation ("androidx.cardview:cardview:1.0.0")
 
 }

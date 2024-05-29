@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
+    <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.LoginWithAnimation">
+        <activity
+            android:name=".view.menu.CatatanMakanan"
+            android:exported="false" />
+        <activity
+            android:name=".view.menu.PilihanMakanan"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.Signup7"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.Signup6"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.Signup5"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.Signup4"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.Signup3"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.Signup2"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.SignupWelcome"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.detail.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.settings.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.welcome.WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.Signup1"
+            android:exported="false" />
+        <activity
+            android:name=".view.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.main.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+</manifest>

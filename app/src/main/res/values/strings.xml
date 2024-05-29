@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">NutriLens</string>
+    <string name="signup">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="message_welcome_page">Health Innovation: Empowering Vulnerable Communities for Health and Well-being</string>
+    <string name="title_welcome_page">Selamat Datang Di NutriLens</string>
+    <string name="title_signup_page">Lengkapi data dirimu di bawah ini ya</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="message_login_page">Masukkan dulu datamu ya</string>
+    <string name="title_login_page">Sudah Siap Untuk Memulai Perubahan Di Hidup Kamu?</string>
+    <string name="message_main_page">Selamat Belajar di Dicoding.</string>
+    <string name="logout">Keluar</string>
+    <string name="judul">Judul story</string>
+    <string name="deskrip">Deskripsi story</string>
+    <string name="dicoding">Dicoding Berita dan Cerita</string>
+    <string name="gallery">Galeri</string>
+    <string name="camera">Kamera</string>
+    <string name="description_story">Masukan Deskripsi Cerita</string>
+    <string name="empty_image_warning">"Gambar Kosong "</string>
+    <string name="name">Nama</string>
+    <string name="password_error">Password tidak boleh kurang dari 8 karakter Password must not be less than 8 characters</string>
+    <string name="upload">Unggah</string>
+    <string name="logout_message">Yakin ingin keluar ?</string>
+    <string name="yes">Ya</string>
+    <string name="success_dialog_message">Akun dengan %1$s sudah jadi nih. Yuk Kita Masuk Ke Aplikasi.</string>
+    <string name="success_dialog_title">Yeah!</string>
+    <string name="success_dialog_button">Lanjut</string>
+    <string name="registration_failed">Registrasi Gagal</string>
+    <string name="failure_dialog_title">" Oh tidak!"</string>
+    <string name="try_again">Silahkan coba lagi.</string>
+    <string name="failure_dialog_button">Registrasi Ulang</string>
+    <string name="login_success">login Berhasil</string>
+    <string name="login_failed">Login Gagal</string>
+    <string name="upload_success">Upload Berhasil</string>
+    <string name="upload_failure">Upload Gagal</string>
+    <string name="appwidget_text" translatable="false">EXAMPLE</string>
+    <string name="app_widget_description" translatable="false">This is an app widget description</string>
+    <string name="add_story">Tambah Cerita</string>
+    <string name="tidak">Tidak</string>
+    <string name="ya">Ya</string>
+    <string name="greeting">Halo %1$s,</string>
+    <string name="location_enabled">Anda sedang melihat berita dan cerita sekitar lokasi anda</string>
+    <string name="location_disabled">Anda sedang melihat berita dan cerita di mana saja</string>
+    <string name="location_now">Pilih untuk mengganti lokasi</string>
+    <string name="togglebutton" translatable="false">ToggleButton</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="sugar">sugar</string>
+    <string name="info" translatable="false">info\n</string>
+    <string name="cholesterol">Kolesterol</string>
+    <string name="steps" translatable="false">steps\n</string>
+    <string name="drink">Jumlah Air</string>
+    <string name="user_avatar" translatable="false">user_avatar</string>
+    <string name="profile_image">profile_image</string>
+
+    <string-array name="meal_types">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+    </string-array>
+
+</resources>
