@@ -8,7 +8,7 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakananBinding
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodItem
-import com.capstone.mobiledevelopment.nutrilens.view.addstory.AddFoodActivity
+import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan

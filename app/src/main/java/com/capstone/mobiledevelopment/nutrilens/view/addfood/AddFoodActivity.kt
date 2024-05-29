@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.view.addstory
+package com.capstone.mobiledevelopment.nutrilens.view.addfood
 
 import android.Manifest
 import android.content.ContentValues
@@ -12,21 +12,31 @@ import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.*
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddFoodBinding
-import com.capstone.mobiledevelopment.nutrilens.ingredients.HasilMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.hasil.HasilMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
+import com.capstone.mobiledevelopment.nutrilens.view.utils.getImageUri
+import com.capstone.mobiledevelopment.nutrilens.view.utils.reduceFileImage
+import com.capstone.mobiledevelopment.nutrilens.view.utils.uriToFile
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
+
 
 class AddFoodActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
@@ -36,6 +46,26 @@ class AddFoodActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private var flashEnabled = false
     private lateinit var outputDirectory: File
+    private lateinit var capturedImageUri: Uri
+
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            startCrop(it)
+        }
+    }
+
+    private val cropImage = registerForActivityResult(
+        CropImageContract()
+    ) { result ->
+        if (result.isSuccessful) {
+            result.uriContent?.let { uri ->
+                saveCroppedImageToGallery(uri)
+            }
+        } else {
+            val exception = result.error
+            Log.e(TAG, "Crop failed: ${exception?.message}", exception)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,13 +147,19 @@ class AddFoodActivity : AppCompatActivity() {
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
 
-        val photoFile = File(
-            outputDirectory,
-            SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-                .format(System.currentTimeMillis()) + ".jpg"
-        )
+        capturedImageUri = getImageUri(this)
 
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(
+            contentResolver,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg")
+                put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/MyCamera/")
+                }
+            }
+        ).build()
 
         imageCapture.takePicture(
             outputOptions,
@@ -135,22 +171,38 @@ class AddFoodActivity : AppCompatActivity() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
+                    val savedUri = output.savedUri ?: capturedImageUri
                     val msg = "Photo capture succeeded: $savedUri"
                     Log.d(TAG, msg)
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                    // Save the image to gallery
-                    savePhotoToGallery(photoFile)
-                    // Navigate to HasilMakananActivity with the saved image URI
-                    navigateToHasilMakanan(savedUri)
+                    // Start cropping the captured image
+                    startCrop(savedUri)
                 }
             }
         )
     }
 
-    private fun savePhotoToGallery(photoFile: File) {
+    private fun startCrop(uri: Uri) {
+        val cropImageContractOptions = CropImageContractOptions(
+            uri,
+            CropImageOptions(
+                imageSourceIncludeGallery = true,
+                imageSourceIncludeCamera = true
+            )
+        )
+        cropImage.launch(cropImageContractOptions)
+    }
+
+    private fun saveCroppedImageToGallery(croppedUri: Uri) {
+        val file = uriToFile(croppedUri, this)
+        val reducedFile = file.reduceFileImage()
+        val finalUri = savePhotoToGallery(reducedFile)
+        navigateToHasilMakanan(finalUri)
+    }
+
+    private fun savePhotoToGallery(reducedFile: File): Uri {
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, photoFile.name)
+            put(MediaStore.MediaColumns.DISPLAY_NAME, reducedFile.name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/${resources.getString(R.string.app_name)}")
@@ -162,32 +214,17 @@ class AddFoodActivity : AppCompatActivity() {
 
         uri?.let {
             resolver.openOutputStream(it).use { outputStream ->
-                photoFile.inputStream().use { inputStream ->
+                reducedFile.inputStream().use { inputStream ->
                     inputStream.copyTo(outputStream!!)
                 }
             }
         }
-    }
 
-    private fun navigateToHasilMakanan(imageUri: Uri) {
-        val intent = Intent(this, HasilMakanan::class.java).apply {
-            putExtra("image_uri", imageUri.toString())
-        }
-        startActivity(intent)
+        return uri ?: Uri.fromFile(reducedFile)
     }
 
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, REQUEST_CODE_GALLERY)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK) {
-            data?.data?.let { uri ->
-                navigateToHasilMakanan(uri)
-            }
-        }
+        galleryLauncher.launch("image/*")
     }
 
     private fun getOutputDirectory(): File {
@@ -218,11 +255,17 @@ class AddFoodActivity : AppCompatActivity() {
         }
     }
 
+    private fun navigateToHasilMakanan(imageUri: Uri) {
+        val intent = Intent(this, HasilMakanan::class.java).apply {
+            putExtra("image_uri", imageUri.toString())
+        }
+        startActivity(intent)
+    }
+
     companion object {
         private const val TAG = "AddFoodActivity"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private const val REQUEST_CODE_GALLERY = 20
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     }
 }

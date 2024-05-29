@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
-import com.capstone.mobiledevelopment.nutrilens.view.addstory.AddFoodActivity
+import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan

@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.ingredients
+package com.capstone.mobiledevelopment.nutrilens.view.hasil
 
 import android.content.Intent
 import android.net.Uri

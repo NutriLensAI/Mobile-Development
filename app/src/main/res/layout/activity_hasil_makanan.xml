@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ingredients.HasilMakanan"
+    tools:context=".view.hasil.HasilMakanan"
     android:background="#F5F5F5">
 
     <!-- Tombol X di kiri atas -->
@@ -21,11 +21,10 @@
     <!-- Gambar makanan dari kamera -->
     <ImageView
         android:id="@+id/img_makanan"
-        android:layout_width="412dp"
-        android:layout_height="248dp"
+        android:layout_width="414dp"
+        android:layout_height="175dp"
         android:contentDescription="@string/makanan_image_desc"
         android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_close" />

@@ -68,6 +68,7 @@ dependencies {
 
     //glide
     implementation(libs.glide)
+    annotationProcessor(libs.compiler)
 
     //retrofit api
     implementation(libs.retrofit)
@@ -86,13 +87,10 @@ dependencies {
     implementation (libs.androidx.camera.lifecycle)
     implementation (libs.androidx.camera.view)
     implementation (libs.androidx.camera.extensions)
-    implementation ("androidx.camera:camera-core:1.0.0")
-    implementation ("androidx.camera:camera-camera2:1.0.0")
-    implementation ("androidx.camera:camera-lifecycle:1.0.0")
-    implementation ("androidx.camera:camera-view:1.0.0-alpha27")
-    implementation ("androidx.camera:camera-extensions:1.0.0-alpha27")
-    implementation("com.github.lzyzsd:circleprogress:1.2.1")
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 
+    //Cicleprogress
+    implementation(libs.circleprogress)
+
+    //Android Image Cropper
+    implementation(libs.android.image.cropper)
 }

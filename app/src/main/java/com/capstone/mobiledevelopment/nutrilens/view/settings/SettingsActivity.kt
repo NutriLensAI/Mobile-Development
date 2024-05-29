@@ -11,14 +11,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivitySettingsBinding
-import com.capstone.mobiledevelopment.nutrilens.view.addstory.AddFoodActivity
+import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class SettingsActivity : AppCompatActivity() {
