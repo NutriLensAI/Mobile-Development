@@ -57,15 +57,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Account Setting -->
-
-    <!-- Language Setting -->
-
-    <!-- Another Account Setting -->
-
-    <!-- Logout Button -->
+    <!-- Email Setting -->
     <LinearLayout
-        android:id="@+id/account_setting"
+        android:id="@+id/email_setting"
         android:layout_width="390dp"
         android:layout_height="55dp"
         android:layout_marginTop="32dp"
@@ -73,21 +67,20 @@
         android:orientation="horizontal"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/setting_privacy_label">
 
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_account" />
+            android:src="@drawable/ic_email" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:text="Account"
+            android:text="Email"
             android:textSize="16sp" />
 
         <ImageView
@@ -96,18 +89,50 @@
             android:src="@drawable/ic_arrow_right" />
     </LinearLayout>
 
+    <!-- Password Setting -->
     <LinearLayout
-        android:id="@+id/translate_Button"
+        android:id="@+id/password_setting"
         android:layout_width="390dp"
         android:layout_height="55dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_rounded_corner"
         android:orientation="horizontal"
         android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/account_setting"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/account_setting"
-        app:layout_constraintTop_toBottomOf="@id/account_setting">
+        app:layout_constraintEnd_toEndOf="@+id/email_setting"
+        app:layout_constraintStart_toStartOf="@+id/email_setting"
+        app:layout_constraintTop_toBottomOf="@id/email_setting">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_password" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="Password"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_arrow_right" />
+    </LinearLayout>
+
+    <!-- Language Setting -->
+    <LinearLayout
+        android:id="@+id/language_setting"
+        android:layout_width="390dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_rounded_corner"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/password_setting"
+        app:layout_constraintStart_toStartOf="@+id/password_setting"
+        app:layout_constraintTop_toBottomOf="@id/password_setting">
 
         <ImageView
             android:layout_width="24dp"
@@ -119,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:text="Language"
+            android:text="@string/la"
             android:textSize="16sp" />
 
         <ImageView
@@ -128,18 +153,18 @@
             android:src="@drawable/ic_arrow_right" />
     </LinearLayout>
 
+    <!-- Personal Info Setting -->
     <LinearLayout
-        android:id="@+id/another_account_setting"
+        android:id="@+id/personal_info_setting"
         android:layout_width="390dp"
         android:layout_height="55dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_rounded_corner"
         android:orientation="horizontal"
         android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/translate_Button"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/translate_Button"
-        app:layout_constraintTop_toBottomOf="@+id/translate_Button">
+        app:layout_constraintEnd_toEndOf="@+id/language_setting"
+        app:layout_constraintStart_toStartOf="@+id/language_setting"
+        app:layout_constraintTop_toBottomOf="@id/language_setting">
 
         <ImageView
             android:layout_width="24dp"
@@ -151,7 +176,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:text="Foto Profil"
+            android:text="Personal Info"
             android:textSize="16sp" />
 
         <ImageView
@@ -160,29 +185,20 @@
             android:src="@drawable/ic_arrow_right" />
     </LinearLayout>
 
+    <!-- Logout Button -->
     <Button
         android:id="@+id/action_logout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/bg_button_rounded"
-        android:text="Logout"
+        android:text="@string/logout"
         android:textAllCaps="false"
         android:textColor="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Include Custom Bottom Navigation Layout -->
-    <include
-        layout="@layout/bottom_navigation_layout"
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
