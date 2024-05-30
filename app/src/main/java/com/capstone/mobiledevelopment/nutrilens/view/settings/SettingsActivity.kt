@@ -107,9 +107,9 @@ class SettingsActivity : AppCompatActivity() {
         binding.actionLogout.setOnClickListener {
             showLogoutConfirmationDialog()}
 
-        binding.translateButton.setOnClickListener {
-            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-        }
+//        binding.translateButton.setOnClickListener {
+//            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+//        }
     }
 
     private fun showLogoutConfirmationDialog() {

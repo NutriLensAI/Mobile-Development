@@ -61,5 +61,6 @@
     <string name="dinner">Makan Malam</string>
     <string name="breakfast">Makan Pagi</string>
     <string name="take_a_picture">Ambil Foto</string>
+    <string name="translate">Bahasa</string>
 
 </resources>
