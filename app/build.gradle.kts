@@ -98,4 +98,7 @@ dependencies {
     implementation(libs.play.services.fitness)
     implementation (libs.androidx.work.runtime.ktx)
 
+    //room
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.room.compiler)
 }

@@ -38,19 +38,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             preferences.clear()
         }
     }
-
-    suspend fun saveStepCount(stepCount: Int) {
-        dataStore.edit { preferences ->
-            preferences[STEP_COUNT_KEY] = stepCount
-        }
-    }
-
-    fun getStepCount(): Flow<Int> {
-        return dataStore.data.map { preferences ->
-            preferences[STEP_COUNT_KEY] ?: 0
-        }
-    }
-
     companion object {
         @Volatile
         private var INSTANCE: UserPreference? = null
@@ -58,7 +45,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
-        private val STEP_COUNT_KEY = intPreferencesKey("step_count")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {
