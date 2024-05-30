@@ -49,18 +49,35 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var running = false
     private var totalSteps = 0f
     private var previousTotalSteps = 0f
-    private val totalStepGoal = 10000
-    private val TAG = "MainActivity"
 
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (allPermissionsGranted()) {
+            setupApp()
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
+                ACTIVITY_RECOGNITION_REQUEST_CODE
+            )
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun allPermissionsGranted() = ActivityCompat.checkSelfPermission(
+        this,
+        Manifest.permission.ACTIVITY_RECOGNITION
+    ) == PackageManager.PERMISSION_GRANTED
+
+    private fun setupApp() {
         loadData()
         setup24HourReset()
 
@@ -72,6 +89,20 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         observeSession()
         setupView()
         setupRecyclerView()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == ACTIVITY_RECOGNITION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                setupApp()
+            } else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
     }
 
     override fun onResume() {
@@ -165,7 +196,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val menuList = listOf(
             MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
             MenuItem("Cholesterol", R.drawable.ic_cholesterol, "100 mg/dL", "Cholesterol Numbers and What They Mean"),
-            MenuItem("Steps", R.drawable.ic_steps, "$currentSteps/$totalStepGoal steps", "How much should you walk every day?"),
+            MenuItem("Steps", R.drawable.ic_steps, "$currentSteps/$TOTAL_STEP_GOAL steps", "How much should you walk every day?"),
             MenuItem("Drink", R.drawable.ic_drink, "1500 ml", "How much should you drink every day?")
         )
 
@@ -216,5 +247,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             startActivity(intent)
         }
         Log.d(TAG, "FAB setup")
+    }
+    companion object {
+        private const val ACTIVITY_RECOGNITION_REQUEST_CODE = 100
+        private const val TOTAL_STEP_GOAL = 10000
+        private const val TAG = "MainActivity"
     }
 }
