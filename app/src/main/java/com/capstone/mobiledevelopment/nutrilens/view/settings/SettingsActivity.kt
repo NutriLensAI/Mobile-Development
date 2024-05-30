@@ -1,9 +1,11 @@
 package com.capstone.mobiledevelopment.nutrilens.view.settings
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -18,6 +20,8 @@ import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavi
 import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
+import com.google.android.gms.fitness.FitnessLocal
+import com.google.android.gms.fitness.data.LocalDataType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class SettingsActivity : AppCompatActivity() {
@@ -81,6 +85,8 @@ class SettingsActivity : AppCompatActivity() {
         observeEmail()
         setupView()
         setupAction()
+        unsubscribeFromFitnessData()
+
     }
 
     private fun setupView() {
@@ -124,7 +130,17 @@ class SettingsActivity : AppCompatActivity() {
             show()
         }
     }
-
+    private fun unsubscribeFromFitnessData() {
+        val localRecordingClient = FitnessLocal.getLocalRecordingClient(this)
+        // Unsubscribe from steps data
+        localRecordingClient.unsubscribe(LocalDataType.TYPE_STEP_COUNT_DELTA)
+            .addOnSuccessListener {
+                Log.i(TAG, "Successfully unsubscribed!")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "There was a problem unsubscribing.", e)
+            }
+    }
     private fun navigateToWelcomeActivity() {
         val intent = Intent(this, WelcomeActivity::class.java)
         startActivity(intent)

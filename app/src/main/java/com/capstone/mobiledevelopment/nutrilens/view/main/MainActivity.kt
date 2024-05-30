@@ -1,12 +1,18 @@
 package com.capstone.mobiledevelopment.nutrilens.view.main
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
+import android.Manifest
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
@@ -19,7 +25,16 @@ import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuItem
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.fitness.FitnessLocal
+import com.google.android.gms.fitness.data.LocalDataSet
+import com.google.android.gms.fitness.data.LocalDataType
+import com.google.android.gms.fitness.request.LocalDataReadRequest
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
@@ -27,10 +42,18 @@ class MainActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityMainBinding
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Request Permissions
+        if (allPermissionsGranted()) {
+            checkGooglePlayServices()
+        } else {
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+        }
 
         // Observing token and fetching stories
         viewModel.token.observe(this) { token ->
@@ -90,6 +113,97 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ActivityCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (allPermissionsGranted()) {
+                // Permission granted, check Google Play Services
+                checkGooglePlayServices()
+            } else {
+                // Permission denied
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun checkGooglePlayServices() {
+        val apiAvailability = GoogleApiAvailability.getInstance()
+        val resultCode = apiAvailability.isGooglePlayServicesAvailable(this, LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE)
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                // Prompt user to update their device's Google Play services app
+                apiAvailability.getErrorDialog(this, resultCode, REQUEST_CODE_PERMISSIONS)?.show()
+            } else {
+                // Google Play Services is not available
+                Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        } else {
+            // Google Play Services is up to date, subscribe to steps data
+            subscribeToFitnessData()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun subscribeToFitnessData() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+            return
+        }
+
+        val localRecordingClient = FitnessLocal.getLocalRecordingClient(this)
+        // Subscribe to steps data
+        localRecordingClient.subscribe(LocalDataType.TYPE_STEP_COUNT_DELTA)
+            .addOnSuccessListener {
+                Log.i(TAG, "Successfully subscribed!")
+                readFitnessData() // Read fitness data after subscribing
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "There was a problem subscribing.", e)
+            }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun readFitnessData() {
+        val localRecordingClient = FitnessLocal.getLocalRecordingClient(this)
+        val endTime = LocalDateTime.now().atZone(ZoneId.systemDefault())
+        val startTime = endTime.minusWeeks(1)
+        val readRequest = LocalDataReadRequest.Builder()
+            .aggregate(LocalDataType.TYPE_STEP_COUNT_DELTA)
+            .bucketByTime(1, TimeUnit.DAYS)
+            .setTimeRange(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
+            .build()
+
+        localRecordingClient.readData(readRequest).addOnSuccessListener { response ->
+            for (dataSet in response.buckets.flatMap { it.dataSets }) {
+                dumpDataSet(dataSet)
+            }
+        }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "There was an error reading data", e)
+            }
+    }
+
+    private fun dumpDataSet(dataSet: LocalDataSet) {
+        Log.i(TAG, "Data returned for Data type: ${dataSet.dataType.name}")
+        for (dp in dataSet.dataPoints) {
+            Log.i(TAG, "Data point:")
+            Log.i(TAG, "\tType: ${dp.dataType.name}")
+            Log.i(TAG, "\tStart: ${dp.getStartTime(TimeUnit.HOURS)}")
+            Log.i(TAG, "\tEnd: ${dp.getEndTime(TimeUnit.HOURS)}")
+            for (field in dp.dataType.fields) {
+                Log.i(TAG, "\tLocalField: ${field.name} LocalValue: ${dp.getValue(field)}")
+            }
+        }
+    }
+
     private fun observeSession() {
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
@@ -106,10 +220,7 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
+            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
         supportActionBar?.hide()
     }
@@ -125,5 +236,13 @@ class MainActivity : AppCompatActivity() {
         val adapter = MenuAdapter(menuList)
         binding.menuRecyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.menuRecyclerView.adapter = adapter
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        @RequiresApi(Build.VERSION_CODES.Q)
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.ACTIVITY_RECOGNITION)
+        private const val LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE = 12451000
     }
 }

@@ -93,4 +93,7 @@ dependencies {
 
     //Android Image Cropper
     implementation(libs.android.image.cropper)
+
+    //Step Counter
+    implementation(libs.play.services.fitness)
 }
