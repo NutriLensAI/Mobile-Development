@@ -8,6 +8,13 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import android.Manifest
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -36,121 +43,102 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SensorEventListener {
+    private lateinit var binding: ActivityMainBinding
+    private var sensorManager: SensorManager? = null
+    private var running = false
+    private var totalSteps = 0f
+    private var previousTotalSteps = 0f
+    private val totalStepGoal = 10000
+    private val TAG = "MainActivity"
+
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
-    private lateinit var binding: ActivityMainBinding
-    private var stepCount = "0"
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (allPermissionsGranted()) {
-            checkGooglePlayServices()
-        } else {
-            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-        }
+        loadData()
+        setup24HourReset()
+
+        // Initialize SensorManager
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         setupBottomNavigation()
         setupFab()
-
-        viewModel.token.observe(this) { token ->
-            if (!token.isNullOrEmpty()) {
-                viewModel.getStories()
-            }
-        }
-
         observeSession()
         setupView()
         setupRecyclerView()
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ActivityCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
-    }
+    override fun onResume() {
+        super.onResume()
+        running = true
+        Log.d(TAG, "onResume: Running is set to true")
 
-    @RequiresApi(Build.VERSION_CODES.Q)
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                checkGooglePlayServices()
-            } else {
-                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+        // Get the default step counter sensor
+        val stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun checkGooglePlayServices() {
-        val apiAvailability = GoogleApiAvailability.getInstance()
-        val resultCode = apiAvailability.isGooglePlayServicesAvailable(this, LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE)
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, REQUEST_CODE_UPDATE_PLAY_SERVICES)?.show()
-            } else {
-                Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show()
-                finish()
-            }
+        if (stepSensor == null) {
+            Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_SHORT).show()
+            Log.w(TAG, "No sensor detected on this device")
         } else {
-            subscribeToFitnessData()
+            sensorManager?.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
+            Log.d(TAG, "Step sensor registered")
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun subscribeToFitnessData() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-            return
-        }
-
-        val localRecordingClient = FitnessLocal.getLocalRecordingClient(this)
-        localRecordingClient.subscribe(LocalDataType.TYPE_STEP_COUNT_DELTA)
-            .addOnSuccessListener {
-                Log.i(TAG, "Successfully subscribed!")
-                readFitnessData()
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "There was a problem subscribing.", e)
-            }
+    override fun onPause() {
+        super.onPause()
+        sensorManager?.unregisterListener(this)
+        Log.d(TAG, "onPause: Sensor listener unregistered")
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun readFitnessData() {
-        val localRecordingClient = FitnessLocal.getLocalRecordingClient(this)
-        val endTime = LocalDateTime.now().atZone(ZoneId.systemDefault())
-        val startTime = endTime.minusWeeks(1)
-        val readRequest = LocalDataReadRequest.Builder()
-            .aggregate(LocalDataType.TYPE_STEP_COUNT_DELTA)
-            .bucketByTime(1, TimeUnit.DAYS)
-            .setTimeRange(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
-            .build()
-
-        localRecordingClient.readData(readRequest).addOnSuccessListener { response ->
-            Log.i(TAG, "Successfully read fitness data!")
-            for (dataSet in response.buckets.flatMap { it.dataSets }) {
-                dumpDataSet(dataSet)
-            }
-            setupRecyclerView()
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (running) {
+            totalSteps = event?.values?.get(0) ?: 0f
+            val currentSteps = (totalSteps - previousTotalSteps).toInt()
+            Log.d(TAG, "onSensorChanged: Total steps = $totalSteps, Current steps = $currentSteps")
+            setupRecyclerView(currentSteps)
         }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "There was an error reading data", e)
-            }
     }
 
-    private fun dumpDataSet(dataSet: LocalDataSet) {
-        Log.i(TAG, "Data returned for Data type: ${dataSet.dataType.name}")
-        for (dp in dataSet.dataPoints) {
-            for (field in dp.dataType.fields) {
-                stepCount = dp.getValue(field).toString()
-                Log.i(TAG, "\tLocalField: ${field.name} LocalValue: ${dp.getValue(field)}")
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        // Not used for this app
+        Log.d(TAG, "onAccuracyChanged: Sensor accuracy changed to $accuracy")
+    }
+
+    private fun setup24HourReset() {
+        val handler = Handler(Looper.getMainLooper())
+        val resetTask = object : Runnable {
+            override fun run() {
+                previousTotalSteps = totalSteps
+                saveData()
+                setupRecyclerView(0)
+                Log.d(TAG, "24-hour reset: Previous total steps set to $previousTotalSteps")
+                handler.postDelayed(this, 24 * 60 * 60 * 1000) // Schedule the next reset in 24 hours
             }
         }
+        handler.post(resetTask) // Initial call to start the periodic reset
+        Log.d(TAG, "24-hour reset task scheduled")
+    }
+
+    private fun saveData() {
+        val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putFloat("key1", previousTotalSteps)
+        editor.apply()
+        Log.d(TAG, "Data saved: Previous total steps = $previousTotalSteps")
+    }
+
+    private fun loadData() {
+        val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val savedNumber = sharedPreferences.getFloat("key1", 0f)
+        previousTotalSteps = savedNumber
+        Log.d(TAG, "Data loaded: Previous total steps = $previousTotalSteps")
     }
 
     private fun observeSession() {
@@ -173,17 +161,18 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView(currentSteps: Int = 0) {
         val menuList = listOf(
             MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
             MenuItem("Cholesterol", R.drawable.ic_cholesterol, "100 mg/dL", "Cholesterol Numbers and What They Mean"),
-            MenuItem("Steps", R.drawable.ic_steps, "$stepCount/10,000 steps", "How much should you walk every day?"),
+            MenuItem("Steps", R.drawable.ic_steps, "$currentSteps/$totalStepGoal steps", "How much should you walk every day?"),
             MenuItem("Drink", R.drawable.ic_drink, "1500 ml", "How much should you drink every day?")
         )
 
         val adapter = MenuAdapter(menuList)
         binding.menuRecyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.menuRecyclerView.adapter = adapter
+        Log.d(TAG, "RecyclerView setup with current steps = $currentSteps")
     }
 
     private fun setupBottomNavigation() {
@@ -217,6 +206,7 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        Log.d(TAG, "Bottom navigation setup")
     }
 
     private fun setupFab() {
@@ -225,14 +215,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, AddFoodActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    companion object {
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private const val REQUEST_CODE_UPDATE_PLAY_SERVICES = 1001
-        @RequiresApi(Build.VERSION_CODES.Q)
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.ACTIVITY_RECOGNITION)
-        private const val LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE = 12451000
-        private const val TAG = "MainActivity"
+        Log.d(TAG, "FAB setup")
     }
 }
