@@ -28,6 +28,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuItem
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.fitness.FitnessLocal
+import com.google.android.gms.fitness.LocalRecordingClient
 import com.google.android.gms.fitness.data.LocalDataSet
 import com.google.android.gms.fitness.data.LocalDataType
 import com.google.android.gms.fitness.request.LocalDataReadRequest
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
     private lateinit var binding: ActivityMainBinding
-    private var stepCount = "0"
+    private var stepCount = 0
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         observeSession()
         setupView()
-        setupRecyclerView()
+        setupRecyclerView(stepCount)
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun checkGooglePlayServices() {
         val apiAvailability = GoogleApiAvailability.getInstance()
-        val resultCode = apiAvailability.isGooglePlayServicesAvailable(this, LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE)
+        val resultCode = apiAvailability.isGooglePlayServicesAvailable(this, LocalRecordingClient.LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE)
         if (resultCode != ConnectionResult.SUCCESS) {
             if (apiAvailability.isUserResolvableError(resultCode)) {
                 apiAvailability.getErrorDialog(this, resultCode, REQUEST_CODE_UPDATE_PLAY_SERVICES)?.show()
@@ -136,7 +137,7 @@ class MainActivity : AppCompatActivity() {
             for (dataSet in response.buckets.flatMap { it.dataSets }) {
                 dumpDataSet(dataSet)
             }
-            setupRecyclerView()
+            setupRecyclerView(stepCount)
         }
             .addOnFailureListener { e ->
                 Log.w(TAG, "There was an error reading data", e)
@@ -147,7 +148,7 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "Data returned for Data type: ${dataSet.dataType.name}")
         for (dp in dataSet.dataPoints) {
             for (field in dp.dataType.fields) {
-                stepCount = dp.getValue(field).toString()
+                stepCount += dp.getValue(field).asInt()
                 Log.i(TAG, "\tLocalField: ${field.name} LocalValue: ${dp.getValue(field)}")
             }
         }
@@ -173,7 +174,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView(stepCount: Int) {
         val menuList = listOf(
             MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
             MenuItem("Cholesterol", R.drawable.ic_cholesterol, "100 mg/dL", "Cholesterol Numbers and What They Mean"),
@@ -232,7 +233,6 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_CODE_UPDATE_PLAY_SERVICES = 1001
         @RequiresApi(Build.VERSION_CODES.Q)
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.ACTIVITY_RECOGNITION)
-        private const val LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE = 12451000
         private const val TAG = "MainActivity"
     }
 }
