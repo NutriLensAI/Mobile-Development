@@ -96,4 +96,6 @@ dependencies {
 
     //Step Counter
     implementation(libs.play.services.fitness)
+    implementation (libs.androidx.work.runtime.ktx)
+
 }

@@ -8,12 +8,25 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import android.Manifest
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.IntentFilter
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
@@ -25,6 +38,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuItem
+import com.capstone.mobiledevelopment.nutrilens.view.utils.StepCountWorker
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.fitness.FitnessLocal
@@ -37,18 +51,40 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SensorEventListener {
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
     private lateinit var binding: ActivityMainBinding
-    private var stepCount = 0
+    private var initialSensorSteps = 0
+    private var totalSteps = 0
+
+    private lateinit var sensorManager: SensorManager
+    private var stepCounterSensor: Sensor? = null
+
+    private val stepCountReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val newStepCount = intent?.getIntExtra("STEP_COUNT", 0) ?: 0
+            totalSteps = newStepCount
+            setupRecyclerView(totalSteps)
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(stepCountReceiver, IntentFilter("UPDATE_STEP_COUNT"))
+
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+
+        viewModel.getStepCount().observe(this) { savedStepCount ->
+            totalSteps = savedStepCount
+            setupRecyclerView(totalSteps)
+        }
 
         if (allPermissionsGranted()) {
             checkGooglePlayServices()
@@ -67,7 +103,14 @@ class MainActivity : AppCompatActivity() {
 
         observeSession()
         setupView()
-        setupRecyclerView(stepCount)
+        setupRecyclerView(totalSteps) // Initial setup with the last known steps
+
+        setupPeriodicWork()
+    }
+
+    private fun setupPeriodicWork() {
+        val workRequest = PeriodicWorkRequestBuilder<StepCountWorker>(15, TimeUnit.MINUTES).build()
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("StepCountWork", ExistingPeriodicWorkPolicy.REPLACE, workRequest)
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -134,10 +177,9 @@ class MainActivity : AppCompatActivity() {
 
         localRecordingClient.readData(readRequest).addOnSuccessListener { response ->
             Log.i(TAG, "Successfully read fitness data!")
-            for (dataSet in response.buckets.flatMap { it.dataSets }) {
+            response.buckets.flatMap { it.dataSets }.forEach { dataSet ->
                 dumpDataSet(dataSet)
             }
-            setupRecyclerView(stepCount)
         }
             .addOnFailureListener { e ->
                 Log.w(TAG, "There was an error reading data", e)
@@ -148,10 +190,24 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "Data returned for Data type: ${dataSet.dataType.name}")
         for (dp in dataSet.dataPoints) {
             for (field in dp.dataType.fields) {
-                stepCount += dp.getValue(field).asInt()
+                val stepCount = dp.getValue(field).asInt()
                 Log.i(TAG, "\tLocalField: ${field.name} LocalValue: ${dp.getValue(field)}")
+                updateStepCount(stepCount)
             }
         }
+    }
+
+    private fun updateStepCount(stepCount: Int) {
+        totalSteps += stepCount
+        viewModel.saveStepCount(totalSteps)
+        setupRecyclerView(totalSteps)
+    }
+
+    private fun sendStepCountBroadcast(stepCount: Int) {
+        val intent = Intent("UPDATE_STEP_COUNT")
+        intent.putExtra("STEP_COUNT", stepCount)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+        viewModel.saveStepCount(stepCount)
     }
 
     private fun observeSession() {
@@ -174,17 +230,18 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-    private fun setupRecyclerView(stepCount: Int) {
+    private fun setupRecyclerView(currentSteps: Int) {
         val menuList = listOf(
             MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
             MenuItem("Cholesterol", R.drawable.ic_cholesterol, "100 mg/dL", "Cholesterol Numbers and What They Mean"),
-            MenuItem("Steps", R.drawable.ic_steps, "$stepCount/10,000 steps", "How much should you walk every day?"),
+            MenuItem("Steps", R.drawable.ic_steps, "$currentSteps/10,000 steps", "How much should you walk every day?"),
             MenuItem("Drink", R.drawable.ic_drink, "1500 ml", "How much should you drink every day?")
         )
 
         val adapter = MenuAdapter(menuList)
         binding.menuRecyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.menuRecyclerView.adapter = adapter
+        Log.d(TAG, "RecyclerView setup with current steps = $currentSteps")
     }
 
     private fun setupBottomNavigation() {
@@ -228,11 +285,44 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        sensorManager.registerListener(this, stepCounterSensor, SensorManager.SENSOR_DELAY_UI)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this, stepCounterSensor)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(stepCountReceiver)
+    }
+
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private const val REQUEST_CODE_UPDATE_PLAY_SERVICES = 1001
         @RequiresApi(Build.VERSION_CODES.Q)
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.ACTIVITY_RECOGNITION)
         private const val TAG = "MainActivity"
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        // Do nothing
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event?.sensor?.type == Sensor.TYPE_STEP_COUNTER) {
+            val totalStepsFromSensor = event.values[0].toInt()
+            if (initialSensorSteps == 0) {
+                initialSensorSteps = totalStepsFromSensor
+            }
+            val currentSteps = totalStepsFromSensor - initialSensorSteps
+            totalSteps += currentSteps
+            initialSensorSteps = totalStepsFromSensor
+            setupRecyclerView(totalSteps)
+            viewModel.saveStepCount(totalSteps)
+        }
     }
 }

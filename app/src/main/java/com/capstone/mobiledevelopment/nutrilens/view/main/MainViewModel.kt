@@ -55,4 +55,14 @@ class MainViewModel(private val userRepository: UserRepository,
             }
         }
     }
+
+    fun getStepCount(): LiveData<Int> {
+        return userRepository.getStepCount().asLiveData()
+    }
+
+    fun saveStepCount(stepCount: Int) {
+        viewModelScope.launch {
+            userRepository.saveStepCount(stepCount)
+        }
+    }
 }
