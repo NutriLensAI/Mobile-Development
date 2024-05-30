@@ -41,46 +41,6 @@ class SettingsActivity : AppCompatActivity() {
                 finish()
             }
         }
-        // Initialize the custom bottom navigation view
-        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
-        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
-
-        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_food)
-        bottomNavigationView.selectedItemId = selectedItemId
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_stats -> {
-                    val intent = Intent(this@SettingsActivity, MainActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_stats)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_food -> {
-                    val intent = Intent(this@SettingsActivity, PilihanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_food)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_documents -> {
-                    val intent = Intent(this@SettingsActivity, CatatanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_documents)
-                    startActivity(intent)
-                    true
-                }
-
-                R.id.navigation_profile -> {
-                    true
-                }
-                else -> false
-            }
-        }
-
-        // Add the FAB click listener
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener {
-            val intent = Intent(this@SettingsActivity, AddFoodActivity::class.java)
-            startActivity(intent)
-        }
 
         observeEmail()
         setupView()

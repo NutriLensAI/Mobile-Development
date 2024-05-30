@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
     private lateinit var binding: ActivityMainBinding
+    private var stepCount = "0"
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -138,8 +139,8 @@ class MainActivity : AppCompatActivity() {
         val resultCode = apiAvailability.isGooglePlayServicesAvailable(this, LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE)
         if (resultCode != ConnectionResult.SUCCESS) {
             if (apiAvailability.isUserResolvableError(resultCode)) {
-                // Prompt user to update their device's Google Play services app
-                apiAvailability.getErrorDialog(this, resultCode, REQUEST_CODE_PERMISSIONS)?.show()
+                // Show a dialog to the user explaining that they need to update Google Play services.
+                apiAvailability.getErrorDialog(this, resultCode, REQUEST_CODE_UPDATE_PLAY_SERVICES)?.show()
             } else {
                 // Google Play Services is not available
                 Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show()
@@ -182,9 +183,11 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         localRecordingClient.readData(readRequest).addOnSuccessListener { response ->
+            Log.i(TAG, "Successfully read fitness data!")
             for (dataSet in response.buckets.flatMap { it.dataSets }) {
                 dumpDataSet(dataSet)
             }
+            setupRecyclerView() // Update the RecyclerView after reading data
         }
             .addOnFailureListener { e ->
                 Log.w(TAG, "There was an error reading data", e)
@@ -194,11 +197,8 @@ class MainActivity : AppCompatActivity() {
     private fun dumpDataSet(dataSet: LocalDataSet) {
         Log.i(TAG, "Data returned for Data type: ${dataSet.dataType.name}")
         for (dp in dataSet.dataPoints) {
-            Log.i(TAG, "Data point:")
-            Log.i(TAG, "\tType: ${dp.dataType.name}")
-            Log.i(TAG, "\tStart: ${dp.getStartTime(TimeUnit.HOURS)}")
-            Log.i(TAG, "\tEnd: ${dp.getEndTime(TimeUnit.HOURS)}")
             for (field in dp.dataType.fields) {
+                stepCount = dp.getValue(field).toString()
                 Log.i(TAG, "\tLocalField: ${field.name} LocalValue: ${dp.getValue(field)}")
             }
         }
@@ -229,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         val menuList = listOf(
             MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
             MenuItem("Cholesterol", R.drawable.ic_cholesterol, "100 mg/dL", "Cholesterol Numbers and What They Mean"),
-            MenuItem("Steps", R.drawable.ic_steps, "5,000/10,000 steps", "How much should you walk every day?"),
+            MenuItem("Steps", R.drawable.ic_steps, "$stepCount/10,000 steps", "How much should you walk every day?"),
             MenuItem("Drink", R.drawable.ic_drink, "1500 ml", "How much should you drink every day?")
         )
 
@@ -237,12 +237,12 @@ class MainActivity : AppCompatActivity() {
         binding.menuRecyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.menuRecyclerView.adapter = adapter
     }
-
     companion object {
-        private const val TAG = "MainActivity"
         private const val REQUEST_CODE_PERMISSIONS = 10
+        private const val REQUEST_CODE_UPDATE_PLAY_SERVICES = 1001
         @RequiresApi(Build.VERSION_CODES.Q)
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.ACTIVITY_RECOGNITION)
         private const val LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE = 12451000
+        private const val TAG = "MainActivity"
     }
 }
