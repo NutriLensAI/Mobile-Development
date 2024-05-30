@@ -49,66 +49,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Request Permissions
         if (allPermissionsGranted()) {
             checkGooglePlayServices()
         } else {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
 
-        // Observing token and fetching stories
+        setupBottomNavigation()
+        setupFab()
+
         viewModel.token.observe(this) { token ->
             if (!token.isNullOrEmpty()) {
                 viewModel.getStories()
             }
         }
 
-        // Initialize the custom bottom navigation view
-        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
-        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
-
-        // Set the selected item
-        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_stats)
-        bottomNavigationView.selectedItemId = selectedItemId
-
-        // Set the navigation item selected listener
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_food -> {
-                    val intent = Intent(this@MainActivity, PilihanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_food)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_profile -> {
-                    val intent = Intent(this@MainActivity, SettingsActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_profile)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_documents -> {
-                    val intent = Intent(this@MainActivity, CatatanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_documents)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_stats -> {
-                    // Already on the stats screen
-                    true
-                }
-                else -> false
-            }
-        }
-
-        // Add the FAB click listener
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener {
-            val intent = Intent(this@MainActivity, AddFoodActivity::class.java)
-            startActivity(intent)
-        }
-
-        // Additional setup
-        viewModel.getStories()
         observeSession()
         setupView()
         setupRecyclerView()
@@ -124,10 +79,8 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
-                // Permission granted, check Google Play Services
                 checkGooglePlayServices()
             } else {
-                // Permission denied
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
             }
         }
@@ -139,15 +92,12 @@ class MainActivity : AppCompatActivity() {
         val resultCode = apiAvailability.isGooglePlayServicesAvailable(this, LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE)
         if (resultCode != ConnectionResult.SUCCESS) {
             if (apiAvailability.isUserResolvableError(resultCode)) {
-                // Show a dialog to the user explaining that they need to update Google Play services.
                 apiAvailability.getErrorDialog(this, resultCode, REQUEST_CODE_UPDATE_PLAY_SERVICES)?.show()
             } else {
-                // Google Play Services is not available
                 Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show()
                 finish()
             }
         } else {
-            // Google Play Services is up to date, subscribe to steps data
             subscribeToFitnessData()
         }
     }
@@ -160,11 +110,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         val localRecordingClient = FitnessLocal.getLocalRecordingClient(this)
-        // Subscribe to steps data
         localRecordingClient.subscribe(LocalDataType.TYPE_STEP_COUNT_DELTA)
             .addOnSuccessListener {
                 Log.i(TAG, "Successfully subscribed!")
-                readFitnessData() // Read fitness data after subscribing
+                readFitnessData()
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "There was a problem subscribing.", e)
@@ -187,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             for (dataSet in response.buckets.flatMap { it.dataSets }) {
                 dumpDataSet(dataSet)
             }
-            setupRecyclerView() // Update the RecyclerView after reading data
+            setupRecyclerView()
         }
             .addOnFailureListener { e ->
                 Log.w(TAG, "There was an error reading data", e)
@@ -210,13 +159,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             } else {
-                viewModel.fetchToken() // Fetch token when session changes
+                viewModel.fetchToken()
             }
         }
     }
 
     private fun setupView() {
-        @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
@@ -237,6 +185,48 @@ class MainActivity : AppCompatActivity() {
         binding.menuRecyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.menuRecyclerView.adapter = adapter
     }
+
+    private fun setupBottomNavigation() {
+        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
+        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
+
+        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_stats)
+        bottomNavigationView.selectedItemId = selectedItemId
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_food -> {
+                    val intent = Intent(this@MainActivity, PilihanMakanan::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_food)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_profile -> {
+                    val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_profile)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_documents -> {
+                    val intent = Intent(this@MainActivity, CatatanMakanan::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_documents)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_stats -> true
+                else -> false
+            }
+        }
+    }
+
+    private fun setupFab() {
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener {
+            val intent = Intent(this@MainActivity, AddFoodActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private const val REQUEST_CODE_UPDATE_PLAY_SERVICES = 1001
