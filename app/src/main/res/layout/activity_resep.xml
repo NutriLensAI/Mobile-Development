@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
-        android:layout_height="115dp"
+        android:layout_height="175dp"
         android:background="@drawable/header_background"
         android:orientation="horizontal"
         android:padding="16dp"
@@ -22,17 +22,19 @@
 
         <TextView
             android:id="@+id/tv_dicoding"
-            android:layout_width="277dp"
-            android:layout_height="33dp"
+            android:layout_width="141dp"
+            android:layout_height="45dp"
             android:text="@string/resepmain"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.275" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
