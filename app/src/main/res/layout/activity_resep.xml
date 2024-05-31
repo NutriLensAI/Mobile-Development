@@ -22,8 +22,8 @@
 
         <TextView
             android:id="@+id/tv_dicoding"
-            android:layout_width="352dp"
-            android:layout_height="45dp"
+            android:layout_width="277dp"
+            android:layout_height="33dp"
             android:text="@string/resepmain"
             android:textAlignment="center"
             android:textColor="@android:color/white"
@@ -31,7 +31,6 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.481"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
