@@ -24,6 +24,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
+import com.capstone.mobiledevelopment.nutrilens.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuItem
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
@@ -218,7 +219,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_food -> {
-                    val intent = Intent(this@MainActivity, PilihanMakanan::class.java)
+                    val intent = Intent(this@MainActivity, Resep::class.java)
                     intent.putExtra("selected_item", R.id.navigation_food)
                     startActivity(intent)
                     true

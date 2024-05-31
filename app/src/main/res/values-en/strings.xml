@@ -48,5 +48,6 @@
     <string name="lunch">Lunch</string>
     <string name="dinner">Dinner</string>
     <string name="translate">Language</string>
+    <string name="resepmain"><![CDATA["Rekomendasi Resep & Makanan "]]></string>
 
 </resources>

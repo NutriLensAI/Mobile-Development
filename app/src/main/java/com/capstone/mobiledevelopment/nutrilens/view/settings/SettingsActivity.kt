@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivitySettingsBinding
+import com.capstone.mobiledevelopment.nutrilens.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
@@ -88,7 +89,7 @@ class SettingsActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_food -> {
-                    val intent = Intent(this@SettingsActivity, PilihanMakanan::class.java)
+                    val intent = Intent(this@SettingsActivity, Resep::class.java)
                     intent.putExtra("selected_item", R.id.navigation_food)
                     startActivity(intent)
                     true

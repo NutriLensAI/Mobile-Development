@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakananBinding
+import com.capstone.mobiledevelopment.nutrilens.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodItem
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
@@ -62,7 +63,7 @@ class CatatanMakanan : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_food -> {
-                    val intent = Intent(this@CatatanMakanan, PilihanMakanan::class.java)
+                    val intent = Intent(this@CatatanMakanan, Resep::class.java)
                     intent.putExtra("selected_item", R.id.navigation_food)
                     startActivity(intent)
                     true

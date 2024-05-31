@@ -39,45 +39,5 @@ class PilihanMakanan : AppCompatActivity() {
                 // Handle the case where no item is selected, if needed
             }
         }
-
-        // Initialize the custom bottom navigation view
-        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
-        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
-
-        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_food)
-        bottomNavigationView.selectedItemId = selectedItemId
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_stats -> {
-                    val intent = Intent(this@PilihanMakanan, MainActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_stats)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_profile -> {
-                    val intent = Intent(this@PilihanMakanan, SettingsActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_profile)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_documents -> {
-                    val intent = Intent(this@PilihanMakanan, CatatanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_documents)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_food -> {
-                    true
-                }
-                else -> false
-            }
-        }
-
-        // Add the FAB click listener
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener {
-            val intent = Intent(this@PilihanMakanan, AddFoodActivity::class.java)
-            startActivity(intent)
-        }
     }
 }
