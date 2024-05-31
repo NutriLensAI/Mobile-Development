@@ -94,7 +94,7 @@ class SettingsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_stats -> {
-                    val intent = Intent(this@SettingsActivity, SettingsActivity::class.java)
+                    val intent = Intent(this@SettingsActivity, MainActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_stats)
                     startActivity(intent)
                     true

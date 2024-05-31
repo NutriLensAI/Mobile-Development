@@ -31,14 +31,6 @@ class UserRepository private constructor(
         return apiService.login(email, password)
     }
 
-    fun getStepCount(): Flow<Int> {
-        return userPreference.getStepCount()
-    }
-
-    suspend fun saveStepCount(stepCount: Int) {
-        userPreference.saveStepCount(stepCount)
-    }
-
     companion object {
         @Volatile
         private var instance: UserRepository? = null
