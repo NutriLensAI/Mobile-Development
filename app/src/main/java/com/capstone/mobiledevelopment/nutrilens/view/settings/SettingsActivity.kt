@@ -1,9 +1,11 @@
 package com.capstone.mobiledevelopment.nutrilens.view.settings
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -18,6 +20,8 @@ import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavi
 import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
+import com.google.android.gms.fitness.FitnessLocal
+import com.google.android.gms.fitness.data.LocalDataType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class SettingsActivity : AppCompatActivity() {
@@ -37,50 +41,12 @@ class SettingsActivity : AppCompatActivity() {
                 finish()
             }
         }
-        // Initialize the custom bottom navigation view
-        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
-        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
-
-        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_food)
-        bottomNavigationView.selectedItemId = selectedItemId
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_stats -> {
-                    val intent = Intent(this@SettingsActivity, MainActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_stats)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_food -> {
-                    val intent = Intent(this@SettingsActivity, PilihanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_food)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_documents -> {
-                    val intent = Intent(this@SettingsActivity, CatatanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_documents)
-                    startActivity(intent)
-                    true
-                }
-
-                R.id.navigation_profile -> {
-                    true
-                }
-                else -> false
-            }
-        }
-
-        // Add the FAB click listener
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener {
-            val intent = Intent(this@SettingsActivity, AddFoodActivity::class.java)
-            startActivity(intent)
-        }
 
         observeEmail()
         setupView()
         setupAction()
+        unsubscribeFromFitnessData()
+        setupBottomNavigation()
     }
 
     private fun setupView() {
@@ -107,8 +73,41 @@ class SettingsActivity : AppCompatActivity() {
         binding.actionLogout.setOnClickListener {
             showLogoutConfirmationDialog()}
 
-        binding.translateButton.setOnClickListener {
-            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+//        binding.translateButton.setOnClickListener {
+//            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+//        }
+    }
+
+    private fun setupBottomNavigation() {
+        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
+        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
+
+        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_stats)
+        bottomNavigationView.selectedItemId = selectedItemId
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_food -> {
+                    val intent = Intent(this@SettingsActivity, PilihanMakanan::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_food)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_stats -> {
+                    val intent = Intent(this@SettingsActivity, SettingsActivity::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_stats)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_documents -> {
+                    val intent = Intent(this@SettingsActivity, CatatanMakanan::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_documents)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_profile -> true
+                else -> false
+            }
         }
     }
 
@@ -124,7 +123,17 @@ class SettingsActivity : AppCompatActivity() {
             show()
         }
     }
-
+    private fun unsubscribeFromFitnessData() {
+        val localRecordingClient = FitnessLocal.getLocalRecordingClient(this)
+        // Unsubscribe from steps data
+        localRecordingClient.unsubscribe(LocalDataType.TYPE_STEP_COUNT_DELTA)
+            .addOnSuccessListener {
+                Log.i(TAG, "Successfully unsubscribed!")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "There was a problem unsubscribing.", e)
+            }
+    }
     private fun navigateToWelcomeActivity() {
         val intent = Intent(this, WelcomeActivity::class.java)
         startActivity(intent)

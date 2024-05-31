@@ -9,14 +9,11 @@
     <string name="password">Password</string>
     <string name="message_login_page">Masukkan dulu datamu ya</string>
     <string name="title_login_page">Sudah Siap Untuk Memulai Perubahan Di Hidup Kamu?</string>
-    <string name="message_main_page">Selamat Belajar di Dicoding.</string>
     <string name="logout">Keluar</string>
     <string name="judul">Judul story</string>
     <string name="deskrip">Deskripsi story</string>
-    <string name="dicoding">Dicoding Berita dan Cerita</string>
     <string name="gallery">Galeri</string>
     <string name="camera">Kamera</string>
-    <string name="description_story">Masukan Deskripsi Cerita</string>
     <string name="empty_image_warning">"Gambar Kosong "</string>
     <string name="name">Nama</string>
     <string name="password_error">Password tidak boleh kurang dari 8 karakter Password must not be less than 8 characters</string>
@@ -34,9 +31,6 @@
     <string name="login_failed">Login Gagal</string>
     <string name="upload_success">Upload Berhasil</string>
     <string name="upload_failure">Upload Gagal</string>
-    <string name="appwidget_text" translatable="false">EXAMPLE</string>
-    <string name="app_widget_description" translatable="false">This is an app widget description</string>
-    <string name="add_story">Tambah Cerita</string>
     <string name="tidak">Tidak</string>
     <string name="ya">Ya</string>
     <string name="greeting">Halo %1$s,</string>
@@ -51,21 +45,23 @@
     <string name="steps" translatable="false">steps\n</string>
     <string name="drink">Jumlah Air</string>
     <string name="user_avatar" translatable="false">user_avatar</string>
-    <string name="profile_image">profile_image</string>
-    <string name="menu_image">menu_image\n</string>
-    <string name="close">close\n</string>
-    <string name="flash">flash</string>
-    <string name="take_a_picture">take_a_picture</string>
-    <string name="capture">picture</string>
-    <string name="makanan_image_desc">makanan_image_desc\n</string>
-    <string name="breakfast">breakfast\n</string>
-    <string name="lunch">lunch</string>
-    <string name="dinner">dinner</string>
+    <string name="profile_image" translatable="false">profile_image</string>
+    <string name="menu_image" translatable="false">menu_image\n</string>
+    <string name="close" translatable="false">close\n</string>
+    <string name="flash" translatable="false">Flash</string>
+    <string name="capture">Fotot</string>
+    <string name="makanan_image_desc" translatable="false">makanan_image_desc\n</string>
+    <string name="lunch">Makan Siang</string>
 
     <string-array name="meal_types">
         <item>Breakfast</item>
         <item>Lunch</item>
         <item>Dinner</item>
     </string-array>
+
+    <string name="dinner">Makan Malam</string>
+    <string name="breakfast">Makan Pagi</string>
+    <string name="take_a_picture">Ambil Foto</string>
+    <string name="translate">Bahasa</string>
 
 </resources>
