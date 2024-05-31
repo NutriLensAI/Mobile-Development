@@ -1,8 +1,10 @@
 package com.capstone.mobiledevelopment.nutrilens.view.main
 
 import android.Manifest
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -18,6 +20,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
@@ -50,8 +53,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private var stepCounterSensor: Sensor? = null
-    private var initialSensorSteps: Int? = null
-    private var lastSavedSteps: Int = 0
+    private var initialSensorSteps = 0
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -163,14 +165,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_STEP_COUNTER) {
             val totalStepsFromSensor = event.values[0].toInt()
-            if (initialSensorSteps == null) {
+            if (initialSensorSteps == 0) {
                 initialSensorSteps = totalStepsFromSensor
             }
-            val currentSteps = totalStepsFromSensor - (initialSensorSteps ?: 0)
-            if (currentSteps >= 0 && currentSteps != lastSavedSteps) {  // Ensure that currentSteps is never negative and not the same as the last saved steps
-                viewModel.saveStepCount(currentSteps - lastSavedSteps)  // Save only the new steps to the database
-                lastSavedSteps = currentSteps
-            }
+            val currentSteps = totalStepsFromSensor - initialSensorSteps
+            viewModel.saveStepCount(currentSteps)  // Save live step count to the database
         }
     }
 

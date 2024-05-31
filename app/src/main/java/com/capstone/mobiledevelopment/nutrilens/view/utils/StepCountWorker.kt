@@ -2,14 +2,20 @@ package com.capstone.mobiledevelopment.nutrilens.view.utils
 
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.capstone.mobiledevelopment.nutrilens.data.database.AppDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.database.StepCount
+import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
+import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
+import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
 import com.google.android.gms.fitness.FitnessLocal
 import com.google.android.gms.fitness.data.LocalDataSet
 import com.google.android.gms.fitness.data.LocalDataType
@@ -43,11 +49,8 @@ class StepCountWorker(context: Context, workerParams: WorkerParameters) : Corout
             }
             val totalSteps = response.buckets.flatMap { it.dataSets }.sumOf { dumpDataSet(it) }
 
-            // Adjust the step count before saving to the database
-            val adjustedSteps = totalSteps / 2
-
             // Save the step count to the database
-            val stepCount = StepCount(stepCount = adjustedSteps, date = System.currentTimeMillis())
+            val stepCount = StepCount(stepCount = totalSteps, date = System.currentTimeMillis())
             stepRepository.saveStepCount(stepCount)
 
             Result.success()
