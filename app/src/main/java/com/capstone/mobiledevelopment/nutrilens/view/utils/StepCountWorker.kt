@@ -1,5 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.view.utils
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -8,8 +9,11 @@ import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.capstone.mobiledevelopment.nutrilens.data.database.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.StepCount
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
+import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
 import com.google.android.gms.fitness.FitnessLocal
@@ -25,9 +29,8 @@ import java.time.ZoneId
 import java.util.concurrent.TimeUnit
 
 class StepCountWorker(context: Context, workerParams: WorkerParameters) : CoroutineWorker(context, workerParams) {
-    private val userPreference: UserPreference by lazy {
-        UserPreference.getInstance(context.dataStore)
-    }
+    private val db by lazy { AppDatabase.getDatabase(applicationContext) }
+    private val stepRepository by lazy { StepRepository.getInstance(db.stepCountDao()) }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun doWork(): Result = coroutineScope {
@@ -46,11 +49,9 @@ class StepCountWorker(context: Context, workerParams: WorkerParameters) : Corout
             }
             val totalSteps = response.buckets.flatMap { it.dataSets }.sumOf { dumpDataSet(it) }
 
-            // Save the step count to the user preferences
-            saveStepCount(totalSteps)
-
-            // Update the RecyclerView
-            updateStepsUI(totalSteps)
+            // Save the step count to the database
+            val stepCount = StepCount(stepCount = totalSteps, date = System.currentTimeMillis())
+            stepRepository.saveStepCount(stepCount)
 
             Result.success()
         } catch (e: Exception) {
@@ -67,19 +68,5 @@ class StepCountWorker(context: Context, workerParams: WorkerParameters) : Corout
             }
         }
         return stepCount
-    }
-
-    private suspend fun saveStepCount(stepCount: Int) {
-        userPreference.saveStepCount(stepCount)
-    }
-
-    private fun updateStepsUI(stepCount: Int) {
-        val intent = Intent("UPDATE_STEP_COUNT")
-        intent.putExtra("STEP_COUNT", stepCount)
-        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
-    }
-
-    companion object {
-        private const val TAG = "StepCountWorker"
     }
 }
