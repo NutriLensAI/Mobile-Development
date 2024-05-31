@@ -25,13 +25,16 @@ import java.util.concurrent.TimeUnit
 class StepCountWorker(context: Context, workerParams: WorkerParameters) : CoroutineWorker(context, workerParams) {
     private val db by lazy { AppDatabase.getDatabase(applicationContext) }
     private val stepRepository by lazy { StepRepository.getInstance(db.stepCountDao()) }
+    private val sharedPreferences by lazy {
+        applicationContext.getSharedPreferences("step_prefs", Context.MODE_PRIVATE)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun doWork(): Result = coroutineScope {
         try {
             val localRecordingClient = FitnessLocal.getLocalRecordingClient(applicationContext)
             val endTime = LocalDateTime.now().atZone(ZoneId.systemDefault())
-            val startTime = endTime.minusWeeks(1)
+            val startTime = endTime.minusDays(1)  // Changed to read only the last day's data
             val readRequest = LocalDataReadRequest.Builder()
                 .aggregate(LocalDataType.TYPE_STEP_COUNT_DELTA)
                 .bucketByTime(1, TimeUnit.DAYS)
@@ -43,12 +46,14 @@ class StepCountWorker(context: Context, workerParams: WorkerParameters) : Corout
             }
             val totalSteps = response.buckets.flatMap { it.dataSets }.sumOf { dumpDataSet(it) }
 
-            // Adjust the step count before saving to the database
-            val adjustedSteps = totalSteps / 2
-
             // Save the step count to the database
-            val stepCount = StepCount(stepCount = adjustedSteps, date = System.currentTimeMillis())
-            stepRepository.saveStepCount(stepCount)
+            val lastSavedSteps = sharedPreferences.getInt("lastSavedSteps", 0)
+            val newSteps = totalSteps - lastSavedSteps
+            if (newSteps > 0) {
+                val stepCount = StepCount(stepCount = newSteps, date = System.currentTimeMillis())
+                stepRepository.saveStepCount(stepCount)
+                sharedPreferences.edit().putInt("lastSavedSteps", totalSteps).apply()
+            }
 
             Result.success()
         } catch (e: Exception) {

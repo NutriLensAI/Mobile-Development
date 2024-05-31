@@ -53,6 +53,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var initialSensorSteps: Int? = null
     private var lastSavedSteps: Int = 0
 
+    private val sharedPreferences by lazy {
+        getSharedPreferences("step_prefs", Context.MODE_PRIVATE)
+    }
+
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,10 +71,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         observeSession()
         setupView()
-        setupPeriodicWork()
-
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+        initialSensorSteps = sharedPreferences.getInt("initialSensorSteps", -1)
+        lastSavedSteps = sharedPreferences.getInt("lastSavedSteps", 0)
     }
 
     private fun setupViewModelObservers() {
@@ -163,16 +167,22 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_STEP_COUNTER) {
             val totalStepsFromSensor = event.values[0].toInt()
-            if (initialSensorSteps == null) {
+            if (initialSensorSteps == null || initialSensorSteps == -1) {
                 initialSensorSteps = totalStepsFromSensor
+                sharedPreferences.edit().putInt("initialSensorSteps", initialSensorSteps!!).apply()
             }
             val currentSteps = totalStepsFromSensor - (initialSensorSteps ?: 0)
-            if (currentSteps >= 0 && currentSteps != lastSavedSteps) {  // Ensure that currentSteps is never negative and not the same as the last saved steps
-                viewModel.saveStepCount(currentSteps - lastSavedSteps)  // Save only the new steps to the database
-                lastSavedSteps = currentSteps
+            if (currentSteps >= 0 && currentSteps != lastSavedSteps) {
+                val stepsToSave = currentSteps - lastSavedSteps
+                if (stepsToSave > 0) {
+                    viewModel.saveStepCount(stepsToSave)
+                    lastSavedSteps = currentSteps
+                    sharedPreferences.edit().putInt("lastSavedSteps", lastSavedSteps).apply()
+                }
             }
         }
     }
+
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         // Do nothing
