@@ -1,143 +1,28 @@
 package com.capstone.mobiledevelopment.nutrilens.view.settings
 
-import android.content.ContentValues.TAG
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
-import android.view.WindowInsets
-import android.view.WindowManager
-import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.databinding.ActivitySettingsBinding
-import com.capstone.mobiledevelopment.nutrilens.resep.Resep
-import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
-import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
-import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
-import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
-import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
-import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
-import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
-import com.google.android.gms.fitness.FitnessLocal
-import com.google.android.gms.fitness.data.LocalDataType
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class SettingsActivity : AppCompatActivity() {
-    private val viewModel by viewModels<SettingsViewModel> {
-        ViewModelFactory.getInstance(this)
-    }
-    private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        viewModel.fetchEmail()
-        viewModel.getSession().observe(this) { user ->
-            if (!user.isLogin) {
-                startActivity(Intent(this, WelcomeActivity::class.java))
-                finish()
+        setContentView(R.layout.activity_settings)
+
+        if (savedInstanceState == null) {
+            // We keep the mechanism to handle different item selections
+            val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_profile)  // Default or fallback item
+            val fragment = when (selectedItemId) {
+                R.id.navigation_profile -> SettingsFragment.newInstance()  // Using new instance without parameters
+                else -> SettingsFragment.newInstance()  // Default case also leads to SettingsFragment without parameters
+            }
+            supportFragmentManager.commit {
+                replace(R.id.fragment_container, fragment)
+                setReorderingAllowed(true)
             }
         }
-
-        observeEmail()
-        setupView()
-        setupAction()
-        unsubscribeFromFitnessData()
-        setupBottomNavigation()
-    }
-
-    private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-        supportActionBar?.hide()
-    }
-
-    private fun observeEmail() {
-        viewModel.userEmail.observe(this) { userEmail ->
-            val greetingMessage = getString(R.string.greeting, userEmail)
-            binding.profileName.text = greetingMessage
-        }
-    }
-
-    private fun setupAction() {
-        binding.actionLogout.setOnClickListener {
-            showLogoutConfirmationDialog()}
-
-//        binding.translateButton.setOnClickListener {
-//            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-//        }
-    }
-
-    private fun setupBottomNavigation() {
-        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
-        bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
-
-        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_stats)
-        bottomNavigationView.selectedItemId = selectedItemId
-
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_food -> {
-                    val intent = Intent(this@SettingsActivity, Resep::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_food)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_stats -> {
-                    val intent = Intent(this@SettingsActivity, MainActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_stats)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_documents -> {
-                    val intent = Intent(this@SettingsActivity, CatatanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_documents)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_profile -> true
-                else -> false
-            }
-        }
-    }
-
-    private fun showLogoutConfirmationDialog() {
-        AlertDialog.Builder(this).apply {
-            setTitle(getString(R.string.logout))
-            setMessage(getString(R.string.logout_message))
-            setPositiveButton(getString(R.string.yes)) { _, _ ->
-                navigateToWelcomeActivity()
-                viewModel.logout()
-            }
-            create()
-            show()
-        }
-    }
-    private fun unsubscribeFromFitnessData() {
-        val localRecordingClient = FitnessLocal.getLocalRecordingClient(this)
-        // Unsubscribe from steps data
-        localRecordingClient.unsubscribe(LocalDataType.TYPE_STEP_COUNT_DELTA)
-            .addOnSuccessListener {
-                Log.i(TAG, "Successfully unsubscribed!")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "There was a problem unsubscribing.", e)
-            }
-    }
-    private fun navigateToWelcomeActivity() {
-        val intent = Intent(this, WelcomeActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 }
