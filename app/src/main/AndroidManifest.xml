@@ -27,6 +27,7 @@
         android:theme="@style/Theme.LoginWithAnimation">
         <activity
             android:name=".view.settings.personal.changepersonal.PersonalActivity"
+            android:name=".view.welcome.SignupWelcome"
             android:exported="false" />
         <activity
             android:name=".resep.Detail"

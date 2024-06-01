@@ -79,7 +79,7 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
         binding.signupButton.setOnClickListener {
-            startActivity(Intent(this, SignupActivity::class.java))
+            startActivity(Intent(this, SignupWelcome::class.java))
         }
     }
 }
