@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
 
-class FoodAdapter2(private val foodList: List<Food>) : RecyclerView.Adapter<FoodAdapter2.FoodViewHolder>() {
+class FoodAdapter2(private val foodList: List<Food>, private val onAddClickListener: (Food) -> Unit) : RecyclerView.Adapter<FoodAdapter2.FoodViewHolder>() {
 
     class FoodViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvFoodName: TextView = view.findViewById(R.id.tv_food_name)
@@ -26,7 +26,7 @@ class FoodAdapter2(private val foodList: List<Food>) : RecyclerView.Adapter<Food
         holder.tvFoodName.text = foodItem.name
         holder.tvFoodCalories.text = "${foodItem.calories} Cal"
         holder.ivAddFood.setOnClickListener {
-            // Handle add food action
+            onAddClickListener(foodItem)
         }
     }
 
