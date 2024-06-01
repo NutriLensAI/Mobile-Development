@@ -26,7 +26,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginWithAnimation">
         <activity
-            android:name=".view.settings.personal.changepersonal.PersonalActivity"
             android:name=".view.welcome.SignupWelcome"
             android:exported="false" />
         <activity
