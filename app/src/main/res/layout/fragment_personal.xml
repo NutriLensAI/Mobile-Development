@@ -40,110 +40,152 @@
             app:layout_constraintStart_toStartOf="@+id/titlePersonalData"
             app:layout_constraintTop_toBottomOf="@id/titlePersonalData" />
 
-        <!-- Activity Level Display -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilActivityLevel"
-            android:layout_width="0dp"
+
+        <!-- Section for Activity Level -->
+
+        <!-- Section for Weight -->
+        <LinearLayout
+            android:id="@+id/ActivityLevel"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/explanationText">
+            app:layout_constraintTop_toBottomOf="@+id/explanationText">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etActivityLevel"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:hint="Activity Level"
+                android:layout_weight="1"
+                android:text="Activity Level:" />
+
+            <TextView
+                android:id="@+id/tvActivityLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
                 android:text="Moderately Active" />
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Weight Display -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilWeight"
-            android:layout_width="0dp"
+        </LinearLayout>
+
+        <!-- Section for Height -->
+        <LinearLayout
+            android:id="@+id/Weight"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilActivityLevel">
+            app:layout_constraintTop_toBottomOf="@+id/ActivityLevel">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etWeight"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:hint="Weight"
+                android:layout_weight="1"
+                android:text="Weight:" />
+
+            <TextView
+                android:id="@+id/tvWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
                 android:text="70 kg" />
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Height Display -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilHeight"
-            android:layout_width="0dp"
+        </LinearLayout>
+
+        <!-- Section for Age -->
+        <LinearLayout
+            android:id="@+id/Height"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilWeight">
+            app:layout_constraintTop_toBottomOf="@+id/Weight">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etHeight"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:hint="Height"
+                android:layout_weight="1"
+                android:text="Height:" />
+
+            <TextView
+                android:id="@+id/tvHeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
                 android:text="175 cm" />
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Age Display -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilAge"
-            android:layout_width="0dp"
+        </LinearLayout>
+
+        <!-- Section for Gender -->
+        <LinearLayout
+            android:id="@+id/Age"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilHeight">
+            app:layout_constraintTop_toBottomOf="@+id/Height">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etAge"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:hint="Age"
+                android:layout_weight="1"
+                android:text="Age:" />
+
+            <TextView
+                android:id="@+id/tvAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
                 android:text="30 years" />
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Gender Display -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilGender"
-            android:layout_width="0dp"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Gender"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilAge">
+            app:layout_constraintTop_toBottomOf="@+id/Age">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etGender"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:hint="Gender"
+                android:layout_weight="1"
+                android:text="Gender:" />
+
+            <TextView
+                android:id="@+id/tvGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
                 android:text="Male" />
-        </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnChangePersonalData"
