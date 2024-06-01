@@ -22,8 +22,8 @@
 
         <TextView
             android:id="@+id/tv_dicoding"
-            android:layout_width="141dp"
-            android:layout_height="45dp"
+            android:layout_width="123dp"
+            android:layout_height="43dp"
             android:text="@string/resepmain"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -31,10 +31,25 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.152"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.275" />
+            app:layout_constraintVertical_bias="0.22" />
+
+        <TextView
+            android:id="@+id/appNameTextView"
+            android:layout_width="187dp"
+            android:layout_height="48dp"
+            android:text="NutriLens"
+            android:textColor="@android:color/white"
+            android:textSize="42sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.255"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.684" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
