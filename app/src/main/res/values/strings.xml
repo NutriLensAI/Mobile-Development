@@ -53,10 +53,18 @@
     <string name="makanan_image_desc" translatable="false">makanan_image_desc\n</string>
     <string name="lunch">Makan Siang</string>
 
+
     <string-array name="meal_types">
         <item>Breakfast</item>
         <item>Lunch</item>
         <item>Dinner</item>
+    </string-array>
+
+    <string-array name="activity_level">
+        <item>Sedentary</item>
+        <item>Moderately Active</item>
+        <item>Active</item>
+        <item>Very Active</item>
     </string-array>
 
     <string name="dinner">Makan Malam</string>
@@ -66,4 +74,11 @@
     <string name="resepmain">Recipes</string>
     <string name="signup2">SignUp</string>
 
+    <string name="weight_hint">Weight</string>
+    <string name="height_hint">Height</string>
+    <string name="age_hint">Age</string>
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>
