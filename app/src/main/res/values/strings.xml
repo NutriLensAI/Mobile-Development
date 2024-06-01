@@ -64,6 +64,8 @@
     <string name="take_a_picture">Ambil Foto</string>
     <string name="translate">Bahasa</string>
     <string name="resepmain">Recipes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signup2">SignUp</string>
 
 </resources>
