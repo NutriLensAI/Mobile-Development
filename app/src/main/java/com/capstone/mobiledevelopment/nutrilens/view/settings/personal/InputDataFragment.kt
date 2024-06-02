@@ -16,7 +16,7 @@ class InputDataFragment : Fragment() {
     private val personalViewModel: PersonalViewModel by activityViewModels()
 
     companion object {
-        fun newInstance() = PasswordFragment()
+        fun newInstance() = InputDataFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
