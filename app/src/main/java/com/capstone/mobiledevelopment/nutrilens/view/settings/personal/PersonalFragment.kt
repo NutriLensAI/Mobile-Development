@@ -32,7 +32,7 @@ class PersonalFragment : Fragment() {
 
         val btnChangePersonalData = view.findViewById<Button>(R.id.btnChangePersonalData)
         btnChangePersonalData.setOnClickListener {
-            val intent = Intent(activity, PersonalActivity::class.java)
+            val intent = Intent(fragment, PersonalActivity::class.java)
             startActivity(intent)
         }
 
