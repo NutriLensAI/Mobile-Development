@@ -62,7 +62,7 @@ class SettingsFragment : Fragment() {
 
         // Setup navigation for Personal Info Settings
         binding.personalInfoSetting.setOnClickListener {
-            navigateToFragment(PersonalFragment.newInstance())
+            navigateToFragment(PersonalFragment.newInstance(weight, height, age, gender))
         }
 
         binding.backButton.setOnClickListener {
