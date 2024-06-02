@@ -26,6 +26,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginWithAnimation">
         <activity
+            android:name=".view.main.InfoDrink"
+            android:exported="false" />
+        <activity
+            android:name=".view.main.InfoSteps"
+            android:exported="false" />
+        <activity
+            android:name=".view.main.InfoCholesterol"
+            android:exported="false" />
+        <activity
+            android:name=".view.main.InfoSugar"
+            android:exported="false" />
+        <activity
             android:name=".view.welcome.SignupWelcome"
             android:exported="false" />
         <activity

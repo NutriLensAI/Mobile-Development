@@ -29,8 +29,8 @@ class Resep : AppCompatActivity() {
         }
 
         val resepList = listOf(
-            ResepItem("Resep 1", "Deskripsi Resep 1", "url_gambar_1"),
-            ResepItem("Resep 2", "Deskripsi Resep 2", "url_gambar_2"),
+            ResepItem("Nasi Goreng", "Cara Membuat Nasi Goreng Paling Enak, Dari Rekomendasi Nutrilens Cukup Mudah Dan Bergizi.", "nasi_goreng"),
+            ResepItem("Mie Ayam", "Mau Tau Resep Mie Ayam Yang Bergizi Buat Kamu? Ini Dia Rekomendasi Dari Nutrilens.", "mie_ayam"),
             // Tambahkan item lainnya
         )
 

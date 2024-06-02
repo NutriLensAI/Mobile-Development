@@ -1,9 +1,16 @@
 package com.capstone.mobiledevelopment.nutrilens.view.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ItemMenuBinding
+import com.capstone.mobiledevelopment.nutrilens.view.main.InfoCholesterol
+import com.capstone.mobiledevelopment.nutrilens.view.main.InfoDrink
+import com.capstone.mobiledevelopment.nutrilens.view.main.InfoSteps
+import com.capstone.mobiledevelopment.nutrilens.view.main.InfoSugar
 
 data class MenuItem(
     val title: String,
@@ -28,6 +35,28 @@ class MenuAdapter(private val menuList: List<MenuItem>) :
         holder.binding.menuImageView.setImageResource(menuItem.imageResId)
         holder.binding.menuValueTextView.text = menuItem.value
         holder.binding.menuInfoTextView.text = menuItem.info
+
+        holder.binding.root.findViewById<ImageView>(R.id.menuInfoImageView).setOnClickListener {
+            val context = holder.itemView.context
+            when (menuItem.title) {
+                "Sugar" -> {
+                    val intent = Intent(context, InfoSugar::class.java)
+                    context.startActivity(intent)
+                }
+                "Cholesterol" -> {
+                    val intent = Intent(context, InfoCholesterol::class.java)
+                    context.startActivity(intent)
+                }
+                "Steps" -> {
+                    val intent = Intent(context, InfoSteps::class.java)
+                    context.startActivity(intent)
+                }
+                "Drink" -> {
+                    val intent = Intent(context, InfoDrink::class.java)
+                    context.startActivity(intent)
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int = menuList.size

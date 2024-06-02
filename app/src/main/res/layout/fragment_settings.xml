@@ -168,8 +168,6 @@
         </LinearLayout>
 
         <!-- Personal Info Setting -->
-
-        <!-- Logout Button -->
         <LinearLayout
             android:id="@+id/personal_info_setting"
             android:layout_width="match_parent"
@@ -207,6 +205,7 @@
                 android:src="@drawable/ic_arrow_right" />
         </LinearLayout>
 
+        <!-- Logout Button -->
         <Button
             android:id="@+id/action_logout"
             android:layout_width="0dp"
