@@ -16,7 +16,7 @@
         <!-- Gambar makanan -->
         <ImageView
             android:id="@+id/img_makanan"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="0dp"
             android:contentDescription="@string/makanan_image_desc"
             android:scaleType="centerCrop"
@@ -33,9 +33,9 @@
             android:text="Bakso Urat"
             android:textSize="24sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/img_makanan"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/img_makanan" />
 
         <!-- Info Nutrisi dan Makro -->
         <LinearLayout
@@ -43,32 +43,32 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_nama_makanan"
-            android:padding="8dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_nama_makanan">
 
             <TextView
                 android:id="@+id/tv_kcal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="450 Kcal"
-                android:textStyle="bold"
-                android:layout_gravity="center"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_macros"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Carbs: 14g, Fat: 14g, Protein: 14g"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:text="Carbs: 14g, Fat: 14g, Protein: 14g" />
 
             <TextView
                 android:id="@+id/tv_macros_percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Carbs: 60%, Fat: 14%, Protein: 26%"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:text="Carbs: 60%, Fat: 14%, Protein: 26%" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
