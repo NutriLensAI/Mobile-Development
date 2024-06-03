@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NutriLens</string>
+    <string name="signup">Don\'t have an account? Sign Up.</string>
+    <string name="login">Login</string>
+    <string name="message_welcome_page">Health Innovation: Empowering Vulnerable Communities for Health and Well-being</string>
+    <string name="title_welcome_page">Welcome to NutriLens</string>
+    <string name="title_signup_page">" Complete your data below"</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="message_login_page">"Enter your data first "</string>
+    <string name="title_login_page">Ready to start changing your life?</string>
+    <string name="name">Name</string>
+    <string name="tidak">No</string>
+    <string name="ya">Yes</string>
+    <string name="greeting">"Hello %1$s, "</string>
+    <string name="logout">Logout</string>
+    <string name="password_error">" Password must not be less than 8 characters"</string>
+    <string name="judul">" Story title "</string>
+    <string name="deskrip">" Story description"</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="upload">Upload</string>
+    <string name="empty_image_warning">"Blank Image "</string>
+    <string name="logout_message">Are you sure you want to log out?</string>
+    <string name="yes">Yes</string>
+    <string name="failure_dialog_title">Oh no!</string>
+    <string name="success_dialog_message">The account with %1$s is ready. Come on, log in and learn to code.</string>
+    <string name="login_success">login successful</string>
+    <string name="login_failed">Login Failed</string>
+    <string name="success_dialog_title">Yeah!</string>
+    <string name="success_dialog_button">Continue</string>
+    <string name="failure_dialog_button">Re-registration</string>
+    <string name="registration_failed">Registration Failed</string>
+    <string name="try_again">Please try again.</string>
+    <string name="upload_success">"Upload Successful "</string>
+    <string name="upload_failure">Upload Failed</string>
+    <string name="location_enabled">"You are viewing news and stories around your location "</string>
+    <string name="location_disabled">"You're viewing news and stories on the go "</string>
+    <string name="location_now">Select to change location</string>
+    <string name="dont_have_an_account">Don\'t Have Account?</string>
+    <string name="sugar">Sugar</string>
+    <string name="cholesterol">Cholesterol</string>
+    <string name="drink">Drink</string>
+    <string name="take_a_picture">Take A Picture</string>
+    <string name="capture">Picture</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="translate">Language</string>
+    <string name="resepmain">Recipes</string>
+    <string name="signup2">SignUp</string>
+
+</resources>
