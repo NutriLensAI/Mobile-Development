@@ -10,6 +10,7 @@ import com.capstone.mobiledevelopment.nutrilens.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodItem
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
+import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddDrink
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
@@ -54,6 +55,7 @@ class CatatanMakanan : AppCompatActivity() {
         if (mealType != null && namaMakanan != null) {
             addFoodToMeal(mealType, namaMakanan, calories, carbs, fat, protein)
         }
+
         // Initialize the custom bottom navigation view
         val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
         bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
@@ -91,9 +93,10 @@ class CatatanMakanan : AppCompatActivity() {
                 else -> false
             }
         }
-        val fab: FloatingActionButton = findViewById(R.id.fab)
+
+        val fab: FloatingActionButton = findViewById(R.id.floatingActionButton)
         fab.setOnClickListener {
-            val intent = Intent(this@CatatanMakanan, AddFoodActivity::class.java)
+            val intent = Intent(this@CatatanMakanan, AddDrink::class.java)
             startActivity(intent)
         }
     }

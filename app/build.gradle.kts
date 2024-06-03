@@ -101,4 +101,5 @@ dependencies {
     //room
     implementation(libs.androidx.room.ktx)
     ksp(libs.room.compiler)
+    implementation ("androidx.work:work-runtime-ktx:2.7.1")
 }

@@ -18,19 +18,21 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
+import com.capstone.mobiledevelopment.nutrilens.drink.DrinkDatabase
+import com.capstone.mobiledevelopment.nutrilens.drink.ResetDrinkWorker
 import com.capstone.mobiledevelopment.nutrilens.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuItem
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
-import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.StepCountWorker
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
@@ -41,7 +43,11 @@ import com.google.android.gms.fitness.FitnessLocal
 import com.google.android.gms.fitness.LocalRecordingClient
 import com.google.android.gms.fitness.data.LocalDataType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
     private val viewModel by viewModels<MainViewModel> {
@@ -76,12 +82,18 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
         initialSensorSteps = sharedPreferences.getInt("initialSensorSteps", -1)
         lastSavedSteps = sharedPreferences.getInt("lastSavedSteps", 0)
+
+        // Fetch drink data and setup RecyclerView
+        fetchDrinkDataAndSetupRecyclerView()
+
+        // Schedule the worker to reset drink data at midnight
+        scheduleResetDrinkWorker()
     }
 
     private fun setupViewModelObservers() {
         viewModel.stepCounts.observe(this) { stepCounts ->
             val totalSteps = stepCounts.sumOf { it.stepCount }
-            setupRecyclerView(totalSteps)
+            fetchDrinkDataAndSetupRecyclerView(totalSteps)
         }
         viewModel.token.observe(this) { token ->
             if (!token.isNullOrEmpty()) {
@@ -142,17 +154,51 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             }
     }
 
-    private fun setupRecyclerView(currentSteps: Int) {
-        val menuList = listOf(
+    private fun setupRecyclerView(currentSteps: Int, totalDrinkAmount: Int) {
+        val menuList = mutableListOf(
             MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
             MenuItem("Cholesterol", R.drawable.ic_cholesterol, "100 mg/dL", "Cholesterol Numbers and What They Mean"),
             MenuItem("Steps", R.drawable.ic_steps, "$currentSteps/10,000 steps", "How much should you walk every day?"),
-            MenuItem("Drink", R.drawable.ic_drink, "1500 ml", "How much should you drink every day?")
+            MenuItem("Drink", R.drawable.ic_drink, "$totalDrinkAmount ml", "How much should you drink every day?")
         )
 
         val adapter = MenuAdapter(menuList)
         binding.menuRecyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.menuRecyclerView.adapter = adapter
+    }
+
+    private fun fetchDrinkDataAndSetupRecyclerView(currentSteps: Int = 0) {
+        val drinkDao = DrinkDatabase.getDatabase(this).drinkDao()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val totalAmount = drinkDao.getTotalAmount() ?: 0
+            withContext(Dispatchers.Main) {
+                setupRecyclerView(currentSteps, totalAmount)
+            }
+        }
+    }
+
+    private fun scheduleResetDrinkWorker() {
+        val currentTime = Calendar.getInstance()
+        val dueTime = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            if (before(currentTime)) {
+                add(Calendar.DAY_OF_MONTH, 1)
+            }
+        }
+
+        val initialDelay = dueTime.timeInMillis - currentTime.timeInMillis
+        val dailyWorkRequest = PeriodicWorkRequestBuilder<ResetDrinkWorker>(1, TimeUnit.DAYS)
+            .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "ResetDrinkWork",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            dailyWorkRequest
+        )
     }
 
     override fun onResume() {
@@ -183,7 +229,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             }
         }
     }
-
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         // Do nothing

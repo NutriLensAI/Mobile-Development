@@ -19,7 +19,7 @@ data class MenuItem(
     val info: String
 )
 
-class MenuAdapter(private val menuList: List<MenuItem>) :
+class MenuAdapter(private val menuList: MutableList<MenuItem>) :
     RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
     class MenuViewHolder(val binding: ItemMenuBinding) : RecyclerView.ViewHolder(binding.root)
@@ -60,4 +60,12 @@ class MenuAdapter(private val menuList: List<MenuItem>) :
     }
 
     override fun getItemCount(): Int = menuList.size
+
+    fun updateDrinkAmount(amount: String) {
+        val index = menuList.indexOfFirst { it.title == "Drink" }
+        if (index != -1) {
+            menuList[index] = menuList[index].copy(value = amount)
+            notifyItemChanged(index)
+        }
+    }
 }
