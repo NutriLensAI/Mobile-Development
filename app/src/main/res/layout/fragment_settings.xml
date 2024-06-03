@@ -216,7 +216,7 @@
             android:background="@drawable/bg_button_rounded"
             android:text="@string/logout"
             android:textAllCaps="false"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
