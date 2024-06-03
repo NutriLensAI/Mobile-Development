@@ -75,7 +75,7 @@ class CatatanMakanan : AppCompatActivity() {
                     val intent = Intent(this@CatatanMakanan, SettingsActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_profile)
                     startActivity(intent)
-                    true
+                    false
                 }
 
                 R.id.navigation_stats -> {

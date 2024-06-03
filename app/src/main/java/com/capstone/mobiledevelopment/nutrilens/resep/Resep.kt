@@ -56,7 +56,7 @@ class Resep : AppCompatActivity() {
                     val intent = Intent(this@Resep, SettingsActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_profile)
                     startActivity(intent)
-                    true
+                    false
                 }
                 R.id.navigation_documents -> {
                     val intent = Intent(this@Resep, CatatanMakanan::class.java)

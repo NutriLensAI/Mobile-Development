@@ -273,7 +273,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     val intent = Intent(this@MainActivity, SettingsActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_profile)
                     startActivity(intent)
-                    true
+                    false
                 }
                 R.id.navigation_documents -> {
                     val intent = Intent(this@MainActivity, CatatanMakanan::class.java)
