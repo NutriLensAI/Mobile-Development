@@ -3,6 +3,7 @@ package com.capstone.mobiledevelopment.nutrilens.view.hasil
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -17,11 +18,14 @@ import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 
 class HasilMakanan : AppCompatActivity() {
 
+    private lateinit var makananList: List<Makanan>
+    private lateinit var imageUri: Uri
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hasil_makanan)
 
-        val imageUri = intent.getStringExtra("image_uri")?.let { Uri.parse(it) }
+        imageUri = intent.getStringExtra("image_uri")?.let { Uri.parse(it) } ?: Uri.EMPTY
         val imageView: ImageView = findViewById(R.id.img_makanan)
 
         imageUri?.let {
@@ -52,7 +56,11 @@ class HasilMakanan : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.rv_makanan)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = MakananAdapter(getMakananList())
+        makananList = getMakananList()
+        recyclerView.adapter = MakananAdapter(makananList)
+
+        val viewIngredientsButton: Button = findViewById(R.id.btn_view_ingredients)
+        viewIngredientsButton.setOnClickListener { viewIngredients() }
     }
 
     private fun sendMealData(mealType: String, makanan: Makanan) {
@@ -73,5 +81,13 @@ class HasilMakanan : AppCompatActivity() {
             Makanan("Bakso Urat", 450, 14, 14, 14, "60%", "14%", "26%")
             // Tambahkan data lainnya
         )
+    }
+
+    private fun viewIngredients() {
+        val intent = Intent(this, Ingredients::class.java).apply {
+            putExtra("image_uri", imageUri.toString())
+            putParcelableArrayListExtra("makanan_list", ArrayList(makananList))
+        }
+        startActivity(intent)
     }
 }
