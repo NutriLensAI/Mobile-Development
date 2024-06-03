@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
 class CustomBottomNavigationView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BottomNavigationView(context, attrs, defStyleAttr) {
@@ -40,6 +39,10 @@ class CustomBottomNavigationView @JvmOverloads constructor(
         mPaint.style = Paint.Style.FILL_AND_STROKE
         mPaint.color = ContextCompat.getColor(context, R.color.white)
         setBackgroundColor(Color.TRANSPARENT)
+
+        // Set the shadow layer for the paint
+        mPaint.setShadowLayer(10f, 0f, -5f, Color.GRAY) // Adjust the values as needed
+        setLayerType(LAYER_TYPE_SOFTWARE, mPaint) // Enable software rendering to allow shadow layer
     }
 
     override fun getMaxItemCount(): Int {
@@ -52,20 +55,41 @@ class CustomBottomNavigationView @JvmOverloads constructor(
         mNavigationBarWidth = width
         mNavigationBarHeight = height
         // The coordinates (x,y) of the start point before curve
-        mFirstCurveStartPoint.set((mNavigationBarWidth / 2) - (CURVE_CIRCLE_RADIUS * 2) - (CURVE_CIRCLE_RADIUS / 3), 0)
+        mFirstCurveStartPoint.set(
+            (mNavigationBarWidth / 2) - (CURVE_CIRCLE_RADIUS * 2) - (CURVE_CIRCLE_RADIUS / 3),
+            0
+        )
         // The coordinates (x,y) of the end point after curve
-        mFirstCurveEndPoint.set(mNavigationBarWidth / 2, CURVE_CIRCLE_RADIUS + (CURVE_CIRCLE_RADIUS / 4))
+        mFirstCurveEndPoint.set(
+            mNavigationBarWidth / 2,
+            CURVE_CIRCLE_RADIUS + (CURVE_CIRCLE_RADIUS / 4)
+        )
         // Same thing for the second curve
         mSecondCurveStartPoint.set(mFirstCurveEndPoint.x, mFirstCurveEndPoint.y)
-        mSecondCurveEndPoint.set((mNavigationBarWidth / 2) + (CURVE_CIRCLE_RADIUS * 2) + (CURVE_CIRCLE_RADIUS / 3), 0)
+        mSecondCurveEndPoint.set(
+            (mNavigationBarWidth / 2) + (CURVE_CIRCLE_RADIUS * 2) + (CURVE_CIRCLE_RADIUS / 3),
+            0
+        )
 
         // The coordinates (x,y) of the 1st control point on a cubic curve
-        mFirstCurveControlPoint1.set(mFirstCurveStartPoint.x + CURVE_CIRCLE_RADIUS + (CURVE_CIRCLE_RADIUS / 4), mFirstCurveStartPoint.y)
+        mFirstCurveControlPoint1.set(
+            mFirstCurveStartPoint.x + CURVE_CIRCLE_RADIUS + (CURVE_CIRCLE_RADIUS / 4),
+            mFirstCurveStartPoint.y
+        )
         // The coordinates (x,y) of the 2nd control point on a cubic curve
-        mFirstCurveControlPoint2.set(mFirstCurveEndPoint.x - (CURVE_CIRCLE_RADIUS * 2) + CURVE_CIRCLE_RADIUS, mFirstCurveEndPoint.y)
+        mFirstCurveControlPoint2.set(
+            mFirstCurveEndPoint.x - (CURVE_CIRCLE_RADIUS * 2) + CURVE_CIRCLE_RADIUS,
+            mFirstCurveEndPoint.y
+        )
 
-        mSecondCurveControlPoint1.set(mSecondCurveStartPoint.x + (CURVE_CIRCLE_RADIUS * 2) - CURVE_CIRCLE_RADIUS, mSecondCurveStartPoint.y)
-        mSecondCurveControlPoint2.set(mSecondCurveEndPoint.x - (CURVE_CIRCLE_RADIUS + (CURVE_CIRCLE_RADIUS / 4)), mSecondCurveEndPoint.y)
+        mSecondCurveControlPoint1.set(
+            mSecondCurveStartPoint.x + (CURVE_CIRCLE_RADIUS * 2) - CURVE_CIRCLE_RADIUS,
+            mSecondCurveStartPoint.y
+        )
+        mSecondCurveControlPoint2.set(
+            mSecondCurveEndPoint.x - (CURVE_CIRCLE_RADIUS + (CURVE_CIRCLE_RADIUS / 4)),
+            mSecondCurveEndPoint.y
+        )
 
         mPath.reset()
         mPath.moveTo(0f, 0f)
@@ -96,17 +120,24 @@ class CustomBottomNavigationView @JvmOverloads constructor(
         // Additional logic to enlarge and raise the selected item
         val selectedItem = menu.findItem(selectedItemId)
         val icon = selectedItem.icon
-        val bounds = icon!!.bounds
 
-        // Draw the selected item larger and raised
-        val selectedIconSize = (bounds.width() * 1.5).toInt()
-        val selectedIconHeight = (bounds.height() * 1.5).toInt()
-        val left = bounds.left - (selectedIconSize - bounds.width()) / 2
-        val top = bounds.top - (selectedIconHeight - bounds.height()) / 2 - 20 // raised by 20 pixels
-        val right = bounds.right + (selectedIconSize - bounds.width()) / 2
-        val bottom = bounds.bottom + (selectedIconHeight - bounds.height()) / 2 - 20
+        if (icon != null) {
+            // Change color to blue if the item is selected
+            icon.setTint(ContextCompat.getColor(context, R.color.blue))
 
-        icon.setBounds(left, top, right, bottom)
-        icon.draw(canvas)
+            val bounds = icon.bounds
+
+            // Draw the selected item larger and raised
+            val selectedIconSize = (bounds.width() * 1.5).toInt()
+            val selectedIconHeight = (bounds.height() * 1.5).toInt()
+            val left = bounds.left - (selectedIconSize - bounds.width()) / 2
+            val top =
+                bounds.top - (selectedIconHeight - bounds.height()) / 2 - 20 // raised by 20 pixels
+            val right = bounds.right + (selectedIconSize - bounds.width()) / 2
+            val bottom = bounds.bottom + (selectedIconHeight - bounds.height()) / 2 - 20
+
+            icon.setBounds(left, top, right, bottom)
+            icon.draw(canvas)
+        }
     }
 }

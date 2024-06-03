@@ -16,8 +16,8 @@
         app:backgroundTint="@color/teal_200"
         app:elevation="6dp"
         app:fabSize="mini"
-        app:layout_anchor="@id/customBottomBar"
-        app:layout_anchorGravity="top|center"
+        app:layout_anchor="@+id/customBottomBar"
+        app:layout_anchorGravity="center"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded" />
 
     <com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
@@ -25,10 +25,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="@color/teal_200"
+        android:backgroundTintMode="src_atop"
+        app:backgroundTint="@color/gray"
         app:elevation="3dp"
-        android:background="@color/colorPrimaryDark"
-        app:labelVisibilityMode="labeled"
+        app:itemActiveIndicatorStyle="@color/blue"
         app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView.Inactive" />
+        app:itemTextAppearanceInactive="@style/BottomNavigationView.Inactive"
+        app:labelVisibilityMode="labeled" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
