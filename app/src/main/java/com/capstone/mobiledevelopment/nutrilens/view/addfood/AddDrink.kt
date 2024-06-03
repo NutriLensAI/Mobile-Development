@@ -1,6 +1,5 @@
 package com.capstone.mobiledevelopment.nutrilens.view.addfood
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +26,7 @@ class AddDrink : AppCompatActivity() {
         }
 
         binding.subtractCupButton.setOnClickListener {
-            updateDrinkAmount(-cupAmount)
+            checkAndSubtractAmount(cupAmount)
         }
 
         updateTotalAmount()
@@ -37,6 +36,21 @@ class AddDrink : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             drinkDao.insert(Drink(amount = amount))
             updateTotalAmount()
+        }
+    }
+
+    private fun checkAndSubtractAmount(cupAmount: Int) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val totalAmount = drinkDao.getTotalAmount() ?: 0
+            if (totalAmount > 0) {
+                val newAmount = totalAmount - cupAmount
+                if (newAmount >= 0) {
+                    drinkDao.insert(Drink(amount = -cupAmount))
+                    withContext(Dispatchers.Main) {
+                        updateTotalAmount()
+                    }
+                }
+            }
         }
     }
 
