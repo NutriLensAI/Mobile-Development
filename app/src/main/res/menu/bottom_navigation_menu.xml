@@ -18,7 +18,7 @@
     <item
         android:id="@+id/navigation_documents"
         android:icon="@drawable/ic_documents"
-        android:title="Documents"/>
+        android:title="Notes"/>
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile"
