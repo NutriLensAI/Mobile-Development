@@ -93,10 +93,8 @@ class CatatanMakanan : AppCompatActivity() {
                 else -> false
             }
         }
-
-        val fab: FloatingActionButton = findViewById(R.id.floatingActionButton)
-        fab.setOnClickListener {
-            val intent = Intent(this@CatatanMakanan, AddDrink::class.java)
+        binding.customFloatingButton.setOnClickListener {
+            val intent = Intent(this, AddDrink::class.java)
             startActivity(intent)
         }
     }

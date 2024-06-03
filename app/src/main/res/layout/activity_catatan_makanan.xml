@@ -211,17 +211,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="16dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+    <!-- Include Custom Floating Button -->
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="76dp"
-        android:clickable="true"
-        android:contentDescription="Add Stories"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/customFloatingButton"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/fab_background"
+            android:src="@drawable/ic_drink"
+            android:contentDescription="Custom Floating Button"
+            android:scaleType="centerInside"
+            android:elevation="6dp" />
+    </FrameLayout>
 
     <!-- Include Custom Bottom Navigation Layout -->
     <include

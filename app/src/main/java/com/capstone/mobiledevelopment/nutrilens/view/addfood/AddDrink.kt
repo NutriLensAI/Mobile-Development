@@ -1,5 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.view.addfood
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
