@@ -97,6 +97,15 @@ class CatatanMakanan : AppCompatActivity() {
             val intent = Intent(this, AddDrink::class.java)
             startActivity(intent)
         }
+        setupFab()
+    }
+
+    private fun setupFab() {
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener {
+            val intent = Intent(this@CatatanMakanan, AddFoodActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun addFoodToMeal(mealType: String, namaMakanan: String, calories: Int, carbs: Int, fat: Int, protein: Int) {
