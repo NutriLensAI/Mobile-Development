@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.hasil.HasilMakanan"
-    android:background="#F5F5F5">
+    android:background="#F5F5F5"
+    tools:context=".view.hasil.HasilMakanan">
 
     <!-- Tombol X di kiri atas -->
     <ImageButton
@@ -15,21 +15,26 @@
         android:layout_margin="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_close"
+        android:elevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Gambar makanan dari kamera -->
-    <ImageView
-        android:id="@+id/img_makanan"
-        android:layout_width="414dp"
-        android:layout_height="175dp"
-        android:contentDescription="@string/makanan_image_desc"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_close" />
 
     <!-- Nama makanan dan tombol tambah -->
+
+    <ImageView
+        android:id="@+id/img_makanan"
+        android:layout_width="408dp"
+        android:layout_height="216dp"
+        android:contentDescription="@string/makanan_image_desc"
+        android:elevation="2dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_nama_makanan"
         android:layout_width="wrap_content"
@@ -58,10 +63,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners_background"
+        android:elevation="10dp"
         android:orientation="horizontal"
         android:padding="16dp"
         android:visibility="gone"
-        android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_add">
@@ -142,9 +147,8 @@
         android:layout_marginTop="8dp"
         app:donut_finished_color="@android:color/holo_red_light"
         app:donut_finished_stroke_width="8dp"
-        app:donut_progress="1"
+        app:donut_progress="450"
         app:donut_text="450 Kcal"
-        app:donut_show_text="false"
         app:donut_text_color="@android:color/black"
         app:donut_text_size="12sp"
         app:layout_constraintStart_toStartOf="parent"
