@@ -101,5 +101,9 @@ dependencies {
     //room
     implementation(libs.androidx.room.ktx)
     ksp(libs.room.compiler)
-    implementation ("androidx.work:work-runtime-ktx:2.7.1")
+
+    //paging
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation (libs.androidx.room.paging)
+
 }
