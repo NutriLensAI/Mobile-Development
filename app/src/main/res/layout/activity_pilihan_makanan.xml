@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:id="@+id/main"
-    tools:context=".view.pilihan.PilihanMakanan">
+    tools:context=".view.food.FoodChoice">
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar

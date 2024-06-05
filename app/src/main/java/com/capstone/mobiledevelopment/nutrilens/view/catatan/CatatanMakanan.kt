@@ -9,8 +9,8 @@ import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakan
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodItem
-import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
-import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddDrink
+import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
+import com.capstone.mobiledevelopment.nutrilens.view.drink.AddDrink
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
@@ -102,7 +102,7 @@ class CatatanMakanan : AppCompatActivity() {
     private fun setupFab() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
-            val intent = Intent(this@CatatanMakanan, AddFoodActivity::class.java)
+            val intent = Intent(this@CatatanMakanan, CameraFoodActivity::class.java)
             startActivity(intent)
         }
     }

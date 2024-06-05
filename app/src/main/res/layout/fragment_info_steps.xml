@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5">
+
+        <!-- Background Hijau -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:background="@drawable/header_background"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_dicoding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Info Steps"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.152"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.22" />
+
+            <TextView
+                android:id="@+id/appNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NutriLens"
+                android:textColor="@android:color/white"
+                android:textSize="42sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.255"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.684" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- ScrollView for content -->
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/headerLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:src="@drawable/ic_steps_image"
+                    android:contentDescription="@string/steps_info_image"
+                    android:scaleType="centerCrop"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Jumlah Langkah Kaki yang Cukup dan Bagus untuk Tubuh"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Berjalan kaki adalah salah satu bentuk aktivitas fisik yang mudah dilakukan dan memiliki banyak manfaat bagi kesehatan. Dengan berjalan kaki secara rutin, Anda dapat meningkatkan kesehatan jantung, mengontrol berat badan, serta memperbaiki suasana hati dan energi. Namun, berapa jumlah langkah yang cukup dan bagus untuk tubuh?"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Penelitian menunjukkan bahwa berjalan setidaknya 10.000 langkah per hari dapat memberikan manfaat kesehatan yang signifikan. Angka ini setara dengan sekitar 8 kilometer atau 5 mil. Namun, beberapa studi juga menunjukkan bahwa bahkan berjalan sekitar 7.000 langkah per hari sudah cukup untuk memberikan manfaat kesehatan yang berarti."
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Manfaat Berjalan Kaki:"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1. Meningkatkan Kesehatan Jantung: Berjalan kaki secara rutin dapat membantu menurunkan risiko penyakit jantung dan stroke dengan memperbaiki sirkulasi darah dan menurunkan tekanan darah."
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2. Mengontrol Berat Badan: Berjalan kaki membantu membakar kalori dan mengurangi lemak tubuh, sehingga membantu dalam mengontrol berat badan."
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3. Memperbaiki Suasana Hati: Aktivitas fisik seperti berjalan kaki dapat meningkatkan produksi hormon endorfin yang membantu memperbaiki suasana hati dan mengurangi stres."
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4. Meningkatkan Energi: Berjalan kaki dapat meningkatkan energi dengan meningkatkan aliran darah dan oksigen ke seluruh tubuh."
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tips untuk Menambah Jumlah Langkah Harian:"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1. Gunakan tangga daripada lift atau eskalator."
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2. Parkir kendaraan lebih jauh dari pintu masuk tujuan Anda."
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3. Luangkan waktu untuk berjalan-jalan singkat selama istirahat kerja atau setelah makan siang."
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4. Gunakan aplikasi penghitung langkah untuk memantau aktivitas fisik harian Anda dan menetapkan tujuan."
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5. Ajak teman atau keluarga untuk berjalan bersama sehingga lebih menyenangkan dan menjadi kebiasaan."
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dengan menambahkan lebih banyak langkah ke dalam rutinitas harian Anda, Anda dapat mencapai gaya hidup yang lebih sehat dan aktif. Mulailah dengan target yang realistis dan tingkatkan secara bertahap sesuai kemampuan Anda."
+                    android:layout_marginBottom="16dp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

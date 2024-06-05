@@ -28,9 +28,9 @@ import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
 import com.capstone.mobiledevelopment.nutrilens.view.drink.ResetDrinkWorker
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.MenuAdapter
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.MenuItem
-import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.info.MenuAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.info.MenuItem
+import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
@@ -290,7 +290,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private fun setupFab() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
-            val intent = Intent(this@MainActivity, AddFoodActivity::class.java)
+            val intent = Intent(this@MainActivity, CameraFoodActivity::class.java)
             startActivity(intent)
         }
     }

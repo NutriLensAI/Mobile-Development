@@ -26,25 +26,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginWithAnimation">
         <activity
-            android:name=".view.main.InfoActivity"
+            android:name=".view.main.info.InfoActivity"
             android:exported="false" />
         <activity
             android:name=".view.hasil.Ingredients"
             android:exported="false" />
         <activity
-            android:name=".view.addfood.AddDrink"
-            android:exported="false" />
-        <activity
-            android:name=".view.main.InfoDrink"
-            android:exported="false" />
-        <activity
-            android:name=".view.main.InfoSteps"
-            android:exported="false" />
-        <activity
-            android:name=".view.main.InfoCholesterol"
-            android:exported="false" />
-        <activity
-            android:name=".view.main.InfoSugar"
+            android:name=".view.drink.AddDrink"
             android:exported="false" />
         <activity
             android:name=".view.welcome.SignupWelcome"
@@ -62,7 +50,7 @@
             android:name=".view.catatan.CatatanMakanan"
             android:exported="false" />
         <activity
-            android:name=".view.pilihan.PilihanMakanan"
+            android:name=".view.food.FoodChoice"
             android:exported="false" />
         <activity
             android:name=".view.settings.SettingsActivity"
@@ -77,7 +65,7 @@
             android:name=".view.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".view.addfood.AddFoodActivity"
+            android:name=".view.camera.CameraFoodActivity"
             android:exported="false" />
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
