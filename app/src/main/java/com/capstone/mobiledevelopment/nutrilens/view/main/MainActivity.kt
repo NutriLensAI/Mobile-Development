@@ -25,11 +25,11 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
-import com.capstone.mobiledevelopment.nutrilens.view.drink.DrinkDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
 import com.capstone.mobiledevelopment.nutrilens.view.drink.ResetDrinkWorker
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuAdapter
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.MenuItem
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.MenuAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.MenuItem
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView

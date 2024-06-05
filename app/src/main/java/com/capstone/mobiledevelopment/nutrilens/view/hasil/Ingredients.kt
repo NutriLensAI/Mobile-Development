@@ -3,16 +3,13 @@ package com.capstone.mobiledevelopment.nutrilens.view.hasil
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.Makanan
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.MakananAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.Makanan
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.MakananAdapter
 
 class Ingredients : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

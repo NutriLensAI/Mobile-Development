@@ -26,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginWithAnimation">
         <activity
+            android:name=".view.main.InfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.hasil.Ingredients"
             android:exported="false" />
         <activity
@@ -47,10 +50,10 @@
             android:name=".view.welcome.SignupWelcome"
             android:exported="false" />
         <activity
-            android:name="com.capstone.mobiledevelopment.nutrilens.view.resep.Detail"
+            android:name=".view.resep.Detail"
             android:exported="false" />
         <activity
-            android:name="com.capstone.mobiledevelopment.nutrilens.view.resep.Resep"
+            android:name=".view.resep.Resep"
             android:exported="false" />
         <activity
             android:name=".view.hasil.HasilMakanan"

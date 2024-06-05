@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakananBinding
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodAdapter
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodItem
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodItem
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddDrink
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
@@ -116,7 +116,8 @@ class CatatanMakanan : AppCompatActivity() {
             existingFoodItem.protein += protein
             existingFoodItem.calories += calories
         } else {
-            val newFoodItem = FoodItem(mealType, carbs, fat, protein, calories, mutableListOf(FoodItem.FoodDetail(namaMakanan, carbs, fat, protein, calories)))
+            val newFoodItem = FoodItem(mealType, carbs, fat, protein, calories, mutableListOf(
+                FoodItem.FoodDetail(namaMakanan, carbs, fat, protein, calories)))
             foodList.add(newFoodItem)
         }
         adapter.notifyDataSetChanged()

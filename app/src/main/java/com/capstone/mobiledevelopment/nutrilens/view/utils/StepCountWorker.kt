@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.capstone.mobiledevelopment.nutrilens.data.database.AppDatabase
-import com.capstone.mobiledevelopment.nutrilens.data.database.StepCount
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.google.android.gms.fitness.FitnessLocal
 import com.google.android.gms.fitness.data.LocalDataSet

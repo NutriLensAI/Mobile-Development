@@ -1,7 +1,7 @@
 package com.capstone.mobiledevelopment.nutrilens.di
 
 import android.content.Context
-import com.capstone.mobiledevelopment.nutrilens.data.database.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.AppDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository

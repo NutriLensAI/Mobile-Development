@@ -1,7 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.view.resep
 
 
-import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
@@ -9,8 +8,10 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
@@ -18,11 +19,15 @@ import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
-import com.capstone.mobiledevelopment.nutrilens.view.resep.adapter.ResepAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.lang.ref.WeakReference
 import java.net.HttpURLConnection
@@ -54,11 +59,15 @@ class Resep : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = resepAdapter
 
-        // AsyncTask untuk memuat data JSON dari URL
-        LoadRecipeDataTask(this) { loadedList ->
-            resepList = loadedList
-            loadMoreData()
-        }.execute()
+        // Add the divider
+        val dividerItemDecoration = DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
+        ContextCompat.getDrawable(this, R.drawable.divider)?.let {
+            dividerItemDecoration.setDrawable(it)
+        }
+        recyclerView.addItemDecoration(dividerItemDecoration)
+
+        // Load recipe data
+        loadRecipeData()
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -74,7 +83,13 @@ class Resep : AppCompatActivity() {
             }
         })
 
-        // Initialize the custom bottom navigation view
+        // Initialize bottom navigation view and FAB
+        setupBottomNavigationView()
+        setupFAB()
+        setupSearchView()
+    }
+
+    private fun setupBottomNavigationView() {
         val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
         bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
 
@@ -106,16 +121,14 @@ class Resep : AppCompatActivity() {
                 else -> false
             }
         }
+    }
 
-        // Add the FAB click listener
+    private fun setupFAB() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
             val intent = Intent(this@Resep, AddFoodActivity::class.java)
             startActivity(intent)
         }
-
-        // Set up search view
-        setupSearchView()
     }
 
     private fun setupSearchView() {
@@ -153,55 +166,36 @@ class Resep : AppCompatActivity() {
         }
     }
 
-    private class LoadRecipeDataTask(
-        context: Resep,
-        private val callback: (List<ResepItem>) -> Unit
-    ) : AsyncTask<Void, Void, List<ResepItem>>() {
-
-        private val activityReference = WeakReference(context)
-
-        override fun onPreExecute() {
-            super.onPreExecute()
-            activityReference.get()?.progressBar?.visibility = View.VISIBLE
-        }
-
-        override fun doInBackground(vararg params: Void?): List<ResepItem> {
-            val activity = activityReference.get()
-            return if (activity != null) {
+    private fun loadRecipeData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            progressBar.visibility = View.VISIBLE
+            val loadedList = withContext(Dispatchers.IO) {
                 getRecipeDataFromUrl()
-            } else {
-                emptyList()
             }
+            resepList = loadedList
+            loadMoreData()
+            progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun getRecipeDataFromUrl(): List<ResepItem> {
+        val urlString = "https://nutrilensai.github.io/datadummy/datarecipe.json"
+        var jsonString: String
+        try {
+            val url = URL(urlString)
+            val connection = url.openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.connect()
+
+            jsonString = connection.inputStream.bufferedReader().use { it.readText() }
+        } catch (ioException: IOException) {
+            ioException.printStackTrace()
+            return emptyList()
         }
 
-        override fun onPostExecute(result: List<ResepItem>) {
-            super.onPostExecute(result)
-            val activity = activityReference.get()
-            if (activity != null) {
-                callback(result)
-                activity.progressBar.visibility = View.GONE
-            }
-        }
-
-        private fun getRecipeDataFromUrl(): List<ResepItem> {
-            val urlString = "https://nutrilensai.github.io/datadummy/datarecipe.json"
-            var jsonString: String
-            try {
-                val url = URL(urlString)
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-                connection.connect()
-
-                jsonString = connection.inputStream.bufferedReader().use { it.readText() }
-            } catch (ioException: IOException) {
-                ioException.printStackTrace()
-                return emptyList()
-            }
-
-            val gson = Gson()
-            val recipeType = object : TypeToken<RecipeData>() {}.type
-            val recipeData: RecipeData = gson.fromJson(jsonString, recipeType)
-            return recipeData.recipeData
-        }
+        val gson = Gson()
+        val recipeType = object : TypeToken<RecipeData>() {}.type
+        val recipeData: RecipeData = gson.fromJson(jsonString, recipeType)
+        return recipeData.recipeData
     }
 }

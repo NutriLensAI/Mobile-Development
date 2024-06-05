@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.capstone.mobiledevelopment.nutrilens.data.database.StepCount
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.StoriesResponse
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository

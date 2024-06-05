@@ -1,8 +1,8 @@
 package com.capstone.mobiledevelopment.nutrilens.data.repository
 
 import androidx.lifecycle.LiveData
-import com.capstone.mobiledevelopment.nutrilens.data.database.StepCount
-import com.capstone.mobiledevelopment.nutrilens.data.database.StepCountDao
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCountDao
 
 class StepRepository private constructor(
     private val stepCountDao: StepCountDao

@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.Food
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodAdapter2
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.Food
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodAdapter2
 import android.widget.AdapterView
 import android.view.View
 import android.widget.Spinner

@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.Makanan
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.MakananAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.Makanan
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.MakananAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 
 class HasilMakanan : AppCompatActivity() {
