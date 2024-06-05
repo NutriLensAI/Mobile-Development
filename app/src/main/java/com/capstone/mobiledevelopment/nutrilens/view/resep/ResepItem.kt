@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.resep
+package com.capstone.mobiledevelopment.nutrilens.view.resep
 
 data class ResepItem(
     val title: String,

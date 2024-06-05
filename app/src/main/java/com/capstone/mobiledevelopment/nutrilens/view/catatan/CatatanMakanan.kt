@@ -6,14 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakananBinding
-import com.capstone.mobiledevelopment.nutrilens.resep.Resep
+import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.FoodItem
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.addfood.AddDrink
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
-import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 

@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddDrinkBinding
-import com.capstone.mobiledevelopment.nutrilens.drink.Drink
-import com.capstone.mobiledevelopment.nutrilens.drink.DrinkDatabase
+import com.capstone.mobiledevelopment.nutrilens.view.drink.Drink
+import com.capstone.mobiledevelopment.nutrilens.view.drink.DrinkDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

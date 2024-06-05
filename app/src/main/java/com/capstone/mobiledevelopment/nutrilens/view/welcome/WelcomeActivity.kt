@@ -1,6 +1,7 @@
 package com.capstone.mobiledevelopment.nutrilens.view.welcome
 
 import android.content.Intent
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
@@ -37,6 +38,8 @@ class WelcomeActivity : AppCompatActivity() {
         val fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
         val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
         val slideDownAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_down)
+        val imageView = binding.imageView
+        val drawable = imageView.drawable
 
         val imageViewAnimationSet = AnimationSet(true)
         imageViewAnimationSet.addAnimation(zoomInAnimation)
@@ -58,6 +61,12 @@ class WelcomeActivity : AppCompatActivity() {
         val signupButtonAnimationSet = AnimationSet(true)
         signupButtonAnimationSet.addAnimation(slideUpAnimation)
         binding.signupButton.startAnimation(signupButtonAnimationSet)
+
+
+
+        if (drawable is AnimatedVectorDrawable) {
+            drawable.start()
+        }
     }
 
     private fun setupView() {

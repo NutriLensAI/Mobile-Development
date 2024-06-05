@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.resep
+package com.capstone.mobiledevelopment.nutrilens.view.resep
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

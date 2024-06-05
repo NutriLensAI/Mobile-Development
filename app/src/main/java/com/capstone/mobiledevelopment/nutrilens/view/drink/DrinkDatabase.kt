@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.drink
+package com.capstone.mobiledevelopment.nutrilens.view.drink
 
 import android.content.Context
 import androidx.room.Database

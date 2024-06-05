@@ -47,10 +47,10 @@
             android:name=".view.welcome.SignupWelcome"
             android:exported="false" />
         <activity
-            android:name=".resep.Detail"
+            android:name="com.capstone.mobiledevelopment.nutrilens.view.resep.Detail"
             android:exported="false" />
         <activity
-            android:name=".resep.Resep"
+            android:name="com.capstone.mobiledevelopment.nutrilens.view.resep.Resep"
             android:exported="false" />
         <activity
             android:name=".view.hasil.HasilMakanan"

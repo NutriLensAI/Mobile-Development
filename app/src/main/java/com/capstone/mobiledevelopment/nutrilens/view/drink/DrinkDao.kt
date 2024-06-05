@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.drink
+package com.capstone.mobiledevelopment.nutrilens.view.drink
 
 import androidx.room.Dao
 import androidx.room.Insert

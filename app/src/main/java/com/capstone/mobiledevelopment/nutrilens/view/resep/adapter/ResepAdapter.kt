@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.resep.adapter
+package com.capstone.mobiledevelopment.nutrilens.view.resep.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.resep.Detail
+import com.capstone.mobiledevelopment.nutrilens.view.resep.Detail
 
 class ResepAdapter(private val resepList: List<ResepItem>) : RecyclerView.Adapter<ResepAdapter.ResepViewHolder>() {
 
