@@ -105,5 +105,6 @@ dependencies {
     //paging
     implementation(libs.androidx.paging.runtime.ktx)
     implementation (libs.androidx.room.paging)
-
+    implementation ("com.google.code.gson:gson:2.11.0")
+    implementation ("androidx.work:work-runtime-ktx:2.7.1")
 }

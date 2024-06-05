@@ -13,17 +13,13 @@ class Detail : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val imageRes = intent.getStringExtra("EXTRA_IMAGE")?.let { getImageResource(it) }
         val title = intent.getStringExtra("EXTRA_TITLE")
-        val description = intent.getStringExtra("EXTRA_DESCRIPTION")
+        val ingredients = intent.getStringExtra("EXTRA_INGREDIENTS")
+        val steps = intent.getStringExtra("EXTRA_STEPS")
 
-        imageRes?.let { binding.ivDetailImage.setImageResource(it) }
         binding.tvDetailTitle.text = title
-        binding.tvDetailDescription.text = description
-    }
-
-    private fun getImageResource(imageName: String): Int {
-        return resources.getIdentifier(imageName, "drawable", packageName)
+        binding.tvDetailIngredients.text = ingredients?.replace("--", "\n")
+        binding.tvDetailSteps.text = steps?.replace("--", "\n")
     }
 }
 
