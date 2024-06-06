@@ -25,6 +25,7 @@ class PersonalFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_personal, container, false)
 
         personalViewModel.userData.observe(viewLifecycleOwner) { userData ->
+            view.findViewById<TextView>(R.id.tvActivityLevel).text = userData.activity ?: "Not set"
             view.findViewById<TextView>(R.id.tvWeight).text = userData.weight ?: "Not set"
             view.findViewById<TextView>(R.id.tvHeight).text = userData.height ?: "Not set"
             view.findViewById<TextView>(R.id.tvAge).text = userData.age ?: "Not set"

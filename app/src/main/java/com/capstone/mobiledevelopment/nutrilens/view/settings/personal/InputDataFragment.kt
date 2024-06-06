@@ -29,11 +29,12 @@ class InputDataFragment : Fragment() {
     }
 
     private fun saveDataToViewModel(view: View) {
+        val activity = view.findViewById<Spinner>(R.id.spinnerActivityLevel).selectedItem.toString()
         val weight = view.findViewById<EditText>(R.id.tiWeight).text.toString()
         val height = view.findViewById<EditText>(R.id.tiHeight).text.toString()
         val age = view.findViewById<EditText>(R.id.tiAge).text.toString()
         val gender = view.findViewById<Spinner>(R.id.spinnerGender).selectedItem.toString()
-        personalViewModel.saveUserData(weight, height, age, gender)
+        personalViewModel.saveUserData(activity, weight, height, age, gender)
     }
 
     private fun navigateToPersonalFragment() {

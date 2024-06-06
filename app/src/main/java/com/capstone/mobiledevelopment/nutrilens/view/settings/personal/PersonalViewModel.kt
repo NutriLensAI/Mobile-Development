@@ -18,9 +18,10 @@ class PersonalViewModel(application: Application) : AndroidViewModel(application
         loadUserData()
     }
 
-    fun saveUserData(weight: String, height: String, age: String, gender: String) {
-        _userData.value = PersonalData(weight, height, age, gender)
+    fun saveUserData(activity: String, weight: String, height: String, age: String, gender: String) {
+        _userData.value = PersonalData(activity, weight, height, age, gender)
         sharedPreferences.edit().apply {
+            putString("activity", activity)
             putString("weight", weight)
             putString("height", height)
             putString("age", age)
@@ -30,10 +31,11 @@ class PersonalViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun loadUserData() {
+        val activity = sharedPreferences.getString("activity", "Not set")
         val weight = sharedPreferences.getString("weight", "Not set")
         val height = sharedPreferences.getString("height", "Not set")
         val age = sharedPreferences.getString("age", "Not set")
         val gender = sharedPreferences.getString("gender", "Not set")
-        _userData.value = PersonalData(weight!!, height!!, age!!, gender!!)
+        _userData.value = PersonalData(activity!!, weight!!, height!!, age!!, gender!!)
     }
 }
