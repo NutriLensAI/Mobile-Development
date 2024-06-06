@@ -28,7 +28,7 @@ class HasilMakanan : AppCompatActivity() {
         imageUri = intent.getStringExtra("image_uri")?.let { Uri.parse(it) } ?: Uri.EMPTY
         val imageView: ImageView = findViewById(R.id.img_makanan)
 
-        imageUri?.let {
+        imageUri.let {
             Glide.with(this)
                 .load(it)
                 .into(imageView)
