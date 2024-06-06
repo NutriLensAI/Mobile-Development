@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ItemMenuBinding
 import com.capstone.mobiledevelopment.nutrilens.view.main.info.InfoActivity
 
@@ -33,8 +32,18 @@ class MenuAdapter(private val menuList: MutableList<MenuItem>) :
         holder.binding.menuValueTextView.text = menuItem.value
         holder.binding.menuInfoTextView.text = menuItem.info
 
-        holder.binding.root.findViewById<ImageView>(R.id.menuInfoImageView).setOnClickListener {
-            val context = holder.itemView.context
+        val context = holder.itemView.context
+
+        // Set OnClickListener for the CardView to navigate to the appropriate info page
+        holder.binding.root.setOnClickListener {
+            val intent = Intent(context, InfoActivity::class.java).apply {
+                putExtra("FRAGMENT_TYPE", menuItem.title)
+            }
+            context.startActivity(intent)
+        }
+
+        // Set OnClickListener for the info icon to navigate to the appropriate info page
+        holder.binding.root.findViewById<ImageView>(com.capstone.mobiledevelopment.nutrilens.R.id.menuInfoImageView).setOnClickListener {
             val intent = Intent(context, InfoActivity::class.java).apply {
                 putExtra("FRAGMENT_TYPE", menuItem.title)
             }
