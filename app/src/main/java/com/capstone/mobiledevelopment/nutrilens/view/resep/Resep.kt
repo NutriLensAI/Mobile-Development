@@ -1,6 +1,5 @@
 package com.capstone.mobiledevelopment.nutrilens.view.resep
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -13,7 +12,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.FavoriteRecipe
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
@@ -39,6 +41,7 @@ class Resep : AppCompatActivity() {
     private val itemsPerPage = 20
     private lateinit var progressBar: ProgressBar
     private lateinit var searchView: SearchView
+    private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +52,14 @@ class Resep : AppCompatActivity() {
             insets
         }
 
-        resepAdapter = ResepAdapter(mutableListOf())
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "nutrilens-db"
+        ).build()
+
+        resepAdapter = ResepAdapter(mutableListOf()) { recipe ->
+            addFavoriteRecipe(recipe)
+        }
         progressBar = findViewById(R.id.progressBar)
         searchView = findViewById(R.id.searchView)
 
@@ -85,6 +95,18 @@ class Resep : AppCompatActivity() {
         setupBottomNavigationView()
         setupFAB()
         setupSearchView()
+    }
+
+    private fun addFavoriteRecipe(recipe: ResepItem) {
+        CoroutineScope(Dispatchers.IO).launch {
+            db.favoriteRecipeDao().insertFavorite(
+                FavoriteRecipe(
+                    title = recipe.Title,
+                    ingredients = recipe.Ingredients,
+                    steps = recipe.Steps
+                )
+            )
+        }
     }
 
     private fun setupBottomNavigationView() {

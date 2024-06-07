@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.Food
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodAdapter2
@@ -17,19 +18,30 @@ import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.AppDatabase
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PilihanMakanan : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var foodAdapter2: FoodAdapter2
     private lateinit var selectedMealType: String
     private lateinit var allFoodList: List<Food>
-    private lateinit var favoriteFoodList: List<Food>
+    private lateinit var favoriteFoodList: MutableList<Food>
     private lateinit var myRecipesList: List<Food>
+    private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pilihan_makanan)
+
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "nutrilens-db"
+        ).build()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -60,13 +72,11 @@ class PilihanMakanan : AppCompatActivity() {
             Food("Salad Buah", 150, 25, 2, 3)
         )
 
-        favoriteFoodList = listOf(
-            Food("Ayam Bakar", 200, 10, 5, 20)
-        )
-
         myRecipesList = listOf(
             Food("Nasi Goreng", 300, 50, 10, 10)
         )
+
+        loadFavoriteRecipes()
 
         foodAdapter2 = FoodAdapter2(allFoodList) { food ->
             if (selectedMealType.isNotEmpty()) {
@@ -125,5 +135,16 @@ class PilihanMakanan : AppCompatActivity() {
 
     private fun updateRecyclerView(newList: List<Food>) {
         foodAdapter2.updateList(newList)
+    }
+
+    private fun loadFavoriteRecipes() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val favoriteRecipes = withContext(Dispatchers.IO) {
+                db.favoriteRecipeDao().getAllFavorites()
+            }
+            favoriteFoodList = favoriteRecipes.map {
+                Food(it.title, 0, 0, 0, 0)  // Adjust according to your data
+            }.toMutableList()
+        }
     }
 }
