@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.AppDatabase
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityDetailBinding
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.AppDatabase
 import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

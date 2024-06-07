@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.AppDatabase
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan

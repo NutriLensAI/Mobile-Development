@@ -20,8 +20,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipesAdapter
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.AddMyRecipes
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipe
 import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipe
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,8 +39,9 @@ class PilihanMakanan : AppCompatActivity() {
     private lateinit var selectedMealType: String
     private lateinit var allFoodList: List<Food>
     private lateinit var favoriteFoodList: MutableList<FavoriteRecipe>
-    private lateinit var myRecipesList: List<FavoriteRecipe>
+    private lateinit var myRecipesList: MutableList<MyRecipe>
     private lateinit var db: AppDatabase
+    private lateinit var fab: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,11 +81,8 @@ class PilihanMakanan : AppCompatActivity() {
             Food("Salad Buah", 150, 25, 2, 3)
         )
 
-        myRecipesList = listOf(
-            FavoriteRecipe(1, "Nasi Goreng", "Rice -- Eggs -- Spices", "Step 1 -- Step 2 -- Step 3")
-        )
-
         loadFavoriteRecipes()
+        loadMyRecipes()
 
         foodAdapter2 = FoodAdapter2(allFoodList) { food ->
             if (selectedMealType.isNotEmpty()) {
@@ -122,14 +123,17 @@ class PilihanMakanan : AppCompatActivity() {
                     0 -> {
                         recyclerView.adapter = foodAdapter2
                         updateRecyclerView(allFoodList)
+                        fab.hide()
                     }
                     1 -> {
                         recyclerView.adapter = favoriteRecipeAdapter
                         updateFavoriteRecyclerView(favoriteFoodList)
+                        fab.hide()
                     }
                     2 -> {
                         recyclerView.adapter = myRecipesAdapter
                         updateMyRecipesRecyclerView(myRecipesList)
+                        fab.show()
                     }
                 }
             }
@@ -138,6 +142,14 @@ class PilihanMakanan : AppCompatActivity() {
 
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
+
+        // Setup Floating Action Button
+        fab = findViewById(R.id.fab_add_recipe)
+        fab.hide()
+        fab.setOnClickListener {
+            val intent = Intent(this, AddMyRecipes::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun filter(text: String) {
@@ -163,7 +175,7 @@ class PilihanMakanan : AppCompatActivity() {
         favoriteRecipeAdapter.updateList(newList)
     }
 
-    private fun updateMyRecipesRecyclerView(newList: List<FavoriteRecipe>) {
+    private fun updateMyRecipesRecyclerView(newList: List<MyRecipe>) {
         myRecipesAdapter.updateList(newList)
     }
 
@@ -174,7 +186,16 @@ class PilihanMakanan : AppCompatActivity() {
             }
             favoriteFoodList = favoriteRecipes.toMutableList()
             updateFavoriteRecyclerView(favoriteFoodList)
-            updateMyRecipesRecyclerView(myRecipesList) // Load My Recipes similarly if needed
+        }
+    }
+
+    private fun loadMyRecipes() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val myRecipes = withContext(Dispatchers.IO) {
+                db.myRecipeDao().getAllRecipes()
+            }
+            myRecipesList = myRecipes.toMutableList()
+            updateMyRecipesRecyclerView(myRecipesList)
         }
     }
 }
