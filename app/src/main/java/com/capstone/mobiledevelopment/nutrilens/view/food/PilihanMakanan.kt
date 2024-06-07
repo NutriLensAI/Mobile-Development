@@ -17,12 +17,15 @@ import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import com.google.android.material.tabs.TabLayout
 
 class PilihanMakanan : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var foodAdapter2: FoodAdapter2
     private lateinit var selectedMealType: String
-    private lateinit var foodList: List<Food>
+    private lateinit var allFoodList: List<Food>
+    private lateinit var favoriteFoodList: List<Food>
+    private lateinit var myRecipesList: List<Food>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,13 +54,21 @@ class PilihanMakanan : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Create dummy data
-        foodList = listOf(
+        allFoodList = listOf(
             Food("Ayam Bakar", 200, 10, 5, 20),
             Food("Nasi Goreng", 300, 50, 10, 10),
             Food("Salad Buah", 150, 25, 2, 3)
         )
 
-        foodAdapter2 = FoodAdapter2(foodList) { food ->
+        favoriteFoodList = listOf(
+            Food("Ayam Bakar", 200, 10, 5, 20)
+        )
+
+        myRecipesList = listOf(
+            Food("Nasi Goreng", 300, 50, 10, 10)
+        )
+
+        foodAdapter2 = FoodAdapter2(allFoodList) { food ->
             if (selectedMealType.isNotEmpty()) {
                 val intent = Intent(this, CatatanMakanan::class.java).apply {
                     putExtra("meal_type", selectedMealType)
@@ -83,12 +94,36 @@ class PilihanMakanan : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        // Setup Tab Layout
+        val tabLayout: TabLayout = findViewById(R.id.tab_layout)
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> updateRecyclerView(allFoodList)
+                    1 -> updateRecyclerView(favoriteFoodList)
+                    2 -> updateRecyclerView(myRecipesList)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
     }
 
     private fun filter(text: String) {
-        val filteredList = foodList.filter {
+        val filteredList = when {
+            findViewById<TabLayout>(R.id.tab_layout).selectedTabPosition == 1 -> favoriteFoodList
+            findViewById<TabLayout>(R.id.tab_layout).selectedTabPosition == 2 -> myRecipesList
+            else -> allFoodList
+        }.filter {
             it.name.contains(text, ignoreCase = true)
         }
         foodAdapter2.updateList(filteredList)
+    }
+
+    private fun updateRecyclerView(newList: List<Food>) {
+        foodAdapter2.updateList(newList)
     }
 }
