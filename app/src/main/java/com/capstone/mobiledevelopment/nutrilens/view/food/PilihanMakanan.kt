@@ -9,6 +9,7 @@ import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.Food
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodAdapter2
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FavoriteRecipeAdapter
 import android.widget.AdapterView
 import android.view.View
 import android.widget.Spinner
@@ -19,6 +20,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipe
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,9 +30,10 @@ import kotlinx.coroutines.withContext
 class PilihanMakanan : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var foodAdapter2: FoodAdapter2
+    private lateinit var favoriteRecipeAdapter: FavoriteRecipeAdapter
     private lateinit var selectedMealType: String
     private lateinit var allFoodList: List<Food>
-    private lateinit var favoriteFoodList: MutableList<Food>
+    private lateinit var favoriteFoodList: MutableList<FavoriteRecipe>
     private lateinit var myRecipesList: List<Food>
     private lateinit var db: AppDatabase
 
@@ -91,6 +94,9 @@ class PilihanMakanan : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+        favoriteRecipeAdapter = FavoriteRecipeAdapter(emptyList(), this)
+
         recyclerView.adapter = foodAdapter2
 
         // Setup Search Bar
@@ -110,9 +116,18 @@ class PilihanMakanan : AppCompatActivity() {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> updateRecyclerView(allFoodList)
-                    1 -> updateRecyclerView(favoriteFoodList)
-                    2 -> updateRecyclerView(myRecipesList)
+                    0 -> {
+                        recyclerView.adapter = foodAdapter2
+                        updateRecyclerView(allFoodList)
+                    }
+                    1 -> {
+                        recyclerView.adapter = favoriteRecipeAdapter
+                        updateFavoriteRecyclerView(favoriteFoodList)
+                    }
+                    2 -> {
+                        recyclerView.adapter = foodAdapter2
+                        updateRecyclerView(myRecipesList)
+                    }
                 }
             }
 
@@ -124,7 +139,9 @@ class PilihanMakanan : AppCompatActivity() {
 
     private fun filter(text: String) {
         val filteredList = when {
-            findViewById<TabLayout>(R.id.tab_layout).selectedTabPosition == 1 -> favoriteFoodList
+            findViewById<TabLayout>(R.id.tab_layout).selectedTabPosition == 1 -> favoriteFoodList.map {
+                Food(it.title, 0, 0, 0, 0)  // Adjust according to your data
+            }
             findViewById<TabLayout>(R.id.tab_layout).selectedTabPosition == 2 -> myRecipesList
             else -> allFoodList
         }.filter {
@@ -137,14 +154,17 @@ class PilihanMakanan : AppCompatActivity() {
         foodAdapter2.updateList(newList)
     }
 
+    private fun updateFavoriteRecyclerView(newList: List<FavoriteRecipe>) {
+        favoriteRecipeAdapter.updateList(newList)
+    }
+
     private fun loadFavoriteRecipes() {
         CoroutineScope(Dispatchers.Main).launch {
             val favoriteRecipes = withContext(Dispatchers.IO) {
                 db.favoriteRecipeDao().getAllFavorites()
             }
-            favoriteFoodList = favoriteRecipes.map {
-                Food(it.title, 0, 0, 0, 0)  // Adjust according to your data
-            }.toMutableList()
+            favoriteFoodList = favoriteRecipes.toMutableList()
+            updateFavoriteRecyclerView(favoriteFoodList)
         }
     }
 }
