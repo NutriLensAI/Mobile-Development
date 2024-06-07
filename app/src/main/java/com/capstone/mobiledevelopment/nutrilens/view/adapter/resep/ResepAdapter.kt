@@ -5,13 +5,17 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Detail
 import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepItem
 
-class ResepAdapter(private var resepList: MutableList<ResepItem>) : RecyclerView.Adapter<ResepAdapter.ResepViewHolder>() {
+class ResepAdapter(
+    private var resepList: MutableList<ResepItem>,
+    private val onFavoriteClickListener: (ResepItem) -> Unit
+) : RecyclerView.Adapter<ResepAdapter.ResepViewHolder>() {
 
     private val colors = listOf(
         "#AEC6CF", // Blue pastel
@@ -43,6 +47,10 @@ class ResepAdapter(private var resepList: MutableList<ResepItem>) : RecyclerView
             intent.putExtra("EXTRA_STEPS", resep.Steps)
             context.startActivity(intent)
         }
+
+        holder.favoriteButton.setOnClickListener {
+            onFavoriteClickListener(resep)
+        }
     }
 
     override fun getItemCount(): Int = resepList.size
@@ -63,11 +71,6 @@ class ResepAdapter(private var resepList: MutableList<ResepItem>) : RecyclerView
         val tvItemName: TextView = itemView.findViewById(R.id.tv_item_name)
         val tvItemIngredients: TextView = itemView.findViewById(R.id.tv_item_ingredients)
         val tvItemSteps: TextView = itemView.findViewById(R.id.tv_item_steps)
+        val favoriteButton: ImageView = itemView.findViewById(R.id.iv_favorite)
     }
 }
-
-data class ResepItem(
-    val Title: String,
-    val Ingredients: String,
-    val Steps: String
-)
