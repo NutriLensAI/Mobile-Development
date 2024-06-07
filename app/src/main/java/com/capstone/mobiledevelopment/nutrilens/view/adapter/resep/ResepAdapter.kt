@@ -5,8 +5,10 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Detail
@@ -48,7 +50,12 @@ class ResepAdapter(
             context.startActivity(intent)
         }
 
+        holder.favoriteButton.setImageDrawable(ContextCompat.getDrawable(holder.favoriteButton.context, R.drawable.favorite_button_selector))
+        holder.favoriteButton.isSelected = false
+
         holder.favoriteButton.setOnClickListener {
+            holder.favoriteButton.isSelected = !holder.favoriteButton.isSelected
+            animateFavoriteButton(holder.favoriteButton)
             onFavoriteClickListener(resep)
         }
     }
@@ -65,6 +72,17 @@ class ResepAdapter(
         resepList.clear()
         resepList.addAll(newRecipes)
         notifyDataSetChanged()
+    }
+
+    private fun animateFavoriteButton(button: ImageView) {
+        val scaleAnimation = ScaleAnimation(
+            0.7f, 1.2f, 0.7f, 1.2f,
+            ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
+            ScaleAnimation.RELATIVE_TO_SELF, 0.5f
+        )
+        scaleAnimation.duration = 200
+        scaleAnimation.fillAfter = true
+        button.startAnimation(scaleAnimation)
     }
 
     class ResepViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
