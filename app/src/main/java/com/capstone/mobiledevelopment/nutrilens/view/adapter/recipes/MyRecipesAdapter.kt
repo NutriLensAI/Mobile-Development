@@ -1,36 +1,39 @@
 package com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.databinding.ItemMyRecipeBinding
 
-class MyRecipesAdapter(private var recipeList: List<MyRecipe>) : RecyclerView.Adapter<MyRecipesAdapter.MyRecipeViewHolder>() {
+class MyRecipesAdapter(
+    private var recipes: List<MyRecipe>,
+    private val onDeleteClick: (MyRecipe) -> Unit
+) : RecyclerView.Adapter<MyRecipesAdapter.MyRecipesViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecipeViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.resep_card, parent, false)
-        return MyRecipeViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecipesViewHolder {
+        val binding = ItemMyRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MyRecipesViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyRecipeViewHolder, position: Int) {
-        val recipe = recipeList[position]
-        holder.tvItemName.text = recipe.title
-        holder.tvItemIngredients.text = recipe.ingredients.replace("--", "\n")
-        holder.tvItemSteps.text = recipe.steps.replace("--", "\n")
+    override fun onBindViewHolder(holder: MyRecipesViewHolder, position: Int) {
+        holder.bind(recipes[position])
     }
 
-    override fun getItemCount(): Int = recipeList.size
+    override fun getItemCount(): Int = recipes.size
 
-    fun updateList(newList: List<MyRecipe>) {
-        recipeList = newList
+    fun updateList(newRecipes: List<MyRecipe>) {
+        recipes = newRecipes
         notifyDataSetChanged()
     }
 
-    class MyRecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvItemName: TextView = itemView.findViewById(R.id.tv_item_name)
-        val tvItemIngredients: TextView = itemView.findViewById(R.id.tv_item_ingredients)
-        val tvItemSteps: TextView = itemView.findViewById(R.id.tv_item_steps)
+    inner class MyRecipesViewHolder(private val binding: ItemMyRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(recipe: MyRecipe) {
+            binding.tvItemName.text = recipe.title
+            binding.tvItemIngredients.text = recipe.ingredients
+            binding.tvItemSteps.text = recipe.steps
+            binding.btnDelete.setOnClickListener {
+                onDeleteClick(recipe)
+            }
+        }
     }
 }

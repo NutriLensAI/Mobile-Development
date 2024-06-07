@@ -11,3 +11,4 @@ data class MyRecipe(
     @ColumnInfo(name = "ingredients") val ingredients: String,
     @ColumnInfo(name = "steps") val steps: String
 )
+

@@ -99,7 +99,9 @@ class PilihanMakanan : AppCompatActivity() {
         }
 
         favoriteRecipeAdapter = FavoriteRecipeAdapter(emptyList(), this)
-        myRecipesAdapter = MyRecipesAdapter(emptyList())
+        myRecipesAdapter = MyRecipesAdapter(emptyList()) { recipe ->
+            deleteRecipe(recipe)
+        }
 
         recyclerView.adapter = foodAdapter2
 
@@ -145,7 +147,6 @@ class PilihanMakanan : AppCompatActivity() {
 
         // Setup Floating Action Button
         fab = findViewById(R.id.fab_add_recipe)
-        fab.hide()
         fab.setOnClickListener {
             val intent = Intent(this, AddMyRecipes::class.java)
             startActivity(intent)
@@ -196,6 +197,16 @@ class PilihanMakanan : AppCompatActivity() {
             }
             myRecipesList = myRecipes.toMutableList()
             updateMyRecipesRecyclerView(myRecipesList)
+        }
+    }
+
+    private fun deleteRecipe(recipe: MyRecipe) {
+        CoroutineScope(Dispatchers.IO).launch {
+            db.myRecipeDao().deleteRecipe(recipe)
+            withContext(Dispatchers.Main) {
+                myRecipesList.remove(recipe)
+                updateMyRecipesRecyclerView(myRecipesList)
+            }
         }
     }
 }
