@@ -14,11 +14,15 @@ import android.widget.Spinner
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 
-class FoodChoice : AppCompatActivity() {
+class PilihanMakanan : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var foodAdapter2: FoodAdapter2
     private lateinit var selectedMealType: String
+    private lateinit var foodList: List<Food>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +51,7 @@ class FoodChoice : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Create dummy data
-        val foodList = listOf(
+        foodList = listOf(
             Food("Ayam Bakar", 200, 10, 5, 20),
             Food("Nasi Goreng", 300, 50, 10, 10),
             Food("Salad Buah", 150, 25, 2, 3)
@@ -67,5 +71,24 @@ class FoodChoice : AppCompatActivity() {
             }
         }
         recyclerView.adapter = foodAdapter2
+
+        // Setup Search Bar
+        val searchBar: EditText = findViewById(R.id.search_bar)
+        searchBar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    private fun filter(text: String) {
+        val filteredList = foodList.filter {
+            it.name.contains(text, ignoreCase = true)
+        }
+        foodAdapter2.updateList(filteredList)
     }
 }

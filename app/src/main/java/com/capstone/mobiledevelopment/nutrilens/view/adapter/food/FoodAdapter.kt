@@ -8,7 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.view.food.FoodChoice
+import com.capstone.mobiledevelopment.nutrilens.view.food.PilihanMakanan
 
 data class FoodItem(
     val mealTitle: String,
@@ -62,7 +62,7 @@ class FoodAdapter(private val foodList: List<FoodItem>) :
         // Set the OnClickListener for the add button
         holder.btnAddFood.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, FoodChoice::class.java)
+            val intent = Intent(context, PilihanMakanan::class.java)
             intent.putExtra("meal_type", foodItem.mealTitle)
             context.startActivity(intent)
         }

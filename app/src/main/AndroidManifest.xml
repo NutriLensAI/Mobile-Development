@@ -50,7 +50,7 @@
             android:name=".view.catatan.CatatanMakanan"
             android:exported="false" />
         <activity
-            android:name=".view.food.FoodChoice"
+            android:name=".view.food.PilihanMakanan"
             android:exported="false" />
         <activity
             android:name=".view.settings.SettingsActivity"
