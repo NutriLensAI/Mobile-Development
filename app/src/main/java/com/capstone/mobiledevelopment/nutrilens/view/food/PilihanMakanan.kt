@@ -19,6 +19,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipesAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.AppDatabase
 import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipe
 import com.google.android.material.tabs.TabLayout
@@ -31,10 +32,11 @@ class PilihanMakanan : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var foodAdapter2: FoodAdapter2
     private lateinit var favoriteRecipeAdapter: FavoriteRecipeAdapter
+    private lateinit var myRecipesAdapter: MyRecipesAdapter
     private lateinit var selectedMealType: String
     private lateinit var allFoodList: List<Food>
     private lateinit var favoriteFoodList: MutableList<FavoriteRecipe>
-    private lateinit var myRecipesList: List<Food>
+    private lateinit var myRecipesList: List<FavoriteRecipe>
     private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,8 +78,9 @@ class PilihanMakanan : AppCompatActivity() {
         )
 
         myRecipesList = listOf(
-            Food("Nasi Goreng", 300, 50, 10, 10)
+            FavoriteRecipe(1, "Nasi Goreng", "Rice -- Eggs -- Spices", "Step 1 -- Step 2 -- Step 3")
         )
+
 
         loadFavoriteRecipes()
 
@@ -96,6 +99,7 @@ class PilihanMakanan : AppCompatActivity() {
         }
 
         favoriteRecipeAdapter = FavoriteRecipeAdapter(emptyList(), this)
+        myRecipesAdapter = MyRecipesAdapter(emptyList(), this)
 
         recyclerView.adapter = foodAdapter2
 
@@ -125,8 +129,8 @@ class PilihanMakanan : AppCompatActivity() {
                         updateFavoriteRecyclerView(favoriteFoodList)
                     }
                     2 -> {
-                        recyclerView.adapter = foodAdapter2
-                        updateRecyclerView(myRecipesList)
+                        recyclerView.adapter = myRecipesAdapter
+                        updateMyRecipesRecyclerView(myRecipesList)
                     }
                 }
             }
@@ -142,7 +146,9 @@ class PilihanMakanan : AppCompatActivity() {
             findViewById<TabLayout>(R.id.tab_layout).selectedTabPosition == 1 -> favoriteFoodList.map {
                 Food(it.title, 0, 0, 0, 0)  // Adjust according to your data
             }
-            findViewById<TabLayout>(R.id.tab_layout).selectedTabPosition == 2 -> myRecipesList
+            findViewById<TabLayout>(R.id.tab_layout).selectedTabPosition == 2 -> myRecipesList.map {
+                Food(it.title, 0, 0, 0, 0)  // Adjust according to your data
+            }
             else -> allFoodList
         }.filter {
             it.name.contains(text, ignoreCase = true)
@@ -158,6 +164,10 @@ class PilihanMakanan : AppCompatActivity() {
         favoriteRecipeAdapter.updateList(newList)
     }
 
+    private fun updateMyRecipesRecyclerView(newList: List<FavoriteRecipe>) {
+        myRecipesAdapter.updateList(newList)
+    }
+
     private fun loadFavoriteRecipes() {
         CoroutineScope(Dispatchers.Main).launch {
             val favoriteRecipes = withContext(Dispatchers.IO) {
@@ -165,6 +175,7 @@ class PilihanMakanan : AppCompatActivity() {
             }
             favoriteFoodList = favoriteRecipes.toMutableList()
             updateFavoriteRecyclerView(favoriteFoodList)
+            updateMyRecipesRecyclerView(myRecipesList) // Load My Recipes similarly if needed
         }
     }
 }
