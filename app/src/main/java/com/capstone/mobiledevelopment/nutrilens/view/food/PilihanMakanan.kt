@@ -81,7 +81,6 @@ class PilihanMakanan : AppCompatActivity() {
             FavoriteRecipe(1, "Nasi Goreng", "Rice -- Eggs -- Spices", "Step 1 -- Step 2 -- Step 3")
         )
 
-
         loadFavoriteRecipes()
 
         foodAdapter2 = FoodAdapter2(allFoodList) { food ->
@@ -99,7 +98,7 @@ class PilihanMakanan : AppCompatActivity() {
         }
 
         favoriteRecipeAdapter = FavoriteRecipeAdapter(emptyList(), this)
-        myRecipesAdapter = MyRecipesAdapter(emptyList(), this)
+        myRecipesAdapter = MyRecipesAdapter(emptyList())
 
         recyclerView.adapter = foodAdapter2
 

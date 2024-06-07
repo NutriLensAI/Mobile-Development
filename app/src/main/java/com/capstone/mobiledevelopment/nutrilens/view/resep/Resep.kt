@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.AppDatabase
-import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipe
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
@@ -57,9 +56,7 @@ class Resep : AppCompatActivity() {
             AppDatabase::class.java, "nutrilens-db"
         ).build()
 
-        resepAdapter = ResepAdapter(mutableListOf(), db) { recipe, isFavorite ->
-            handleFavoriteClick(recipe, isFavorite)
-        }
+        resepAdapter = ResepAdapter(mutableListOf())
         progressBar = findViewById(R.id.progressBar)
         searchView = findViewById(R.id.searchView)
 
@@ -95,22 +92,6 @@ class Resep : AppCompatActivity() {
         setupBottomNavigationView()
         setupFAB()
         setupSearchView()
-    }
-
-    private fun handleFavoriteClick(recipe: ResepItem, isFavorite: Boolean) {
-        CoroutineScope(Dispatchers.IO).launch {
-            if (isFavorite) {
-                db.favoriteRecipeDao().insertFavorite(
-                    FavoriteRecipe(
-                        title = recipe.Title,
-                        ingredients = recipe.Ingredients,
-                        steps = recipe.Steps
-                    )
-                )
-            } else {
-                db.favoriteRecipeDao().removeFavoriteByTitle(recipe.Title)
-            }
-        }
     }
 
     private fun setupBottomNavigationView() {

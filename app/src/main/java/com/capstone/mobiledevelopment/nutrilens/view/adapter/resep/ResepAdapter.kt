@@ -5,21 +5,14 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.ScaleAnimation
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Detail
 import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepItem
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class ResepAdapter(
-    private var resepList: MutableList<ResepItem>,
-    private val db: AppDatabase,
-    private val onFavoriteClickListener: (ResepItem, Boolean) -> Unit
+    private var resepList: MutableList<ResepItem>
 ) : RecyclerView.Adapter<ResepAdapter.ResepViewHolder>() {
 
     private val colors = listOf(
@@ -52,18 +45,6 @@ class ResepAdapter(
             intent.putExtra("EXTRA_STEPS", resep.Steps)
             context.startActivity(intent)
         }
-
-        CoroutineScope(Dispatchers.Main).launch {
-            val favoriteRecipe = db.favoriteRecipeDao().getFavoriteByTitle(resep.Title)
-            holder.favoriteButton.isSelected = favoriteRecipe != null
-
-            holder.favoriteButton.setOnClickListener {
-                val isSelected = !holder.favoriteButton.isSelected
-                holder.favoriteButton.isSelected = isSelected
-                animateFavoriteButton(holder.favoriteButton)
-                onFavoriteClickListener(resep, isSelected)
-            }
-        }
     }
 
     override fun getItemCount(): Int = resepList.size
@@ -80,21 +61,9 @@ class ResepAdapter(
         notifyDataSetChanged()
     }
 
-    private fun animateFavoriteButton(button: ImageView) {
-        val scaleAnimation = ScaleAnimation(
-            0.7f, 1.2f, 0.7f, 1.2f,
-            ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
-            ScaleAnimation.RELATIVE_TO_SELF, 0.5f
-        )
-        scaleAnimation.duration = 200
-        scaleAnimation.fillAfter = true
-        button.startAnimation(scaleAnimation)
-    }
-
     class ResepViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvItemName: TextView = itemView.findViewById(R.id.tv_item_name)
         val tvItemIngredients: TextView = itemView.findViewById(R.id.tv_item_ingredients)
         val tvItemSteps: TextView = itemView.findViewById(R.id.tv_item_steps)
-        val favoriteButton: ImageView = itemView.findViewById(R.id.iv_favorite)
     }
 }
