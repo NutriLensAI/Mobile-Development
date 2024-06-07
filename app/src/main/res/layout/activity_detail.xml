@@ -110,7 +110,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_detail_ingredients"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="Langkah-langkah" />
+
+            <ImageView
+                android:id="@+id/iv_favorite"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_heart_outline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/favorite" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
