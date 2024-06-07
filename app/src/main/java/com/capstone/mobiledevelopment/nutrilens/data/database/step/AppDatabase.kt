@@ -4,9 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCountDao
+import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipe
+import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipeDao
 
-@Database(entities = [StepCount::class], version = 1, exportSchema = false)
+@Database(entities = [StepCount::class, FavoriteRecipe::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun favoriteRecipeDao(): FavoriteRecipeDao
     abstract fun stepCountDao(): StepCountDao
 
     companion object {
@@ -18,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "step_count_database"
+                    "nutrilens_database"
                 ).build()
                 INSTANCE = instance
                 instance
@@ -26,3 +31,4 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 }
+

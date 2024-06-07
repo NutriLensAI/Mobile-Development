@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.AppDatabase
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.FavoriteRecipe
+import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipe
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
@@ -57,8 +57,8 @@ class Resep : AppCompatActivity() {
             AppDatabase::class.java, "nutrilens-db"
         ).build()
 
-        resepAdapter = ResepAdapter(mutableListOf()) { recipe ->
-            addFavoriteRecipe(recipe)
+        resepAdapter = ResepAdapter(mutableListOf(), db) { recipe, isFavorite ->
+            handleFavoriteClick(recipe, isFavorite)
         }
         progressBar = findViewById(R.id.progressBar)
         searchView = findViewById(R.id.searchView)
@@ -97,15 +97,19 @@ class Resep : AppCompatActivity() {
         setupSearchView()
     }
 
-    private fun addFavoriteRecipe(recipe: ResepItem) {
+    private fun handleFavoriteClick(recipe: ResepItem, isFavorite: Boolean) {
         CoroutineScope(Dispatchers.IO).launch {
-            db.favoriteRecipeDao().insertFavorite(
-                FavoriteRecipe(
-                    title = recipe.Title,
-                    ingredients = recipe.Ingredients,
-                    steps = recipe.Steps
+            if (isFavorite) {
+                db.favoriteRecipeDao().insertFavorite(
+                    FavoriteRecipe(
+                        title = recipe.Title,
+                        ingredients = recipe.Ingredients,
+                        steps = recipe.Steps
+                    )
                 )
-            )
+            } else {
+                db.favoriteRecipeDao().removeFavoriteByTitle(recipe.Title)
+            }
         }
     }
 

@@ -8,15 +8,18 @@ import android.view.ViewGroup
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Detail
 import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ResepAdapter(
     private var resepList: MutableList<ResepItem>,
-    private val onFavoriteClickListener: (ResepItem) -> Unit
+    private val db: AppDatabase,
+    private val onFavoriteClickListener: (ResepItem, Boolean) -> Unit
 ) : RecyclerView.Adapter<ResepAdapter.ResepViewHolder>() {
 
     private val colors = listOf(
@@ -50,13 +53,16 @@ class ResepAdapter(
             context.startActivity(intent)
         }
 
-        holder.favoriteButton.setImageDrawable(ContextCompat.getDrawable(holder.favoriteButton.context, R.drawable.favorite_button_selector))
-        holder.favoriteButton.isSelected = false
+        CoroutineScope(Dispatchers.Main).launch {
+            val favoriteRecipe = db.favoriteRecipeDao().getFavoriteByTitle(resep.Title)
+            holder.favoriteButton.isSelected = favoriteRecipe != null
 
-        holder.favoriteButton.setOnClickListener {
-            holder.favoriteButton.isSelected = !holder.favoriteButton.isSelected
-            animateFavoriteButton(holder.favoriteButton)
-            onFavoriteClickListener(resep)
+            holder.favoriteButton.setOnClickListener {
+                val isSelected = !holder.favoriteButton.isSelected
+                holder.favoriteButton.isSelected = isSelected
+                animateFavoriteButton(holder.favoriteButton)
+                onFavoriteClickListener(resep, isSelected)
+            }
         }
     }
 
