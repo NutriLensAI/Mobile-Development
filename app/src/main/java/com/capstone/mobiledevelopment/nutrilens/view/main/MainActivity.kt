@@ -97,7 +97,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         scheduleResetDrinkWorker()
 
         // Create a PendingIntent for Sleep API events
-        sleepPendingIntent = SleepReceiver.createSleepReceiverPendingIntent(context = applicationContext)
+        sleepPendingIntent = SleepReceiver.createSleepReceiverPendingIntent(applicationContext)
+
+        // Automatically subscribe to sleep data
+        viewModel.subscribedToSleepDataLiveData.observe(this) { newSubscribedToSleepData ->
+            if (subscribedToSleepData != newSubscribedToSleepData) {
+                subscribedToSleepData = newSubscribedToSleepData
+            }
+        }
     }
 
     private fun setupViewModelObservers() {
@@ -108,6 +115,23 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         viewModel.token.observe(this) { token ->
             if (!token.isNullOrEmpty()) {
                 viewModel.getStories()
+            }
+        }
+
+        // Observe Sleep Data
+        viewModel.allSleepSegments.observe(this) { sleepSegmentEventEntities ->
+            Log.d(TAG, "sleepSegmentEventEntities: $sleepSegmentEventEntities")
+
+            if (sleepSegmentEventEntities.isNotEmpty()) {
+                updateCholesterolMenuItem()
+            }
+        }
+
+        viewModel.allSleepClassifyEventEntities.observe(this) { sleepClassifyEventEntities ->
+            Log.d(TAG, "sleepClassifyEventEntities: $sleepClassifyEventEntities")
+
+            if (sleepClassifyEventEntities.isNotEmpty()) {
+                updateCholesterolMenuItem()
             }
         }
     }
@@ -326,6 +350,21 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private fun cancelAllWork() {
         WorkManager.getInstance(this).cancelAllWorkByTag("StepCountWork")
+    }
+
+    private fun updateCholesterolMenuItem() {
+        Log.d(TAG, "updateCholesterolMenuItem()")
+
+        val menuList = mutableListOf(
+            MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
+            MenuItem("Cholesterol", R.drawable.ic_cholesterol, "100 mg/dL", "Cholesterol Numbers and What They Mean"),
+            MenuItem("Steps", R.drawable.ic_steps, "0/10,000 steps", "How much should you walk every day?"),
+            MenuItem("Drink", R.drawable.ic_drink, "0 ml", "How much should you drink every day?")
+        )
+
+        val adapter = MenuAdapter(menuList)
+        binding.menuRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        binding.menuRecyclerView.adapter = adapter
     }
 
     companion object {

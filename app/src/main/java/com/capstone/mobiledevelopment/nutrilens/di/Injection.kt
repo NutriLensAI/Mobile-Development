@@ -1,9 +1,12 @@
 package com.capstone.mobiledevelopment.nutrilens.di
 
 import android.content.Context
+import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.pref.SLEEP_PREFERENCES_NAME
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
+import com.capstone.mobiledevelopment.nutrilens.data.repository.SleepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StoryRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
@@ -30,5 +33,13 @@ object Injection {
         val db = StepDatabase.getDatabase(context)
         val dao = db.stepCountDao()
         return StepRepository.getInstance(dao)
+    }
+
+    fun provideSleepCountRepository(context: Context): SleepRepository {
+        val db = SleepDatabase.getDatabase(context)
+        val event = db.sleepClassifyEventDao()
+        val segment = db.sleepSegmentEventDao()
+        val sleepSubscriptionStatus = UserPreference.SleepSubscriptionStatus(context.dataStore)
+        return SleepRepository.getInstance(sleepSubscriptionStatus, segment, event)
     }
 }

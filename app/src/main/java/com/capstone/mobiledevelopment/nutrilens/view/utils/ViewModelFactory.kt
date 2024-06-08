@@ -3,9 +3,11 @@ package com.capstone.mobiledevelopment.nutrilens.view.utils
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.capstone.mobiledevelopment.nutrilens.data.repository.SleepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StoryRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
+import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideSleepCountRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideStepCountRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideStoryRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideUserRepository
@@ -17,14 +19,15 @@ import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupViewModel
 class ViewModelFactory(
     private val userRepository: UserRepository,
     private val storyRepository: StoryRepository,
-    private val stepRepository: StepRepository
+    private val stepRepository: StepRepository,
+    private val sleepRepository: SleepRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(userRepository, storyRepository, stepRepository) as T
+                MainViewModel(userRepository, storyRepository, sleepRepository ,stepRepository) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(userRepository, storyRepository) as T
@@ -49,7 +52,8 @@ class ViewModelFactory(
                 INSTANCE ?: ViewModelFactory(
                     provideUserRepository(context),
                     provideStoryRepository(context),
-                    provideStepCountRepository(context)
+                    provideStepCountRepository(context),
+                    provideSleepCountRepository(context)
                 ).also { INSTANCE = it }
             }
         }
