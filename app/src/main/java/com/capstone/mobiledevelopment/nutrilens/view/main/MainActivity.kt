@@ -1,6 +1,8 @@
 package com.capstone.mobiledevelopment.nutrilens.view.main
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -34,14 +36,16 @@ import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
-import com.capstone.mobiledevelopment.nutrilens.view.utils.StepCountWorker
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
+import com.capstone.mobiledevelopment.nutrilens.view.utils.reciever.SleepReceiver
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.fitness.FitnessLocal
 import com.google.android.gms.fitness.LocalRecordingClient
 import com.google.android.gms.fitness.data.LocalDataType
+import com.google.android.gms.location.ActivityRecognition
+import com.google.android.gms.location.SleepSegmentRequest
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -63,6 +67,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private val sharedPreferences by lazy {
         getSharedPreferences("step_prefs", Context.MODE_PRIVATE)
     }
+
+    private var subscribedToSleepData = false
+    private lateinit var sleepPendingIntent: PendingIntent
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,6 +95,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         // Schedule the worker to reset drink data at midnight
         scheduleResetDrinkWorker()
+
+        // Create a PendingIntent for Sleep API events
+        sleepPendingIntent = SleepReceiver.createSleepReceiverPendingIntent(context = applicationContext)
     }
 
     private fun setupViewModelObservers() {
@@ -111,11 +121,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    private fun setupPeriodicWork() {
-        val workRequest = PeriodicWorkRequestBuilder<StepCountWorker>(15, TimeUnit.MINUTES).build()
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork("StepCountWork", ExistingPeriodicWorkPolicy.REPLACE, workRequest)
-    }
-
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ActivityCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
@@ -133,12 +138,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 finish()
             }
         } else {
-            subscribeToFitnessData()
+            subscribeToActivityData()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
-    private fun subscribeToFitnessData() {
+    private fun subscribeToActivityData() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
             return
@@ -147,11 +152,30 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val localRecordingClient = FitnessLocal.getLocalRecordingClient(this)
         localRecordingClient.subscribe(LocalDataType.TYPE_STEP_COUNT_DELTA)
             .addOnSuccessListener {
-                Log.i(TAG, "Successfully subscribed!")
+                Log.i(TAG, "Successfully subscribed to step count!")
             }
             .addOnFailureListener { e ->
-                Log.w(TAG, "There was a problem subscribing.", e)
+                Log.w(TAG, "There was a problem subscribing to step count.", e)
             }
+
+        subscribeToSleepSegmentUpdates(applicationContext, sleepPendingIntent)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun subscribeToSleepSegmentUpdates(context: Context, pendingIntent: PendingIntent) {
+        Log.d(TAG, "requestSleepSegmentUpdates()")
+        val task = ActivityRecognition.getClient(context).requestSleepSegmentUpdates(
+            pendingIntent,
+            SleepSegmentRequest.getDefaultSleepSegmentRequest()
+        )
+
+        task.addOnSuccessListener {
+            viewModel.updateSubscribedToSleepData(true)
+            Log.d(TAG, "Successfully subscribed to sleep data.")
+        }
+        task.addOnFailureListener { exception ->
+            Log.d(TAG, "Exception when subscribing to sleep data: $exception")
+        }
     }
 
     private fun setupRecyclerView(currentSteps: Int, totalDrinkAmount: Int) {

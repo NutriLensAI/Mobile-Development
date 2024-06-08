@@ -12,27 +12,27 @@ import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteReci
 import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipeDao
 
 @Database(entities = [StepCount::class, FavoriteRecipe::class, MyRecipe::class], version = 2, exportSchema = false)
-abstract class AppDatabase : RoomDatabase() {
+abstract class StepDatabase : RoomDatabase() {
     abstract fun favoriteRecipeDao(): FavoriteRecipeDao
     abstract fun myRecipeDao(): MyRecipeDao
     abstract fun stepCountDao(): StepCountDao
 
     companion object {
         @Volatile
-        private var INSTANCE: AppDatabase? = null
+        private var INSTANCE: StepDatabase? = null
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
+            override fun migrate(db: SupportSQLiteDatabase) {
                 // Migration code if necessary
                 // e.g., database.execSQL("ALTER TABLE my_recipes ADD COLUMN new_column INTEGER NOT NULL DEFAULT 0")
             }
         }
 
-        fun getDatabase(context: Context): AppDatabase {
+        fun getDatabase(context: Context): StepDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java,
+                    StepDatabase::class.java,
                     "nutrilens_database"
                 )
                     .addMigrations(MIGRATION_1_2)

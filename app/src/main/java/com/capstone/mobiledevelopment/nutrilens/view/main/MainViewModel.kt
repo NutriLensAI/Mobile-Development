@@ -7,24 +7,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepClassifyEventEntity
+import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepSegmentEventEntity
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.StoriesResponse
+import com.capstone.mobiledevelopment.nutrilens.data.repository.SleepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StoryRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.ZoneId
-import java.time.ZoneOffset
 
 class MainViewModel(
     private val userRepository: UserRepository,
     private val storyRepository: StoryRepository,
+    private val sleepRepository: SleepRepository,
     private val stepRepository: StepRepository
 ) : ViewModel() {
 
@@ -68,26 +67,27 @@ class MainViewModel(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getTotalStepsForToday(): LiveData<Int> {
-        val today = System.currentTimeMillis()
-        val startOfDay = LocalDateTime.ofInstant(Instant.ofEpochMilli(today), ZoneId.systemDefault())
-            .with(LocalTime.MIN).toEpochSecond(ZoneOffset.UTC) * 1000
-        val endOfDay = LocalDateTime.ofInstant(Instant.ofEpochMilli(today), ZoneId.systemDefault())
-            .with(LocalTime.MAX).toEpochSecond(ZoneOffset.UTC) * 1000
-
-        val totalStepsLiveData = MutableLiveData<Int>()
-        viewModelScope.launch {
-            val totalSteps = stepRepository.getSumStepCounts(startOfDay, endOfDay)
-            totalStepsLiveData.postValue(totalSteps)
-        }
-        return totalStepsLiveData
-    }
-
     fun saveStepCount(stepCount: Int) {
         viewModelScope.launch {
             val today = System.currentTimeMillis()
             stepRepository.saveStepCount(StepCount(stepCount = stepCount, date = today))
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    val subscribedToSleepDataLiveData = sleepRepository.subscribedToSleepDataFlow.asLiveData()
+
+    fun updateSubscribedToSleepData(subscribed: Boolean) = viewModelScope.launch {
+        sleepRepository.updateSubscribedToSleepData(subscribed)
+    }
+
+    // Using LiveData and caching what allWords returns has several benefits:
+    // - We can put an observer on the data (instead of polling for changes) and only update the
+    //   UI when the data actually changes.
+    // - Repository is completely separated from the UI through the ViewModel.
+    val allSleepSegments: LiveData<List<SleepSegmentEventEntity>> =
+        sleepRepository.allSleepSegmentEvents.asLiveData()
+
+    val allSleepClassifyEventEntities: LiveData<List<SleepClassifyEventEntity>> =
+        sleepRepository.allSleepClassifyEvents.asLiveData()
 }

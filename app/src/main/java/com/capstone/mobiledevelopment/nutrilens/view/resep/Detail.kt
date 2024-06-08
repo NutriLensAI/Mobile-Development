@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.data.database.step.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityDetailBinding
 import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipe
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class Detail : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var db: AppDatabase
+    private lateinit var db: StepDatabase
     private var isFavorite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class Detail : AppCompatActivity() {
 
         db = Room.databaseBuilder(
             applicationContext,
-            AppDatabase::class.java, "nutrilens-db"
+            StepDatabase::class.java, "nutrilens-db"
         ).build()
 
         val title = intent.getStringExtra("EXTRA_TITLE")

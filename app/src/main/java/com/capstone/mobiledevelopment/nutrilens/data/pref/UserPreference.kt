@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
+const val SLEEP_PREFERENCES_NAME = "sleep_preferences"
 
 class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
 
@@ -48,6 +49,26 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     fun getStepCount(): Flow<Int> {
         return dataStore.data.map { preferences ->
             preferences[STEP_COUNT_KEY] ?: 0
+        }
+    }
+
+    class SleepSubscriptionStatus(private val dataStore: DataStore<Preferences>) {
+
+        private object PreferencesKeys {
+            val SUBSCRIBED_TO_SLEEP_DATA = booleanPreferencesKey("subscribed_to_sleep_data")
+        }
+
+        // Observed Flow will notify the observer when the the sleep subscription status has changed.
+        val subscribedToSleepDataFlow: Flow<Boolean> = dataStore.data.map { preferences ->
+            // Get the subscription value, defaults to false if not set:
+            preferences[PreferencesKeys.SUBSCRIBED_TO_SLEEP_DATA] ?: false
+        }
+
+        // Updates subscription status.
+        suspend fun updateSubscribedToSleepData(subscribedToSleepData: Boolean) {
+            dataStore.edit { preferences ->
+                preferences[PreferencesKeys.SUBSCRIBED_TO_SLEEP_DATA] = subscribedToSleepData
+            }
         }
     }
 

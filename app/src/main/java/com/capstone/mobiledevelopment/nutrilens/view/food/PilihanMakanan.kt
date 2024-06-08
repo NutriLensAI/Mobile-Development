@@ -20,7 +20,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipesAdapter
-import com.capstone.mobiledevelopment.nutrilens.data.database.step.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.AddMyRecipes
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipe
 import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipe
@@ -40,7 +40,7 @@ class PilihanMakanan : AppCompatActivity() {
     private lateinit var allFoodList: List<Food>
     private lateinit var favoriteFoodList: MutableList<FavoriteRecipe>
     private lateinit var myRecipesList: MutableList<MyRecipe>
-    private lateinit var db: AppDatabase
+    private lateinit var db: StepDatabase
     private lateinit var fab: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class PilihanMakanan : AppCompatActivity() {
 
         db = Room.databaseBuilder(
             applicationContext,
-            AppDatabase::class.java, "nutrilens-db"
+            StepDatabase::class.java, "nutrilens-db"
         ).build()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
