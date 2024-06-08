@@ -5,6 +5,8 @@ import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.LoginRequest
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RegisterRequest
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository private constructor(
@@ -24,11 +26,13 @@ class UserRepository private constructor(
     }
 
     suspend fun register(name: String, email: String, password: String): RegisterResponse {
-        return apiService.register(name, email, password)
+        val request = RegisterRequest(username = name, email = email, password = password)
+        return apiService.register(request)
     }
 
     suspend fun login(email: String, password: String): LoginResponse {
-        return apiService.login(email, password)
+        val request = LoginRequest(email = email, password = password)
+        return apiService.login(request)
     }
 
     companion object {
@@ -36,7 +40,7 @@ class UserRepository private constructor(
         private var instance: UserRepository? = null
 
         fun getInstance(userPreference: UserPreference, apiService: ApiService): UserRepository {
-            return synchronized(this) {
+            return instance ?: synchronized(this) {
                 instance ?: UserRepository(userPreference, apiService).also { instance = it }
             }
         }

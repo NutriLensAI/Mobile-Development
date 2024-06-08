@@ -24,15 +24,13 @@ class SignupViewModel( private val userRepository: UserRepository) : ViewModel()
     fun register(name: String, email: String, password: String) {
         viewModelScope.launch {
             try {
-                _isLoading.value = true // Start loading
-                Log.d(TAG, "Registration started")
+                _isLoading.value = true
                 val response = userRepository.register(name, email, password)
                 _registrationResult.value = Result.Success(response)
-                Log.d(TAG, "Registration successful: ${response.message}")
             } catch (e: Exception) {
-                handleRegistrationError(e)
+                _registrationResult.value = Result.Failure(e)
             } finally {
-                _isLoading.value = false // Stop loading
+                _isLoading.value = false
             }
         }
     }

@@ -139,7 +139,6 @@ class SignupActivity : AppCompatActivity() {
             if (result is Result.Success) {
                 // Registration succeeded, show success dialog
                 showSuccessDialog(binding.edRegisterEmail.text.toString())
-
             } else {
                 val message = when (result) {
                     is Result.Failure -> getString(R.string.registration_failed) + " [" + result.error.message + "]. " + getString(R.string.try_again)
