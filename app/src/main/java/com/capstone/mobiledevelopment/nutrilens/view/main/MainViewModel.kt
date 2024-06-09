@@ -9,9 +9,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.StoriesResponse
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
-import com.capstone.mobiledevelopment.nutrilens.data.repository.StoryRepository
+import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import kotlinx.coroutines.flow.first
@@ -24,15 +23,12 @@ import java.time.ZoneOffset
 
 class MainViewModel(
     private val userRepository: UserRepository,
-    private val storyRepository: StoryRepository,
+    private val foodRepository: FoodRepository,
     private val stepRepository: StepRepository
 ) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _storiesResult = MutableLiveData<Result<StoriesResponse>>()
-    val storiesResult: LiveData<Result<StoriesResponse>> = _storiesResult
 
     private val _token = MutableLiveData<String>()
     val token: LiveData<String> = _token
@@ -47,26 +43,9 @@ class MainViewModel(
         viewModelScope.launch {
             val userModel = userRepository.getSession().first()
             _token.value = userModel.token
-            getStories()
         }
     }
 
-    fun getStories() {
-        val tokenValue = _token.value
-        if (!tokenValue.isNullOrEmpty()) {
-            viewModelScope.launch {
-                _isLoading.value = true
-                try {
-                    val response = storyRepository.getStories(tokenValue)
-                    _storiesResult.value = Result.Success(response)
-                } catch (e: Exception) {
-                    _storiesResult.value = Result.Failure(e)
-                } finally {
-                    _isLoading.value = false
-                }
-            }
-        }
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getTotalStepsForToday(): LiveData<Int> {

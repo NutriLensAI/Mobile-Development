@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
-import com.capstone.mobiledevelopment.nutrilens.data.repository.StoryRepository
+import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideStepCountRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideStoryRepository
@@ -16,7 +16,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository,
-    private val storyRepository: StoryRepository,
+    private val foodRepository: FoodRepository,
     private val stepRepository: StepRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
@@ -24,10 +24,10 @@ class ViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(userRepository, storyRepository, stepRepository) as T
+                MainViewModel(userRepository, foodRepository, stepRepository) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(userRepository, storyRepository) as T
+                LoginViewModel(userRepository, foodRepository) as T
             }
             modelClass.isAssignableFrom(SignupViewModel::class.java) -> {
                 SignupViewModel(userRepository) as T

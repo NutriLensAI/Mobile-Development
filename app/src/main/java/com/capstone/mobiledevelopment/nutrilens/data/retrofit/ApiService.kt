@@ -2,7 +2,6 @@ package com.capstone.mobiledevelopment.nutrilens.data.retrofit
 
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.StoriesResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -38,17 +37,4 @@ interface ApiService {
     suspend fun login(
         @Body request: LoginRequest
     ): LoginResponse
-
-    @GET("stories")
-    suspend fun getAllStories(
-        @Header("Bearer") token: String,
-    ): StoriesResponse
-
-    @Multipart
-    @POST("stories")
-    suspend fun uploadStory(
-        @Header("Bearer") token: String,
-        @Part file:  MultipartBody.Part,
-        @Part("description") description: RequestBody,
-    ): StoriesResponse
 }

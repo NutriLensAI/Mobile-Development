@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
-import com.capstone.mobiledevelopment.nutrilens.data.repository.StoryRepository
+import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ import retrofit2.HttpException
 
 class LoginViewModel(
     private val userRepository: UserRepository,
-    private val storyRepository: StoryRepository
+    private val foodRepository: FoodRepository
 ) : ViewModel() {
 
     private val _loginResult = MutableLiveData<Result<LoginResponse>>()
@@ -33,7 +33,7 @@ class LoginViewModel(
     }
 
     fun updateToken(token: String) {
-        storyRepository.updateToken(token)
+        foodRepository.updateToken(token)
     }
 
     fun login(email: String, password: String) {
