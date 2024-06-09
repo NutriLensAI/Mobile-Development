@@ -10,21 +10,24 @@ import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodItem
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
+import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.InputCatatanActivity
 import com.capstone.mobiledevelopment.nutrilens.view.drink.AddDrink
 import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CatatanMakanan : AppCompatActivity() {
     private lateinit var binding: ActivityCatatanMakananBinding
     private lateinit var foodList: MutableList<FoodItem>
-    private lateinit var adapter: FoodAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCatatanMakananBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setupToggleButtonGroup()
 
         foodList = mutableListOf(
             FoodItem("Breakfast", 14, 14, 14, 500, mutableListOf(FoodItem.FoodDetail("Nasi Gudeg Rawon", 14, 14, 14, 500))),
@@ -32,17 +35,7 @@ class CatatanMakanan : AppCompatActivity() {
             FoodItem("Dinner", 14, 14, 14, 500, mutableListOf(FoodItem.FoodDetail("Nasi Gudeg Rawon", 14, 14, 14, 500)))
         )
 
-        adapter = FoodAdapter(foodList)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
-
-        binding.carbsProgressBar.progress = 75
-        binding.fatProgressBar.progress = 100
-        binding.proteinProgressBar.progress = 100
-        binding.carbsValueTextView.text = "75/100 g"
-        binding.fatValueTextView.text = "100/100 g"
-        binding.proteinValueTextView.text = "100/100 g"
-        binding.totalCalories.text = "1500/2400 Calories"
+        updateMacros()
 
         val mealType = intent.getStringExtra("meal_type")
         val namaMakanan = intent.getStringExtra("nama_makanan")
@@ -92,11 +85,25 @@ class CatatanMakanan : AppCompatActivity() {
                 else -> false
             }
         }
-        binding.customFloatingButton.setOnClickListener {
-            val intent = Intent(this, AddDrink::class.java)
-            startActivity(intent)
-        }
+
         setupFab()
+    }
+
+    private fun setupToggleButtonGroup() {
+        binding.toggleButtonGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked) {
+                val selectedFragment = when (checkedId) {
+                    R.id.btn_breakfast -> "BREAKFAST"
+                    R.id.btn_lunch -> "LUNCH"
+                    R.id.btn_dinner -> "DINNER"
+                    R.id.btn_drink -> "DRINK"
+                    else -> "BREAKFAST"
+                }
+                val intent = Intent(this, InputCatatanActivity::class.java)
+                intent.putExtra("selected_fragment", selectedFragment)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun setupFab() {
@@ -120,10 +127,33 @@ class CatatanMakanan : AppCompatActivity() {
                 FoodItem.FoodDetail(namaMakanan, carbs, fat, protein, calories)))
             foodList.add(newFoodItem)
         }
-        adapter.notifyDataSetChanged()
 
-        // Update the macros
+        updateSection(mealType)
         updateMacros()
+    }
+
+    private fun updateSection(mealType: String) {
+        val foodItem = foodList.find { it.mealTitle.equals(mealType, ignoreCase = true) } ?: return
+        when (mealType.lowercase()) {
+            "breakfast" -> {
+                binding.breakfastCarbs.text = "${foodItem.carbs} g"
+                binding.breakfastFat.text = "${foodItem.fat} g"
+                binding.breakfastProtein.text = "${foodItem.protein} g"
+                binding.breakfastCalories.text = "${foodItem.calories}"
+            }
+            "lunch" -> {
+                binding.lunchCarbs.text = "${foodItem.carbs} g"
+                binding.lunchFat.text = "${foodItem.fat} g"
+                binding.lunchProtein.text = "${foodItem.protein} g"
+                binding.lunchCalories.text = "${foodItem.calories}"
+            }
+            "dinner" -> {
+                binding.dinnerCarbs.text = "${foodItem.carbs} g"
+                binding.dinnerFat.text = "${foodItem.fat} g"
+                binding.dinnerProtein.text = "${foodItem.protein} g"
+                binding.dinnerCalories.text = "${foodItem.calories}"
+            }
+        }
     }
 
     private fun updateMacros() {
@@ -135,9 +165,15 @@ class CatatanMakanan : AppCompatActivity() {
         binding.carbsProgressBar.progress = totalCarbs
         binding.fatProgressBar.progress = totalFat
         binding.proteinProgressBar.progress = totalProtein
-        binding.carbsValueTextView.text = "$totalCarbs/100 g"
-        binding.fatValueTextView.text = "$totalFat/100 g"
-        binding.proteinValueTextView.text = "$totalProtein/100 g"
+
+        binding.carbsValueTextView.text = formatMacroText(totalCarbs, 100)
+        binding.fatValueTextView.text = formatMacroText(totalFat, 100)
+        binding.proteinValueTextView.text = formatMacroText(totalProtein, 100)
         binding.totalCalories.text = "$totalCalories/2400 Calories"
     }
+
+    private fun formatMacroText(value: Int, max: Int): String {
+        return "$value\nof\n$max g"
+    }
+
 }

@@ -22,6 +22,7 @@
             android:textStyle="bold" />
 
         <LinearLayout
+            android:id="@+id/nutrientsHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -29,6 +30,7 @@
             android:paddingBottom="8dp">
 
             <TextView
+                android:id="@+id/carbsLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -38,6 +40,7 @@
                 android:gravity="center" />
 
             <TextView
+                android:id="@+id/fatLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,6 +50,7 @@
                 android:gravity="center" />
 
             <TextView
+                android:id="@+id/proteinLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -56,6 +60,7 @@
                 android:gravity="center" />
 
             <TextView
+                android:id="@+id/caloriesLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -66,12 +71,14 @@
 
         <!-- Nutrients Details -->
         <LinearLayout
+            android:id="@+id/nutrientsDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="8dp">
 
             <TextView
+                android:id="@+id/carbsValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -80,6 +87,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
+                android:id="@+id/fatValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -88,6 +96,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
+                android:id="@+id/proteinValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -96,6 +105,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
+                android:id="@+id/caloriesValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -106,6 +116,7 @@
 
         <!-- Divider -->
         <View
+            android:id="@+id/divider1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#CCCCCC"
@@ -113,6 +124,7 @@
 
         <!-- Food Item -->
         <TextView
+            android:id="@+id/foodItemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nasi Gudeg Rawon"
@@ -121,12 +133,14 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <LinearLayout
+            android:id="@+id/foodItemDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="8dp">
 
             <TextView
+                android:id="@+id/foodItemCarbs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -135,6 +149,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
+                android:id="@+id/foodItemFat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -143,6 +158,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
+                android:id="@+id/foodItemProtein"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -151,6 +167,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
+                android:id="@+id/foodItemCalories"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -161,6 +178,7 @@
 
         <!-- Divider -->
         <View
+            android:id="@+id/divider2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#CCCCCC"
@@ -168,6 +186,7 @@
 
         <!-- Add Food Button -->
         <ImageButton
+            android:id="@+id/btnAddFood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add"

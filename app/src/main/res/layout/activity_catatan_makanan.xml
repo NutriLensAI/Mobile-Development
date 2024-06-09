@@ -65,15 +65,15 @@
                         android:textSize="14sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_marginTop="8dp">
 
                         <ProgressBar
                             android:id="@+id/carbsProgressBar"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                            android:layout_width="82dp"
-                            android:layout_height="78dp"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:layout_gravity="center"
                             android:indeterminate="false"
                             android:max="100"
@@ -88,12 +88,14 @@
                             android:id="@+id/carbsValueTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="75/100 g"
+                            android:layout_margin="10dp"
+                            android:text="750\nof\n1000 g"
+                            android:textAlignment="center"
                             android:textColor="@android:color/holo_blue_light"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/carbsProgressBar"
+                            app:layout_constraintStart_toStartOf="@+id/carbsProgressBar"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
@@ -115,15 +117,15 @@
                         android:textSize="14sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_marginTop="8dp">
 
                         <ProgressBar
                             android:id="@+id/fatProgressBar"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                            android:layout_width="82dp"
-                            android:layout_height="78dp"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:layout_gravity="center"
                             android:indeterminate="false"
                             android:max="100"
@@ -138,12 +140,16 @@
                             android:id="@+id/fatValueTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100/100 g"
+                            android:layout_margin="10dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:text="100\nof\n100 g"
+                            android:textAlignment="center"
                             android:textColor="@android:color/holo_orange_light"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/fatProgressBar"
+                            app:layout_constraintStart_toStartOf="@+id/fatProgressBar"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
@@ -165,15 +171,15 @@
                         android:textSize="14sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_marginTop="8dp">
 
                         <ProgressBar
                             android:id="@+id/proteinProgressBar"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                            android:layout_width="82dp"
-                            android:layout_height="78dp"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:layout_gravity="center"
                             android:indeterminate="false"
                             android:max="100"
@@ -188,12 +194,14 @@
                             android:id="@+id/proteinValueTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100/100 g"
+                            android:layout_margin="10dp"
+                            android:text="100\nof\n100 g"
+                            android:textAlignment="center"
                             android:textColor="@android:color/holo_red_light"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/proteinProgressBar"
+                            app:layout_constraintStart_toStartOf="@+id/proteinProgressBar"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
@@ -203,73 +211,46 @@
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleButtonGroup"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/macrosCard"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:selectionRequired="true"
         app:singleSelection="true">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_one"
+            android:id="@+id/btn_breakfast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/breakfast" />
+            android:layout_weight="1"
+            android:text="Pagi" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_two"
+            android:id="@+id/btn_lunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lunch" />
+            android:layout_weight="1"
+            android:text="Siang" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_three"
+            android:id="@+id/btn_dinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dinner" />
+            android:layout_weight="1"
+            android:text="Malam" />
 
-        <Button
-            android:id="@+id/button2"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_drink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Drink" />
-    </com.google.android.material.button.MaterialButtonToggleGroup
-
-        <!-- Include Custom Floating Button -->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonGroup"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="76dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:id="@+id/customFloatingButton"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="@drawable/fab_background"
-            android:src="@drawable/ic_drink"
-            android:contentDescription="Custom Floating Button"
-            android:scaleType="centerInside"
-            android:elevation="6dp" />
-    </FrameLayout>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <!-- Include Custom Bottom Navigation Layout -->
     <include
@@ -280,5 +261,435 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Input Data Makan"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/macrosCard"
+        app:layout_constraintTop_toBottomOf="@+id/macrosCard" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButtonGroup">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Breakfast Section -->
+            <TextView
+                android:id="@+id/breakfastTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="Breakfast"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:id="@+id/breakfastHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Carbs"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33AFFF"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Fat"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFA500"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Protein"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF6347"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Calories"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/breakfastDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/breakfastCarbs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="14 g"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/breakfastFat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="14 g"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/breakfastProtein"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="14 g"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/breakfastCalories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="500"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <!-- Lunch Section -->
+            <TextView
+                android:id="@+id/lunchTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="Lunch"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:id="@+id/lunchHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Carbs"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33AFFF"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Fat"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFA500"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Protein"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF6347"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Calories"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lunchDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/lunchCarbs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="14 g"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/lunchFat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="14 g"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/lunchProtein"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="14 g"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/lunchCalories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="500"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <!-- Dinner Section -->
+            <TextView
+                android:id="@+id/dinnerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="Dinner"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:id="@+id/dinnerHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Carbs"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33AFFF"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Fat"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFA500"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Protein"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF6347"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Calories"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dinnerDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/dinnerCarbs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="14 g"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/dinnerFat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="14 g"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/dinnerProtein"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="14 g"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/dinnerCalories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="500"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <!-- Drink Section -->
+            <TextView
+                android:id="@+id/drinkTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="Drink"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:id="@+id/drinkHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Mililiter"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33AFFF"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Sugar"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFA500"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/drinkDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/drinkMililiter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="250 ml"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/drinkSugar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="10 g"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="757dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
