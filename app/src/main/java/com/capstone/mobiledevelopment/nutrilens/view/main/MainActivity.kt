@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
         viewModel.token.observe(this) { token ->
             if (!token.isNullOrEmpty()) {
-               
+
             }
         }
     }
