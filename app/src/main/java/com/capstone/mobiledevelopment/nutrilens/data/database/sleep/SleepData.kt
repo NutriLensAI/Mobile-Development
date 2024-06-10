@@ -6,5 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "sleep_data")
 data class SleepData(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val sleepTime: Long
+    var sleepTime: Long,
+    var sleepCount: Int = 0
 )

@@ -170,10 +170,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private fun fetchDrinkDataAndSetupRecyclerView(currentSteps: Int = 0) {
         val drinkDao = DrinkDatabase.getDatabase(this).drinkDao()
-        val sleepDataDao = SleepDatabase.getDatabase(this).sleepDataDao() // Ensure this references the correct database
+        val sleepDataDao = SleepDatabase.getDatabase(this).sleepDataDao()
         lifecycleScope.launch(Dispatchers.IO) {
             val totalAmount = drinkDao.getTotalAmount() ?: 0
-            val sleepCount = sleepDataDao.getAllSleepData().size
+            val sleepCount = sleepDataDao.getTotalSleepCount() // Use the new method to get the total sleep count
             withContext(Dispatchers.Main) {
                 setupRecyclerView(currentSteps, totalAmount, sleepCount)
             }
@@ -206,6 +206,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
+        fetchDrinkDataAndSetupRecyclerView()
         sensorManager.registerListener(this, stepCounterSensor, SensorManager.SENSOR_DELAY_UI)
     }
 
