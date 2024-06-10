@@ -142,7 +142,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordTextView"
         app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
-        <com.capstone.mobiledevelopment.nutrilens.view.customview.PasswordEditText
+        <com.capstone.mobiledevelopment.nutrilens.view.utils.customview.PasswordEditText
             android:id="@+id/edRegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

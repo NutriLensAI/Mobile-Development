@@ -1,9 +1,8 @@
-package com.capstone.mobiledevelopment.nutrilens.view.utils
+package com.capstone.mobiledevelopment.nutrilens.view.utils.worker
 
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepData
 import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepDatabase
 import java.util.concurrent.TimeUnit
 

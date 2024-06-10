@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.view.customview
+package com.capstone.mobiledevelopment.nutrilens.view.utils.customview
 
 import android.content.Context
 import android.graphics.Canvas

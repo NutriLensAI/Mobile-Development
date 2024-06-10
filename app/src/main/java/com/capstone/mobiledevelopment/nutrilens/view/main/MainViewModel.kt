@@ -10,9 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
-import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
-import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -23,7 +21,6 @@ import java.time.ZoneOffset
 
 class MainViewModel(
     private val userRepository: UserRepository,
-    private val foodRepository: FoodRepository,
     private val stepRepository: StepRepository
 ) : ViewModel() {
 

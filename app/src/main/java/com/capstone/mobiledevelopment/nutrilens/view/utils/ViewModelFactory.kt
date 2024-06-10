@@ -7,8 +7,9 @@ import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideStepCountRepository
-import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideStoryRepository
+import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideFoodRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideUserRepository
+import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakananViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsViewModel
@@ -24,7 +25,7 @@ class ViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(userRepository, foodRepository, stepRepository) as T
+                MainViewModel(userRepository, stepRepository) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(userRepository, foodRepository) as T
@@ -33,6 +34,9 @@ class ViewModelFactory(
                 SignupViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(SettingsViewModel::class.java) -> {
+                SettingsViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(CatatanMakananViewModel::class.java) -> {
                 SettingsViewModel(userRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
@@ -48,8 +52,9 @@ class ViewModelFactory(
             return INSTANCE ?: synchronized(ViewModelFactory::class.java) {
                 INSTANCE ?: ViewModelFactory(
                     provideUserRepository(context),
-                    provideStoryRepository(context),
+                    provideFoodRepository(context),
                     provideStepCountRepository(context)
+
                 ).also { INSTANCE = it }
             }
         }

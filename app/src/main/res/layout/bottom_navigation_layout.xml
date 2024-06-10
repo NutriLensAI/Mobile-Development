@@ -20,7 +20,7 @@
         app:layout_anchorGravity="center"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded" />
 
-    <com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
+    <com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
         android:id="@+id/customBottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

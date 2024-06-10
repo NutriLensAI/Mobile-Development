@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.view.utils
+package com.capstone.mobiledevelopment.nutrilens.view.utils.worker
 
 import android.content.ContentValues.TAG
 import android.content.Context

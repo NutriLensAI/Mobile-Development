@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.view.drink
+package com.capstone.mobiledevelopment.nutrilens.view.utils.worker
 
 import android.content.Context
 import androidx.work.CoroutineWorker

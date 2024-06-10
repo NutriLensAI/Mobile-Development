@@ -18,7 +18,7 @@ import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
-import com.capstone.mobiledevelopment.nutrilens.view.customview.CustomBottomNavigationView
+import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
