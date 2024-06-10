@@ -6,7 +6,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.data.database.step.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ class AddMyRecipes : AppCompatActivity() {
     private lateinit var etIngredients: EditText
     private lateinit var etSteps: EditText
     private lateinit var btnSave: Button
-    private lateinit var db: AppDatabase
+    private lateinit var db: StepDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +26,7 @@ class AddMyRecipes : AppCompatActivity() {
 
         db = Room.databaseBuilder(
             applicationContext,
-            AppDatabase::class.java, "nutrilens-db"
+            StepDatabase::class.java, "nutrilens-db"
         ).build()
 
         etTitle = findViewById(R.id.etTitle)

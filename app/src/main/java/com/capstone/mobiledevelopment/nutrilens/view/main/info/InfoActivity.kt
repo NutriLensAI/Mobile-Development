@@ -1,8 +1,10 @@
 package com.capstone.mobiledevelopment.nutrilens.view.main.info
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityInfoBinding
@@ -25,7 +27,7 @@ class InfoActivity : AppCompatActivity() {
         if (savedInstanceState == null && fragmentType != null) {
             val fragment = when (fragmentType) {
                 "Sugar" -> InfoSugarFragment()
-                "Cholesterol" -> InfoCholesterolFragment()
+                "Sleep" -> InfoSleepFragment()
                 "Steps" -> InfoStepsFragment()
                 "Drink" -> InfoDrinkFragment()
                 else -> throw IllegalArgumentException("Invalid fragment type")
@@ -38,6 +40,8 @@ class InfoActivity : AppCompatActivity() {
     }
 
     private fun enableEdgeToEdge() {
-        // Implement your edge-to-edge enabling logic here
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
     }
 }

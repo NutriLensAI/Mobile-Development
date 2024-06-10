@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.data.database.step.AppDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
@@ -40,7 +40,7 @@ class Resep : AppCompatActivity() {
     private val itemsPerPage = 20
     private lateinit var progressBar: ProgressBar
     private lateinit var searchView: SearchView
-    private lateinit var db: AppDatabase
+    private lateinit var db: StepDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,7 @@ class Resep : AppCompatActivity() {
 
         db = Room.databaseBuilder(
             applicationContext,
-            AppDatabase::class.java, "nutrilens-db"
+            StepDatabase::class.java, "nutrilens-db"
         ).build()
 
         resepAdapter = ResepAdapter(mutableListOf())

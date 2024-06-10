@@ -26,6 +26,7 @@ import androidx.work.WorkManager
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepDatabase
 import com.capstone.mobiledevelopment.nutrilens.view.drink.ResetDrinkWorker
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.info.MenuAdapter
@@ -54,12 +55,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         ViewModelFactory.getInstance(this)
     }
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var sensorManager: SensorManager
     private var stepCounterSensor: Sensor? = null
     private var initialSensorSteps: Int? = null
     private var lastSavedSteps: Int = 0
-
     private val sharedPreferences by lazy {
         getSharedPreferences("step_prefs", Context.MODE_PRIVATE)
     }
@@ -88,6 +87,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         // Schedule the worker to reset drink data at midnight
         scheduleResetDrinkWorker()
+
+
     }
 
     private fun setupViewModelObservers() {
@@ -154,10 +155,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             }
     }
 
-    private fun setupRecyclerView(currentSteps: Int, totalDrinkAmount: Int) {
+    private fun setupRecyclerView(currentSteps: Int, totalDrinkAmount: Int, sleepCount: Int) {
         val menuList = mutableListOf(
             MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
-            MenuItem("Cholesterol", R.drawable.ic_cholesterol, "100 mg/dL", "Cholesterol Numbers and What They Mean"),
+            MenuItem("Sleep", R.drawable.ic_cholesterol, "$sleepCount sessions", "Number of sleep sessions"),
             MenuItem("Steps", R.drawable.ic_steps, "$currentSteps/10,000 steps", "How much should you walk every day?"),
             MenuItem("Drink", R.drawable.ic_drink, "$totalDrinkAmount ml", "How much should you drink every day?")
         )
@@ -169,10 +170,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private fun fetchDrinkDataAndSetupRecyclerView(currentSteps: Int = 0) {
         val drinkDao = DrinkDatabase.getDatabase(this).drinkDao()
+        val sleepDataDao = SleepDatabase.getDatabase(this).sleepDataDao() // Ensure this references the correct database
         lifecycleScope.launch(Dispatchers.IO) {
             val totalAmount = drinkDao.getTotalAmount() ?: 0
+            val sleepCount = sleepDataDao.getAllSleepData().size
             withContext(Dispatchers.Main) {
-                setupRecyclerView(currentSteps, totalAmount)
+                setupRecyclerView(currentSteps, totalAmount, sleepCount)
             }
         }
     }

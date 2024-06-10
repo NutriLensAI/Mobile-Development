@@ -1,5 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.data.retrofit
 
+import androidx.room.Query
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import okhttp3.MultipartBody
