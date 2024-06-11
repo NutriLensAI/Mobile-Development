@@ -13,6 +13,7 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
 
 data class RegisterRequest(
@@ -24,6 +25,14 @@ data class RegisterRequest(
 data class LoginRequest(
     val email: String,
     val password: String
+)
+
+data class UpdateEmailRequest(
+    val email: String
+)
+
+data class ApiResponse(
+    val message: String
 )
 
 interface ApiService {
@@ -38,4 +47,11 @@ interface ApiService {
     suspend fun login(
         @Body request: LoginRequest
     ): LoginResponse
+
+    @Headers("Content-Type: application/json")
+    @PUT("users/profile/editemail")
+    suspend fun updateEmail(
+        @Header("Authorization") token: String,
+        @Body request: UpdateEmailRequest
+    ): ApiResponse
 }

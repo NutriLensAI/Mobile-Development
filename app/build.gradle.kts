@@ -15,7 +15,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "ENDPOINT", "\"https://capstone-nutrilens.et.r.appspot.com/api/\"")
+        buildConfigField("String", "ENDPOINT", "\"https://nutrilens-capstone.et.r.appspot.com/api/\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

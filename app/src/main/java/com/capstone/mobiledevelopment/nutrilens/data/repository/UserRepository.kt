@@ -4,9 +4,11 @@ import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiResponse
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.LoginRequest
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RegisterRequest
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UpdateEmailRequest
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository private constructor(
@@ -33,6 +35,11 @@ class UserRepository private constructor(
     suspend fun login(email: String, password: String): LoginResponse {
         val request = LoginRequest(email = email, password = password)
         return apiService.login(request)
+    }
+
+    suspend fun updateEmail(token: String, email: String): ApiResponse {
+        val request = UpdateEmailRequest(email = email)
+        return apiService.updateEmail(token, request)
     }
 
     companion object {
