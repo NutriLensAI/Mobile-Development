@@ -5,56 +5,59 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.Lunch
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodItem
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LunchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LunchFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var foodList: MutableList<FoodItem>
+    private lateinit var adapter: FoodAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lunch, container, false)
+        val view = inflater.inflate(R.layout.fragment_lunch, container, false)
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+
+        // Initialize the food list
+        foodList = mutableListOf()
+
+        // Set up the adapter and RecyclerView
+        adapter = FoodAdapter(foodList)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+
+        // Retrieve data from arguments
+        arguments?.getParcelable<Lunch>("selected_meal")?.let { lunch ->
+            updateFoodList(lunch)
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LunchFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance() =
-            LunchFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun updateFoodList(lunch: Lunch) {
+        foodList.clear()
+        val newFoodItem = FoodItem(
+            "Lunch",
+            lunch.total?.carbs ?: 0,
+            lunch.total?.fat ?: 0,
+            lunch.total?.prot ?: 0,
+            lunch.total?.calories ?: 0,
+            lunch.data?.map {
+                FoodItem.FoodDetail(
+                    it?.foodName ?: "",
+                    it?.carbohydrate ?: 0,
+                    it?.fat ?: 0,
+                    it?.proteins ?: 0,
+                    it?.calories ?: 0
+                )
+            }?.toMutableList() ?: mutableListOf()
+        )
+        foodList.add(newFoodItem)
+        adapter.notifyDataSetChanged()
     }
 }

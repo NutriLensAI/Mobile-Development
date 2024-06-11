@@ -1,11 +1,16 @@
 package com.capstone.mobiledevelopment.nutrilens.data.retrofit
 
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.Breakfast
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.ChangeResponse
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.Dinner
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.Lunch
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -36,6 +41,11 @@ interface ApiService {
     suspend fun login(
         @Body request: LoginRequest
     ): LoginResponse
+
+    @GET("nutritions/user/foods")
+    suspend fun getAllMeals(
+        @Header("Authorization") token: String,
+    ): UserFoodResponse
 
     @PUT("users/profile/editemail")
     suspend fun updateEmail(

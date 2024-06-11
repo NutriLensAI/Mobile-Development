@@ -38,7 +38,7 @@ class ViewModelFactory(
                 SettingsViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(CatatanMakananViewModel::class.java) -> {
-                CatatanMakananViewModel(userRepository) as T
+                CatatanMakananViewModel(foodRepository,userRepository) as T
             }
             modelClass.isAssignableFrom(EmailViewModel::class.java) -> {
                 EmailViewModel(userRepository) as T

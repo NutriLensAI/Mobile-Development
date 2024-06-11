@@ -2,14 +2,20 @@ package com.capstone.mobiledevelopment.nutrilens.view.catatan
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakananBinding
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodItem
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.InputCatatanActivity
+import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.breakfast.BreakfastFragment
+import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.dinner.DinnerFragment
+import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.lunch.LunchFragment
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
@@ -32,6 +38,68 @@ class CatatanMakanan : AppCompatActivity() {
         setupToggleButtonGroup()
         setupBottomNavigationView()
         setupFab()
+
+        viewModel.fetchToken()
+        observeViewModel()
+
+        // Fetch all meals after token is fetched
+        viewModel.token.observe(this) { token ->
+            if (token != null) {
+                viewModel.fetchAllMeals()
+            }
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.allMeals.observe(this) { meals ->
+            updateMealsUI(meals)
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun updateMealsUI(meals: UserFoodResponse) {
+        // Update Breakfast
+        meals.breakfast?.let { breakfast ->
+            binding.breakfastCarbs.text = breakfast.total?.carbs.toString()
+            binding.breakfastFat.text = breakfast.total?.fat.toString()
+            binding.breakfastProtein.text = breakfast.total?.prot.toString()
+            binding.breakfastCalories.text = breakfast.total?.calories.toString()
+        }
+
+        // Update Lunch
+        meals.lunch?.let { lunch ->
+            binding.lunchCarbs.text = lunch.total?.carbs.toString()
+            binding.lunchFat.text = lunch.total?.fat.toString()
+            binding.lunchProtein.text = lunch.total?.prot.toString()
+            binding.lunchCalories.text = lunch.total?.calories.toString()
+        }
+
+        // Update Dinner
+        meals.dinner?.let { dinner ->
+            binding.dinnerCarbs.text = dinner.total?.carbs.toString()
+            binding.dinnerFat.text = dinner.total?.fat.toString()
+            binding.dinnerProtein.text = dinner.total?.prot.toString()
+            binding.dinnerCalories.text = dinner.total?.calories.toString()
+        }
+
+        // Update Macros
+        meals.macros?.let { macros ->
+            binding.carbsProgressBar.progress = macros.totalCarbs ?: 0
+            binding.fatProgressBar.progress = macros.totalFat ?: 0
+            binding.proteinProgressBar.progress = macros.totalProteins ?: 0
+            binding.totalCalories.text = "${macros.totalCalories ?: 0}/2400 Calories"
+
+            binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0, 100)
+            binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0, 100)
+            binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0, 100)
+        }
+    }
+
+    private fun formatMacroText(value: Int, max: Int): String {
+        return "$value\nof\n$max g"
     }
 
     private fun setupToggleButtonGroup() {
@@ -44,8 +112,18 @@ class CatatanMakanan : AppCompatActivity() {
                     R.id.btn_drink -> "DRINK"
                     else -> "BREAKFAST"
                 }
-                val intent = Intent(this, InputCatatanActivity::class.java)
-                intent.putExtra("selected_fragment", selectedFragment)
+
+                val mealData: Parcelable? = when (selectedFragment) {
+                    "BREAKFAST" -> viewModel.allMeals.value?.breakfast
+                    "LUNCH" -> viewModel.allMeals.value?.lunch
+                    "DINNER" -> viewModel.allMeals.value?.dinner
+                    else -> null
+                }
+
+                val intent = Intent(this, InputCatatanActivity::class.java).apply {
+                    putExtra("selected_fragment", selectedFragment)
+                    putExtra("selected_meal", mealData)
+                }
                 startActivity(intent)
             }
         }
@@ -96,28 +174,5 @@ class CatatanMakanan : AppCompatActivity() {
                 else -> false
             }
         }
-    }
-
-
-
-
-    private fun updateMacros(foodData: List<FoodItem>) {
-        val totalCarbs = foodData.sumOf { it.carbs }
-        val totalFat = foodData.sumOf { it.fat }
-        val totalProtein = foodData.sumOf { it.protein }
-        val totalCalories = foodData.sumOf { it.calories }
-
-        binding.carbsProgressBar.progress = totalCarbs
-        binding.fatProgressBar.progress = totalFat
-        binding.proteinProgressBar.progress = totalProtein
-
-        binding.carbsValueTextView.text = formatMacroText(totalCarbs, 100)
-        binding.fatValueTextView.text = formatMacroText(totalFat, 100)
-        binding.proteinValueTextView.text = formatMacroText(totalProtein, 100)
-        binding.totalCalories.text = "$totalCalories/2400 Calories"
-    }
-
-    private fun formatMacroText(value: Int, max: Int): String {
-        return "$value\nof\n$max g"
     }
 }

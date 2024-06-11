@@ -16,16 +16,36 @@ import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsFragment
 class InputCatatanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        setContentView(R.layout.activity_input_catatan) // Ensure this layout has a container for fragments
 
         if (savedInstanceState == null) {
             val selectedFragment = intent.getStringExtra("selected_fragment") ?: "BREAKFAST"
             val fragment = when (selectedFragment) {
-                "BREAKFAST" -> BreakfastFragment()
-                "LUNCH" -> LunchFragment()
-                "DINNER" -> DinnerFragment()
-                "DRINK" -> DrinkFragment()
-                else -> BreakfastFragment()
+                "BREAKFAST" -> BreakfastFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("selected_meal", intent.getParcelableExtra("selected_meal"))
+                    }
+                }
+                "LUNCH" -> LunchFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("selected_meal", intent.getParcelableExtra("selected_meal"))
+                    }
+                }
+                "DINNER" -> DinnerFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("selected_meal", intent.getParcelableExtra("selected_meal"))
+                    }
+                }
+                "DRINK" -> DrinkFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("selected_meal", intent.getParcelableExtra("selected_meal"))
+                    }
+                }
+                else -> BreakfastFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("selected_meal", intent.getParcelableExtra("selected_meal"))
+                    }
+                }
             }
             supportFragmentManager.commit {
                 replace(R.id.fragment_container, fragment)
