@@ -59,16 +59,15 @@ class SettingsFragment : Fragment() {
                 binding.passwordSetting.setOnClickListener {
                     navigateToFragment(PasswordFragment.newInstance(token))
                 }
+                // Setup navigation for Personal Info Settings
+                binding.personalInfoSetting.setOnClickListener {
+                    navigateToFragment(PersonalFragment.newInstance(token))
+                }
             }
         }
 
         binding.languageSetting.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-        }
-
-        // Setup navigation for Personal Info Settings
-        binding.personalInfoSetting.setOnClickListener {
-            navigateToFragment(PersonalFragment.newInstance())
         }
 
         binding.backButton.setOnClickListener {

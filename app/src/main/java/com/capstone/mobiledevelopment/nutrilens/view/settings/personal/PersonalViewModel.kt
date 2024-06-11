@@ -1,41 +1,46 @@
 package com.capstone.mobiledevelopment.nutrilens.view.settings.personal
 
-import android.app.Application
-import android.content.Context
-import androidx.lifecycle.AndroidViewModel
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
-class PersonalViewModel(application: Application) : AndroidViewModel(application) {
-    private val sharedPreferences = application.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+class PersonalViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    // Live data for different user attributes
     private val _userData = MutableLiveData<PersonalData>()
-
     val userData: LiveData<PersonalData> get() = _userData
-
-    init {
-        loadUserData()
-    }
 
     fun saveUserData(activity: String, weight: String, height: String, age: String, gender: String) {
         _userData.value = PersonalData(activity, weight, height, age, gender)
-        sharedPreferences.edit().apply {
-            putString("activity", activity)
-            putString("weight", weight)
-            putString("height", height)
-            putString("age", age)
-            putString("gender", gender)
-            apply()
-        }
     }
 
-    private fun loadUserData() {
-        val activity = sharedPreferences.getString("activity", "Not set")
-        val weight = sharedPreferences.getString("weight", "Not set")
-        val height = sharedPreferences.getString("height", "Not set")
-        val age = sharedPreferences.getString("age", "Not set")
-        val gender = sharedPreferences.getString("gender", "Not set")
-        _userData.value = PersonalData(activity!!, weight!!, height!!, age!!, gender!!)
+    fun updateProfileData(token: String, onResult: (Boolean, String) -> Unit) {
+        val userData = _userData.value ?: return
+
+        viewModelScope.launch {
+            try {
+                Log.d("PersonalViewModel", "Calling update profile API with token: $token")
+                val response = userRepository.updateProfile(
+                    token,
+                    userData.weight.toInt(),
+                    userData.height.toInt(),
+                    userData.age.toInt(),
+                    userData.gender,
+                    userData.activity
+                )
+                Log.d("PersonalViewModel", "API Response: ${response.message}")
+                onResult(response.message == "Profile updated successfully", response.message)
+            } catch (e: HttpException) {
+                Log.e("PersonalViewModel", "HTTP Error updating profile: ${e.message()}", e)
+                onResult(false, "HTTP Error: ${e.message()}")
+            } catch (e: Exception) {
+                Log.e("PersonalViewModel", "Error updating profile", e)
+                onResult(false, "Error updating profile")
+            }
+        }
     }
 }

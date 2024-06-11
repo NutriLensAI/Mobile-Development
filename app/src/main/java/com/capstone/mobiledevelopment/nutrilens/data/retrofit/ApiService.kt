@@ -34,6 +34,14 @@ data class UpdatePasswordRequest(
     val newPassword: String
 )
 
+data class UpdateProfileRequest(
+    val weight: Int,
+    val height: Int,
+    val age: Int,
+    val gender: String,
+    val activity_level: String
+)
+
 interface ApiService {
 
     @POST("users/register")
@@ -61,5 +69,11 @@ interface ApiService {
     suspend fun updatePassword(
         @Header("Authorization") token: String,
         @Body request: UpdatePasswordRequest
+    ): ChangeResponse
+
+    @PUT("users/editprofile")
+    suspend fun updateProfile(
+        @Header("Authorization") token: String,
+        @Body request: UpdateProfileRequest
     ): ChangeResponse
 }

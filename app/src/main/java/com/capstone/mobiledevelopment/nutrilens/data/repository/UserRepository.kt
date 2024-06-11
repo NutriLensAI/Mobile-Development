@@ -11,6 +11,7 @@ import com.capstone.mobiledevelopment.nutrilens.data.retrofit.LoginRequest
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RegisterRequest
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UpdateEmailRequest
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UpdatePasswordRequest
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UpdateProfileRequest
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository private constructor(
@@ -46,6 +47,18 @@ class UserRepository private constructor(
 
     suspend fun updatePassword(token: String, newPassword: String): ChangeResponse {
         return apiService.updatePassword(token, UpdatePasswordRequest(newPassword))
+    }
+
+    suspend fun updateProfile(
+        token: String,
+        weight: Int,
+        height: Int,
+        age: Int,
+        gender: String,
+        activityLevel: String
+    ): ChangeResponse {
+        val request = UpdateProfileRequest(weight, height, age, gender, activityLevel)
+        return apiService.updateProfile(token, request)
     }
 
     companion object {

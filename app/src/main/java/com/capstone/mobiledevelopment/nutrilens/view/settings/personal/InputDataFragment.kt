@@ -1,6 +1,7 @@
 package com.capstone.mobiledevelopment.nutrilens.view.settings.personal
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,39 +9,89 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.view.settings.password.PasswordFragment
+import androidx.fragment.app.viewModels
+import com.capstone.mobiledevelopment.nutrilens.databinding.FragmentInputDataBinding
+import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 
 class InputDataFragment : Fragment() {
-    private val personalViewModel: PersonalViewModel by activityViewModels()
+
+    private var _binding: FragmentInputDataBinding? = null
+    private val binding get() = _binding!!
+
+    private var token: String? = null
+
+    private val viewModel: PersonalViewModel by viewModels {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            token = it.getString(ARG_TOKEN)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentInputDataBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupListeners()
+    }
+
+    private fun setupListeners() {
+        binding.buttonSave.setOnClickListener {
+            val activity = binding.spinnerActivityLevel.selectedItem.toString()
+            val weight = binding.tiWeight.text.toString()
+            val height = binding.tiHeight.text.toString()
+            val age = binding.tiAge.text.toString()
+            val gender = binding.spinnerGender.selectedItem.toString()
+
+            if (validateInput(weight, height, age)) {
+                token?.let {
+                    viewModel.saveUserData(activity, weight, height, age, gender)
+                    viewModel.updateProfileData(it) { success, message ->
+                        if (success) {
+                            Log.d("InputDataFragment", "Profile updated successfully: $message")
+                            // Handle successful profile update
+                        } else {
+                            Log.e("InputDataFragment", "Failed to update profile: $message")
+                            // Handle failed profile update
+                        }
+                    }
+                } ?: run {
+                    Log.e("InputDataFragment", "Token is null")
+                    // Handle token fetch failure
+                }
+            } else {
+                Log.e("InputDataFragment", "Invalid input")
+                // Handle invalid input
+            }
+        }
+    }
+
+    private fun validateInput(weight: String, height: String, age: String): Boolean {
+        // Add input validation logic if needed
+        return weight.isNotEmpty() && height.isNotEmpty() && age.isNotEmpty()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     companion object {
-        fun newInstance() = InputDataFragment()
-    }
+        private const val ARG_TOKEN = "token"
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_input_data, container, false)
-        view.findViewById<Button>(R.id.buttonSave).setOnClickListener {
-            saveDataToViewModel(view)
-            navigateToPersonalFragment()
+        fun newInstance(token: String) = InputDataFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_TOKEN, token)
+            }
         }
-        return view
-    }
-
-    private fun saveDataToViewModel(view: View) {
-        val activity = view.findViewById<Spinner>(R.id.spinnerActivityLevel).selectedItem.toString()
-        val weight = view.findViewById<EditText>(R.id.tiWeight).text.toString()
-        val height = view.findViewById<EditText>(R.id.tiHeight).text.toString()
-        val age = view.findViewById<EditText>(R.id.tiAge).text.toString()
-        val gender = view.findViewById<Spinner>(R.id.spinnerGender).selectedItem.toString()
-        personalViewModel.saveUserData(activity, weight, height, age, gender)
-    }
-
-    private fun navigateToPersonalFragment() {
-        val personalFragment = PersonalFragment.newInstance()
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.fragment_container, personalFragment)
-            ?.commit()
     }
 }
