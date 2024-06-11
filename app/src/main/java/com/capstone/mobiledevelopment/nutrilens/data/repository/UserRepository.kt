@@ -2,9 +2,10 @@ package com.capstone.mobiledevelopment.nutrilens.data.repository
 
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.ChangeResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
-import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiResponse
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.LoginRequest
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RegisterRequest
@@ -27,6 +28,10 @@ class UserRepository private constructor(
         return userPreference.getSession()
     }
 
+    fun updateToken(token: String) {
+        apiService = ApiConfig.getApiService(token)
+    }
+
     suspend fun register(name: String, email: String, password: String): RegisterResponse {
         val request = RegisterRequest(username = name, email = email, password = password)
         return apiService.register(request)
@@ -37,7 +42,7 @@ class UserRepository private constructor(
         return apiService.login(request)
     }
 
-    suspend fun updateEmail(token: String, email: String): ApiResponse {
+    suspend fun updateEmail(token: String, email: String): ChangeResponse {
         val request = UpdateEmailRequest(email = email)
         return apiService.updateEmail(token, request)
     }

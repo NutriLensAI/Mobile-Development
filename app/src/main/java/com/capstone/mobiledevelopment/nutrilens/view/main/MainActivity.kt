@@ -240,7 +240,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private fun observeSession() {
         viewModel.getSession().observe(this) { user ->
-            if (!user.isLogin) {
+            if (user == null || !user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             } else {

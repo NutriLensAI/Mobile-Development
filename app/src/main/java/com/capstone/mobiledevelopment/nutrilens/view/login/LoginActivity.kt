@@ -16,7 +16,6 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityLoginBinding
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
-import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.SignupWelcome
@@ -144,26 +143,26 @@ class LoginActivity : AppCompatActivity() {
 
                 // Extract token from the API response
                 val loginResponse = result.value
-                val token = loginResponse.loginResult?.token ?: ""
+                val token = loginResponse.token
 
                 // Get user-provided email from the EditText
                 val email = binding.edLoginEmail.text.toString()
 
-                viewModel.saveSession(
-                    UserModel(
-                        email, token
-                    )
-                ) // Pass the UserModel and the StoryRepository instance
-                viewModel.updateToken(token) // Update token in the ViewModel
-                navigateToMainActivity() // Navigate to main activity
+                val user = UserModel(email, token)
+
+                // Save session and update token
+                viewModel.saveSessionAndNavigate(user, token).observe(this) { isSaved ->
+                    if (isSaved) {
+                        navigateToMainActivity() // Navigate to main activity only after saving session and updating token
+                    } else {
+                        showFailureToast(getString(R.string.login_failed))
+                    }
+                }
 
             } else {
                 // Handle login failure
                 val message = when (result) {
-                    is Result.Failure -> getString(R.string.login_failed) + " [" + result.error.message + "]. " + getString(
-                        R.string.try_again
-                    )
-
+                    is Result.Failure -> getString(R.string.login_failed) + " [" + result.error.message + "]. " + getString(R.string.try_again)
                     else -> getString(R.string.login_failed) + ". " + getString(R.string.try_again)
                 }
                 showFailureToast(message)

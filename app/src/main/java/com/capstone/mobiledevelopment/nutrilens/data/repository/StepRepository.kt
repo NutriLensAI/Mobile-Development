@@ -13,10 +13,6 @@ class StepRepository private constructor(
         stepCountDao.insert(stepCount)
     }
 
-    suspend fun getSumStepCounts(start: Long, end: Long): Int {
-        return stepCountDao.getSumStepCounts(start, end)
-    }
-
     companion object {
         @Volatile
         private var instance: StepRepository? = null

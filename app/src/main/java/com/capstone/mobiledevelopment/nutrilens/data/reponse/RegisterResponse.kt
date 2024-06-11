@@ -28,5 +28,8 @@ data class RegisterResponse(
 	val gender: String,
 
 	@field:SerializedName("activity_level")
-	val activityLevel: String
+	val activityLevel: String,
+
+	@field:SerializedName("error")
+	val error: String? = null
 ) : Parcelable

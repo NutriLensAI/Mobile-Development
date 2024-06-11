@@ -1,6 +1,7 @@
 package com.capstone.mobiledevelopment.nutrilens.view.main
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -36,28 +37,12 @@ class MainViewModel(
         return userRepository.getSession().asLiveData()
     }
 
+    // Fetch token
     fun fetchToken() {
         viewModelScope.launch {
             val userModel = userRepository.getSession().first()
             _token.value = userModel.token
         }
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getTotalStepsForToday(): LiveData<Int> {
-        val today = System.currentTimeMillis()
-        val startOfDay = LocalDateTime.ofInstant(Instant.ofEpochMilli(today), ZoneId.systemDefault())
-            .with(LocalTime.MIN).toEpochSecond(ZoneOffset.UTC) * 1000
-        val endOfDay = LocalDateTime.ofInstant(Instant.ofEpochMilli(today), ZoneId.systemDefault())
-            .with(LocalTime.MAX).toEpochSecond(ZoneOffset.UTC) * 1000
-
-        val totalStepsLiveData = MutableLiveData<Int>()
-        viewModelScope.launch {
-            val totalSteps = stepRepository.getSumStepCounts(startOfDay, endOfDay)
-            totalStepsLiveData.postValue(totalSteps)
-        }
-        return totalStepsLiveData
     }
 
     fun saveStepCount(stepCount: Int) {

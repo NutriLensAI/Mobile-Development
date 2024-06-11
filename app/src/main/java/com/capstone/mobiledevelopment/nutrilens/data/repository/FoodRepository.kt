@@ -8,9 +8,7 @@ class FoodRepository private constructor(
 ) {
 
     // Fungsi untuk memperbarui token
-    fun updateToken(token: String) {
-        apiService = ApiConfig.getApiService(token)
-    }
+
 
     companion object {
         @Volatile

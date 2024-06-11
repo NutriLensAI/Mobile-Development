@@ -40,20 +40,26 @@ class SettingsFragment : Fragment() {
         binding.profileName.text = viewModel.userEmail.value
 
         viewModel.fetchEmail()
+        viewModel.fetchToken()
+
         viewModel.getSession().observe(viewLifecycleOwner) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(activity, WelcomeActivity::class.java))
                 activity?.finish()
             }
         }
-        // Setup navigation for Email Settings
-        binding.emailSetting.setOnClickListener {
-            navigateToFragment(EmailFragment.newInstance())
-        }
 
-        // Setup navigation for Password Settings
-        binding.passwordSetting.setOnClickListener {
-            navigateToFragment(PasswordFragment.newInstance())
+        // Observe token and set up navigation for Email and Password Settings
+        viewModel.token.observe(viewLifecycleOwner) { token ->
+            if (token != null) {
+                binding.emailSetting.setOnClickListener {
+                    navigateToFragment(EmailFragment.newInstance(token))
+                }
+
+                binding.passwordSetting.setOnClickListener {
+                    navigateToFragment(PasswordFragment.newInstance())
+                }
+            }
         }
 
         binding.languageSetting.setOnClickListener {
@@ -73,6 +79,7 @@ class SettingsFragment : Fragment() {
         setupView()
         setupAction()
     }
+
     private fun navigateToFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)

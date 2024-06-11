@@ -14,10 +14,20 @@ class SettingsViewModel(private val userRepository: UserRepository) : ViewModel(
     private val _userEmail = MutableLiveData<String>()
     val userEmail: LiveData<String> = _userEmail
 
+    private val _token = MutableLiveData<String>()
+    val token: LiveData<String> = _token
+
     fun fetchEmail() {
         viewModelScope.launch {
             val userModel = userRepository.getSession().first()
             _userEmail.value = userModel.email
+        }
+    }
+
+    fun fetchToken() {
+        viewModelScope.launch {
+            val userModel = userRepository.getSession().first()
+            _token.value = userModel.token
         }
     }
 

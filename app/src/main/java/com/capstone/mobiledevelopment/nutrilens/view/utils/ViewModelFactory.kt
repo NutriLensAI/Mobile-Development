@@ -13,6 +13,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakananViewM
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsViewModel
+import com.capstone.mobiledevelopment.nutrilens.view.settings.email.EmailViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupViewModel
 
 class ViewModelFactory(
@@ -28,7 +29,7 @@ class ViewModelFactory(
                 MainViewModel(userRepository, stepRepository) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(userRepository, foodRepository) as T
+                LoginViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(SignupViewModel::class.java) -> {
                 SignupViewModel(userRepository) as T
@@ -37,7 +38,10 @@ class ViewModelFactory(
                 SettingsViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(CatatanMakananViewModel::class.java) -> {
-                SettingsViewModel(userRepository) as T
+                CatatanMakananViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(EmailViewModel::class.java) -> {
+                EmailViewModel(userRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
@@ -54,7 +58,6 @@ class ViewModelFactory(
                     provideUserRepository(context),
                     provideFoodRepository(context),
                     provideStepCountRepository(context)
-
                 ).also { INSTANCE = it }
             }
         }
