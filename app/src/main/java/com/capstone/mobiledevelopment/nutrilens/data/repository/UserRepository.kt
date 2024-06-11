@@ -28,10 +28,6 @@ class UserRepository private constructor(
         return userPreference.getSession()
     }
 
-    fun updateToken(token: String) {
-        apiService = ApiConfig.getApiService(token)
-    }
-
     suspend fun register(name: String, email: String, password: String): RegisterResponse {
         val request = RegisterRequest(username = name, email = email, password = password)
         return apiService.register(request)

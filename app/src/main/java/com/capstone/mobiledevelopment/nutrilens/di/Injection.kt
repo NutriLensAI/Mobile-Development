@@ -14,15 +14,13 @@ import kotlinx.coroutines.runBlocking
 object Injection {
     fun provideUserRepository(context: Context): UserRepository {
         val pref = UserPreference.getInstance(context.dataStore)
-        val user = runBlocking { pref.getSession().first() }
-        val apiService = ApiConfig.getApiService(user.token)
+        val apiService = ApiConfig.getApiService()
         return UserRepository.getInstance(pref, apiService)
     }
 
     fun provideFoodRepository(context: Context): FoodRepository {
         val pref = UserPreference.getInstance(context.dataStore)
-        val user = runBlocking { pref.getSession().first() }
-        val apiService = ApiConfig.getApiService(user.token)
+        val apiService = ApiConfig.getApiService()
         return FoodRepository.getInstance(apiService)
     }
 

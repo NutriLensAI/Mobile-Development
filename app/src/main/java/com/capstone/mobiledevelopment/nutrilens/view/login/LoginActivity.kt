@@ -151,14 +151,10 @@ class LoginActivity : AppCompatActivity() {
                 val user = UserModel(email, token)
 
                 // Save session and update token
-                viewModel.saveSessionAndNavigate(user, token).observe(this) { isSaved ->
-                    if (isSaved) {
-                        navigateToMainActivity() // Navigate to main activity only after saving session and updating token
-                    } else {
-                        showFailureToast(getString(R.string.login_failed))
-                    }
-                }
+                viewModel.saveSession(user)
 
+                // Navigate to main activity
+                navigateToMainActivity()
             } else {
                 // Handle login failure
                 val message = when (result) {

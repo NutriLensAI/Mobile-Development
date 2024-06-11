@@ -24,14 +24,10 @@ class LoginViewModel(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private fun saveSession(user: UserModel) {
+    fun saveSession(user: UserModel) {
         viewModelScope.launch {
             userRepository.saveSession(user)
         }
-    }
-
-    private fun updateToken(token: String) {
-        userRepository.updateToken(token)
     }
 
     fun login(email: String, password: String) {
@@ -42,7 +38,6 @@ class LoginViewModel(
                 val response = userRepository.login(email, password)
                 _loginResult.value = Result.Success(response)
                 val token = response.token
-                updateToken(token) // Update token in StoryRepository
                 saveSession(UserModel(email, token)) // Save session
                 Log.d(TAG, "Login successful")
             } catch (e: Exception) {
@@ -51,20 +46,6 @@ class LoginViewModel(
                 _isLoading.value = false // Stop loading
             }
         }
-    }
-
-    fun saveSessionAndNavigate(user: UserModel, token: String): LiveData<Boolean> {
-        val result = MutableLiveData<Boolean>()
-        viewModelScope.launch {
-            try {
-                userRepository.saveSession(user)
-                userRepository.updateToken(token)
-                result.postValue(true)
-            } catch (e: Exception) {
-                result.postValue(false)
-            }
-        }
-        return result
     }
 
     private fun handleLoginError(e: Exception) {
