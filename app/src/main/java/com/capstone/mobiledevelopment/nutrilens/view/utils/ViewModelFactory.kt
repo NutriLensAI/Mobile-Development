@@ -14,6 +14,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.login.LoginViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.settings.email.EmailViewModel
+import com.capstone.mobiledevelopment.nutrilens.view.settings.password.PasswordViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupViewModel
 
 class ViewModelFactory(
@@ -38,10 +39,13 @@ class ViewModelFactory(
                 SettingsViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(CatatanMakananViewModel::class.java) -> {
-                CatatanMakananViewModel(foodRepository,userRepository) as T
+                CatatanMakananViewModel(foodRepository, userRepository) as T
             }
             modelClass.isAssignableFrom(EmailViewModel::class.java) -> {
                 EmailViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(PasswordViewModel::class.java) -> {
+                PasswordViewModel(userRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

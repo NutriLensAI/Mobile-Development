@@ -57,7 +57,7 @@ class SettingsFragment : Fragment() {
                 }
 
                 binding.passwordSetting.setOnClickListener {
-                    navigateToFragment(PasswordFragment.newInstance())
+                    navigateToFragment(PasswordFragment.newInstance(token))
                 }
             }
         }

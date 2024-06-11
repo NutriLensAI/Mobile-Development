@@ -30,6 +30,10 @@ data class UpdateEmailRequest(
     val email: String
 )
 
+data class UpdatePasswordRequest(
+    val newPassword: String
+)
+
 interface ApiService {
 
     @POST("users/register")
@@ -51,5 +55,11 @@ interface ApiService {
     suspend fun updateEmail(
         @Header("Authorization") token: String,
         @Body request: UpdateEmailRequest
+    ): ChangeResponse
+
+    @PUT("users/profile/editpassword")
+    suspend fun updatePassword(
+        @Header("Authorization") token: String,
+        @Body request: UpdatePasswordRequest
     ): ChangeResponse
 }

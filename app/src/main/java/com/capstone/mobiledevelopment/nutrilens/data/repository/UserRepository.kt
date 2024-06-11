@@ -10,6 +10,7 @@ import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.LoginRequest
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RegisterRequest
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UpdateEmailRequest
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UpdatePasswordRequest
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository private constructor(
@@ -41,6 +42,10 @@ class UserRepository private constructor(
     suspend fun updateEmail(token: String, email: String): ChangeResponse {
         val request = UpdateEmailRequest(email = email)
         return apiService.updateEmail(token, request)
+    }
+
+    suspend fun updatePassword(token: String, newPassword: String): ChangeResponse {
+        return apiService.updatePassword(token, UpdatePasswordRequest(newPassword))
     }
 
     companion object {
