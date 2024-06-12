@@ -1,4 +1,4 @@
-package com.capstone.mobiledevelopment.nutrilens.view.resep.favorite
+package com.capstone.mobiledevelopment.nutrilens.data.database.favorite
 
 import androidx.room.Dao
 import androidx.room.Insert

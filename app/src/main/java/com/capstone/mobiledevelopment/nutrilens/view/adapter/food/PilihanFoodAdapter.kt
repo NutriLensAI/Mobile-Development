@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.mobiledevelopment.nutrilens.R
 
-class FoodAdapter2(private var foodList: List<FoodResponse>) :
-    RecyclerView.Adapter<FoodAdapter2.FoodViewHolder>() {
+class PilihanFoodAdapter(private var foodList: List<FoodResponse>) :
+    RecyclerView.Adapter<PilihanFoodAdapter.FoodViewHolder>() {
 
     class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val foodName: TextView = itemView.findViewById(R.id.tv_food_name)

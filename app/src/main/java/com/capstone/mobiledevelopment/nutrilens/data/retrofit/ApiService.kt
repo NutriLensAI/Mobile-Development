@@ -1,17 +1,11 @@
 package com.capstone.mobiledevelopment.nutrilens.data.retrofit
 
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.Breakfast
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.ChangeResponse
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.Dinner
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.Lunch
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.Food
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST

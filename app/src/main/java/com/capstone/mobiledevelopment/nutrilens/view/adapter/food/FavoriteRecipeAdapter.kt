@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Detail
-import com.capstone.mobiledevelopment.nutrilens.view.resep.favorite.FavoriteRecipe
+import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
 
 class FavoriteRecipeAdapter(
     private var favoriteRecipes: List<FavoriteRecipe>,
