@@ -61,6 +61,10 @@ class UserRepository private constructor(
         return apiService.updateProfile(token, request)
     }
 
+    suspend fun getUserProfile(token: String): RegisterResponse {
+        return apiService.getUserProfile(token)
+    }
+
     companion object {
         @Volatile
         private var instance: UserRepository? = null

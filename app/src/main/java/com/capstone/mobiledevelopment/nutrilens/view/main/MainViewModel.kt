@@ -31,6 +31,10 @@ class MainViewModel(
     private val _token = MutableLiveData<String>()
     val token: LiveData<String> = _token
 
+    private val _username = MutableLiveData<String>()
+    val username: LiveData<String> get() = _username
+
+
     val stepCounts: LiveData<List<StepCount>> = stepRepository.getStepCounts()
 
     fun getSession(): LiveData<UserModel> {
@@ -42,6 +46,12 @@ class MainViewModel(
         viewModelScope.launch {
             val userModel = userRepository.getSession().first()
             _token.value = userModel.token
+        }
+    }
+    fun fetchUsername() {
+        viewModelScope.launch {
+            val userModel = userRepository.getSession().first()
+            _username.value = userModel.username
         }
     }
 

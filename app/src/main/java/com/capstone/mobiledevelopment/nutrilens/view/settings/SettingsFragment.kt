@@ -26,7 +26,16 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by activityViewModels<SettingsViewModel> {
-        ViewModelFactory.getInstance(requireActivity())  // Ensure it uses Activity context
+        ViewModelFactory.getInstance(requireActivity())
+    }
+
+    private var navigateTo: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            navigateTo = it.getString(ARG_NAVIGATE_TO)
+        }
     }
 
     override fun onCreateView(
@@ -49,7 +58,6 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        // Observe token and set up navigation for Email and Password Settings
         viewModel.token.observe(viewLifecycleOwner) { token ->
             if (token != null) {
                 binding.emailSetting.setOnClickListener {
@@ -59,8 +67,12 @@ class SettingsFragment : Fragment() {
                 binding.passwordSetting.setOnClickListener {
                     navigateToFragment(PasswordFragment.newInstance(token))
                 }
-                // Setup navigation for Personal Info Settings
+
                 binding.personalInfoSetting.setOnClickListener {
+                    navigateToFragment(PersonalFragment.newInstance(token))
+                }
+
+                if (navigateTo == "PersonalFragment") {
                     navigateToFragment(PersonalFragment.newInstance(token))
                 }
             }
@@ -135,8 +147,13 @@ class SettingsFragment : Fragment() {
     }
 
     companion object {
-        // Simplified newInstance method without parameters
-        @JvmStatic
-        fun newInstance() = SettingsFragment()
+        private const val ARG_NAVIGATE_TO = "navigate_to"
+
+        fun newInstance(selectedItemId: Int, navigateTo: String?) = SettingsFragment().apply {
+            arguments = Bundle().apply {
+                putInt("selected_item", selectedItemId)
+                putString(ARG_NAVIGATE_TO, navigateTo)
+            }
+        }
     }
 }

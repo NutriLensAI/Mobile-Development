@@ -16,6 +16,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
@@ -27,6 +28,7 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.view.utils.worker.ResetDrinkWorker
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.info.MenuAdapter
@@ -88,7 +90,42 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         // Schedule the worker to reset drink data at midnight
         scheduleResetDrinkWorker()
 
+        // Fetch and bind username
+        viewModel.fetchUsername()
+        viewModel.username.observe(this) { username ->
+            binding.helloTextView.text = "Hello, $username!"
+        }
 
+        // Fetch and check user profile data
+        val userProfile: RegisterResponse? = intent.getParcelableExtra("userProfile")
+        userProfile?.let {
+            checkUserProfileData(it)
+        }
+    }
+
+    private fun checkUserProfileData(userProfile: RegisterResponse) {
+        if (userProfile.weight == null || userProfile.height == null || userProfile.age == null || userProfile.gender == null || userProfile.activityLevel == null) {
+            showUserProfileTooltip()
+        }
+    }
+
+    private fun showUserProfileTooltip() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Complete Your Profile")
+        builder.setMessage("Personal data is still empty. You must fill it to have the fullest experience.")
+        builder.setPositiveButton("Fill Now") { dialog, _ ->
+            // Navigate to settings activity with PersonalFragment
+            val intent = Intent(this, SettingsActivity::class.java).apply {
+                putExtra("selected_item", R.id.navigation_profile)
+                putExtra("navigate_to", "PersonalFragment")
+            }
+            startActivity(intent)
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Later") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
     private fun setupViewModelObservers() {

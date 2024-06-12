@@ -58,7 +58,8 @@ class InputDataFragment : Fragment() {
                     viewModel.updateProfileData(it) { success, message ->
                         if (success) {
                             Log.d("InputDataFragment", "Profile updated successfully: $message")
-                            // Handle successful profile update
+                            // Optionally, go back to PersonalFragment to see the updated data
+                            parentFragmentManager.popBackStack()
                         } else {
                             Log.e("InputDataFragment", "Failed to update profile: $message")
                             // Handle failed profile update

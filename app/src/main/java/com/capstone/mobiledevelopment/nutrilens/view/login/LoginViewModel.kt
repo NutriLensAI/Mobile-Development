@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import kotlinx.coroutines.launch
@@ -24,11 +25,11 @@ class LoginViewModel(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun saveSession(user: UserModel) {
-        viewModelScope.launch {
-            userRepository.saveSession(user)
-        }
-    }
+    private val _sessionSaved = MutableLiveData<Boolean>()
+    val sessionSaved: LiveData<Boolean> = _sessionSaved
+
+    private val _userProfile = MutableLiveData<RegisterResponse>()
+    val userProfile: LiveData<RegisterResponse> = _userProfile
 
     fun login(email: String, password: String) {
         _isLoading.value = true // Start loading
@@ -37,13 +38,32 @@ class LoginViewModel(
                 Log.d(TAG, "Login started")
                 val response = userRepository.login(email, password)
                 _loginResult.value = Result.Success(response)
-                val token = response.token
-                saveSession(UserModel(email, token)) // Save session
                 Log.d(TAG, "Login successful")
             } catch (e: Exception) {
                 handleLoginError(e)
             } finally {
                 _isLoading.value = false // Stop loading
+            }
+        }
+    }
+
+    fun saveSession(token: String) {
+        viewModelScope.launch {
+            try {
+                val userProfile = userRepository.getUserProfile(token)
+                val user = UserModel(
+                    email = userProfile.email.toString(),
+                    token = token,
+                    isLogin = true,
+                    username = userProfile.username.toString()
+                )
+                userRepository.saveSession(user)
+                _userProfile.value = userProfile
+                _sessionSaved.value = true
+                Log.d(TAG, "User details fetched and session saved successfully")
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to fetch user details and save session", e)
+                _sessionSaved.value = false
             }
         }
     }

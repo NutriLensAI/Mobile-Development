@@ -12,16 +12,21 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         if (savedInstanceState == null) {
-            // We keep the mechanism to handle different item selections
-            val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_profile)  // Default or fallback item
-            val fragment = when (selectedItemId) {
-                R.id.navigation_profile -> SettingsFragment.newInstance()  // Using new instance without parameters
-                else -> SettingsFragment.newInstance()  // Default case also leads to SettingsFragment without parameters
-            }
+            val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_profile)
+            val navigateTo = intent.getStringExtra("navigate_to")
+            val fragment = SettingsFragment.newInstance(selectedItemId, navigateTo)
             supportFragmentManager.commit {
                 replace(R.id.fragment_container, fragment)
                 setReorderingAllowed(true)
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
         }
     }
 }

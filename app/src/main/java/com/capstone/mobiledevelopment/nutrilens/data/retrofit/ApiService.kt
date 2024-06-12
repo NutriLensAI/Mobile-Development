@@ -81,4 +81,9 @@ interface ApiService {
 
     @GET("nutritions/data")
     suspend fun getFoodData(): List<FoodResponse>
+
+    @GET("users/profile")
+    suspend fun getUserProfile(
+        @Header("Authorization") token: String
+    ): RegisterResponse
 }
