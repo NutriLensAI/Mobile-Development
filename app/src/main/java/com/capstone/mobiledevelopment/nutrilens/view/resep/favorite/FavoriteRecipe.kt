@@ -10,3 +10,4 @@ data class FavoriteRecipe(
     val ingredients: String,
     val steps: String
 )
+

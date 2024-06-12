@@ -24,7 +24,6 @@ abstract class StepDatabase : RoomDatabase() {
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Migration code if necessary
-                // e.g., database.execSQL("ALTER TABLE my_recipes ADD COLUMN new_column INTEGER NOT NULL DEFAULT 0")
             }
         }
 
@@ -36,6 +35,7 @@ abstract class StepDatabase : RoomDatabase() {
                     "nutrilens_database"
                 )
                     .addMigrations(MIGRATION_1_2)
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance

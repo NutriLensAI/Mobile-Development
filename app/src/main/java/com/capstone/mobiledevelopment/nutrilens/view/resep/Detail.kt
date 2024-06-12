@@ -5,7 +5,6 @@ import android.view.View
 import android.view.animation.ScaleAnimation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityDetailBinding
@@ -25,10 +24,7 @@ class Detail : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        db = Room.databaseBuilder(
-            applicationContext,
-            StepDatabase::class.java, "nutrilens-db"
-        ).build()
+        db = StepDatabase.getDatabase(applicationContext)
 
         val title = intent.getStringExtra("EXTRA_TITLE")
         val ingredients = intent.getStringExtra("EXTRA_INGREDIENTS")
