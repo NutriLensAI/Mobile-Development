@@ -7,6 +7,8 @@ import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.Lunch
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.Food
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -76,4 +78,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body request: UpdateProfileRequest
     ): ChangeResponse
+
+    @GET("nutritions/data")
+    suspend fun getFoodData(): List<FoodResponse>
 }

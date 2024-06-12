@@ -6,14 +6,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.capstone.mobiledevelopment.nutrilens.R
 
-class FoodAdapter2(private var foodList: List<Food>, private val onAddClickListener: (Food) -> Unit) : RecyclerView.Adapter<FoodAdapter2.FoodViewHolder>() {
+class FoodAdapter2(private var foodList: List<FoodResponse>) :
+    RecyclerView.Adapter<FoodAdapter2.FoodViewHolder>() {
 
-    class FoodViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvFoodName: TextView = view.findViewById(R.id.tv_food_name)
-        val tvFoodCalories: TextView = view.findViewById(R.id.tv_food_calories)
-        val ivAddFood: ImageView = view.findViewById(R.id.iv_add_food)
+    class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val foodName: TextView = itemView.findViewById(R.id.tv_food_name)
+        val foodCalories: TextView = itemView.findViewById(R.id.tv_food_calories)
+        val foodImage: ImageView = itemView.findViewById(R.id.iv_food_image)
+        val addFoodIcon: ImageView = itemView.findViewById(R.id.iv_add_food)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
@@ -22,18 +25,22 @@ class FoodAdapter2(private var foodList: List<Food>, private val onAddClickListe
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
-        val foodItem = foodList[position]
-        holder.tvFoodName.text = foodItem.name
-        holder.tvFoodCalories.text = "${foodItem.calories} Cal"
-        holder.ivAddFood.setOnClickListener {
-            onAddClickListener(foodItem)
-        }
+        val food = foodList[position]
+        holder.foodName.text = food.name
+        holder.foodCalories.text = "${food.calories} Cal"
+        Glide.with(holder.itemView.context).load(food.image).into(holder.foodImage)
     }
 
-    fun updateList(newList: List<Food>) {
+    override fun getItemCount(): Int {
+        return foodList.size
+    }
+
+    fun updateList(newList: List<FoodResponse>) {
         foodList = newList
         notifyDataSetChanged()
     }
-
-    override fun getItemCount() = foodList.size
 }
+
+
+
+
