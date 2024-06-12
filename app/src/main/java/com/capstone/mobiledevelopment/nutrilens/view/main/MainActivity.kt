@@ -28,6 +28,7 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.Macros
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.view.utils.worker.ResetDrinkWorker
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
@@ -37,6 +38,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
+import com.capstone.mobiledevelopment.nutrilens.view.utils.Utils
 import com.capstone.mobiledevelopment.nutrilens.view.utils.worker.StepCountWorker
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
@@ -96,11 +98,60 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             binding.helloTextView.text = "Hello, $username!"
         }
 
-        // Fetch and check user profile data
-        val userProfile: RegisterResponse? = intent.getParcelableExtra("userProfile")
-        userProfile?.let {
-            checkUserProfileData(it)
+        fetchUserDataAndMacros()
+    }
+
+    private fun fetchUserDataAndMacros() {
+        viewModel.getSession().observe(this) { user ->
+            if (user == null || !user.isLogin) {
+                startActivity(Intent(this, WelcomeActivity::class.java))
+                finish()
+            } else {
+                user.token.let { token ->
+                    viewModel.fetchUserProfile(token)
+                    viewModel.fetchMacros(token)
+                }
+            }
         }
+    }
+
+    private fun observeSession() {
+        viewModel.userProfile.observe(this) { userProfile ->
+            userProfile?.let {
+                val calculatedCalories = Utils.calculateTotalCalories(it)
+                checkUserProfileData(it)
+                binding.totalCalories.text = "$calculatedCalories Calories"
+            }
+        }
+
+        viewModel.macros.observe(this) { macros ->
+            macros?.let {
+                val totalCalories = viewModel.userProfile.value?.let { profile ->
+                    Utils.calculateTotalCalories(profile)
+                } ?: 2400
+                updateMacrosUI(it, totalCalories)
+            }
+        }
+    }
+
+    private fun updateMacrosUI(macros: Macros, totalCalories: Int) {
+        // Calculate target grams for each macro based on total calories
+        val targetProteinGrams = (totalCalories * 0.20 / 4).toInt()
+        val targetCarbsGrams = (totalCalories * 0.50 / 4).toInt()
+        val targetFatGrams = (totalCalories * 0.30 / 9).toInt()
+
+        binding.carbsProgressBar.progress = (macros.totalCarbs ?: 0) * 100 / targetCarbsGrams
+        binding.fatProgressBar.progress = (macros.totalFat ?: 0) * 100 / targetFatGrams
+        binding.proteinProgressBar.progress = (macros.totalProteins ?: 0) * 100 / targetProteinGrams
+        binding.totalCalories.text = "${macros.totalCalories ?: 0}/$totalCalories Calories"
+
+        binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0, targetCarbsGrams)
+        binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0, targetFatGrams)
+        binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0, targetProteinGrams)
+    }
+
+    private fun formatMacroText(value: Int, target: Int): String {
+        return "$value\nof\n$target g"
     }
 
     private fun checkUserProfileData(userProfile: RegisterResponse) {
@@ -147,11 +198,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         } else {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
-    }
-
-    private fun setupPeriodicWork() {
-        val workRequest = PeriodicWorkRequestBuilder<StepCountWorker>(15, TimeUnit.MINUTES).build()
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork("StepCountWork", ExistingPeriodicWorkPolicy.REPLACE, workRequest)
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -273,17 +319,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         // Do nothing
-    }
-
-    private fun observeSession() {
-        viewModel.getSession().observe(this) { user ->
-            if (user == null || !user.isLogin) {
-                startActivity(Intent(this, WelcomeActivity::class.java))
-                finish()
-            } else {
-                viewModel.fetchToken()
-            }
-        }
     }
 
     private fun setupView() {

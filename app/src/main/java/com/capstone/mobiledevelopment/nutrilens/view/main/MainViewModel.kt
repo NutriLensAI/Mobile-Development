@@ -10,6 +10,9 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.Macros
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
+import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import kotlinx.coroutines.flow.first
@@ -22,7 +25,8 @@ import java.time.ZoneOffset
 
 class MainViewModel(
     private val userRepository: UserRepository,
-    private val stepRepository: StepRepository
+    private val stepRepository: StepRepository,
+    private val foodRepository: FoodRepository // Added to access food data
 ) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -34,6 +38,11 @@ class MainViewModel(
     private val _username = MutableLiveData<String>()
     val username: LiveData<String> get() = _username
 
+    private val _userProfile = MutableLiveData<RegisterResponse>()
+    val userProfile: LiveData<RegisterResponse> = _userProfile
+
+    private val _macros = MutableLiveData<Macros?>()
+    val macros: LiveData<Macros?> = _macros
 
     val stepCounts: LiveData<List<StepCount>> = stepRepository.getStepCounts()
 
@@ -41,13 +50,13 @@ class MainViewModel(
         return userRepository.getSession().asLiveData()
     }
 
-    // Fetch token
     fun fetchToken() {
         viewModelScope.launch {
             val userModel = userRepository.getSession().first()
             _token.value = userModel.token
         }
     }
+
     fun fetchUsername() {
         viewModelScope.launch {
             val userModel = userRepository.getSession().first()
@@ -60,5 +69,32 @@ class MainViewModel(
             val today = System.currentTimeMillis()
             stepRepository.saveStepCount(StepCount(stepCount = stepCount, date = today))
         }
+    }
+
+    fun fetchUserProfile(token: String) {
+        viewModelScope.launch {
+            try {
+                val userProfile = userRepository.getUserProfile(token)
+                _userProfile.postValue(userProfile)
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to fetch user profile", e)
+            }
+        }
+    }
+
+    fun fetchMacros(token: String) {
+        viewModelScope.launch {
+            try {
+                val response = foodRepository.getAllMeals(token)
+                _macros.postValue(response.macros)
+                Log.d(TAG, "Macros fetched successfully")
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to fetch macros", e)
+            }
+        }
+    }
+
+    companion object {
+        private const val TAG = "MainViewModel"
     }
 }

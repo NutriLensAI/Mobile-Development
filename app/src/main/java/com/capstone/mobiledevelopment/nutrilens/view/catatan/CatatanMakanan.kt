@@ -55,12 +55,23 @@ class CatatanMakanan : AppCompatActivity() {
             updateMealsUI(meals)
         }
 
+        viewModel.totalCalories.observe(this) { totalCalories ->
+            binding.totalCalories.text = "$totalCalories Calories"
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
 
     private fun updateMealsUI(meals: UserFoodResponse) {
+        val totalCalories = viewModel.totalCalories.value ?: 2400
+
+        // Calculate target grams for each macro
+        val targetProteinGrams = (totalCalories * 0.20 / 4).toInt()
+        val targetCarbsGrams = (totalCalories * 0.50 / 4).toInt()
+        val targetFatGrams = (totalCalories * 0.30 / 9).toInt()
+
         // Update Breakfast
         meals.breakfast?.let { breakfast ->
             binding.breakfastCarbs.text = breakfast.total?.carbs.toString()
@@ -87,19 +98,19 @@ class CatatanMakanan : AppCompatActivity() {
 
         // Update Macros
         meals.macros?.let { macros ->
-            binding.carbsProgressBar.progress = macros.totalCarbs ?: 0
-            binding.fatProgressBar.progress = macros.totalFat ?: 0
-            binding.proteinProgressBar.progress = macros.totalProteins ?: 0
-            binding.totalCalories.text = "${macros.totalCalories ?: 0}/2400 Calories"
+            binding.carbsProgressBar.progress = (macros.totalCarbs ?: 0) * 100 / targetCarbsGrams
+            binding.fatProgressBar.progress = (macros.totalFat ?: 0) * 100 / targetFatGrams
+            binding.proteinProgressBar.progress = (macros.totalProteins ?: 0) * 100 / targetProteinGrams
+            binding.totalCalories.text = "${macros.totalCalories ?: 0}/$totalCalories Calories"
 
-            binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0, 100)
-            binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0, 100)
-            binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0, 100)
+            binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0, targetCarbsGrams)
+            binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0, targetFatGrams)
+            binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0, targetProteinGrams)
         }
     }
 
-    private fun formatMacroText(value: Int, max: Int): String {
-        return "$value\nof\n$max g"
+    private fun formatMacroText(value: Int, target: Int): String {
+        return "$value\nof\n$target g"
     }
 
     private fun setupToggleButtonGroup() {
@@ -160,8 +171,13 @@ class CatatanMakanan : AppCompatActivity() {
                 }
 
                 R.id.navigation_stats -> {
-                    val intent = Intent(this@CatatanMakanan, MainActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_stats)
+                    val totalCalories = viewModel.totalCalories.value ?: 2400
+                    val macros = viewModel.allMeals.value?.macros
+                    val intent = Intent(this@CatatanMakanan, MainActivity::class.java).apply {
+                        putExtra("selected_item", R.id.navigation_stats)
+                        putExtra("total_calories", totalCalories)
+                        putExtra("macros", macros)
+                    }
                     startActivity(intent)
                     true
                 }

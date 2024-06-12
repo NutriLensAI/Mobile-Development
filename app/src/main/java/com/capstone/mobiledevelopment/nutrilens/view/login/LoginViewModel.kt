@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.Macros
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
+import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import kotlinx.coroutines.launch
@@ -30,6 +32,9 @@ class LoginViewModel(
 
     private val _userProfile = MutableLiveData<RegisterResponse>()
     val userProfile: LiveData<RegisterResponse> = _userProfile
+
+    private val _macros = MutableLiveData<Macros?>()
+    val macros: MutableLiveData<Macros?> = _macros
 
     fun login(email: String, password: String) {
         _isLoading.value = true // Start loading

@@ -14,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.Macros
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityLoginBinding
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
@@ -150,11 +151,8 @@ class LoginActivity : AppCompatActivity() {
                 viewModel.saveSession(token)
                 viewModel.sessionSaved.observe(this) { isSaved ->
                     if (isSaved) {
-                        // Observe user profile
-                        viewModel.userProfile.observe(this) { userProfile ->
-                            // Navigate to main activity with user profile
-                            navigateToMainActivity(userProfile)
-                        }
+                        // Navigate to MainActivity
+                        navigateToMainActivity()
                     } else {
                         // Handle session save failure
                     }
@@ -170,11 +168,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToMainActivity(userProfile: RegisterResponse) {
+    private fun navigateToMainActivity() {
         Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            putExtra("userProfile", userProfile)
         }
         startActivity(intent)
         finish()
