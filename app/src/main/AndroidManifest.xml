@@ -53,7 +53,7 @@
             android:name=".view.catatan.CatatanMakanan"
             android:exported="false" />
         <activity
-            android:name=".view.food.PilihanMakanan"
+            android:name=".view.resep.PilihanMakanan"
             android:exported="false" />
         <activity
             android:name=".view.adapter.recipes.AddMyRecipes"

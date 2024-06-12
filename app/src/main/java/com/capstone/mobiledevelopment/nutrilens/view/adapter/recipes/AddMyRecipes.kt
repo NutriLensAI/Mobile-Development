@@ -1,6 +1,7 @@
 package com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -24,10 +25,7 @@ class AddMyRecipes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_my_recipes)
 
-        db = Room.databaseBuilder(
-            applicationContext,
-            StepDatabase::class.java, "nutrilens-db"
-        ).build()
+        db = StepDatabase.getDatabase(applicationContext)
 
         etTitle = findViewById(R.id.etTitle)
         etIngredients = findViewById(R.id.etIngredients)
@@ -46,17 +44,23 @@ class AddMyRecipes : AppCompatActivity() {
 
         if (title.isNotEmpty() && ingredients.isNotEmpty() && steps.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
-                db.myRecipeDao().insertRecipe(
-                    MyRecipe(
-                        title = title,
-                        ingredients = ingredients,
-                        steps = steps
+                try {
+                    db.myRecipeDao().insertRecipe(
+                        MyRecipe(
+                            title = title,
+                            ingredients = ingredients,
+                            steps = steps
+                        )
                     )
-                )
-                withContext(Dispatchers.Main) {
-                    finish()
+                    withContext(Dispatchers.Main) {
+                        finish()
+                    }
+                } catch (e: Exception) {
+                    Log.e("AddMyRecipes", "Error inserting recipe", e)
                 }
             }
+        } else {
+            Log.w("AddMyRecipes", "Title, Ingredients, or Steps are empty")
         }
     }
 }

@@ -8,7 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.view.food.PilihanMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.resep.PilihanMakanan
 
 data class FoodItem(
     val mealTitle: String,
