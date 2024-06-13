@@ -240,10 +240,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private fun setupRecyclerView(currentSteps: Int, totalDrinkAmount: Int, sleepCount: Int) {
         val menuList = mutableListOf(
+            MenuItem("Drink", R.drawable.ic_drink, "$totalDrinkAmount ml", "How much should you drink every day?"),
             MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
-            MenuItem("Sleep", R.drawable.ic_cholesterol, "$sleepCount sessions", "Number of sleep sessions"),
             MenuItem("Steps", R.drawable.ic_steps, "$currentSteps/10,000 steps", "How much should you walk every day?"),
-            MenuItem("Drink", R.drawable.ic_drink, "$totalDrinkAmount ml", "How much should you drink every day?")
+            MenuItem("Sleep", R.drawable.ic_cholesterol, "$sleepCount sessions", "Number of sleep sessions")
         )
 
         val adapter = MenuAdapter(menuList)
