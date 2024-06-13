@@ -50,7 +50,6 @@ class PilihanMakananActivity : AppCompatActivity() {
     private lateinit var userPreference: UserPreference
     private lateinit var mealTypeSpinner: Spinner
     private var token: String = ""
-    private var userId: Int = 0 // Inisialisasi userId
     private var selectedTable: String = "breakfasts" // Default value
 
     override fun onCreate(savedInstanceState: Bundle?) {

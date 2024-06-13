@@ -6,13 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.catatan.CatatanMakanan"
-    android:background="#F5F5F5">
+    android:background="#00000000"
+    android:theme="@style/Base.Theme.LoginWithAnimation">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/macrosCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -695,7 +697,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="95dp" />
+        app:layout_constraintGuide_end="90dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"

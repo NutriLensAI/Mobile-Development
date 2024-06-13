@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LoginWithAnimation">
+        android:theme="@style/Base.Theme.LoginWithAnimation">
         <activity
             android:name=".view.catatan.input.InputCatatanActivity"
             android:exported="false" />

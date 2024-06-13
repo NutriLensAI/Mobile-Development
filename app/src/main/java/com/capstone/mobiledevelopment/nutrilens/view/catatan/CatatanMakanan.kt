@@ -1,11 +1,13 @@
 package com.capstone.mobiledevelopment.nutrilens.view.catatan
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
@@ -49,7 +51,25 @@ class CatatanMakanan : AppCompatActivity() {
             }
         }
 
+        setupView()
         fetchDrinkAndSugarData()
+    }
+    private fun setupView() {
+        // Ensure the content fits system windows to avoid shifting
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+
+        // Make status bar transparent
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        window.statusBarColor = Color.TRANSPARENT // Ensure the status bar is transparent
+
+        // Optionally set status bar content to dark
+        WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
+            controller.isAppearanceLightStatusBars = true
+        }
+
+        // Hide the action bar if any
+        supportActionBar?.hide()
     }
 
     private fun observeViewModel() {
@@ -70,10 +90,9 @@ class CatatanMakanan : AppCompatActivity() {
         val totalCalories = viewModel.totalCalories.value ?: 2400
 
         // Calculate target grams for each macro
-        val targetProteinGrams = (totalCalories * 0.20 / 4).toInt()
-        val targetCarbsGrams = (totalCalories * 0.50 / 4).toInt()
-        val targetFatGrams = (totalCalories * 0.30 / 9).toInt()
-
+        val targetProteinGrams = (totalCalories * 0.15 / 4).toInt()
+        val targetCarbsGrams = (totalCalories * 0.60 / 4).toInt()
+        val targetFatGrams = (totalCalories * 0.15 / 9).toInt()
         // Update Breakfast
         meals.breakfast?.let { breakfast ->
             binding.breakfastCarbs.text = formatDecimal(breakfast.total?.carbs ?: 0.0)
