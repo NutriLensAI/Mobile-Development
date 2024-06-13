@@ -5,56 +5,64 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.database.drink.Drink
+import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.drink.DrinkAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.drink.DrinkItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DrinkFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DrinkFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var drinkList: MutableList<DrinkItem>
+    private lateinit var adapter: DrinkAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drink, container, false)
+        val view = inflater.inflate(R.layout.fragment_drink, container, false)
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+
+        // Initialize the drink list
+        drinkList = mutableListOf()
+
+        // Set up the adapter and RecyclerView
+        adapter = DrinkAdapter(drinkList)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+
+        // Fetch drink data
+        fetchDrinkAndSugarData()
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DrinkFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DrinkFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun fetchDrinkAndSugarData() {
+        val drinkDao = DrinkDatabase.getDatabase(requireContext()).drinkDao()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val drinks = drinkDao.getAllDrinks()
+            withContext(Dispatchers.Main) {
+                updateDrinkList(drinks)
             }
+        }
+    }
+
+    private fun updateDrinkList(drinks: List<Drink>) {
+        drinkList.clear()
+        for (drink in drinks) {
+            val newDrinkItem = DrinkItem(
+                drink.name,
+                drink.amount,
+                drink.sugar,
+                mutableListOf(DrinkItem.DrinkDetail(drink.name, drink.amount, drink.sugar))
+            )
+            drinkList.add(newDrinkItem)
+        }
+        adapter.notifyDataSetChanged()
     }
 }

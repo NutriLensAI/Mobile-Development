@@ -152,11 +152,7 @@ class CatatanMakanan : AppCompatActivity() {
                     R.id.btn_breakfast -> "BREAKFAST"
                     R.id.btn_lunch -> "LUNCH"
                     R.id.btn_dinner -> "DINNER"
-                    R.id.btn_drink -> {
-                        val intent = Intent(this, AddDrink::class.java)
-                        startActivity(intent)
-                        return@addOnButtonCheckedListener
-                    }
+                    R.id.btn_drink -> "DRINK"
                     else -> "BREAKFAST"
                 }
 
@@ -190,7 +186,6 @@ class CatatanMakanan : AppCompatActivity() {
             }
         }
     }
-
 
         private fun setupFab() {
         val fab: FloatingActionButton = findViewById(R.id.fab)

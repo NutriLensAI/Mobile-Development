@@ -1,6 +1,7 @@
 package com.capstone.mobiledevelopment.nutrilens.view.drink
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -22,28 +23,8 @@ class AddDrink : AppCompatActivity() {
         binding = ActivityAddDrinkBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val cupAmount = 200 // Assume each cup is 200 ml
-        val sugarAmount = 25 // Assume each sugar amount is 25 grams
-
-        binding.addCupButton.setOnClickListener {
-            updateDrinkAmount(cupAmount)
-        }
-
-        binding.subtractCupButton.setOnClickListener {
-            checkAndSubtractAmount(cupAmount)
-        }
-
-        binding.addSugarButton.setOnClickListener {
-            updateSugarAmount(sugarAmount)
-        }
-
-        binding.subtractSugarButton.setOnClickListener {
-            checkAndSubtractSugarAmount(sugarAmount)
-        }
-
-        updateTotalAmount()
-        updateTotalSugarAmount()
         setupView()
+        setupListeners()
     }
 
     private fun setupView() {
@@ -57,65 +38,25 @@ class AddDrink : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
 
-    private fun updateDrinkAmount(amount: Int) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            drinkDao.insert(Drink(amount = amount))
-            updateTotalAmount()
-        }
-    }
+    private fun setupListeners() {
+        binding.addDrinkButton.setOnClickListener {
+            val name = binding.drinkNameEditText.text.toString()
+            val amount = binding.drinkAmountEditText.text.toString().toIntOrNull() ?: 0
+            val sugarUnit = binding.sugarUnitSpinner.selectedItem.toString()
+            val sugar = binding.sugarAmountEditText.text.toString().toIntOrNull() ?: 0
+            val sugarInGrams = if (sugarUnit == "Tablespoons") sugar * 13 else sugar // Assume 1 tablespoon = 13 grams
 
-    private fun checkAndSubtractAmount(cupAmount: Int) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val totalAmount = drinkDao.getTotalAmount() ?: 0
-            if (totalAmount > 0) {
-                val newAmount = totalAmount - cupAmount
-                if (newAmount >= 0) {
-                    drinkDao.insert(Drink(amount = -cupAmount))
-                    withContext(Dispatchers.Main) {
-                        updateTotalAmount()
-                    }
-                }
+            if (name.isNotEmpty() && amount > 0) {
+                saveDrink(name, amount, sugarInGrams)
+            } else {
+                Toast.makeText(this, "Please fill in all fields correctly.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun updateSugarAmount(amount: Int) {
+    private fun saveDrink(name: String, amount: Int, sugar: Int) {
         lifecycleScope.launch(Dispatchers.IO) {
-            drinkDao.insert(Drink(amount = 0, sugar = amount))
-            updateTotalSugarAmount()
-        }
-    }
-
-    private fun checkAndSubtractSugarAmount(sugarAmount: Int) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val totalSugarAmount = drinkDao.getTotalSugarAmount() ?: 0
-            if (totalSugarAmount > 0) {
-                val newSugarAmount = totalSugarAmount - sugarAmount
-                if (newSugarAmount >= 0) {
-                    drinkDao.insert(Drink(amount = 0, sugar = -sugarAmount))
-                    withContext(Dispatchers.Main) {
-                        updateTotalSugarAmount()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun updateTotalAmount() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val totalAmount = drinkDao.getTotalAmount() ?: 0
-            withContext(Dispatchers.Main) {
-                binding.totalDrinkAmountTextView.text = "$totalAmount ml"
-            }
-        }
-    }
-
-    private fun updateTotalSugarAmount() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val totalSugarAmount = drinkDao.getTotalSugarAmount() ?: 0
-            withContext(Dispatchers.Main) {
-                binding.totalSugarAmountTextView.text = "$totalSugarAmount g"
-            }
+            drinkDao.insert(Drink(name = name, amount = amount, sugar = sugar))
         }
     }
 }

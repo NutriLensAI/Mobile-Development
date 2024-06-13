@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
-    tools:context=".view.adddrink.AddDrink">
+    tools:context=".view.drink.AddDrink">
 
-    <!-- Background Hijau -->
+    <!-- Background Header -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
@@ -52,119 +52,68 @@
             app:layout_constraintVertical_bias="0.22" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Total Drink Amount TextView -->
-    <TextView
-        android:id="@+id/drinkAmountLabel"
-        android:layout_width="wrap_content"
+    <!-- Drink Name EditText -->
+    <EditText
+        android:id="@+id/drinkNameEditText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Jumlah Air Yang Di Konsumsi: "
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/totalDrinkAmountTextView"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:hint="Name of the Drink"
+        android:inputType="text"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerLayout" />
 
-    <TextView
-        android:id="@+id/totalDrinkAmountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="0 ml"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.76"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerLayout" />
-
-    <!-- Total Sugar Amount TextView -->
-    <TextView
-        android:id="@+id/sugarAmountLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Jumlah Gula Yang Di Konsumsi: "
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/totalSugarAmountTextView"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drinkAmountLabel" />
-
-    <TextView
-        android:id="@+id/totalSugarAmountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="0 g"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.76"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drinkAmountLabel" />
-
-    <!-- Buttons for managing drink and sugar amounts -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
+    <!-- Drink Amount EditText -->
+    <EditText
+        android:id="@+id/drinkAmountEditText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:padding="16dp"
+        android:hint="Amount (ml)"
+        android:inputType="number"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/totalSugarAmountTextView">
+        app:layout_constraintTop_toBottomOf="@+id/drinkNameEditText" />
 
-        <!-- Add Cup Button -->
-        <Button
-            android:id="@+id/addCupButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/light_green"
-            android:text="Add Cup"
-            app:layout_constraintEnd_toStartOf="@+id/subtractCupButton"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!-- Sugar Unit Spinner -->
+    <Spinner
+        android:id="@+id/sugarUnitSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:entries="@array/sugar_units"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drinkAmountEditText" />
 
-        <!-- Subtract Cup Button -->
-        <Button
-            android:id="@+id/subtractCupButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="@color/light_green"
-            android:text="Subtract Cup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/addCupButton"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!-- Sugar Amount EditText -->
+    <EditText
+        android:id="@+id/sugarAmountEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Sugar Amount"
+        android:inputType="number"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sugarUnitSpinner" />
 
-        <!-- Add Sugar Button -->
-        <Button
-            android:id="@+id/addSugarButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/light_green"
-            android:text="Add Sugar"
-            app:layout_constraintEnd_toStartOf="@+id/subtractSugarButton"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addCupButton" />
-
-        <!-- Subtract Sugar Button -->
-        <Button
-            android:id="@+id/subtractSugarButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/light_green"
-            android:text="Subtract Sugar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/addSugarButton"
-            app:layout_constraintTop_toBottomOf="@+id/subtractCupButton" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Add Button -->
+    <Button
+        android:id="@+id/addDrinkButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/light_green"
+        android:text="Add Drink"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sugarAmountEditText" />
 
     <!-- ScrollView for additional information -->
     <ScrollView
@@ -174,7 +123,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/addDrinkButton">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -292,4 +241,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
