@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -45,8 +48,10 @@ class PilihanMakananActivity : AppCompatActivity() {
     private lateinit var db: StepDatabase
     private lateinit var fabAddRecipe: FloatingActionButton
     private lateinit var userPreference: UserPreference
+    private lateinit var mealTypeSpinner: Spinner
     private var token: String = ""
     private var userId: Int = 0 // Inisialisasi userId
+    private var selectedTable: String = "breakfasts" // Default value
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +60,7 @@ class PilihanMakananActivity : AppCompatActivity() {
         db = StepDatabase.getDatabase(applicationContext)
         userPreference = UserPreference.getInstance(dataStore)
 
-        // Ambil token dari UserPreference
+        // Ambil token dan userId dari UserPreference
         lifecycleScope.launch {
             val session = userPreference.getSession().first()
             token = session.token
@@ -64,8 +69,8 @@ class PilihanMakananActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        pilihanFoodAdapter = PilihanFoodAdapter(emptyList()) { food, table ->
-            sendFoodData(table, food)
+        pilihanFoodAdapter = PilihanFoodAdapter(emptyList()) { food ->
+            sendFoodData(selectedTable, food)
         }
         favoriteRecipeAdapter = FavoriteRecipeAdapter(emptyList(), this)
         myRecipesAdapter = MyRecipesAdapter(emptyList(), this::deleteRecipe)
@@ -77,9 +82,29 @@ class PilihanMakananActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        mealTypeSpinner = findViewById(R.id.meal_type_spinner)
+        setupSpinner()
+
         fetchFoodData()
         setupSearchBar()
         setupTabLayout()
+    }
+
+    private fun setupSpinner() {
+        val mealTypes = arrayOf("breakfasts", "lunchs", "dinners")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, mealTypes)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        mealTypeSpinner.adapter = adapter
+
+        mealTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedTable = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Default value or any action if needed
+            }
+        }
     }
 
     private fun fetchFoodData() {

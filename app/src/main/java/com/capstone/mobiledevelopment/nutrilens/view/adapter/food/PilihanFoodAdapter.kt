@@ -11,7 +11,7 @@ import com.capstone.mobiledevelopment.nutrilens.R
 
 class PilihanFoodAdapter(
     private var foodList: List<FoodResponse>,
-    private val onAddFoodClicked: (FoodResponse, String) -> Unit
+    private val onAddFoodClicked: (FoodResponse) -> Unit
 ) : RecyclerView.Adapter<PilihanFoodAdapter.FoodViewHolder>() {
 
     class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,9 +33,7 @@ class PilihanFoodAdapter(
         Glide.with(holder.itemView.context).load(food.image).into(holder.foodImage)
 
         holder.addFoodIcon.setOnClickListener {
-            // Example table value, you may use a spinner or other UI element to select table
-            val table = "lunchs" // Ganti dengan logika yang sesuai untuk menentukan table
-            onAddFoodClicked(food, table)
+            onAddFoodClicked(food)
         }
     }
 
