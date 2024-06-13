@@ -43,17 +43,17 @@ class DinnerFragment : Fragment() {
         foodList.clear()
         val newFoodItem = FoodItem(
             "Dinner",
-            dinner.total?.carbs ?: 0,
-            dinner.total?.fat ?: 0,
-            dinner.total?.prot ?: 0,
-            dinner.total?.calories ?: 0,
+            dinner.total?.carbs ?: 0.0,
+            dinner.total?.fat ?: 0.0,
+            dinner.total?.prot ?: 0.0,
+            dinner.total?.calories ?: 0.0,
             dinner.data?.map {
                 FoodItem.FoodDetail(
                     it?.foodName ?: "",
-                    it?.carbohydrate ?: 0,
-                    it?.fat ?: 0,
-                    it?.proteins ?: 0,
-                    it?.calories ?: 0
+                    it?.carbohydrate ?: 0.0,
+                    it?.fat ?: 0.0,
+                    it?.proteins ?: 0.0,
+                    it?.calories ?: 0.0
                 )
             }?.toMutableList() ?: mutableListOf()
         )

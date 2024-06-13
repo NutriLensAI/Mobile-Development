@@ -39,7 +39,6 @@ import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Utils
-import com.capstone.mobiledevelopment.nutrilens.view.utils.worker.StepCountWorker
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
 import com.google.android.gms.common.ConnectionResult
@@ -140,17 +139,17 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val targetCarbsGrams = (totalCalories * 0.50 / 4).toInt()
         val targetFatGrams = (totalCalories * 0.30 / 9).toInt()
 
-        binding.carbsProgressBar.progress = (macros.totalCarbs ?: 0) * 100 / targetCarbsGrams
-        binding.fatProgressBar.progress = (macros.totalFat ?: 0) * 100 / targetFatGrams
-        binding.proteinProgressBar.progress = (macros.totalProteins ?: 0) * 100 / targetProteinGrams
-        binding.totalCalories.text = "${macros.totalCalories ?: 0}/$totalCalories Calories"
+        binding.carbsProgressBar.progress = ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
+        binding.fatProgressBar.progress = ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
+        binding.proteinProgressBar.progress = ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
+        binding.totalCalories.text = "${macros.totalCalories ?: 0.0}/$totalCalories Calories"
 
-        binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0, targetCarbsGrams)
-        binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0, targetFatGrams)
-        binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0, targetProteinGrams)
+        binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
+        binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0.0, targetFatGrams)
+        binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
     }
 
-    private fun formatMacroText(value: Int, target: Int): String {
+    private fun formatMacroText(value: Double, target: Int): String {
         return "$value\nof\n$target g"
     }
 

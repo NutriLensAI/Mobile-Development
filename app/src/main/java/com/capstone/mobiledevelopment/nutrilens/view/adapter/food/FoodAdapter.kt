@@ -12,13 +12,13 @@ import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakananActiv
 
 data class FoodItem(
     val mealTitle: String,
-    var carbs: Int,
-    var fat: Int,
-    var protein: Int,
-    var calories: Int,
+    var carbs: Double,
+    var fat: Double,
+    var protein: Double,
+    var calories: Double,
     val foodItems: MutableList<FoodDetail> = mutableListOf()
 ) {
-    data class FoodDetail(val nama: String, val carbs: Int, val fat: Int, val protein: Int, val calories: Int)
+    data class FoodDetail(val nama: String, val carbs: Double, val fat: Double, val protein: Double, val calories: Double)
 }
 
 class FoodAdapter(private val foodList: List<FoodItem>) :

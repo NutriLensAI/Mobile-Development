@@ -12,17 +12,11 @@ import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabas
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakananBinding
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodItem
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.InputCatatanActivity
-import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.breakfast.BreakfastFragment
-import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.dinner.DinnerFragment
-import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.lunch.LunchFragment
 import com.capstone.mobiledevelopment.nutrilens.view.drink.AddDrink
-import com.capstone.mobiledevelopment.nutrilens.view.login.LoginViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
-import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -106,18 +100,18 @@ class CatatanMakanan : AppCompatActivity() {
 
         // Update Macros
         meals.macros?.let { macros ->
-            binding.carbsProgressBar.progress = (macros.totalCarbs ?: 0) * 100 / targetCarbsGrams
-            binding.fatProgressBar.progress = (macros.totalFat ?: 0) * 100 / targetFatGrams
-            binding.proteinProgressBar.progress = (macros.totalProteins ?: 0) * 100 / targetProteinGrams
-            binding.totalCalories.text = "${macros.totalCalories ?: 0}/$totalCalories Calories"
+            binding.carbsProgressBar.progress = ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
+            binding.fatProgressBar.progress = ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
+            binding.proteinProgressBar.progress = ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
+            binding.totalCalories.text = "${macros.totalCalories ?: 0.0}/$totalCalories Calories"
 
-            binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0, targetCarbsGrams)
-            binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0, targetFatGrams)
-            binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0, targetProteinGrams)
+            binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
+            binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0.0, targetFatGrams)
+            binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
         }
     }
 
-    private fun formatMacroText(value: Int, target: Int): String {
+    private fun formatMacroText(value: Double, target: Int): String {
         return "$value\nof\n$target g"
     }
 

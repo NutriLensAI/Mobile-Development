@@ -24,16 +24,16 @@ data class UserFoodResponse(
 data class Total(
 
 	@field:SerializedName("Prot")
-	val prot: Int? = null,
+	val prot: Double? = null,
 
 	@field:SerializedName("Carbs")
-	val carbs: Int? = null,
+	val carbs: Double? = null,
 
 	@field:SerializedName("Fat")
-	val fat: Int? = null,
+	val fat: Double? = null,
 
 	@field:SerializedName("Calories")
-	val calories: Int? = null
+	val calories: Double? = null
 ) : Parcelable
 
 @Parcelize
@@ -46,22 +46,22 @@ data class DataItem(
 	val userId: Int? = null,
 
 	@field:SerializedName("proteins")
-	val proteins: Int? = null,
+	val proteins: Double? = null,
 
 	@field:SerializedName("fat")
-	val fat: Int? = null,
+	val fat: Double? = null,
 
 	@field:SerializedName("id")
 	val id: Int? = null,
 
 	@field:SerializedName("calories")
-	val calories: Int? = null,
+	val calories: Double? = null,
 
 	@field:SerializedName("food_id")
 	val foodId: Int? = null,
 
 	@field:SerializedName("carbohydrate")
-	val carbohydrate: Int? = null
+	val carbohydrate: Double? = null
 ) : Parcelable
 
 @Parcelize
@@ -78,16 +78,16 @@ data class Breakfast(
 data class Macros(
 
 	@field:SerializedName("totalCarbs")
-	val totalCarbs: Int? = null,
+	val totalCarbs: Double? = null,
 
 	@field:SerializedName("totalFat")
-	val totalFat: Int? = null,
+	val totalFat: Double? = null,
 
 	@field:SerializedName("totalCalories")
-	val totalCalories: Int? = null,
+	val totalCalories: Double? = null,
 
 	@field:SerializedName("totalProteins")
-	val totalProteins: Int? = null
+	val totalProteins: Double? = null
 ) : Parcelable
 
 @Parcelize
