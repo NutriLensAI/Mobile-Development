@@ -227,6 +227,7 @@
             android:id="@+id/btn_breakfast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/green"
             android:layout_weight="1"
             android:text="Pagi" />
 
@@ -234,6 +235,7 @@
             android:id="@+id/btn_lunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/green"
             android:layout_weight="1"
             android:text="Siang" />
 
@@ -241,6 +243,7 @@
             android:id="@+id/btn_dinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/green"
             android:layout_weight="1"
             android:text="Malam" />
 
@@ -248,6 +251,7 @@
             android:id="@+id/btn_drink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/green"
             android:layout_weight="1"
             android:text="Drink" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -278,6 +282,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
+        android:backgroundTint="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
