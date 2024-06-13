@@ -61,6 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabSelectedTextColor="@color/black"
+        android:backgroundTint="@color/white"
         app:tabTextColor="@color/gray"
         app:layout_constraintTop_toBottomOf="@id/search_bar_container"
         app:layout_constraintStart_toStartOf="parent"
