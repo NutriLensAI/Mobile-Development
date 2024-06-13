@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         binding.carbsProgressBar.progress = ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
         binding.fatProgressBar.progress = ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
         binding.proteinProgressBar.progress = ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
-        binding.totalCalories.text = "${macros.totalCalories ?: 0.0}/$totalCalories Calories"
+        binding.totalCalories.text = "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
 
         binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
         binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0.0, targetFatGrams)
@@ -150,7 +150,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun formatMacroText(value: Double, target: Int): String {
-        return "$value\nof\n$target g"
+        return "${formatDecimal(value)}\nof\n$target g"
+    }
+
+    private fun formatDecimal(value: Double): String {
+        return String.format("%.2f", value)
     }
 
     private fun checkUserProfileData(userProfile: RegisterResponse) {

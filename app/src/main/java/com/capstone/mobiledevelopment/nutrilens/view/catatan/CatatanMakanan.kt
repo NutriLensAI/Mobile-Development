@@ -76,26 +76,26 @@ class CatatanMakanan : AppCompatActivity() {
 
         // Update Breakfast
         meals.breakfast?.let { breakfast ->
-            binding.breakfastCarbs.text = breakfast.total?.carbs.toString()
-            binding.breakfastFat.text = breakfast.total?.fat.toString()
-            binding.breakfastProtein.text = breakfast.total?.prot.toString()
-            binding.breakfastCalories.text = breakfast.total?.calories.toString()
+            binding.breakfastCarbs.text = formatDecimal(breakfast.total?.carbs ?: 0.0)
+            binding.breakfastFat.text = formatDecimal(breakfast.total?.fat ?: 0.0)
+            binding.breakfastProtein.text = formatDecimal(breakfast.total?.prot ?: 0.0)
+            binding.breakfastCalories.text = formatDecimal(breakfast.total?.calories ?: 0.0)
         }
 
         // Update Lunch
         meals.lunch?.let { lunch ->
-            binding.lunchCarbs.text = lunch.total?.carbs.toString()
-            binding.lunchFat.text = lunch.total?.fat.toString()
-            binding.lunchProtein.text = lunch.total?.prot.toString()
-            binding.lunchCalories.text = lunch.total?.calories.toString()
+            binding.lunchCarbs.text = formatDecimal(lunch.total?.carbs ?: 0.0)
+            binding.lunchFat.text = formatDecimal(lunch.total?.fat ?: 0.0)
+            binding.lunchProtein.text = formatDecimal(lunch.total?.prot ?: 0.0)
+            binding.lunchCalories.text = formatDecimal(lunch.total?.calories ?: 0.0)
         }
 
         // Update Dinner
         meals.dinner?.let { dinner ->
-            binding.dinnerCarbs.text = dinner.total?.carbs.toString()
-            binding.dinnerFat.text = dinner.total?.fat.toString()
-            binding.dinnerProtein.text = dinner.total?.prot.toString()
-            binding.dinnerCalories.text = dinner.total?.calories.toString()
+            binding.dinnerCarbs.text = formatDecimal(dinner.total?.carbs ?: 0.0)
+            binding.dinnerFat.text = formatDecimal(dinner.total?.fat ?: 0.0)
+            binding.dinnerProtein.text = formatDecimal(dinner.total?.prot ?: 0.0)
+            binding.dinnerCalories.text = formatDecimal(dinner.total?.calories ?: 0.0)
         }
 
         // Update Macros
@@ -103,7 +103,7 @@ class CatatanMakanan : AppCompatActivity() {
             binding.carbsProgressBar.progress = ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
             binding.fatProgressBar.progress = ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
             binding.proteinProgressBar.progress = ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
-            binding.totalCalories.text = "${macros.totalCalories ?: 0.0}/$totalCalories Calories"
+            binding.totalCalories.text = "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
 
             binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
             binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0.0, targetFatGrams)
@@ -112,7 +112,11 @@ class CatatanMakanan : AppCompatActivity() {
     }
 
     private fun formatMacroText(value: Double, target: Int): String {
-        return "$value\nof\n$target g"
+        return "${formatDecimal(value)}\nof\n$target g"
+    }
+
+    private fun formatDecimal(value: Double): String {
+        return String.format("%.2f", value)
     }
 
     private fun fetchDrinkAndSugarData() {
