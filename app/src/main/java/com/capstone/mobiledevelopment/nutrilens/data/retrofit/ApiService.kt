@@ -10,6 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 data class RegisterRequest(
     val username: String,
@@ -36,6 +37,17 @@ data class UpdateProfileRequest(
     val age: Int,
     val gender: String,
     val activity_level: String
+)
+
+data class FoodRequest(
+    val id: Int,
+    val user_id: Int,
+    val food_id: Int,
+    val food_name: String,
+    val calories: Double,
+    val proteins: Double,
+    val fat: Double,
+    val carbohydrate: Double
 )
 
 interface ApiService {
@@ -80,4 +92,12 @@ interface ApiService {
     suspend fun getUserProfile(
         @Header("Authorization") token: String
     ): RegisterResponse
+
+    @POST("nutritions/{table}/food/{id}")
+    suspend fun addFoodToMeal(
+        @Header("Authorization") token: String,
+        @Path("table") table: String,
+        @Path("id") id: Int,
+        @Body request: FoodRequest
+    ): FoodResponse
 }

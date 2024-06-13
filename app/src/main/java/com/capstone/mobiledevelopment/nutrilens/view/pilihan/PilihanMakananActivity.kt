@@ -6,7 +6,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
@@ -19,12 +21,17 @@ import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipe
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipesAdapter
 import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
+import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
+import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import java.io.IOException
 
 class PilihanMakananActivity : AppCompatActivity() {
@@ -37,17 +44,29 @@ class PilihanMakananActivity : AppCompatActivity() {
     private lateinit var myRecipeList: MutableList<MyRecipe>
     private lateinit var db: StepDatabase
     private lateinit var fabAddRecipe: FloatingActionButton
+    private lateinit var userPreference: UserPreference
+    private var token: String = ""
+    private var userId: Int = 0 // Inisialisasi userId
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pilihan_makanan)
 
         db = StepDatabase.getDatabase(applicationContext)
+        userPreference = UserPreference.getInstance(dataStore)
+
+        // Ambil token dari UserPreference
+        lifecycleScope.launch {
+            val session = userPreference.getSession().first()
+            token = session.token
+        }
 
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        pilihanFoodAdapter = PilihanFoodAdapter(emptyList())
+        pilihanFoodAdapter = PilihanFoodAdapter(emptyList()) { food, table ->
+            sendFoodData(table, food)
+        }
         favoriteRecipeAdapter = FavoriteRecipeAdapter(emptyList(), this)
         myRecipesAdapter = MyRecipesAdapter(emptyList(), this::deleteRecipe)
         recyclerView.adapter = pilihanFoodAdapter
@@ -70,6 +89,35 @@ class PilihanMakananActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     allFoodList = response
                     pilihanFoodAdapter.updateList(allFoodList)
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                // Handle error here, maybe show a Toast message
+            }
+        }
+    }
+
+    private fun sendFoodData(table: String, food: FoodResponse) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val foodRequest = FoodRequest(
+                    id = 0, // Biarkan server yang menetapkan ID
+                    user_id = 0, // Ambil user_id dari session
+                    food_id = food.id,
+                    food_name = food.name,
+                    calories = food.calories,
+                    proteins = food.proteins, // Pastikan field ini ada di FoodResponse
+                    fat = food.fat, // Pastikan field ini ada di FoodResponse
+                    carbohydrate = food.carbohydrate // Pastikan field ini ada di FoodResponse
+                )
+
+                val response = ApiConfig.getApiService().addFoodToMeal(token, table, food.id, foodRequest)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@PilihanMakananActivity, "Food added successfully", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: HttpException) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@PilihanMakananActivity, "Failed to add food", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: IOException) {
                 e.printStackTrace()

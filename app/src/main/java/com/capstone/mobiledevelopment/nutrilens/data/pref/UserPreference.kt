@@ -30,7 +30,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             val email = preferences[EMAIL_KEY] ?: ""
             val token = preferences[TOKEN_KEY] ?: ""
             val isLogin = preferences[IS_LOGIN_KEY] ?: false
-            val username = preferences[USERNAME_KEY] ?: "" // Add this line
+            val username = preferences[USERNAME_KEY] ?: ""
             Log.d("UserPreference", "Retrieved session with token: $token")
             UserModel(email, token, isLogin, username) // Modify this line
         }
@@ -49,7 +49,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
-        private val USERNAME_KEY = stringPreferencesKey("username") // Add this line
+        private val USERNAME_KEY = stringPreferencesKey("username")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.mobiledevelopment.nutrilens.R
 
-class PilihanFoodAdapter(private var foodList: List<FoodResponse>) :
-    RecyclerView.Adapter<PilihanFoodAdapter.FoodViewHolder>() {
+class PilihanFoodAdapter(
+    private var foodList: List<FoodResponse>,
+    private val onAddFoodClicked: (FoodResponse, String) -> Unit
+) : RecyclerView.Adapter<PilihanFoodAdapter.FoodViewHolder>() {
 
     class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val foodName: TextView = itemView.findViewById(R.id.tv_food_name)
@@ -29,6 +31,12 @@ class PilihanFoodAdapter(private var foodList: List<FoodResponse>) :
         holder.foodName.text = food.name
         holder.foodCalories.text = "${food.calories} Cal"
         Glide.with(holder.itemView.context).load(food.image).into(holder.foodImage)
+
+        holder.addFoodIcon.setOnClickListener {
+            // Example table value, you may use a spinner or other UI element to select table
+            val table = "lunchs" // Ganti dengan logika yang sesuai untuk menentukan table
+            onAddFoodClicked(food, table)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -40,7 +48,3 @@ class PilihanFoodAdapter(private var foodList: List<FoodResponse>) :
         notifyDataSetChanged()
     }
 }
-
-
-
-
