@@ -86,8 +86,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         initialSensorSteps = sharedPreferences.getInt("initialSensorSteps", -1)
         lastSavedSteps = sharedPreferences.getInt("lastSavedSteps", 0)
 
-        // Fetch drink data and setup RecyclerView
-        fetchDrinkDataAndSetupRecyclerView()
+        // Fetch drink and sugar data and setup RecyclerView
+        fetchDrinkAndSugarDataAndSetupRecyclerView()
 
         // Schedule the worker to reset drink data at midnight
         scheduleResetDrinkWorker()
@@ -182,7 +182,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private fun setupViewModelObservers() {
         viewModel.stepCounts.observe(this) { stepCounts ->
             val totalSteps = stepCounts.sumOf { it.stepCount }
-            fetchDrinkDataAndSetupRecyclerView(totalSteps)
+            fetchDrinkAndSugarDataAndSetupRecyclerView(totalSteps)
         }
         viewModel.token.observe(this) { token ->
             if (!token.isNullOrEmpty()) {
@@ -238,10 +238,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             }
     }
 
-    private fun setupRecyclerView(currentSteps: Int, totalDrinkAmount: Int, sleepCount: Int) {
+    private fun setupRecyclerView(currentSteps: Int, totalDrinkAmount: Int, totalSugarAmount: Int, sleepCount: Int) {
         val menuList = mutableListOf(
             MenuItem("Drink", R.drawable.ic_drink, "$totalDrinkAmount ml", "How much should you drink every day?"),
-            MenuItem("Sugar", R.drawable.ic_sugar, "25 gr", "How much sugar per day?"),
+            MenuItem("Sugar", R.drawable.ic_sugar, "$totalSugarAmount g", "How much sugar per day?"),
             MenuItem("Steps", R.drawable.ic_steps, "$currentSteps/10,000 steps", "How much should you walk every day?"),
             MenuItem("Sleep", R.drawable.ic_cholesterol, "$sleepCount sessions", "Number of sleep sessions")
         )
@@ -251,14 +251,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         binding.menuRecyclerView.adapter = adapter
     }
 
-    private fun fetchDrinkDataAndSetupRecyclerView(currentSteps: Int = 0) {
+    private fun fetchDrinkAndSugarDataAndSetupRecyclerView(currentSteps: Int = 0) {
         val drinkDao = DrinkDatabase.getDatabase(this).drinkDao()
         val sleepDataDao = SleepDatabase.getDatabase(this).sleepDataDao()
         lifecycleScope.launch(Dispatchers.IO) {
             val totalAmount = drinkDao.getTotalAmount() ?: 0
+            val totalSugarAmount = drinkDao.getTotalSugarAmount() ?: 0
             val sleepCount = sleepDataDao.getTotalSleepCount() // Use the new method to get the total sleep count
             withContext(Dispatchers.Main) {
-                setupRecyclerView(currentSteps, totalAmount, sleepCount)
+                setupRecyclerView(currentSteps, totalAmount, totalSugarAmount, sleepCount)
             }
         }
     }
@@ -289,7 +290,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
-        fetchDrinkDataAndSetupRecyclerView()
+        fetchDrinkAndSugarDataAndSetupRecyclerView()
         sensorManager.registerListener(this, stepCounterSensor, SensorManager.SENSOR_DELAY_UI)
     }
 

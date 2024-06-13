@@ -12,6 +12,9 @@ interface DrinkDao {
     @Query("SELECT SUM(amount) FROM drink")
     suspend fun getTotalAmount(): Int?
 
+    @Query("SELECT SUM(sugar) FROM drink")
+    suspend fun getTotalSugarAmount(): Int?
+
     @Query("DELETE FROM drink")
     suspend fun resetDrinks()
 }

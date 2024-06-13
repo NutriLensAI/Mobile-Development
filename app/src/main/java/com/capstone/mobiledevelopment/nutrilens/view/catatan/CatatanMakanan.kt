@@ -6,7 +6,9 @@ import android.os.Parcelable
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakananBinding
 import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
@@ -16,6 +18,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.InputCatatanA
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.breakfast.BreakfastFragment
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.dinner.DinnerFragment
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.lunch.LunchFragment
+import com.capstone.mobiledevelopment.nutrilens.view.drink.AddDrink
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
@@ -23,6 +26,9 @@ import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CatatanMakanan : AppCompatActivity() {
     private lateinit var binding: ActivityCatatanMakananBinding
@@ -48,6 +54,8 @@ class CatatanMakanan : AppCompatActivity() {
                 viewModel.fetchAllMeals()
             }
         }
+
+        fetchDrinkAndSugarData()
     }
 
     private fun observeViewModel() {
@@ -113,6 +121,18 @@ class CatatanMakanan : AppCompatActivity() {
         return "$value\nof\n$target g"
     }
 
+    private fun fetchDrinkAndSugarData() {
+        val drinkDao = DrinkDatabase.getDatabase(this).drinkDao()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val totalDrinkAmount = drinkDao.getTotalAmount() ?: 0
+            val totalSugarAmount = drinkDao.getTotalSugarAmount() ?: 0
+            withContext(Dispatchers.Main) {
+                binding.drinkMililiter.text = "$totalDrinkAmount ml"
+                binding.drinkSugar.text = "$totalSugarAmount g"
+            }
+        }
+    }
+
     private fun setupToggleButtonGroup() {
         binding.toggleButtonGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {
@@ -120,7 +140,11 @@ class CatatanMakanan : AppCompatActivity() {
                     R.id.btn_breakfast -> "BREAKFAST"
                     R.id.btn_lunch -> "LUNCH"
                     R.id.btn_dinner -> "DINNER"
-                    R.id.btn_drink -> "DRINK"
+                    R.id.btn_drink -> {
+                        val intent = Intent(this, AddDrink::class.java)
+                        startActivity(intent)
+                        return@addOnButtonCheckedListener
+                    }
                     else -> "BREAKFAST"
                 }
 

@@ -20,6 +20,7 @@ class AddDrink : AppCompatActivity() {
         setContentView(binding.root)
 
         val cupAmount = 200 // Assume each cup is 200 ml
+        val sugarAmount = 25 // Assume each sugar amount is 25 grams
 
         binding.addCupButton.setOnClickListener {
             updateDrinkAmount(cupAmount)
@@ -29,7 +30,16 @@ class AddDrink : AppCompatActivity() {
             checkAndSubtractAmount(cupAmount)
         }
 
+        binding.addSugarButton.setOnClickListener {
+            updateSugarAmount(sugarAmount)
+        }
+
+        binding.subtractSugarButton.setOnClickListener {
+            checkAndSubtractSugarAmount(sugarAmount)
+        }
+
         updateTotalAmount()
+        updateTotalSugarAmount()
     }
 
     private fun updateDrinkAmount(amount: Int) {
@@ -54,11 +64,42 @@ class AddDrink : AppCompatActivity() {
         }
     }
 
+    private fun updateSugarAmount(amount: Int) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            drinkDao.insert(Drink(amount = 0, sugar = amount))
+            updateTotalSugarAmount()
+        }
+    }
+
+    private fun checkAndSubtractSugarAmount(sugarAmount: Int) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val totalSugarAmount = drinkDao.getTotalSugarAmount() ?: 0
+            if (totalSugarAmount > 0) {
+                val newSugarAmount = totalSugarAmount - sugarAmount
+                if (newSugarAmount >= 0) {
+                    drinkDao.insert(Drink(amount = 0, sugar = -sugarAmount))
+                    withContext(Dispatchers.Main) {
+                        updateTotalSugarAmount()
+                    }
+                }
+            }
+        }
+    }
+
     private fun updateTotalAmount() {
         lifecycleScope.launch(Dispatchers.IO) {
             val totalAmount = drinkDao.getTotalAmount() ?: 0
             withContext(Dispatchers.Main) {
                 binding.totalDrinkAmountTextView.text = "$totalAmount ml"
+            }
+        }
+    }
+
+    private fun updateTotalSugarAmount() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val totalSugarAmount = drinkDao.getTotalSugarAmount() ?: 0
+            withContext(Dispatchers.Main) {
+                binding.totalSugarAmountTextView.text = "$totalSugarAmount g"
             }
         }
     }

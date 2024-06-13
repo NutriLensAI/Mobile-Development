@@ -625,7 +625,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:text="Drink"
+                android:text="Konsumsi Tambahan"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold"
                 android:textSize="24sp" />
@@ -643,7 +643,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Mililiter"
+                    android:text="Drink"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#33AFFF"
                     android:textSize="18sp" />
