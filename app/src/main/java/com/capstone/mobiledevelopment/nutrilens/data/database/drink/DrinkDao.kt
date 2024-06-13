@@ -17,4 +17,7 @@ interface DrinkDao {
 
     @Query("DELETE FROM drink")
     suspend fun resetDrinks()
+
+    @Query("SELECT * FROM drink")
+    suspend fun getAllDrinks(): List<Drink>
 }

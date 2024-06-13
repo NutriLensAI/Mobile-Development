@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.view.resep.Detail
+import com.capstone.mobiledevelopment.nutrilens.view.resep.DetailActivity
 import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepItem
 
 class ResepAdapter(
@@ -39,7 +39,7 @@ class ResepAdapter(
 
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, Detail::class.java)
+            val intent = Intent(context, DetailActivity::class.java)
             intent.putExtra("EXTRA_TITLE", resep.Title)
             intent.putExtra("EXTRA_INGREDIENTS", resep.Ingredients)
             intent.putExtra("EXTRA_STEPS", resep.Steps)

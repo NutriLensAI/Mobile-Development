@@ -1,12 +1,11 @@
 package com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.databinding.ItemMyRecipeBinding
-import com.capstone.mobiledevelopment.nutrilens.view.resep.Detail
+import com.capstone.mobiledevelopment.nutrilens.view.resep.DetailActivity
 
 class MyRecipesAdapter(
     private var recipes: List<MyRecipe>,
@@ -39,7 +38,7 @@ class MyRecipesAdapter(
             }
             binding.root.setOnClickListener {
                 val context = binding.root.context
-                val intent = Intent(context, Detail::class.java).apply {
+                val intent = Intent(context, DetailActivity::class.java).apply {
                     putExtra("EXTRA_TITLE", recipe.title)
                     putExtra("EXTRA_INGREDIENTS", recipe.ingredients)
                     putExtra("EXTRA_STEPS", recipe.steps)

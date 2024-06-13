@@ -41,10 +41,10 @@
             android:name=".view.welcome.SignupWelcome"
             android:exported="false" />
         <activity
-            android:name=".view.resep.Detail"
+            android:name=".view.resep.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".view.resep.Resep"
+            android:name=".view.resep.ResepActivity"
             android:exported="false" />
         <activity
             android:name=".view.hasil.HasilMakanan"

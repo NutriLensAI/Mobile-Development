@@ -12,10 +12,11 @@
         android:layout_marginBottom="30dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/lucide_scan"
+        app:tint="@android:color/white"
         app:backgroundTint="@color/teal_200"
         app:elevation="6dp"
-        app:fabSize="mini"
+        app:fabSize="auto"
         app:layout_anchor="@+id/customBottomBar"
         app:layout_anchorGravity="center"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded" />
@@ -29,9 +30,8 @@
         android:backgroundTintMode="src_atop"
         app:backgroundTint="@color/gray"
         app:elevation="3dp"
-        app:itemActiveIndicatorStyle="@color/blue"
-        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView.Inactive"
-        app:labelVisibilityMode="labeled" />
+        app:itemIconTint="@color/selector_bottom_nav"
+        app:itemTextColor="@color/selector_bottom_nav"
+        app:labelVisibilityMode="unlabeled" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

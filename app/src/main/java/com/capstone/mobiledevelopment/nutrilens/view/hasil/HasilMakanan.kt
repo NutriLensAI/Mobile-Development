@@ -8,6 +8,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -61,6 +63,18 @@ class HasilMakanan : AppCompatActivity() {
 
         val viewIngredientsButton: Button = findViewById(R.id.btn_view_ingredients)
         viewIngredientsButton.setOnClickListener { viewIngredients() }
+
+        setupView()
+    }
+    private fun setupView() {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
+            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+        }
+        supportActionBar?.hide()
+
+        // Set status bar color to green
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
 
     private fun sendMealData(mealType: String, makanan: Makanan) {

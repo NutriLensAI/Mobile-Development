@@ -2,7 +2,10 @@ package com.capstone.mobiledevelopment.nutrilens.view.drink
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddDrinkBinding
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.Drink
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
@@ -40,6 +43,18 @@ class AddDrink : AppCompatActivity() {
 
         updateTotalAmount()
         updateTotalSugarAmount()
+        setupView()
+    }
+
+    private fun setupView() {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
+            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+        }
+        supportActionBar?.hide()
+
+        // Set status bar color to green
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
 
     private fun updateDrinkAmount(amount: Int) {

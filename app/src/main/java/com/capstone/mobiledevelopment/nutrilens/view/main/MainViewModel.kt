@@ -50,13 +50,6 @@ class MainViewModel(
         return userRepository.getSession().asLiveData()
     }
 
-    fun fetchToken() {
-        viewModelScope.launch {
-            val userModel = userRepository.getSession().first()
-            _token.value = userModel.token
-        }
-    }
-
     fun fetchUsername() {
         viewModelScope.launch {
             val userModel = userRepository.getSession().first()

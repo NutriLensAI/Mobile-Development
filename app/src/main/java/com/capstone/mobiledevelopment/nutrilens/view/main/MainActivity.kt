@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -12,15 +11,13 @@ import android.hardware.SensorManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,7 +31,7 @@ import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepDatabas
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.Macros
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.view.utils.worker.ResetDrinkWorker
-import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
+import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepActivity
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.info.MenuAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.info.MenuItem
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
@@ -296,8 +293,23 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
+        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
+        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_stats)
+        bottomNavigationView.selectedItemId = selectedItemId
+
+        // Fetch drink and sugar data and setup RecyclerView
         fetchDrinkAndSugarDataAndSetupRecyclerView()
+
+        // Register the sensor listener
         sensorManager.registerListener(this, stepCounterSensor, SensorManager.SENSOR_DELAY_UI)
+
+        // Fetch user data and macros
+        viewModel.getSession().observe(this) { user ->
+            user?.token?.let { token ->
+                viewModel.fetchUserProfile(token)
+                viewModel.fetchMacros(token)
+            }
+        }
     }
 
     override fun onPause() {
@@ -329,21 +341,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun setupView() {
-        // Ensure the content fits system windows to avoid shifting
         WindowCompat.setDecorFitsSystemWindows(window, true)
-
-        // Make status bar transparent
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        window.statusBarColor = Color.TRANSPARENT // Ensure the status bar is transparent
-
-        // Optionally set status bar content to dark
         WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-            controller.isAppearanceLightStatusBars = true
+            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
         }
-
-        // Hide the action bar if any
         supportActionBar?.hide()
+
+        // Set status bar color to green
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
 
     private fun setupBottomNavigation() {
@@ -356,7 +361,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_food -> {
-                    val intent = Intent(this@MainActivity, Resep::class.java)
+                    val intent = Intent(this@MainActivity, ResepActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_food)
                     startActivity(intent)
                     true

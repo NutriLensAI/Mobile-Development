@@ -1,19 +1,19 @@
 package com.capstone.mobiledevelopment.nutrilens.view.catatan
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakananBinding
-import com.capstone.mobiledevelopment.nutrilens.view.resep.Resep
+import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepActivity
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.InputCatatanActivity
 import com.capstone.mobiledevelopment.nutrilens.view.drink.AddDrink
@@ -44,32 +44,27 @@ class CatatanMakanan : AppCompatActivity() {
         viewModel.fetchToken()
         observeViewModel()
 
-        // Fetch all meals after token is fetched
+        // Fetch user profile and all meals after token is fetched
         viewModel.token.observe(this) { token ->
             if (token != null) {
-                viewModel.fetchAllMeals()
+                viewModel.fetchUserProfile(token)
+                viewModel.fetchAllMeals(token)
             }
         }
 
         setupView()
         fetchDrinkAndSugarData()
     }
+
     private fun setupView() {
-        // Ensure the content fits system windows to avoid shifting
         WindowCompat.setDecorFitsSystemWindows(window, true)
-
-        // Make status bar transparent
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        window.statusBarColor = Color.TRANSPARENT // Ensure the status bar is transparent
-
-        // Optionally set status bar content to dark
         WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-            controller.isAppearanceLightStatusBars = true
+            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
         }
-
-        // Hide the action bar if any
         supportActionBar?.hide()
+
+        // Set status bar color to green
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
     }
 
     private fun observeViewModel() {
@@ -180,8 +175,24 @@ class CatatanMakanan : AppCompatActivity() {
             }
         }
     }
+    override fun onResume() {
+        super.onResume()
 
-    private fun setupFab() {
+        val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
+        val selectedItemId = intent.getIntExtra("selected_item", R.id.navigation_stats)
+        bottomNavigationView.selectedItemId = selectedItemId
+
+        // Fetch user profile and all meals after token is fetched
+        viewModel.token.observe(this) { token ->
+            if (token != null) {
+                viewModel.fetchUserProfile(token)
+                viewModel.fetchAllMeals(token)
+            }
+        }
+    }
+
+
+        private fun setupFab() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
             val intent = Intent(this@CatatanMakanan, CameraFoodActivity::class.java)
@@ -198,7 +209,7 @@ class CatatanMakanan : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_food -> {
-                    val intent = Intent(this@CatatanMakanan, Resep::class.java)
+                    val intent = Intent(this@CatatanMakanan, ResepActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_food)
                     startActivity(intent)
                     true

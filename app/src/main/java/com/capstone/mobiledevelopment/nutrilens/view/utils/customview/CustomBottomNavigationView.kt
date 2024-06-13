@@ -122,8 +122,8 @@ class CustomBottomNavigationView @JvmOverloads constructor(
         val icon = selectedItem.icon
 
         if (icon != null) {
-            // Change color to blue if the item is selected
-            icon.setTint(ContextCompat.getColor(context, R.color.blue))
+            // Change color to teal_200 if the item is selected
+            icon.setTint(ContextCompat.getColor(context, R.color.teal_200))
 
             val bounds = icon.bounds
 
@@ -131,8 +131,7 @@ class CustomBottomNavigationView @JvmOverloads constructor(
             val selectedIconSize = (bounds.width() * 1.5).toInt()
             val selectedIconHeight = (bounds.height() * 1.5).toInt()
             val left = bounds.left - (selectedIconSize - bounds.width()) / 2
-            val top =
-                bounds.top - (selectedIconHeight - bounds.height()) / 2 - 20 // raised by 20 pixels
+            val top = bounds.top - (selectedIconHeight - bounds.height()) / 2 - 20 // raised by 20 pixels
             val right = bounds.right + (selectedIconSize - bounds.width()) / 2
             val bottom = bounds.bottom + (selectedIconHeight - bounds.height()) / 2 - 20
 

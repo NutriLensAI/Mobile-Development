@@ -33,19 +33,31 @@ class CatatanMakananViewModel(
 
     fun fetchToken() {
         viewModelScope.launch {
-            val userModel = userRepository.getSession().first()
-            _token.value = userModel.token
+            try {
+                val userModel = userRepository.getSession().first()
+                _token.value = userModel.token
+            } catch (e: Exception) {
+                // Handle error
+            }
         }
     }
 
-    fun fetchAllMeals() {
+    fun fetchUserProfile(token: String) {
+        viewModelScope.launch {
+            try {
+                val userProfile = userRepository.getUserProfile(token)
+                _totalCalories.postValue(Utils.calculateTotalCalories(userProfile))
+            } catch (e: Exception) {
+                // Handle error
+            }
+        }
+    }
+
+    fun fetchAllMeals(token: String) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val tokenValue = _token.value ?: throw IllegalStateException("Token is null")
-                val userProfile = userRepository.getUserProfile(tokenValue)
-                val meals = foodRepository.getAllMeals(tokenValue)
-                _totalCalories.postValue(Utils.calculateTotalCalories(userProfile))
+                val meals = foodRepository.getAllMeals(token)
                 _allMeals.postValue(meals)
             } catch (e: Exception) {
                 // Handle error

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.view.resep.Detail
+import com.capstone.mobiledevelopment.nutrilens.view.resep.DetailActivity
 import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
 
 class FavoriteRecipeAdapter(
@@ -34,7 +34,7 @@ class FavoriteRecipeAdapter(
         holder.tvItemSteps.text = recipe.steps.replace("--", "\n")
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, Detail::class.java).apply {
+            val intent = Intent(context, DetailActivity::class.java).apply {
                 putExtra("EXTRA_TITLE", recipe.title)
                 putExtra("EXTRA_INGREDIENTS", recipe.ingredients)
                 putExtra("EXTRA_STEPS", recipe.steps)
