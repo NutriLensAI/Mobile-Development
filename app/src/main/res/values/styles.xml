@@ -5,17 +5,4 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="BottomNavigationView.Active" parent="">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/blue</item>
-        <item name="android:iconTint" tools:targetApi="o">@color/blue</item>
-        <item name="itemIconTint">@color/blue</item>
-    </style>
-
-    <style name="BottomNavigationView.Inactive" parent="">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/gray</item>
-        <item name="android:iconTint" tools:targetApi="o">@color/gray</item>
-        <item name="itemIconTint">@color/gray</item>
-    </style>
 </resources>
