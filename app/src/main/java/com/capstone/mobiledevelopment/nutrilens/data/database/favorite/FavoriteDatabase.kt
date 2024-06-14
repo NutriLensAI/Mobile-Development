@@ -16,7 +16,7 @@ abstract class FavoriteDatabase : RoomDatabase() {
         private var INSTANCE: FavoriteDatabase? = null
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
+            override fun migrate(db: SupportSQLiteDatabase) {
                 // Perform the necessary SQL commands to migrate the schema
                 // Example: database.execSQL("ALTER TABLE favorite_recipe ADD COLUMN new_column_name INTEGER NOT NULL DEFAULT 0")
             }
