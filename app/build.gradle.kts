@@ -88,10 +88,10 @@ dependencies {
     implementation (libs.androidx.camera.view)
     implementation (libs.androidx.camera.extensions)
 
-    //Circle progress
+    //circle progress
     implementation(libs.circleprogress)
 
-    //Android Image Cropper
+    //android Image Cropper
     implementation(libs.android.image.cropper)
 
     //Step Counter
@@ -106,4 +106,5 @@ dependencies {
     implementation(libs.androidx.paging.runtime.ktx)
     implementation (libs.androidx.room.paging)
     implementation (libs.gson)
+
 }

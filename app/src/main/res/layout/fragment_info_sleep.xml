@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -53,13 +52,28 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!-- Clock TextView -->
+        <TextView
+            android:id="@+id/clockTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sleep count\nPress the button to choose what hour you awake"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/headerLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/scheduleButton" />
+
         <Button
             android:id="@+id/scheduleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Set Sleep Time"
             android:backgroundTint="@color/green"
-            app:layout_constraintTop_toBottomOf="@id/headerLayout"
+            app:layout_constraintTop_toBottomOf="@id/clockTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

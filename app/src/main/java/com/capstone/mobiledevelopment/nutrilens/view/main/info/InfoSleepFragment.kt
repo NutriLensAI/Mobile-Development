@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -25,6 +26,7 @@ class InfoSleepFragment : Fragment() {
 
     private lateinit var database: SleepDatabase
     private lateinit var scheduleButton: Button
+    private lateinit var clockTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +35,7 @@ class InfoSleepFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_info_sleep, container, false)
         database = SleepDatabase.getDatabase(requireContext())
         scheduleButton = view.findViewById(R.id.scheduleButton)
+        clockTextView = view.findViewById(R.id.clockTextView)
 
         scheduleButton.setOnClickListener {
             showTimePickerDialog()
@@ -87,6 +90,10 @@ class InfoSleepFragment : Fragment() {
         )
 
         Toast.makeText(requireContext(), "Sleep time scheduled", Toast.LENGTH_SHORT).show()
+
+        // Update the clockTextView to show the selected time
+        val timeText = String.format("%02d:%02d", hour, minute)
+        clockTextView.text = "Sleep count\n$timeText"
     }
 
     companion object {
