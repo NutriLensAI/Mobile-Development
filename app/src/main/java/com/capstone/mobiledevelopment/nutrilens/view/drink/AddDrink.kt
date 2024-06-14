@@ -56,7 +56,24 @@ class AddDrink : AppCompatActivity() {
 
     private fun saveDrink(name: String, amount: Int, sugar: Int) {
         lifecycleScope.launch(Dispatchers.IO) {
-            drinkDao.insert(Drink(name = name, amount = amount, sugar = sugar))
+            try {
+                drinkDao.insert(Drink(name = name, amount = amount, sugar = sugar))
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@AddDrink,
+                        "Successfully added $name with $amount ml and $sugar g of sugar to the database.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@AddDrink,
+                        "Failed to add drink. Please try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 }

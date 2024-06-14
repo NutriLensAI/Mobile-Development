@@ -29,8 +29,8 @@ class DrinkAdapter(private val drinkList: List<DrinkItem>) :
     override fun onBindViewHolder(holder: DrinkViewHolder, position: Int) {
         val drinkItem = drinkList[position]
         holder.drinkTitle.text = drinkItem.drinkTitle
-        holder.drinkAmount.text = "${drinkItem.drinkDetails.sumOf { it.amount }} ml"
-        holder.drinkSugar.text = "${drinkItem.drinkDetails.sumOf { it.sugar }} g"
+        holder.drinkAmount.text = "${drinkItem.amount} ml"
+        holder.drinkSugar.text = "${drinkItem.sugar} g"
 
         holder.drinkListContainer.removeAllViews()
         for (drinkDetail in drinkItem.drinkDetails) {

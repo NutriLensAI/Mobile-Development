@@ -1,5 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.view.catatan.input
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.breakfast.Bre
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.dinner.DinnerFragment
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.drink.DrinkFragment
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.lunch.LunchFragment
+import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsFragment
 
 class InputCatatanActivity : AppCompatActivity() {

@@ -54,12 +54,23 @@ class DrinkFragment : Fragment() {
 
     private fun updateDrinkList(drinks: List<Drink>) {
         drinkList.clear()
-        for (drink in drinks) {
+
+        if (drinks.isEmpty()) {
             val newDrinkItem = DrinkItem(
-                drink.name,
-                drink.amount,
-                drink.sugar,
-                mutableListOf(DrinkItem.DrinkDetail(drink.name, drink.amount, drink.sugar))
+                drinkTitle = "Drink",
+                amount = 0,
+                sugar = 0,
+                drinkDetails = mutableListOf()
+            )
+            drinkList.add(newDrinkItem)
+        } else {
+            val newDrinkItem = DrinkItem(
+                drinkTitle = "Drink",
+                amount = drinks.sumOf { it.amount },
+                sugar = drinks.sumOf { it.sugar },
+                drinkDetails = drinks.map {
+                    DrinkItem.DrinkDetail(it.name, it.amount, it.sugar)
+                }.toMutableList()
             )
             drinkList.add(newDrinkItem)
         }

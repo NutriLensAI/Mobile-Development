@@ -57,7 +57,9 @@
         android:id="@+id/drinkNameEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:hint="Name of the Drink"
         android:inputType="text"
         android:textSize="16sp"
@@ -66,24 +68,30 @@
         app:layout_constraintTop_toBottomOf="@+id/headerLayout" />
 
     <!-- Drink Amount EditText -->
+
+    <!-- Sugar Unit Spinner -->
     <EditText
         android:id="@+id/drinkAmountEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:hint="Amount (ml)"
         android:inputType="number"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/drinkNameEditText" />
 
-    <!-- Sugar Unit Spinner -->
     <Spinner
         android:id="@+id/sugarUnitSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:entries="@array/sugar_units"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +103,9 @@
         android:id="@+id/sugarAmountEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:hint="Sugar Amount"
         android:inputType="number"
         android:textSize="16sp"
