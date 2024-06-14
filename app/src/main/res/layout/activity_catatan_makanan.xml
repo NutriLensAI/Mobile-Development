@@ -5,9 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.catatan.CatatanMakanan"
     android:background="#00000000"
-    android:theme="@style/Base.Theme.LoginWithAnimation">
+    android:theme="@style/Base.Theme.LoginWithAnimation"
+    tools:context=".view.catatan.CatatanMakanan">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/macrosCard"
@@ -229,44 +229,44 @@
             android:id="@+id/btn_breakfast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/green"
             android:layout_weight="1"
+            android:backgroundTint="@color/green"
             android:text="Pagi" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_lunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/green"
             android:layout_weight="1"
+            android:backgroundTint="@color/green"
             android:text="Siang" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/green"
             android:layout_weight="1"
+            android:backgroundTint="@color/green"
             android:text="Malam" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_drink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/green"
             android:layout_weight="1"
+            android:backgroundTint="@color/green"
             android:text="Drink" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <!-- Include Custom Bottom Navigation Layout -->
     <include
-        layout="@layout/bottom_navigation_layout"
         android:id="@+id/bottom_navigation"
+        layout="@layout/bottom_navigation_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
@@ -283,8 +283,8 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
         android:backgroundTint="@color/green"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -305,8 +305,8 @@
                 android:paddingBottom="16dp"
                 android:text="Breakfast"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/breakfastHeader"
@@ -413,8 +413,8 @@
                 android:paddingBottom="16dp"
                 android:text="Lunch"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/lunchHeader"
@@ -521,8 +521,8 @@
                 android:paddingBottom="16dp"
                 android:text="Dinner"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/dinnerHeader"
@@ -629,8 +629,8 @@
                 android:paddingBottom="16dp"
                 android:text="Konsumsi Tambahan"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/drinkHeader"

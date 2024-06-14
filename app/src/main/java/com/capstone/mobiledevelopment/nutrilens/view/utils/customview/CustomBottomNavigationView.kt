@@ -131,7 +131,8 @@ class CustomBottomNavigationView @JvmOverloads constructor(
             val selectedIconSize = (bounds.width() * 1.5).toInt()
             val selectedIconHeight = (bounds.height() * 1.5).toInt()
             val left = bounds.left - (selectedIconSize - bounds.width()) / 2
-            val top = bounds.top - (selectedIconHeight - bounds.height()) / 2 - 20 // raised by 20 pixels
+            val top =
+                bounds.top - (selectedIconHeight - bounds.height()) / 2 - 20 // raised by 20 pixels
             val right = bounds.right + (selectedIconSize - bounds.width()) / 2
             val bottom = bounds.bottom + (selectedIconHeight - bounds.height()) / 2 - 20
 

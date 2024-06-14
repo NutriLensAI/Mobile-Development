@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import kotlinx.coroutines.CoroutineScope

@@ -13,7 +13,8 @@ class MyRecipesAdapter(
 ) : RecyclerView.Adapter<MyRecipesAdapter.MyRecipesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecipesViewHolder {
-        val binding = ItemMyRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemMyRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyRecipesViewHolder(binding)
     }
 
@@ -28,7 +29,8 @@ class MyRecipesAdapter(
         notifyDataSetChanged()
     }
 
-    inner class MyRecipesViewHolder(private val binding: ItemMyRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MyRecipesViewHolder(private val binding: ItemMyRecipeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: MyRecipe) {
             binding.tvItemName.text = recipe.title
             binding.tvItemIngredients.text = recipe.ingredients

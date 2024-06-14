@@ -7,17 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
-import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
-import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
-import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
 import com.capstone.mobiledevelopment.nutrilens.databinding.FragmentEmailBinding
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 class EmailFragment : Fragment() {
 
@@ -29,6 +20,7 @@ class EmailFragment : Fragment() {
     private val viewModel: EmailViewModel by viewModels {
         ViewModelFactory.getInstance(requireContext())
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

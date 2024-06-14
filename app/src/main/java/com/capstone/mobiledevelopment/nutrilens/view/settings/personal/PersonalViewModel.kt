@@ -27,12 +27,19 @@ class PersonalViewModel(private val userRepository: UserRepository) : ViewModel(
                 )
             } catch (e: Exception) {
                 Log.e("PersonalViewModel", "Error fetching user personal data", e)
-                _userData.value = PersonalData("No data", "No data", "No data", "No data", "No data")
+                _userData.value =
+                    PersonalData("No data", "No data", "No data", "No data", "No data")
             }
         }
     }
 
-    fun saveUserData(activity: String, weight: String, height: String, age: String, gender: String) {
+    fun saveUserData(
+        activity: String,
+        weight: String,
+        height: String,
+        age: String,
+        gender: String
+    ) {
         _userData.value = PersonalData(activity, weight, height, age, gender)
     }
 

@@ -7,13 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
-import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import com.capstone.mobiledevelopment.nutrilens.databinding.FragmentPasswordBinding
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 class PasswordFragment : Fragment() {
 

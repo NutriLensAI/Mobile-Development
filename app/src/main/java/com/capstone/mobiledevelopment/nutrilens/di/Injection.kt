@@ -4,12 +4,10 @@ import android.content.Context
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
-import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
+import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 
 object Injection {
     fun provideUserRepository(context: Context): UserRepository {

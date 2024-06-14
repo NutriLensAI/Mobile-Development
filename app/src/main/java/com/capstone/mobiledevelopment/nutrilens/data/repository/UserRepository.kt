@@ -5,7 +5,6 @@ import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.ChangeResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
-import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.LoginRequest
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RegisterRequest

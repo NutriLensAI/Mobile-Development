@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
 
-class MakananAdapter(private val makananList: List<Makanan>) : RecyclerView.Adapter<MakananAdapter.MakananViewHolder>() {
+class MakananAdapter(private val makananList: List<Makanan>) :
+    RecyclerView.Adapter<MakananAdapter.MakananViewHolder>() {
 
     class MakananViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgMakanan: ImageView = view.findViewById(R.id.img_makanan)
@@ -27,8 +28,10 @@ class MakananAdapter(private val makananList: List<Makanan>) : RecyclerView.Adap
         val makanan = makananList[position]
         holder.tvNamaMakanan.text = makanan.nama
         holder.tvKcal.text = "${makanan.calories} Kcal"
-        holder.tvMacros.text = "Carbs: ${makanan.carbs}g, Fat: ${makanan.fat}g, Protein: ${makanan.protein}g"
-        holder.tvMacrosPercentage.text = "Carbs: ${makanan.carbsPercentage}, Fat: ${makanan.fatPercentage}, Protein: ${makanan.proteinPercentage}"
+        holder.tvMacros.text =
+            "Carbs: ${makanan.carbs}g, Fat: ${makanan.fat}g, Protein: ${makanan.protein}g"
+        holder.tvMacrosPercentage.text =
+            "Carbs: ${makanan.carbsPercentage}, Fat: ${makanan.fatPercentage}, Protein: ${makanan.proteinPercentage}"
         // Load image from camera or other source into holder.imgMakanan
     }
 

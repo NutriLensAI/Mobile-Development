@@ -13,9 +13,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.Macros
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityLoginBinding
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
@@ -160,7 +157,10 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 // Handle login failure
                 val message = when (result) {
-                    is Result.Failure -> getString(R.string.login_failed) + " [" + result.error.message + "]. " + getString(R.string.try_again)
+                    is Result.Failure -> getString(R.string.login_failed) + " [" + result.error.message + "]. " + getString(
+                        R.string.try_again
+                    )
+
                     else -> getString(R.string.login_failed) + ". " + getString(R.string.try_again)
                 }
                 showFailureToast(message)

@@ -25,21 +25,21 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.Macros
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
-import com.capstone.mobiledevelopment.nutrilens.view.utils.worker.ResetDrinkWorker
-import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepActivity
+import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityMainBinding
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.info.MenuAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.info.MenuItem
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
-import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
+import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Utils
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
+import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
+import com.capstone.mobiledevelopment.nutrilens.view.utils.worker.ResetDrinkWorker
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -50,8 +50,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.concurrent.TimeUnit
 import java.util.Calendar
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
     private val viewModel by viewModels<MainViewModel> {
@@ -139,14 +139,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val targetCarbsGrams = (totalCalories * 0.60 / 4).toInt()
         val targetFatGrams = (totalCalories * 0.15 / 9).toInt()
 
-        binding.carbsProgressBar.progress = ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
+        binding.carbsProgressBar.progress =
+            ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
         binding.fatProgressBar.progress = ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
-        binding.proteinProgressBar.progress = ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
-        binding.totalCalories.text = "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
+        binding.proteinProgressBar.progress =
+            ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
+        binding.totalCalories.text =
+            "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
 
-        binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
+        binding.carbsValueTextView.text =
+            formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
         binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0.0, targetFatGrams)
-        binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
+        binding.proteinValueTextView.text =
+            formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
     }
 
     private fun formatMacroText(value: Double, target: Int): String {
@@ -211,10 +216,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun checkGooglePlayServices() {
         val apiAvailability = GoogleApiAvailability.getInstance()
-        val resultCode = apiAvailability.isGooglePlayServicesAvailable(this, LocalRecordingClient.LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE)
+        val resultCode = apiAvailability.isGooglePlayServicesAvailable(
+            this,
+            LocalRecordingClient.LOCAL_RECORDING_CLIENT_MIN_VERSION_CODE
+        )
         if (resultCode != ConnectionResult.SUCCESS) {
             if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, REQUEST_CODE_UPDATE_PLAY_SERVICES)?.show()
+                apiAvailability.getErrorDialog(this, resultCode, REQUEST_CODE_UPDATE_PLAY_SERVICES)
+                    ?.show()
             } else {
                 Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show()
                 finish()
@@ -226,7 +235,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun subscribeToFitnessData() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACTIVITY_RECOGNITION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
             return
         }
@@ -241,12 +254,37 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             }
     }
 
-    private fun setupRecyclerView(currentSteps: Int, totalDrinkAmount: Int, totalSugarAmount: Int, sleepCount: Int) {
+    private fun setupRecyclerView(
+        currentSteps: Int,
+        totalDrinkAmount: Int,
+        totalSugarAmount: Int,
+        sleepCount: Int
+    ) {
         val menuList = mutableListOf(
-            MenuItem("Drink", R.drawable.ic_drink, "$totalDrinkAmount ml", "How much should you drink every day?"),
-            MenuItem("Sugar", R.drawable.ic_sugar, "$totalSugarAmount g", "How much sugar per day?"),
-            MenuItem("Steps", R.drawable.ic_steps, "$currentSteps/10,000 steps", "How much should you walk every day?"),
-            MenuItem("Sleep", R.drawable.ic_cholesterol, "$sleepCount sessions", "Number of sleep sessions")
+            MenuItem(
+                "Drink",
+                R.drawable.ic_drink,
+                "$totalDrinkAmount ml",
+                "How much should you drink every day?"
+            ),
+            MenuItem(
+                "Sugar",
+                R.drawable.ic_sugar,
+                "$totalSugarAmount g",
+                "How much sugar per day?"
+            ),
+            MenuItem(
+                "Steps",
+                R.drawable.ic_steps,
+                "$currentSteps/10,000 steps",
+                "How much should you walk every day?"
+            ),
+            MenuItem(
+                "Sleep",
+                R.drawable.ic_cholesterol,
+                "$sleepCount sessions",
+                "Number of sleep sessions"
+            )
         )
 
         val adapter = MenuAdapter(menuList)
@@ -260,7 +298,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         lifecycleScope.launch(Dispatchers.IO) {
             val totalAmount = drinkDao.getTotalAmount() ?: 0
             val totalSugarAmount = drinkDao.getTotalSugarAmount() ?: 0
-            val sleepCount = sleepDataDao.getTotalSleepCount() // Use the new method to get the total sleep count
+            val sleepCount =
+                sleepDataDao.getTotalSleepCount() // Use the new method to get the total sleep count
             withContext(Dispatchers.Main) {
                 setupRecyclerView(currentSteps, totalAmount, totalSugarAmount, sleepCount)
             }
@@ -286,7 +325,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             "ResetDrinkWork",
-            ExistingPeriodicWorkPolicy.REPLACE,
+            ExistingPeriodicWorkPolicy.UPDATE,
             dailyWorkRequest
         )
     }
@@ -342,8 +381,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
         }
         supportActionBar?.hide()
 
@@ -366,18 +406,21 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     startActivity(intent)
                     true
                 }
+
                 R.id.navigation_profile -> {
                     val intent = Intent(this@MainActivity, SettingsActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_profile)
                     startActivity(intent)
                     false
                 }
+
                 R.id.navigation_documents -> {
                     val intent = Intent(this@MainActivity, CatatanMakanan::class.java)
                     intent.putExtra("selected_item", R.id.navigation_documents)
                     startActivity(intent)
                     true
                 }
+
                 R.id.navigation_stats -> true
                 else -> false
             }

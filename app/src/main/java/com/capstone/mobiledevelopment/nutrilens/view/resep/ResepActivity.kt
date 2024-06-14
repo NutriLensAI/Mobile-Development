@@ -19,9 +19,9 @@ import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
-import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
+import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -95,16 +95,19 @@ class ResepActivity : AppCompatActivity() {
         setupSearchView()
         setupView()
     }
+
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
         }
         supportActionBar?.hide()
 
         // Set status bar color to green
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
+
     private fun setupBottomNavigationView() {
         val bottomNavigationView = findViewById<CustomBottomNavigationView>(R.id.customBottomBar)
         bottomNavigationView.inflateMenu(R.menu.bottom_navigation_menu)
@@ -119,21 +122,25 @@ class ResepActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+
                 R.id.navigation_profile -> {
                     val intent = Intent(this@ResepActivity, SettingsActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_profile)
                     startActivity(intent)
                     false
                 }
+
                 R.id.navigation_documents -> {
                     val intent = Intent(this@ResepActivity, CatatanMakanan::class.java)
                     intent.putExtra("selected_item", R.id.navigation_documents)
                     startActivity(intent)
                     true
                 }
+
                 R.id.navigation_food -> {
                     true
                 }
+
                 else -> false
             }
         }

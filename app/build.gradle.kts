@@ -15,14 +15,23 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "ENDPOINT", "\"https://nutrilens-capstone.et.r.appspot.com/api/\"")
+        buildConfigField(
+            "String",
+            "ENDPOINT",
+            "\"https://nutrilens-capstone.et.r.appspot.com/api/\""
+        )
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         named("release") {
             isMinifyEnabled = false
-            setProguardFiles(listOf(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"))
+            setProguardFiles(
+                listOf(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
+            )
         }
     }
     compileOptions {
@@ -34,7 +43,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        buildConfig= true
+        buildConfig = true
     }
     lint {
         checkAllWarnings = true
@@ -76,17 +85,17 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     //cardview
-    implementation (libs.androidx.cardview)
+    implementation(libs.androidx.cardview)
 
     //viewpager
-    implementation (libs.androidx.viewpager2)
+    implementation(libs.androidx.viewpager2)
 
     //CameraX
-    implementation (libs.androidx.camera.core)
-    implementation (libs.androidx.camera.camera2)
-    implementation (libs.androidx.camera.lifecycle)
-    implementation (libs.androidx.camera.view)
-    implementation (libs.androidx.camera.extensions)
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.extensions)
 
     //circle progress
     implementation(libs.circleprogress)
@@ -96,7 +105,7 @@ dependencies {
 
     //Step Counter
     implementation(libs.play.services.fitness)
-    implementation (libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
 
     //room
     implementation(libs.androidx.room.ktx)
@@ -104,7 +113,7 @@ dependencies {
 
     //paging
     implementation(libs.androidx.paging.runtime.ktx)
-    implementation (libs.androidx.room.paging)
-    implementation (libs.gson)
+    implementation(libs.androidx.room.paging)
+    implementation(libs.gson)
 
 }

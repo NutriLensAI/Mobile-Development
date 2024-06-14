@@ -7,7 +7,8 @@ import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabas
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ResetDrinkWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
+class ResetDrinkWorker(context: Context, params: WorkerParameters) :
+    CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         return withContext(Dispatchers.IO) {
             try {

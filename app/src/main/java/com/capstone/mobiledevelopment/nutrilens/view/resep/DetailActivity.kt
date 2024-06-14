@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityDetailBinding
-import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,21 +48,34 @@ class DetailActivity : AppCompatActivity() {
         }
         setupView()
     }
+
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
         }
         supportActionBar?.hide()
 
         // Set status bar color to green
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
+
     private fun updateFavoriteButton() {
         if (isFavorite) {
-            binding.ivFavorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_heart_filled))
+            binding.ivFavorite.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_heart_filled
+                )
+            )
         } else {
-            binding.ivFavorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_heart_outline))
+            binding.ivFavorite.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_heart_outline
+                )
+            )
         }
         animateFavoriteButton(binding.ivFavorite)
     }

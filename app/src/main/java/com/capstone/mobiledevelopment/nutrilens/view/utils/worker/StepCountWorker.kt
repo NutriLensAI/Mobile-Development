@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
+import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.google.android.gms.fitness.FitnessLocal
 import com.google.android.gms.fitness.data.LocalDataSet
@@ -22,7 +22,8 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.concurrent.TimeUnit
 
-class StepCountWorker(context: Context, workerParams: WorkerParameters) : CoroutineWorker(context, workerParams) {
+class StepCountWorker(context: Context, workerParams: WorkerParameters) :
+    CoroutineWorker(context, workerParams) {
     private val db by lazy { StepDatabase.getDatabase(applicationContext) }
     private val stepRepository by lazy { StepRepository.getInstance(db.stepCountDao()) }
     private val sharedPreferences by lazy {

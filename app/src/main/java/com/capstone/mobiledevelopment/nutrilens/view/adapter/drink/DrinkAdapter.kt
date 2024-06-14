@@ -34,7 +34,8 @@ class DrinkAdapter(private val drinkList: List<DrinkItem>) :
 
         holder.drinkListContainer.removeAllViews()
         for (drinkDetail in drinkItem.drinkDetails) {
-            val drinkView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.drink_detail_item, holder.drinkListContainer, false)
+            val drinkView = LayoutInflater.from(holder.itemView.context)
+                .inflate(R.layout.drink_detail_item, holder.drinkListContainer, false)
             drinkView.findViewById<TextView>(R.id.drinkName).text = drinkDetail.name
             drinkView.findViewById<TextView>(R.id.drinkAmount).text = "${drinkDetail.amount} ml"
             drinkView.findViewById<TextView>(R.id.drinkSugar).text = "${drinkDetail.sugar} g"

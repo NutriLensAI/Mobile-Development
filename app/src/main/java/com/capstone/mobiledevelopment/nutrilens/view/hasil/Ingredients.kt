@@ -17,7 +17,8 @@ class Ingredients : AppCompatActivity() {
         setContentView(R.layout.activity_ingredients)
 
         val imageUri = intent.getStringExtra("image_uri")?.let { Uri.parse(it) }
-        val makananList: List<Makanan> = intent.getParcelableArrayListExtra("makanan_list") ?: emptyList()
+        val makananList: List<Makanan> =
+            intent.getParcelableArrayListExtra("makanan_list") ?: emptyList()
 
         val imageView: ImageView = findViewById(R.id.img_makanan)
         imageUri?.let {

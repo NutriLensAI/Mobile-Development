@@ -3,8 +3,6 @@ package com.capstone.mobiledevelopment.nutrilens.view.signup
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -141,7 +139,10 @@ class SignupActivity : AppCompatActivity() {
                 showSuccessDialog(binding.edRegisterEmail.text.toString())
             } else {
                 val message = when (result) {
-                    is Result.Failure -> getString(R.string.registration_failed) + " [" + result.error.message + "]. " + getString(R.string.try_again)
+                    is Result.Failure -> getString(R.string.registration_failed) + " [" + result.error.message + "]. " + getString(
+                        R.string.try_again
+                    )
+
                     else -> getString(R.string.registration_failed) + ". " + getString(R.string.try_again)
                 }
                 showFailureDialog(message)

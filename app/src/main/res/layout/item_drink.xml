@@ -61,8 +61,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="0 ml"
                 android:gravity="center"
+                android:text="0 ml"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -70,8 +70,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="0 g"
                 android:gravity="center"
+                android:text="0 g"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -80,8 +80,8 @@
             android:id="@+id/divider1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#CCCCCC"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:background="#CCCCCC" />
 
         <!-- Container for drink details -->
         <LinearLayout

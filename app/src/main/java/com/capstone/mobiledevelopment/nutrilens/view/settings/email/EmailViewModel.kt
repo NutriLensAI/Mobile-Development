@@ -1,13 +1,9 @@
 package com.capstone.mobiledevelopment.nutrilens.view.settings.email
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 

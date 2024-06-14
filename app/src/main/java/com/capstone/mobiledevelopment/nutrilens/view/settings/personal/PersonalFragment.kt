@@ -19,6 +19,7 @@ class PersonalFragment : Fragment() {
                 putString(ARG_TOKEN, token)
             }
         }
+
         private const val ARG_TOKEN = "token"
     }
 
@@ -35,15 +36,19 @@ class PersonalFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val view = inflater.inflate(R.layout.fragment_personal, container, false)
 
         personalViewModel.userData.observe(viewLifecycleOwner) { userData ->
-            view.findViewById<TextView>(R.id.tvActivityLevel).text = userData.activity ?: "No data"
-            view.findViewById<TextView>(R.id.tvWeight).text = userData.weight ?: "No data"
-            view.findViewById<TextView>(R.id.tvHeight).text = userData.height ?: "No data"
-            view.findViewById<TextView>(R.id.tvAge).text = userData.age ?: "No data"
-            view.findViewById<TextView>(R.id.tvGender).text = userData.gender ?: "No data"
+            view.findViewById<TextView>(R.id.tvActivityLevel).text = userData.activity
+            view.findViewById<TextView>(R.id.tvWeight).text = userData.weight
+            view.findViewById<TextView>(R.id.tvHeight).text = userData.height
+            view.findViewById<TextView>(R.id.tvAge).text = userData.age
+            view.findViewById<TextView>(R.id.tvGender).text = userData.gender
         }
 
         view.findViewById<Button>(R.id.btnChangePersonalData).setOnClickListener {

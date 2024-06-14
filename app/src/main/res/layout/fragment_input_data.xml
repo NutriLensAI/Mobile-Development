@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
-    tools:context=".view.settings.personal.InputDataFragment"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".view.settings.personal.InputDataFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -133,9 +133,9 @@
                 <Button
                     android:id="@+id/buttonSave"
                     android:layout_width="match_parent"
-                    android:backgroundTint="@color/green"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:backgroundTint="@color/green"
                     android:text="Save Info" />
 
             </LinearLayout>

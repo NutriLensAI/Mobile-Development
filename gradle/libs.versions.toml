@@ -77,6 +77,6 @@ androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "ro
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-android-library = { id = "com.android.library", version.ref = "library"}
-google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlinPlugin"  }
+android-library = { id = "com.android.library", version.ref = "library" }
+google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinPlugin" }

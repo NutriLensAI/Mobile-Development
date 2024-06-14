@@ -3,11 +3,11 @@ package com.capstone.mobiledevelopment.nutrilens.view.utils
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
+import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
-import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideStepCountRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideFoodRepository
+import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideStepCountRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideUserRepository
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakananViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginViewModel
@@ -30,27 +30,35 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(userRepository, stepRepository, foodRepository) as T
             }
+
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(userRepository) as T
             }
+
             modelClass.isAssignableFrom(SignupViewModel::class.java) -> {
                 SignupViewModel(userRepository) as T
             }
+
             modelClass.isAssignableFrom(SettingsViewModel::class.java) -> {
                 SettingsViewModel(userRepository) as T
             }
+
             modelClass.isAssignableFrom(CatatanMakananViewModel::class.java) -> {
                 CatatanMakananViewModel(foodRepository, userRepository) as T
             }
+
             modelClass.isAssignableFrom(EmailViewModel::class.java) -> {
                 EmailViewModel(userRepository) as T
             }
+
             modelClass.isAssignableFrom(PasswordViewModel::class.java) -> {
                 PasswordViewModel(userRepository) as T
             }
+
             modelClass.isAssignableFrom(PersonalViewModel::class.java) -> {
                 PersonalViewModel(userRepository) as T
             }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

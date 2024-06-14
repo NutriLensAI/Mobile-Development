@@ -18,7 +18,13 @@ data class FoodItem(
     var calories: Double,
     val foodItems: MutableList<FoodDetail> = mutableListOf()
 ) {
-    data class FoodDetail(val nama: String, val carbs: Double, val fat: Double, val protein: Double, val calories: Double)
+    data class FoodDetail(
+        val nama: String,
+        val carbs: Double,
+        val fat: Double,
+        val protein: Double,
+        val calories: Double
+    )
 }
 
 class FoodAdapter(private val foodList: List<FoodItem>) :
@@ -49,7 +55,8 @@ class FoodAdapter(private val foodList: List<FoodItem>) :
 
         holder.foodListContainer.removeAllViews()
         for (foodDetail in foodItem.foodItems) {
-            val foodView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.food_detail_item, holder.foodListContainer, false)
+            val foodView = LayoutInflater.from(holder.itemView.context)
+                .inflate(R.layout.food_detail_item, holder.foodListContainer, false)
             foodView.findViewById<TextView>(R.id.foodName).text = foodDetail.nama
             foodView.findViewById<TextView>(R.id.foodCarbs).text = "${foodDetail.carbs} g"
             foodView.findViewById<TextView>(R.id.foodFat).text = "${foodDetail.fat} g"

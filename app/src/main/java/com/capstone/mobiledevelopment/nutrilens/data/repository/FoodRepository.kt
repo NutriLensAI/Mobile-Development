@@ -1,10 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.data.repository
 
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.Breakfast
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.Dinner
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.Lunch
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
-import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
 
 class FoodRepository private constructor(

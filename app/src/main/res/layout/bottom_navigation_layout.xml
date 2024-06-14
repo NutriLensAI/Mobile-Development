@@ -13,13 +13,13 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/lucide_scan"
-        app:tint="@android:color/white"
         app:backgroundTint="@color/teal_200"
         app:elevation="6dp"
         app:fabSize="auto"
         app:layout_anchor="@+id/customBottomBar"
         app:layout_anchorGravity="center"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded" />
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded"
+        app:tint="@android:color/white" />
 
     <com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
         android:id="@+id/customBottomBar"

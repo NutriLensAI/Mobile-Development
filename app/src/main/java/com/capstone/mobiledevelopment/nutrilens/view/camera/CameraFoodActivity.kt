@@ -48,11 +48,12 @@ class CameraFoodActivity : AppCompatActivity() {
     private lateinit var outputDirectory: File
     private lateinit var capturedImageUri: Uri
 
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let {
-            startCrop(it)
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                startCrop(it)
+            }
         }
-    }
 
     private val cropImage = registerForActivityResult(
         CropImageContract()
@@ -153,7 +154,13 @@ class CameraFoodActivity : AppCompatActivity() {
             contentResolver,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             ContentValues().apply {
-                put(MediaStore.MediaColumns.DISPLAY_NAME, SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg")
+                put(
+                    MediaStore.MediaColumns.DISPLAY_NAME,
+                    SimpleDateFormat(
+                        FILENAME_FORMAT,
+                        Locale.US
+                    ).format(System.currentTimeMillis()) + ".jpg"
+                )
                 put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/MyCamera/")
@@ -167,7 +174,11 @@ class CameraFoodActivity : AppCompatActivity() {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
-                    Toast.makeText(baseContext, "Photo capture failed: ${exc.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext,
+                        "Photo capture failed: ${exc.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
@@ -205,7 +216,10 @@ class CameraFoodActivity : AppCompatActivity() {
             put(MediaStore.MediaColumns.DISPLAY_NAME, reducedFile.name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/${resources.getString(R.string.app_name)}")
+                put(
+                    MediaStore.MediaColumns.RELATIVE_PATH,
+                    "DCIM/${resources.getString(R.string.app_name)}"
+                )
             }
         }
 
@@ -249,7 +263,8 @@ class CameraFoodActivity : AppCompatActivity() {
             if (allPermissionsGranted()) {
                 startCamera()
             } else {
-                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT)
+                    .show()
                 finish()
             }
         }

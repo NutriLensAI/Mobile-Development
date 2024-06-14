@@ -3,10 +3,7 @@ package com.capstone.mobiledevelopment.nutrilens.view.catatan
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository

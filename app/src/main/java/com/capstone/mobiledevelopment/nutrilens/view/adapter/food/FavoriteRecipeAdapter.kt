@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.view.resep.DetailActivity
 import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
+import com.capstone.mobiledevelopment.nutrilens.view.resep.DetailActivity
 
 class FavoriteRecipeAdapter(
     private var favoriteRecipes: List<FavoriteRecipe>,

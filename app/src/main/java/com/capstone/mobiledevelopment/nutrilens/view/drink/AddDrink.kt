@@ -7,9 +7,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddDrinkBinding
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.Drink
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
+import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddDrinkBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,8 +29,9 @@ class AddDrink : AppCompatActivity() {
 
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
         }
         supportActionBar?.hide()
 
@@ -44,12 +45,14 @@ class AddDrink : AppCompatActivity() {
             val amount = binding.drinkAmountEditText.text.toString().toIntOrNull() ?: 0
             val sugarUnit = binding.sugarUnitSpinner.selectedItem.toString()
             val sugar = binding.sugarAmountEditText.text.toString().toIntOrNull() ?: 0
-            val sugarInGrams = if (sugarUnit == "Tablespoons") sugar * 13 else sugar // Assume 1 tablespoon = 13 grams
+            val sugarInGrams =
+                if (sugarUnit == "Tablespoons") sugar * 13 else sugar // Assume 1 tablespoon = 13 grams
 
             if (name.isNotEmpty() && amount > 0) {
                 saveDrink(name, amount, sugarInGrams)
             } else {
-                Toast.makeText(this, "Please fill in all fields correctly.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill in all fields correctly.", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

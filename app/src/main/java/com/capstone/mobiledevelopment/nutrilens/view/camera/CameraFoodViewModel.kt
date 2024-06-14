@@ -1,24 +1,5 @@
 package com.capstone.mobiledevelopment.nutrilens.view.add_story
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
-import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
-import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
-import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.HttpException
-import java.io.File
-import java.io.IOException
-
 //class CameraFoodViewModel(private val userRepository: UserRepository,
 //                          private val foodRepository: FoodRepository) : ViewModel() {
 //

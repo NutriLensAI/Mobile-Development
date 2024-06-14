@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
-    tools:context=".view.settings.personal.PersonalFragment"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".view.settings.personal.PersonalFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

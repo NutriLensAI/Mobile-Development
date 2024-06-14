@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.settings.SettingsFragment"
-    android:background="#F5F5F5">
+    android:background="#F5F5F5"
+    tools:context=".view.settings.SettingsFragment">
 
     <!-- Using a ConstraintLayout within the FrameLayout to position elements -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,11 +31,11 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/ic_user_avatar"
             android:contentDescription="@string/profile_image"
-            app:layout_constraintTop_toBottomOf="@id/back_button"
+            android:src="@drawable/ic_user_avatar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back_button" />
 
         <!-- Profile Name -->
         <TextView
@@ -46,9 +46,9 @@
             android:text="Pavelmez"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/profile_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_image" />
 
         <!-- Setting and Privacy Label -->
         <TextView
@@ -58,9 +58,9 @@
             android:layout_marginTop="16dp"
             android:text="Setting And Privacy"
             android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/profile_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_name" />
 
         <!-- Email Setting -->
         <LinearLayout

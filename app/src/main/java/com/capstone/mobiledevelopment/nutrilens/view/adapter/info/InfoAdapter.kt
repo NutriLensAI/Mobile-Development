@@ -43,12 +43,13 @@ class MenuAdapter(private val menuList: MutableList<MenuItem>) :
         }
 
         // Set OnClickListener for the info icon to navigate to the appropriate info page
-        holder.binding.root.findViewById<ImageView>(com.capstone.mobiledevelopment.nutrilens.R.id.menuInfoImageView).setOnClickListener {
-            val intent = Intent(context, InfoActivity::class.java).apply {
-                putExtra("FRAGMENT_TYPE", menuItem.title)
+        holder.binding.root.findViewById<ImageView>(com.capstone.mobiledevelopment.nutrilens.R.id.menuInfoImageView)
+            .setOnClickListener {
+                val intent = Intent(context, InfoActivity::class.java).apply {
+                    putExtra("FRAGMENT_TYPE", menuItem.title)
+                }
+                context.startActivity(intent)
             }
-            context.startActivity(intent)
-        }
     }
 
     override fun getItemCount(): Int = menuList.size

@@ -66,10 +66,12 @@ class HasilMakanan : AppCompatActivity() {
 
         setupView()
     }
+
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
         }
         supportActionBar?.hide()
 

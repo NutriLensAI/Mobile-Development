@@ -6,12 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipe
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipeDao
 import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
 import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipeDao
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipe
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipeDao
 
-@Database(entities = [StepCount::class, FavoriteRecipe::class, MyRecipe::class], version = 3, exportSchema = false)
+@Database(
+    entities = [StepCount::class, FavoriteRecipe::class, MyRecipe::class],
+    version = 3,
+    exportSchema = false
+)
 abstract class StepDatabase : RoomDatabase() {
     abstract fun favoriteRecipeDao(): FavoriteRecipeDao
     abstract fun myRecipeDao(): MyRecipeDao

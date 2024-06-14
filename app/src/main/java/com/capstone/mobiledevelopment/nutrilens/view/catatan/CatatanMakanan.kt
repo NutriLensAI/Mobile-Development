@@ -13,14 +13,13 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.database.drink.DrinkDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakananBinding
-import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepActivity
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.InputCatatanActivity
-import com.capstone.mobiledevelopment.nutrilens.view.drink.AddDrink
-import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
+import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
+import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -58,8 +57,9 @@ class CatatanMakanan : AppCompatActivity() {
 
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
         }
         supportActionBar?.hide()
 
@@ -114,14 +114,20 @@ class CatatanMakanan : AppCompatActivity() {
 
         // Update Macros
         meals.macros?.let { macros ->
-            binding.carbsProgressBar.progress = ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
-            binding.fatProgressBar.progress = ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
-            binding.proteinProgressBar.progress = ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
-            binding.totalCalories.text = "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
+            binding.carbsProgressBar.progress =
+                ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
+            binding.fatProgressBar.progress =
+                ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
+            binding.proteinProgressBar.progress =
+                ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
+            binding.totalCalories.text =
+                "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
 
-            binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
+            binding.carbsValueTextView.text =
+                formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
             binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0.0, targetFatGrams)
-            binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
+            binding.proteinValueTextView.text =
+                formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
         }
     }
 
@@ -171,6 +177,7 @@ class CatatanMakanan : AppCompatActivity() {
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
 
@@ -187,7 +194,7 @@ class CatatanMakanan : AppCompatActivity() {
         }
     }
 
-        private fun setupFab() {
+    private fun setupFab() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
             val intent = Intent(this@CatatanMakanan, CameraFoodActivity::class.java)

@@ -1,8 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.view.main
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,11 +15,6 @@ import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.ZoneId
-import java.time.ZoneOffset
 
 class MainViewModel(
     private val userRepository: UserRepository,

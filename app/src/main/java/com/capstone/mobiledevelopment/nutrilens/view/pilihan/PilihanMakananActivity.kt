@@ -15,18 +15,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
+import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FavoriteRecipeAdapter
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.PilihanFoodAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.PilihanFoodAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.AddMyRecipes
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipe
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipesAdapter
-import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
-import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
-import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
-import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
-import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.CoroutineScope
@@ -96,7 +96,12 @@ class PilihanMakananActivity : AppCompatActivity() {
         mealTypeSpinner.adapter = adapter
 
         mealTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 selectedTable = parent.getItemAtPosition(position) as String
             }
 
@@ -135,13 +140,22 @@ class PilihanMakananActivity : AppCompatActivity() {
                     carbohydrate = food.carbohydrate // Pastikan field ini ada di FoodResponse
                 )
 
-                val response = ApiConfig.getApiService().addFoodToMeal(token, table, food.id, foodRequest)
+                val response =
+                    ApiConfig.getApiService().addFoodToMeal(token, table, food.id, foodRequest)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@PilihanMakananActivity, "Food added successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@PilihanMakananActivity,
+                        "Food added successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: HttpException) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@PilihanMakananActivity, "Failed to add food", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@PilihanMakananActivity,
+                        "Failed to add food",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -187,6 +201,7 @@ class PilihanMakananActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
     }
@@ -208,11 +223,13 @@ class PilihanMakananActivity : AppCompatActivity() {
                         pilihanFoodAdapter.updateList(allFoodList)
                         fabAddRecipe.visibility = View.GONE
                     }
+
                     1 -> {
                         recyclerView.adapter = favoriteRecipeAdapter
                         fetchFavoriteRecipes()
                         fabAddRecipe.visibility = View.GONE
                     }
+
                     2 -> {
                         recyclerView.adapter = myRecipesAdapter
                         fetchMyRecipes()
