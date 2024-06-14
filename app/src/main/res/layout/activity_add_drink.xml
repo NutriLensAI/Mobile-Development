@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="Add Drink"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,39 +52,50 @@
             app:layout_constraintVertical_bias="0.22" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Drink Name EditText -->
-    <EditText
-        android:id="@+id/drinkNameEditText"
+    <!-- Drink Name TextInputLayout -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/drinkNameTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:hint="Name of the Drink"
-        android:inputType="text"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/headerLayout">
 
-    <!-- Drink Amount EditText -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/drinkNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name of the Drink"
+            android:inputType="text"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Sugar Unit Spinner -->
-    <EditText
-        android:id="@+id/drinkAmountEditText"
+    <!-- Drink Amount TextInputLayout -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/drinkAmountTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:hint="Amount (ml)"
-        android:inputType="number"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drinkNameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/drinkNameTextInputLayout">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/drinkAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Amount (ml)"
+            android:inputType="number"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Sugar Unit Spinner -->
     <Spinner
         android:id="@+id/sugarUnitSpinner"
         android:layout_width="0dp"
@@ -96,34 +107,42 @@
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drinkAmountEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/drinkAmountTextInputLayout" />
 
-    <!-- Sugar Amount EditText -->
-    <EditText
-        android:id="@+id/sugarAmountEditText"
+    <!-- Sugar Amount TextInputLayout -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/sugarAmountTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:hint="Sugar Amount"
-        android:inputType="number"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sugarUnitSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/sugarUnitSpinner">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/sugarAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sugar Amount"
+            android:inputType="number"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Add Button -->
     <Button
         android:id="@+id/addDrinkButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:backgroundTint="@color/light_green"
         android:text="Add Drink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sugarAmountEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/sugarAmountTextInputLayout" />
 
     <!-- ScrollView for additional information -->
     <ScrollView

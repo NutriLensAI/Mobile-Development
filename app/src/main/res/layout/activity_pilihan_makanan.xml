@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".view.food.PilihanMakanan">
+    tools:context=".view.pilihan.PilihanMakananActivity">
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
@@ -28,9 +28,11 @@
             android:entries="@array/meal_types"
             android:padding="8dp"
             android:spinnerMode="dropdown"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="147dp"
+            tools:layout_editor_absoluteY="13dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Search Bar -->

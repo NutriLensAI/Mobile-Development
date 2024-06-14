@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="Info Sleep"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/appNameTextView"

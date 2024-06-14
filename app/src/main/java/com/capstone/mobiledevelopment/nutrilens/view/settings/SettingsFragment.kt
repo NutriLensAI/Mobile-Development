@@ -1,18 +1,25 @@
 package com.capstone.mobiledevelopment.nutrilens.view.settings
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.FragmentSettingsBinding
 import com.capstone.mobiledevelopment.nutrilens.view.settings.email.EmailFragment
@@ -30,6 +37,27 @@ class SettingsFragment : Fragment() {
     }
 
     private var navigateTo: String? = null
+
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                startCrop(it)
+            }
+        }
+
+    private val cropImage = registerForActivityResult(
+        CropImageContract()
+    ) { result ->
+        if (result.isSuccessful) {
+            result.uriContent?.let { uri ->
+                saveCroppedImageToPreferences(uri)
+                binding.profileImage.setImageURI(uri)
+            }
+        } else {
+            val exception = result.error
+            Log.e(TAG, "Crop failed: ${exception?.message}", exception)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,9 +115,14 @@ class SettingsFragment : Fragment() {
             activity?.finish()
         }
 
+        binding.profileImage.setOnClickListener {
+            openGallery()
+        }
+
         observeEmail()
         setupView()
         setupAction()
+        loadImageFromPreferences()
     }
 
     private fun navigateToFragment(fragment: Fragment) {
@@ -149,7 +182,36 @@ class SettingsFragment : Fragment() {
         activity?.finish()
     }
 
+    private fun openGallery() {
+        galleryLauncher.launch("image/*")
+    }
+
+    private fun startCrop(uri: Uri) {
+        val cropImageContractOptions = CropImageContractOptions(
+            uri,
+            CropImageOptions()
+        )
+        cropImage.launch(cropImageContractOptions)
+    }
+
+    private fun saveCroppedImageToPreferences(uri: Uri) {
+        val sharedPreferences = requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("profileImageUri", uri.toString())
+        editor.apply()
+    }
+
+    private fun loadImageFromPreferences() {
+        val sharedPreferences = requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val imageUriString = sharedPreferences.getString("profileImageUri", null)
+        if (imageUriString != null) {
+            val imageUri = Uri.parse(imageUriString)
+            binding.profileImage.setImageURI(imageUri)
+        }
+    }
+
     companion object {
+        private const val TAG = "SettingsFragment"
         private const val ARG_NAVIGATE_TO = "navigate_to"
 
         fun newInstance(selectedItemId: Int, navigateTo: String?) = SettingsFragment().apply {

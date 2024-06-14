@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="Info Steps"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

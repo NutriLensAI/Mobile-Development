@@ -8,6 +8,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -98,7 +99,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
 
         fetchUserDataAndMacros()
+        // Bind the user image from SharedPreferences
+        bindUserImageFromPreferences()
     }
+
+    private fun bindUserImageFromPreferences() {
+        val sharedPreferences = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val imageUriString = sharedPreferences.getString("profileImageUri", null)
+        if (imageUriString != null) {
+            val imageUri = Uri.parse(imageUriString)
+            binding.userImageView.setImageURI(imageUri)
+        }
+    }
+
 
     private fun fetchUserDataAndMacros() {
         viewModel.getSession().observe(this) { user ->
