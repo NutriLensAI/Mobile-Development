@@ -100,6 +100,7 @@ class ResepActivity : AppCompatActivity() {
         setupFAB()
         setupSearchView()
         setupView()
+        checkGuestUser()
     }
 
     private fun setupView() {
@@ -184,6 +185,15 @@ class ResepActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun checkGuestUser() {
+        val userPreference = UserPreference.getInstance(dataStore)
+        CoroutineScope(Dispatchers.Main).launch {
+            val userModel = userPreference.getSession().first()
+            isGuestUser = userModel.isGuest
+            setupFAB() // Reinitialize FAB after checking guest user status
+        }
     }
 
     private fun setupSearchView() {
