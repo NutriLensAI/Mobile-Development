@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,8 +26,10 @@ import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
+import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
+import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -48,6 +52,9 @@ class ResepActivity : AppCompatActivity() {
     private lateinit var searchView: SearchView
     private lateinit var db: StepDatabase
     private var isGuestUser: Boolean = false
+    private val viewModel by viewModels<MainViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +108,25 @@ class ResepActivity : AppCompatActivity() {
         setupSearchView()
         setupView()
         checkGuestUser()
+        observeSession() // Add this line to observe session
+    }
+
+    private fun observeSession() {
+        viewModel.getSession().observe(this) { user ->
+            if (user == null || !user.isLogin) {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            } else {
+                user.token.let { token ->
+                    if (!isGuestUser) {
+                        viewModel.fetchUserProfile(token)
+                        viewModel.userProfile.observe(this) { userProfile ->
+                            // Handle user profile data here if needed
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun setupView() {
