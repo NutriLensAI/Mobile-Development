@@ -58,13 +58,17 @@
         app:layout_constraintStart_toStartOf="@+id/loginButton"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
-    <Button
+    <TextView
         android:id="@+id/guestButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#2C7865"
         android:text="Login as Guest"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="@+id/signupButton"
         app:layout_constraintStart_toStartOf="@+id/signupButton"
         app:layout_constraintTop_toBottomOf="@+id/signupButton" />
