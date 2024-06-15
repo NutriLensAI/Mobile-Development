@@ -8,6 +8,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.R
@@ -64,9 +65,10 @@ class WelcomeActivity : AppCompatActivity() {
         signupButtonAnimationSet.addAnimation(slideUpAnimation)
         binding.signupButton.startAnimation(signupButtonAnimationSet)
 
+        val guestButton: TextView = findViewById(R.id.guestButton)
         val guestButtonAnimationSet = AnimationSet(true)
         guestButtonAnimationSet.addAnimation(slideUpAnimation)
-        binding.guestButton.startAnimation(guestButtonAnimationSet)
+        guestButton.startAnimation(guestButtonAnimationSet)
 
         if (drawable is AnimatedVectorDrawable) {
             drawable.start()
@@ -95,7 +97,8 @@ class WelcomeActivity : AppCompatActivity() {
             startActivity(Intent(this, SignupWelcome::class.java))
         }
 
-        binding.guestButton.setOnClickListener {
+        val guestButton: TextView = findViewById(R.id.guestButton)
+        guestButton.setOnClickListener {
             loginAsGuest()
         }
     }
