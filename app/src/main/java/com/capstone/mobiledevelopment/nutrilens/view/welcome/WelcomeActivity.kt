@@ -11,7 +11,9 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityWelcomeBinding
+import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity
+import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepActivity
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
@@ -60,8 +62,6 @@ class WelcomeActivity : AppCompatActivity() {
         val signupButtonAnimationSet = AnimationSet(true)
         signupButtonAnimationSet.addAnimation(slideUpAnimation)
         binding.signupButton.startAnimation(signupButtonAnimationSet)
-
-
 
         if (drawable is AnimatedVectorDrawable) {
             drawable.start()

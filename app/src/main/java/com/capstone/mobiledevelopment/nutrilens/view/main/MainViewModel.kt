@@ -80,6 +80,10 @@ class MainViewModel(
         }
     }
 
+    fun isGuestUser(): LiveData<Boolean> {
+        return userRepository.isGuestUser().asLiveData()
+    }
+
     companion object {
         private const val TAG = "MainViewModel"
     }

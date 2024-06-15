@@ -3,6 +3,7 @@ package com.capstone.mobiledevelopment.nutrilens.view.catatan
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
@@ -62,5 +63,9 @@ class CatatanMakananViewModel(
                 _isLoading.value = false
             }
         }
+    }
+
+    fun isGuestUser(): LiveData<Boolean> {
+        return userRepository.isGuestUser().asLiveData()
     }
 }

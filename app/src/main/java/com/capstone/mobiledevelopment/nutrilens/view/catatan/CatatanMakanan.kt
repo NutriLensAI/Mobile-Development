@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -15,6 +16,7 @@ import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityCatatanMakananBinding
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.input.InputCatatanActivity
+import com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
@@ -31,6 +33,8 @@ class CatatanMakanan : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
+    private var isGuestUser: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCatatanMakananBinding.inflate(layoutInflater)
@@ -42,6 +46,10 @@ class CatatanMakanan : AppCompatActivity() {
 
         viewModel.fetchToken()
         observeViewModel()
+
+        viewModel.isGuestUser().observe(this) { isGuest ->
+            isGuestUser = isGuest
+        }
 
         // Fetch user profile and all meals after token is fetched
         viewModel.token.observe(this) { token ->
@@ -58,8 +66,7 @@ class CatatanMakanan : AppCompatActivity() {
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowCompat.getInsetsController(window, window.decorView).let { controller ->
-            controller.isAppearanceLightStatusBars =
-                true // Optional: Set status bar content to dark
+            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
         }
         supportActionBar?.hide()
 
@@ -114,20 +121,14 @@ class CatatanMakanan : AppCompatActivity() {
 
         // Update Macros
         meals.macros?.let { macros ->
-            binding.carbsProgressBar.progress =
-                ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
-            binding.fatProgressBar.progress =
-                ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
-            binding.proteinProgressBar.progress =
-                ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
-            binding.totalCalories.text =
-                "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
+            binding.carbsProgressBar.progress = ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
+            binding.fatProgressBar.progress = ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
+            binding.proteinProgressBar.progress = ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
+            binding.totalCalories.text = "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
 
-            binding.carbsValueTextView.text =
-                formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
+            binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
             binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0.0, targetFatGrams)
-            binding.proteinValueTextView.text =
-                formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
+            binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
         }
     }
 
@@ -154,28 +155,46 @@ class CatatanMakanan : AppCompatActivity() {
     private fun setupToggleButtonGroup() {
         binding.toggleButtonGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {
-                val selectedFragment = when (checkedId) {
-                    R.id.btn_breakfast -> "BREAKFAST"
-                    R.id.btn_lunch -> "LUNCH"
-                    R.id.btn_dinner -> "DINNER"
-                    R.id.btn_drink -> "DRINK"
-                    else -> "BREAKFAST"
-                }
+                if (isGuestUser && checkedId != R.id.btn_drink) {
+                    showLoginDialog()
+                } else {
+                    val selectedFragment = when (checkedId) {
+                        R.id.btn_breakfast -> "BREAKFAST"
+                        R.id.btn_lunch -> "LUNCH"
+                        R.id.btn_dinner -> "DINNER"
+                        R.id.btn_drink -> "DRINK"
+                        else -> "BREAKFAST"
+                    }
 
-                val mealData: Parcelable? = when (selectedFragment) {
-                    "BREAKFAST" -> viewModel.allMeals.value?.breakfast
-                    "LUNCH" -> viewModel.allMeals.value?.lunch
-                    "DINNER" -> viewModel.allMeals.value?.dinner
-                    else -> null
-                }
+                    val mealData: Parcelable? = when (selectedFragment) {
+                        "BREAKFAST" -> viewModel.allMeals.value?.breakfast
+                        "LUNCH" -> viewModel.allMeals.value?.lunch
+                        "DINNER" -> viewModel.allMeals.value?.dinner
+                        else -> null
+                    }
 
-                val intent = Intent(this, InputCatatanActivity::class.java).apply {
-                    putExtra("selected_fragment", selectedFragment)
-                    putExtra("selected_meal", mealData)
+                    val intent = Intent(this, InputCatatanActivity::class.java).apply {
+                        putExtra("selected_fragment", selectedFragment)
+                        putExtra("selected_meal", mealData)
+                    }
+                    startActivity(intent)
                 }
-                startActivity(intent)
             }
         }
+    }
+
+    private fun showLoginDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Kamu harus login untuk menggunakan fitur ini")
+        builder.setMessage("Silakan login untuk melanjutkan atau pilih Later untuk menggunakan akun guest.")
+        builder.setPositiveButton("Login Now") { dialog, _ ->
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+        builder.setNegativeButton("Later") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
     override fun onResume() {

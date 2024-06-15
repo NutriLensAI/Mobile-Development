@@ -1,7 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.data.pref
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -16,12 +15,12 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
 
     suspend fun saveSession(user: UserModel) {
-        Log.d("UserPreference", "Saving session with token: ${user.token}")
         dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = user.email
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = user.isLogin
-            preferences[USERNAME_KEY] = user.username // Add this line
+            preferences[USERNAME_KEY] = user.username
+            preferences[IS_GUEST_KEY] = user.isGuest
         }
     }
 
@@ -31,14 +30,26 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             val token = preferences[TOKEN_KEY] ?: ""
             val isLogin = preferences[IS_LOGIN_KEY] ?: false
             val username = preferences[USERNAME_KEY] ?: ""
-            Log.d("UserPreference", "Retrieved session with token: $token")
-            UserModel(email, token, isLogin, username) // Modify this line
+            val isGuest = preferences[IS_GUEST_KEY] ?: false
+            UserModel(email, token, isLogin, username, isGuest)
         }
     }
 
     suspend fun logout() {
         dataStore.edit { preferences ->
             preferences.clear()
+        }
+    }
+
+    suspend fun setGuestUser(isGuest: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[IS_GUEST_KEY] = isGuest
+        }
+    }
+
+    fun isGuestUser(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[IS_GUEST_KEY] ?: false
         }
     }
 
@@ -50,6 +61,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
         private val USERNAME_KEY = stringPreferencesKey("username")
+        private val IS_GUEST_KEY = booleanPreferencesKey("isGuest")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

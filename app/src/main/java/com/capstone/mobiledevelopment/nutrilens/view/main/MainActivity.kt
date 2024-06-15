@@ -35,6 +35,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.adapter.info.MenuAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.info.MenuItem
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity
 import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Utils
@@ -67,6 +68,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         getSharedPreferences("step_prefs", Context.MODE_PRIVATE)
     }
 
+    private var isGuestUser: Boolean = false
+
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +101,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             binding.helloTextView.text = "Hello, $username!"
         }
 
+        viewModel.isGuestUser().observe(this) { isGuest ->
+            isGuestUser = isGuest
+            if (isGuest) {
+                // Jalankan logika untuk guest user
+                binding.helloTextView.text = "Hello, Guest!"
+            }
+        }
+
         fetchUserDataAndMacros()
         // Bind the user image from SharedPreferences
         bindUserImageFromPreferences()
@@ -112,7 +123,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-
     private fun fetchUserDataAndMacros() {
         viewModel.getSession().observe(this) { user ->
             if (user == null || !user.isLogin) {
@@ -120,11 +130,29 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 finish()
             } else {
                 user.token.let { token ->
-                    viewModel.fetchUserProfile(token)
-                    viewModel.fetchMacros(token)
+                    if (!isGuestUser) {
+                        viewModel.fetchUserProfile(token)
+                        viewModel.fetchMacros(token)
+                    } else {
+                        showLoginDialog()
+                    }
                 }
             }
         }
+    }
+
+    private fun showLoginDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Kamu harus login untuk menggunakan fitur lengkapnya!")
+        builder.setMessage("Silakan login untuk melanjutkan atau pilih Later untuk menggunakan akun guest.")
+        builder.setPositiveButton("Login Now") { dialog, _ ->
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+        builder.setNegativeButton("Later") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
     private fun observeSession() {
@@ -358,8 +386,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         // Fetch user data and macros
         viewModel.getSession().observe(this) { user ->
             user?.token?.let { token ->
-                viewModel.fetchUserProfile(token)
-                viewModel.fetchMacros(token)
+                if (!isGuestUser) {
+                    viewModel.fetchUserProfile(token)
+                    viewModel.fetchMacros(token)
+                } else {
+                    Toast.makeText(this, "Please login to use this Macros feature", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -414,26 +446,23 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_food -> {
-                    val intent = Intent(this@MainActivity, ResepActivity::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_food)
-                    startActivity(intent)
-                    true
+                        val intent = Intent(this@MainActivity, ResepActivity::class.java)
+                        intent.putExtra("selected_item", R.id.navigation_food)
+                        startActivity(intent)
+                        true
                 }
-
                 R.id.navigation_profile -> {
                     val intent = Intent(this@MainActivity, SettingsActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_profile)
                     startActivity(intent)
                     false
-                }
-
+                    }
                 R.id.navigation_documents -> {
-                    val intent = Intent(this@MainActivity, CatatanMakanan::class.java)
-                    intent.putExtra("selected_item", R.id.navigation_documents)
-                    startActivity(intent)
-                    true
+                        val intent = Intent(this@MainActivity, CatatanMakanan::class.java)
+                        intent.putExtra("selected_item", R.id.navigation_documents)
+                        startActivity(intent)
+                        true
                 }
-
                 R.id.navigation_stats -> true
                 else -> false
             }
@@ -443,8 +472,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private fun setupFab() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
-            val intent = Intent(this@MainActivity, CameraFoodActivity::class.java)
-            startActivity(intent)
+            if (isGuestUser) {
+                showLoginDialog()
+            } else {
+                val intent = Intent(this@MainActivity, CameraFoodActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 

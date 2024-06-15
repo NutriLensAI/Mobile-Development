@@ -59,7 +59,8 @@ class LoginViewModel(
                     email = userProfile.email.toString(),
                     token = token,
                     isLogin = true,
-                    username = userProfile.username.toString()
+                    username = userProfile.username.toString(),
+                    isGuest = false
                 )
                 userRepository.saveSession(user)
                 _userProfile.value = userProfile
@@ -72,6 +73,21 @@ class LoginViewModel(
         }
     }
 
+    fun setGuestUser(isGuest: Boolean) {
+        viewModelScope.launch {
+            val guestToken = "guest_token_123456" // Token default untuk guest user
+            val user = UserModel(
+                email = "guest@example.com",
+                token = guestToken,
+                isLogin = true,
+                username = "Guest",
+                isGuest = true
+            )
+            userRepository.userPreference.setGuestUser(isGuest)
+            userRepository.saveSession(user)
+            _sessionSaved.value = true
+        }
+    }
 
     private fun handleLoginError(e: Exception) {
         val errorMessage = when (e) {
@@ -84,7 +100,6 @@ class LoginViewModel(
                     "Login failed. Please try again."
                 }
             }
-
             else -> "Login failed. Please try again."
         }
         _loginResult.value = Result.Failure(Throwable(errorMessage))

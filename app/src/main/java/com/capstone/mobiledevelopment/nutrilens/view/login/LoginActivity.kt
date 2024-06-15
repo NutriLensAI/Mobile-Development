@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityLoginBinding
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
@@ -19,6 +20,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.welcome.SignupWelcome
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -117,6 +119,14 @@ class LoginActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.VISIBLE
 
             viewModel.login(email, password)
+        }
+
+        binding.guestLoginButton.setOnClickListener {
+            // Set guest user session
+            lifecycleScope.launch {
+                viewModel.setGuestUser(true)
+                navigateToMainActivity()
+            }
         }
 
         // Observe isLoading LiveData here

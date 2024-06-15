@@ -14,7 +14,7 @@ import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UpdateProfileReque
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository private constructor(
-    private var userPreference: UserPreference,
+    var userPreference: UserPreference,
     private var apiService: ApiService
 ) {
     suspend fun logout() {
@@ -27,6 +27,10 @@ class UserRepository private constructor(
 
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()
+    }
+
+    fun isGuestUser(): Flow<Boolean> {
+        return userPreference.isGuestUser()
     }
 
     suspend fun register(name: String, email: String, password: String): RegisterResponse {
