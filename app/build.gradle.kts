@@ -50,6 +50,8 @@ android {
         warningsAsErrors = false
         abortOnError = true
     }
+    buildToolsVersion = "34.0.0"
+    ndkVersion = "27.0.11718014 rc1"
 }
 
 dependencies {
