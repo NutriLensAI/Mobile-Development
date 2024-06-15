@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -27,19 +28,20 @@ import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddFoodBinding
+import com.capstone.mobiledevelopment.nutrilens.view.add_story.CameraFoodViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.hasil.HasilMakananActivity
-import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.utils.getImageUri
 import com.capstone.mobiledevelopment.nutrilens.view.utils.reduceFileImage
 import com.capstone.mobiledevelopment.nutrilens.view.utils.uriToFile
+import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 
 class CameraFoodActivity : AppCompatActivity() {
-    private val viewModel by viewModels<MainViewModel> {
+    private val viewModel by viewModels<CameraFoodViewModel> {
         ViewModelFactory.getInstance(this)
     }
     private lateinit var binding: ActivityAddFoodBinding
@@ -109,6 +111,25 @@ class CameraFoodActivity : AppCompatActivity() {
         val takePictureText: TextView = findViewById(R.id.takePictureText)
         takePictureText.setOnClickListener {
             takePhoto()
+        }
+
+        viewModel.predictResult.observe(this) { result ->
+            when (result) {
+                is Result.Success -> {
+                    val prediction = result.value.prediction
+                    val confidence = result.value.confidence
+                    // Pass the prediction result along with the image URI
+                    navigateToHasilMakanan(capturedImageUri, prediction, confidence)
+                }
+                is Result.Failure -> {
+                    val error = result.error.message
+                    showErrorDialog(error)
+                }
+            }
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            // Show or hide loading indicator
         }
     }
 
@@ -208,7 +229,9 @@ class CameraFoodActivity : AppCompatActivity() {
         val file = uriToFile(croppedUri, this)
         val reducedFile = file.reduceFileImage()
         val finalUri = savePhotoToGallery(reducedFile)
-        navigateToHasilMakanan(finalUri)
+        capturedImageUri = finalUri
+        // Call predictImage from the ViewModel
+        viewModel.predictImage(reducedFile)
     }
 
     private fun savePhotoToGallery(reducedFile: File): Uri {
@@ -270,11 +293,23 @@ class CameraFoodActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToHasilMakanan(imageUri: Uri) {
+    private fun navigateToHasilMakanan(imageUri: Uri, prediction: String?, confidence: Double?) {
         val intent = Intent(this, HasilMakananActivity::class.java).apply {
             putExtra("image_uri", imageUri.toString())
+            putExtra("prediction", prediction)
+            putExtra("confidence", confidence)
         }
         startActivity(intent)
+    }
+
+    private fun showErrorDialog(error: String?) {
+        AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setMessage(error)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     companion object {

@@ -9,7 +9,9 @@ import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideFoodRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideStepCountRepository
 import com.capstone.mobiledevelopment.nutrilens.di.Injection.provideUserRepository
+import com.capstone.mobiledevelopment.nutrilens.view.add_story.CameraFoodViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakananViewModel
+import com.capstone.mobiledevelopment.nutrilens.view.hasil.HasilMakananViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsViewModel
@@ -57,6 +59,14 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(PersonalViewModel::class.java) -> {
                 PersonalViewModel(userRepository) as T
+            }
+
+            modelClass.isAssignableFrom(HasilMakananViewModel::class.java) -> {
+                HasilMakananViewModel(foodRepository) as T
+            }
+
+            modelClass.isAssignableFrom(CameraFoodViewModel::class.java) -> {
+                CameraFoodViewModel(foodRepository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

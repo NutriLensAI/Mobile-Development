@@ -8,6 +8,7 @@ import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.PredictApiConfig
 
 object Injection {
     fun provideUserRepository(context: Context): UserRepository {
@@ -19,7 +20,8 @@ object Injection {
     fun provideFoodRepository(context: Context): FoodRepository {
         val pref = UserPreference.getInstance(context.dataStore)
         val apiService = ApiConfig.getApiService()
-        return FoodRepository.getInstance(apiService)
+        val predictApiService = PredictApiConfig.getApiService()
+        return FoodRepository.getInstance(apiService, predictApiService)
     }
 
     fun provideStepCountRepository(context: Context): StepRepository {

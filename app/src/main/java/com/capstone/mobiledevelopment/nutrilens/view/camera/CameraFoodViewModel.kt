@@ -1,60 +1,53 @@
 package com.capstone.mobiledevelopment.nutrilens.view.add_story
 
-//class CameraFoodViewModel(private val userRepository: UserRepository,
-//                          private val foodRepository: FoodRepository) : ViewModel() {
-//
-//    private val _uploadResult = MutableLiveData<Result<StoriesResponse>>()
-//    val uploadResult: LiveData<Result<StoriesResponse>> = _uploadResult
-//
-//    private val _token = MutableLiveData<String>()
-//    val token: LiveData<String> = _token
-//
-//    private val _isLoading = MutableLiveData<Boolean>()
-//    val isLoading: LiveData<Boolean> = _isLoading
-//
-//    fun getToken() {
-//        viewModelScope.launch {
-//            val userModel = userRepository.getSession().first()
-//            _token.value = userModel.token
-//        }
-//    }
-//
-//    fun uploadImage( token: String ,imageFile: File, description: String, lat: Float, lon: Float) {
-//        viewModelScope.launch {
-//            try {
-//                _isLoading.value = true
-//                val requestBody = description.toRequestBody("text/plain".toMediaType())
-//                val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-//                val multipartBody = MultipartBody.Part.createFormData(
-//                    "photo",
-//                    imageFile.name,
-//                    requestImageFile
-//                )
-//                val successResponse = foodRepository.uploadImage(token,multipartBody, requestBody)
-//                _uploadResult.value = Result.Success(successResponse)
-//            } catch (e: Exception) {
-//                handleUploadError(e)
-//            } finally {
-//                _isLoading.value = false
-//            }
-//        }
-//    }
-//
-//    private fun handleUploadError(e: Exception) {
-//        val errorMessage = when (e) {
-//            is HttpException -> {
-//                try {
-//                    val errorBody = e.response()?.errorBody()?.string()
-//                    val errorResponse = Gson().fromJson(errorBody, StoriesResponse::class.java)
-//                    errorResponse.message
-//                } catch (jsonException: JsonSyntaxException) {
-//                    "Upload failed. Please try again."
-//                } catch (ioException: IOException) {
-//                    "Network error. Please check your internet connection."
-//                }
-//            }
-//            else -> "Upload failed. Please try again."
-//        }
-//        _uploadResult.value = Result.Failure(Throwable(errorMessage))
-//    }
-//}
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.PredictImageResponse
+import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
+import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
+import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.MediaType.Companion.toMediaType
+import java.io.File
+
+class CameraFoodViewModel(private val foodRepository: FoodRepository) : ViewModel() {
+    private val _predictResult = MutableLiveData<Result<PredictImageResponse>>()
+    val predictResult: LiveData<Result<PredictImageResponse>> = _predictResult
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    fun predictImage(imageFile: File) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+                val multipartBody = MultipartBody.Part.createFormData(
+                    "file",
+                    imageFile.name,
+                    requestImageFile
+                )
+                val response = foodRepository.predictImage(multipartBody)
+                if (response.detail != null) {
+                    // Handle validation error
+                    _predictResult.value = Result.Failure(Throwable(response.detail.joinToString { it.msg }))
+                } else {
+                    _predictResult.value = Result.Success(response)
+                }
+            } catch (e: Exception) {
+                handlePredictError(e)
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    private fun handlePredictError(e: Exception) {
+        Log.e("CameraFoodViewModel", "Prediction failed: ${e.message}", e)
+        _predictResult.value = Result.Failure(e)
+    }
+}

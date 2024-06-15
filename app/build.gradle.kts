@@ -20,6 +20,11 @@ android {
             "ENDPOINT",
             "\"https://nutrilens-capstone.et.r.appspot.com/api/\""
         )
+        buildConfigField(
+            "String",
+            "PREDICT_API_ENDPOINT",
+            "\"https://ml-api-sla6c4qvsq-et.a.run.app/\""
+        )
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
