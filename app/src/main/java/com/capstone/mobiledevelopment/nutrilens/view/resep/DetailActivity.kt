@@ -1,17 +1,24 @@
 package com.capstone.mobiledevelopment.nutrilens.view.resep
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.ScaleAnimation
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityDetailBinding
+import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
+import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
+import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class DetailActivity : AppCompatActivity() {
@@ -19,6 +26,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var db: StepDatabase
     private var isFavorite: Boolean = false
+    private var isGuestUser: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +34,12 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         db = StepDatabase.getDatabase(applicationContext)
+
+        val userPreference = UserPreference.getInstance(dataStore)
+        lifecycleScope.launch {
+            val userModel = userPreference.getSession().first()
+            isGuestUser = userModel.isGuest
+        }
 
         val title = intent.getStringExtra("EXTRA_TITLE")
         val ingredients = intent.getStringExtra("EXTRA_INGREDIENTS")
@@ -42,9 +56,13 @@ class DetailActivity : AppCompatActivity() {
         }
 
         binding.ivFavorite.setOnClickListener {
-            isFavorite = !isFavorite
-            updateFavoriteButton()
-            handleFavoriteClick(title!!, ingredients!!, steps!!)
+            if (isGuestUser) {
+                showLoginDialog()
+            } else {
+                isFavorite = !isFavorite
+                updateFavoriteButton()
+                handleFavoriteClick(title!!, ingredients!!, steps!!)
+            }
         }
         setupView()
     }
@@ -105,5 +123,20 @@ class DetailActivity : AppCompatActivity() {
                 db.favoriteRecipeDao().removeFavoriteByTitle(title)
             }
         }
+    }
+
+    private fun showLoginDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Kamu harus login untuk menggunakan fitur ini")
+        builder.setMessage("Silakan login untuk melanjutkan atau pilih Later untuk menggunakan akun guest.")
+        builder.setPositiveButton("Login Now") { dialog, _ ->
+            val intent = Intent(this, WelcomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        builder.setNegativeButton("Later") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 }
