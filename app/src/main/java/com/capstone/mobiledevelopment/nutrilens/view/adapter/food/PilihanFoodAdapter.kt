@@ -8,10 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RecommendedFood
 
 class PilihanFoodAdapter(
-    private var foodList: List<FoodResponse>,
-    private val onAddFoodClicked: (FoodResponse) -> Unit
+    private var foodList: List<RecommendedFood>,
+    private val onAddFoodClicked: (RecommendedFood) -> Unit
 ) : RecyclerView.Adapter<PilihanFoodAdapter.FoodViewHolder>() {
 
     class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,7 +31,8 @@ class PilihanFoodAdapter(
         val food = foodList[position]
         holder.foodName.text = food.name
         holder.foodCalories.text = "${food.calories} Cal"
-        Glide.with(holder.itemView.context).load(food.image).into(holder.foodImage)
+        // Assuming there's a default image or URL is provided in the API
+        Glide.with(holder.itemView.context).load(R.drawable.default_food_image).into(holder.foodImage)
 
         holder.addFoodIcon.setOnClickListener {
             onAddFoodClicked(food)
@@ -41,7 +43,7 @@ class PilihanFoodAdapter(
         return foodList.size
     }
 
-    fun updateList(newList: List<FoodResponse>) {
+    fun updateList(newList: List<RecommendedFood>) {
         foodList = newList
         notifyDataSetChanged()
     }

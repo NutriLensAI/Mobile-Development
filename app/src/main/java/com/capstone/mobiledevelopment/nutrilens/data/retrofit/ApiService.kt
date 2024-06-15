@@ -61,7 +61,7 @@ data class UserProfileRequest(
 
 data class RecommendedFood(
     val name: String,
-    val calories: Int,
+    val calories: Double,
     val proteins: Double,
     val fat: Double,
     val carbohydrate: Double
