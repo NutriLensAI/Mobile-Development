@@ -242,6 +242,7 @@
                     android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/tv_carbs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Carbs"
@@ -250,16 +251,10 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_carbs_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="14 g"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="60%"
                         android:textColor="@android:color/holo_blue_dark"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -273,6 +268,7 @@
                     android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/tv_fat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Fat"
@@ -281,16 +277,10 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_fat_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="14 g"
-                        android:textColor="@android:color/holo_orange_dark"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="14%"
                         android:textColor="@android:color/holo_orange_dark"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -304,6 +294,7 @@
                     android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/tv_protein"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Protein"
@@ -312,21 +303,14 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_protein_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="14 g"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="18sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="26%"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/tv_nutritional_info"
@@ -347,6 +331,7 @@
                 android:padding="16dp">
 
                 <TextView
+                    android:id="@+id/tv_carbs_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -354,12 +339,14 @@
                     android:text="Carbs" />
 
                 <TextView
+                    android:id="@+id/tv_carbs_value_grid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
                     android:text="10 gr" />
 
                 <TextView
+                    android:id="@+id/tv_protein_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -367,12 +354,14 @@
                     android:text="Protein" />
 
                 <TextView
+                    android:id="@+id/tv_protein_value_grid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
                     android:text="10 gr" />
 
                 <TextView
+                    android:id="@+id/tv_fat_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -380,12 +369,14 @@
                     android:text="Fat" />
 
                 <TextView
+                    android:id="@+id/tv_fat_value_grid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
                     android:text="10 gr" />
 
                 <TextView
+                    android:id="@+id/tv_calories_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -393,6 +384,7 @@
                     android:text="Calories" />
 
                 <TextView
+                    android:id="@+id/tv_calories_value_grid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
@@ -407,16 +399,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@android:color/holo_green_light"
+                android:backgroundTint="@color/green"
                 android:text="View ingredients"
                 android:textColor="@android:color/white" />
 
             <!-- RecyclerView untuk daftar makanan -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_makanan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" />
 
         </LinearLayout>
     </ScrollView>

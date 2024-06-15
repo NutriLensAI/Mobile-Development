@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.NutritionResponseItem
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.Makanan
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.MakananAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
@@ -32,6 +34,7 @@ class HasilMakananActivity : AppCompatActivity() {
     private lateinit var imageUri: Uri
     private var prediction: String? = null
     private var confidence: Double = 0.0
+    private var matchedNutrition: NutritionResponseItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,12 +71,31 @@ class HasilMakananActivity : AppCompatActivity() {
         val lunchButton: ImageButton = findViewById(R.id.lunch_button)
         val dinnerButton: ImageButton = findViewById(R.id.dinner_button)
 
-        breakfastButton.setOnClickListener { sendMealData("breakfast") }
-        lunchButton.setOnClickListener { sendMealData("lunch") }
-        dinnerButton.setOnClickListener { sendMealData("dinner") }
+        breakfastButton.setOnClickListener { matchedNutrition?.let { sendMealData("breakfast", it) } }
+        lunchButton.setOnClickListener { matchedNutrition?.let { sendMealData("lunch", it) } }
+        dinnerButton.setOnClickListener { matchedNutrition?.let { sendMealData("dinner", it) } }
+
+        val viewIngredientsButton: Button = findViewById(R.id.btn_view_ingredients)
+        viewIngredientsButton.setOnClickListener { viewIngredients() }
 
         setupView()
         handlePrediction()
+
+        viewModel.nutritions.observe(this) { nutritionList ->
+            matchedNutrition = nutritionList.find {
+                it.name?.contains(prediction ?: "", ignoreCase = true) ?: false
+            }
+            matchedNutrition?.let {
+                updateNutritionUI(it)
+            }
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            // Show or hide loading indicator
+        }
+
+        // Fetch the nutrition data
+        viewModel.fetchNutritions()
     }
 
     private fun setupView() {
@@ -87,11 +109,14 @@ class HasilMakananActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
 
-    private fun sendMealData(mealType: String) {
+    private fun sendMealData(mealType: String, nutrition: NutritionResponseItem) {
         val intent = Intent(this, CatatanMakanan::class.java).apply {
             putExtra("meal_type", mealType)
             putExtra("nama_makanan", prediction)
-            // Assuming other nutritional information needs to be sent, you can add those extras here
+            putExtra("calories", nutrition.calories)
+            putExtra("carbs", nutrition.carbohydrate)
+            putExtra("fat", nutrition.fat)
+            putExtra("protein", nutrition.proteins)
         }
         startActivity(intent)
     }
@@ -119,5 +144,39 @@ class HasilMakananActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun updateNutritionUI(nutrition: NutritionResponseItem) {
+        // Update TextViews
+        findViewById<TextView>(R.id.tv_carbs_value).text = "${nutrition.carbohydrate ?: 0} g"
+        findViewById<TextView>(R.id.tv_fat_value).text = "${nutrition.fat ?: 0} g"
+        findViewById<TextView>(R.id.tv_protein_value).text = "${nutrition.proteins ?: 0} g"
+
+        // Update ProgressBars
+        findViewById<ProgressBar>(R.id.carbsProgressBar).progress = (nutrition.carbohydrate ?: 0) * 100 / 100
+        findViewById<ProgressBar>(R.id.fatProgressBar).progress = (nutrition.fat ?: 0) * 100 / 100
+        findViewById<ProgressBar>(R.id.proteinProgressBar).progress = (nutrition.proteins ?: 0) * 100 / 100
+
+        // Update Grid TextViews
+        findViewById<TextView>(R.id.tv_carbs_value_grid).text = "${nutrition.carbohydrate ?: 0} gr"
+        findViewById<TextView>(R.id.tv_fat_value_grid).text = "${nutrition.fat ?: 0} gr"
+        findViewById<TextView>(R.id.tv_protein_value_grid).text = "${nutrition.proteins ?: 0} gr"
+        findViewById<TextView>(R.id.tv_calories_value_grid).text = "${nutrition.calories ?: 0} kcal"
+    }
+
+    private fun viewIngredients() {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra("image_uri", imageUri.toString())
+            putExtra("prediction", prediction)
+            putExtra("confidence", confidence)
+            // If matchedNutrition is not null, pass its details as well
+            matchedNutrition?.let {
+                putExtra("carbs", it.carbohydrate)
+                putExtra("fat", it.fat)
+                putExtra("protein", it.proteins)
+                putExtra("calories", it.calories)
+            }
+        }
+        startActivity(intent)
     }
 }

@@ -2,6 +2,8 @@ package com.capstone.mobiledevelopment.nutrilens.data.retrofit
 
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.ChangeResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.NutritionResponse
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.NutritionResponseItem
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.PredictImageResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
@@ -126,4 +128,7 @@ interface ApiService {
 
     @POST("show-recommended-foods")
     fun showRecommendedFoods(@Body userProfileRequest: UserProfileRequest): Call<List<RecommendedFood>>
+
+    @GET("nutritions/data")
+    suspend fun getNutritions(): NutritionResponse
 }

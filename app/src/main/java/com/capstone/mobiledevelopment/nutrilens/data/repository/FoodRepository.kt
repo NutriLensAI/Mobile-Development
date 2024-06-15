@@ -1,5 +1,7 @@
 package com.capstone.mobiledevelopment.nutrilens.data.repository
 
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.NutritionResponse
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.NutritionResponseItem
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.PredictImageResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
@@ -26,6 +28,15 @@ class FoodRepository private constructor(
             throw RuntimeException("Error predicting image", e)
         }
     }
+
+    suspend fun getNutritions(): NutritionResponse {
+        return try {
+            apiService.getNutritions()
+        } catch (e: Exception) {
+            throw RuntimeException("Error fetching nutritions", e)
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: FoodRepository? = null
