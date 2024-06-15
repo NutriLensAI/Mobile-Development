@@ -64,7 +64,9 @@ data class RecommendedFood(
     val calories: Double,
     val proteins: Double,
     val fat: Double,
-    val carbohydrate: Double
+    val carbohydrate: Double,
+    val image: String? = null, // URL gambar dari API untuk makanan non-rekomendasi
+    val isRecommended: Boolean = false // Menandai apakah makanan ini adalah rekomendasi
 )
 
 interface ApiService {

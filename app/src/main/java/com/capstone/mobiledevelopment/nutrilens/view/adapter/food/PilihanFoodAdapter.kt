@@ -31,8 +31,16 @@ class PilihanFoodAdapter(
         val food = foodList[position]
         holder.foodName.text = food.name
         holder.foodCalories.text = "${food.calories} Cal"
-        // Assuming there's a default image or URL is provided in the API
-        Glide.with(holder.itemView.context).load(R.drawable.default_food_image).into(holder.foodImage)
+
+        if (food.isRecommended) {
+            // Menggunakan gambar dari drawable untuk makanan rekomendasi
+            Glide.with(holder.itemView.context).load(R.drawable.image_9).into(holder.foodImage)
+        } else {
+            // Menggunakan URL gambar dari API untuk makanan non-rekomendasi
+            food.image?.let {
+                Glide.with(holder.itemView.context).load(it).into(holder.foodImage)
+            }
+        }
 
         holder.addFoodIcon.setOnClickListener {
             onAddFoodClicked(food)

@@ -120,8 +120,11 @@ class PilihanMakananActivity : AppCompatActivity() {
                 val response = RetrofitInstance.api.showRecommendedFoods(request).execute()
                 // Update the food list with recommended foods
                 response.body()?.let { recommendedFoods ->
+                    val updatedRecommendedFoods = recommendedFoods.map {
+                        it.copy(isRecommended = true) // Menandai makanan sebagai rekomendasi
+                    }
                     withContext(Dispatchers.Main) {
-                        allFoodList.addAll(0, recommendedFoods) // Add recommended foods at the top
+                        allFoodList.addAll(0, updatedRecommendedFoods) // Add recommended foods at the top
                         pilihanFoodAdapter.updateList(allFoodList)
                     }
                 }
@@ -174,7 +177,9 @@ class PilihanMakananActivity : AppCompatActivity() {
                             calories = it.calories,
                             proteins = it.proteins,
                             fat = it.fat,
-                            carbohydrate = it.carbohydrate
+                            carbohydrate = it.carbohydrate,
+                            image = it.image, // Menggunakan URL gambar dari API
+                            isRecommended = false // Menandai makanan sebagai non-rekomendasi
                         )
                     }
                     allFoodList.addAll(additionalFoods)
