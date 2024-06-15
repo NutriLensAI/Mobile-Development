@@ -37,6 +37,7 @@ class SettingsFragment : Fragment() {
     }
 
     private var navigateTo: String? = null
+    private var isGuestUser: Boolean = false
 
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -84,21 +85,35 @@ class SettingsFragment : Fragment() {
             if (!user.isLogin) {
                 startActivity(Intent(activity, WelcomeActivity::class.java))
                 activity?.finish()
+            } else {
+                isGuestUser = user.isGuest
             }
         }
 
         viewModel.token.observe(viewLifecycleOwner) { token ->
             if (token != null) {
                 binding.emailSetting.setOnClickListener {
-                    navigateToFragment(EmailFragment.newInstance(token))
+                    if (isGuestUser) {
+                        showLoginDialog()
+                    } else {
+                        navigateToFragment(EmailFragment.newInstance(token))
+                    }
                 }
 
                 binding.passwordSetting.setOnClickListener {
-                    navigateToFragment(PasswordFragment.newInstance(token))
+                    if (isGuestUser) {
+                        showLoginDialog()
+                    } else {
+                        navigateToFragment(PasswordFragment.newInstance(token))
+                    }
                 }
 
                 binding.personalInfoSetting.setOnClickListener {
-                    navigateToFragment(PersonalFragment.newInstance(token))
+                    if (isGuestUser) {
+                        showLoginDialog()
+                    } else {
+                        navigateToFragment(PersonalFragment.newInstance(token))
+                    }
                 }
 
                 if (navigateTo == "PersonalFragment") {
@@ -130,6 +145,21 @@ class SettingsFragment : Fragment() {
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)  // Optional: Adds the transaction to the backstack
             .commit()
+    }
+
+    private fun showLoginDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Kamu harus login untuk menggunakan fitur ini")
+        builder.setMessage("Silakan login untuk melanjutkan atau pilih Later untuk menggunakan akun guest.")
+        builder.setPositiveButton("Login Now") { dialog, _ ->
+            val intent = Intent(activity, WelcomeActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
+        builder.setNegativeButton("Later") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
     override fun onDestroyView() {
