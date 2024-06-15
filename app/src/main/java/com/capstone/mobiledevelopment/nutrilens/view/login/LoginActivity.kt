@@ -121,14 +121,6 @@ class LoginActivity : AppCompatActivity() {
             viewModel.login(email, password)
         }
 
-        binding.guestLoginButton.setOnClickListener {
-            // Set guest user session
-            lifecycleScope.launch {
-                viewModel.setGuestUser(true)
-                navigateToMainActivity()
-            }
-        }
-
         // Observe isLoading LiveData here
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {

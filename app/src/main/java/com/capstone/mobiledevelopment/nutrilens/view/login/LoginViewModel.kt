@@ -73,22 +73,6 @@ class LoginViewModel(
         }
     }
 
-    fun setGuestUser(isGuest: Boolean) {
-        viewModelScope.launch {
-            val guestToken = "guest_token_123456" // Token default untuk guest user
-            val user = UserModel(
-                email = "guest@example.com",
-                token = guestToken,
-                isLogin = true,
-                username = "Guest",
-                isGuest = true
-            )
-            userRepository.userPreference.setGuestUser(isGuest)
-            userRepository.saveSession(user)
-            _sessionSaved.value = true
-        }
-    }
-
     private fun handleLoginError(e: Exception) {
         val errorMessage = when (e) {
             is HttpException -> {

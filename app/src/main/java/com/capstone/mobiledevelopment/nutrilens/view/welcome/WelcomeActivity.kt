@@ -9,11 +9,15 @@ import android.view.WindowManager
 import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
+import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
+import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityWelcomeBinding
-import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity
-import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepActivity
+import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
+import kotlinx.coroutines.launch
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
@@ -34,11 +38,8 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun playAnimations() {
         val zoomInAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
-        val zoomOutAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_out)
         val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-        val fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
         val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
-        val slideDownAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_down)
         val imageView = binding.imageView
         val drawable = imageView.drawable
 
@@ -62,6 +63,10 @@ class WelcomeActivity : AppCompatActivity() {
         val signupButtonAnimationSet = AnimationSet(true)
         signupButtonAnimationSet.addAnimation(slideUpAnimation)
         binding.signupButton.startAnimation(signupButtonAnimationSet)
+
+        val guestButtonAnimationSet = AnimationSet(true)
+        guestButtonAnimationSet.addAnimation(slideUpAnimation)
+        binding.guestButton.startAnimation(guestButtonAnimationSet)
 
         if (drawable is AnimatedVectorDrawable) {
             drawable.start()
@@ -88,6 +93,21 @@ class WelcomeActivity : AppCompatActivity() {
 
         binding.signupButton.setOnClickListener {
             startActivity(Intent(this, SignupWelcome::class.java))
+        }
+
+        binding.guestButton.setOnClickListener {
+            loginAsGuest()
+        }
+    }
+
+    private fun loginAsGuest() {
+        val userPreference = UserPreference.getInstance(dataStore)
+        lifecycleScope.launch {
+            val guestUser = UserModel(email = "guest@guest.com", token = "guest_token", isLogin = true, username = "Guest", isGuest = true)
+            userPreference.saveSession(guestUser)
+            val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
