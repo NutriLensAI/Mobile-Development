@@ -5,6 +5,7 @@ import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -45,6 +46,22 @@ data class FoodRequest(
     val food_id: Int,
     val food_name: String,
     val calories: Double,
+    val proteins: Double,
+    val fat: Double,
+    val carbohydrate: Double
+)
+
+data class UserProfileRequest(
+    val weight_kg: Int,
+    val height_cm: Int,
+    val age_years: Int,
+    val gender: String,
+    val activity_level: String
+)
+
+data class RecommendedFood(
+    val name: String,
+    val calories: Int,
     val proteins: Double,
     val fat: Double,
     val carbohydrate: Double
@@ -100,4 +117,7 @@ interface ApiService {
         @Path("id") id: Int,
         @Body request: FoodRequest
     ): FoodResponse
+
+    @POST("show-recommended-foods")
+    fun showRecommendedFoods(@Body userProfileRequest: UserProfileRequest): Call<List<RecommendedFood>>
 }

@@ -21,6 +21,10 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RecommendedFood
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UserProfileRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
@@ -28,8 +32,8 @@ import com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
-import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
+import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -38,6 +42,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -121,12 +128,39 @@ class ResepActivity : AppCompatActivity() {
                     if (!isGuestUser) {
                         viewModel.fetchUserProfile(token)
                         viewModel.userProfile.observe(this) { userProfile ->
-                            // Handle user profile data here if needed
+                            userProfile?.let {
+                                sendProfileDataToApi(it)
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun sendProfileDataToApi(userProfile: RegisterResponse) {
+        val request = UserProfileRequest(
+            weight_kg = userProfile.weight ?: 0,
+            height_cm = userProfile.height ?: 0,
+            age_years = userProfile.age ?: 0,
+            gender = userProfile.gender ?: "",
+            activity_level = userProfile.activityLevel ?: ""
+        )
+
+        RetrofitInstance.api.showRecommendedFoods(request).enqueue(object : Callback<List<RecommendedFood>> {
+            override fun onResponse(call: Call<List<RecommendedFood>>, response: Response<List<RecommendedFood>>) {
+                if (response.isSuccessful) {
+                    val recommendedFoods = response.body()
+                    // Handle the recommended foods list here
+                } else {
+                    // Handle the error case
+                }
+            }
+
+            override fun onFailure(call: Call<List<RecommendedFood>>, t: Throwable) {
+                // Handle the failure case
+            }
+        })
     }
 
     private fun setupView() {
