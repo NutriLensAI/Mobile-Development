@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -16,9 +17,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
+import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
+import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.camera.CameraFoodActivity
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainActivity
 import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.CustomBottomNavigationView
@@ -27,6 +31,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -42,6 +47,7 @@ class ResepActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var searchView: SearchView
     private lateinit var db: StepDatabase
+    private var isGuestUser: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -157,9 +163,27 @@ class ResepActivity : AppCompatActivity() {
     private fun setupFAB() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
-            val intent = Intent(this@ResepActivity, CameraFoodActivity::class.java)
-            startActivity(intent)
+            if (isGuestUser) {
+                showLoginDialog()
+            } else {
+                val intent = Intent(this@ResepActivity, CameraFoodActivity::class.java)
+                startActivity(intent)
+            }
         }
+    }
+
+    private fun showLoginDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Login Required")
+            .setMessage("You must be logged in to use this feature.")
+            .setPositiveButton("Login Now") { dialog, _ ->
+                startActivity(Intent(this, LoginActivity::class.java))
+                dialog.dismiss()
+            }
+            .setNegativeButton("Later") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun setupSearchView() {

@@ -216,8 +216,12 @@ class CatatanMakanan : AppCompatActivity() {
     private fun setupFab() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
-            val intent = Intent(this@CatatanMakanan, CameraFoodActivity::class.java)
-            startActivity(intent)
+            if (isGuestUser) {
+                showLoginDialog()
+            } else {
+                val intent = Intent(this@CatatanMakanan, CameraFoodActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
