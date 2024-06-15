@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,9 +28,10 @@ import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.PilihanFoodAda
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.AddMyRecipes
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipe
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipesAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
+import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -52,18 +54,16 @@ class PilihanMakananActivity : AppCompatActivity() {
     private var token: String = ""
     private var selectedTable: String = "breakfasts" // Default value
 
+    private val viewModel by viewModels<MainViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pilihan_makanan)
 
         db = StepDatabase.getDatabase(applicationContext)
         userPreference = UserPreference.getInstance(dataStore)
-
-        // Ambil token dan userId dari UserPreference
-        lifecycleScope.launch {
-            val session = userPreference.getSession().first()
-            token = session.token
-        }
 
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -84,9 +84,23 @@ class PilihanMakananActivity : AppCompatActivity() {
         mealTypeSpinner = findViewById(R.id.meal_type_spinner)
         setupSpinner()
 
-        fetchFoodData()
+        observeSession()
         setupSearchBar()
         setupTabLayout()
+    }
+
+    private fun observeSession() {
+        lifecycleScope.launch {
+            val session = userPreference.getSession().first()
+            token = session.token
+            viewModel.fetchUserProfile(token)
+            viewModel.userProfile.observe(this@PilihanMakananActivity) { userProfile ->
+                userProfile?.let {
+                    // Gunakan data profil di sini atau kirim ke API lain
+                    fetchFoodData()
+                }
+            }
+        }
     }
 
     private fun setupSpinner() {
@@ -112,7 +126,7 @@ class PilihanMakananActivity : AppCompatActivity() {
     }
 
     private fun fetchFoodData() {
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response = ApiConfig.getApiService().getFoodData()
                 withContext(Dispatchers.Main) {
@@ -122,12 +136,15 @@ class PilihanMakananActivity : AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
                 // Handle error here, maybe show a Toast message
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@PilihanMakananActivity, "Failed to fetch food data", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     private fun sendFoodData(table: String, food: FoodResponse) {
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val foodRequest = FoodRequest(
                     id = 0, // Biarkan server yang menetapkan ID
@@ -160,12 +177,15 @@ class PilihanMakananActivity : AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
                 // Handle error here, maybe show a Toast message
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@PilihanMakananActivity, "Failed to add food", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     private fun fetchFavoriteRecipes() {
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val favoriteRecipes = db.favoriteRecipeDao().getAllFavorites()
                 withContext(Dispatchers.Main) {
@@ -180,7 +200,7 @@ class PilihanMakananActivity : AppCompatActivity() {
     }
 
     private fun fetchMyRecipes() {
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val myRecipes = db.myRecipeDao().getAllRecipes()
                 withContext(Dispatchers.Main) {
@@ -244,7 +264,7 @@ class PilihanMakananActivity : AppCompatActivity() {
     }
 
     private fun deleteRecipe(recipe: MyRecipe) {
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             db.myRecipeDao().deleteRecipe(recipe)
             fetchMyRecipes()
         }
