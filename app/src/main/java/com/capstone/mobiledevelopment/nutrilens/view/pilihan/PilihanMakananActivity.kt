@@ -20,8 +20,10 @@ import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteR
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
+import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UserProfileRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FavoriteRecipeAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.PilihanFoodAdapter
@@ -29,6 +31,7 @@ import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.AddMyRecipe
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipe
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipesAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
+import com.capstone.mobiledevelopment.nutrilens.view.resep.RetrofitInstance
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
@@ -96,8 +99,40 @@ class PilihanMakananActivity : AppCompatActivity() {
             viewModel.fetchUserProfile(token)
             viewModel.userProfile.observe(this@PilihanMakananActivity) { userProfile ->
                 userProfile?.let {
-                    // Gunakan data profil di sini atau kirim ke API lain
-                    fetchFoodData()
+                    sendProfileDataToApi(it)
+                }
+            }
+            fetchFoodData()
+        }
+    }
+
+    private fun sendProfileDataToApi(userProfile: RegisterResponse) {
+        val request = UserProfileRequest(
+            weight_kg = userProfile.weight ?: 0,
+            height_cm = userProfile.height ?: 0,
+            age_years = userProfile.age ?: 0,
+            gender = userProfile.gender ?: "",
+            activity_level = userProfile.activityLevel ?: ""
+        )
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val response = RetrofitInstance.api.showRecommendedFoods(request).execute()
+                // Log atau lakukan tindakan lain dengan respons di sini
+                response.body()?.forEach { food ->
+                    println("Recommended food: ${food.name}, Calories: ${food.calories}")
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                // Handle error here, maybe show a Toast message
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@PilihanMakananActivity, "Failed to fetch recommended foods", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                // Handle error here, maybe show a Toast message
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@PilihanMakananActivity, "Failed to fetch recommended foods", Toast.LENGTH_SHORT).show()
                 }
             }
         }
