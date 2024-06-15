@@ -18,8 +18,6 @@ class FavoriteRecipeAdapter(
 
     class FavoriteRecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvItemName: TextView = itemView.findViewById(R.id.tv_item_name)
-        val tvItemIngredients: TextView = itemView.findViewById(R.id.tv_item_ingredients)
-        val tvItemSteps: TextView = itemView.findViewById(R.id.tv_item_steps)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteRecipeViewHolder {
@@ -30,8 +28,6 @@ class FavoriteRecipeAdapter(
     override fun onBindViewHolder(holder: FavoriteRecipeViewHolder, position: Int) {
         val recipe = favoriteRecipes[position]
         holder.tvItemName.text = recipe.title
-        holder.tvItemIngredients.text = recipe.ingredients.replace("--", "\n")
-        holder.tvItemSteps.text = recipe.steps.replace("--", "\n")
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, DetailActivity::class.java).apply {

@@ -15,13 +15,6 @@ class ResepAdapter(
     private var resepList: MutableList<ResepItem>
 ) : RecyclerView.Adapter<ResepAdapter.ResepViewHolder>() {
 
-    private val colors = listOf(
-        "#AEC6CF", // Blue pastel
-        "#FFB3B3", // Red pastel
-        "#FFFACD", // Yellow pastel
-        "#B2E8A4"  // Green pastel
-    )
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResepViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.resep_card, parent, false)
         return ResepViewHolder(view)
@@ -30,11 +23,6 @@ class ResepAdapter(
     override fun onBindViewHolder(holder: ResepViewHolder, position: Int) {
         val resep = resepList[position]
         holder.tvItemName.text = resep.Title
-
-        // Set background color based on position
-        val color = Color.parseColor(colors[position % colors.size])
-        holder.itemView.setBackgroundColor(color)
-
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, DetailActivity::class.java)
