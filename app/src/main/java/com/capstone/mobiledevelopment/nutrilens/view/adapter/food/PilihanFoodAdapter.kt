@@ -1,5 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.view.adapter.food
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,12 @@ class PilihanFoodAdapter(
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val food = foodList[position]
-        holder.foodName.text = food.name
+        holder.foodName.text = if (food.isRecommended) {
+            "${food.name} (Rekomendasi)"
+        } else {
+            food.name
+        }
+
         holder.foodCalories.text = "${food.calories} Cal"
 
         if (food.isRecommended) {
