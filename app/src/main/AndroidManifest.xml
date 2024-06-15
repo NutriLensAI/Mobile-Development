@@ -35,9 +35,6 @@
             android:name=".view.main.info.InfoActivity"
             android:exported="false" />
         <activity
-            android:name=".view.hasil.Ingredients"
-            android:exported="false" />
-        <activity
             android:name=".view.drink.AddDrink"
             android:exported="false" />
         <activity
@@ -50,7 +47,7 @@
             android:name=".view.resep.ResepActivity"
             android:exported="false" />
         <activity
-            android:name=".view.hasil.HasilMakanan"
+            android:name=".view.hasil.HasilMakananActivity"
             android:exported="false" />
         <activity
             android:name=".view.catatan.CatatanMakanan"

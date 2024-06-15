@@ -17,8 +17,9 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.Makanan
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.MakananAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.resep.DetailActivity
 
-class HasilMakanan : AppCompatActivity() {
+class HasilMakananActivity : AppCompatActivity() {
 
     private lateinit var makananList: List<Makanan>
     private lateinit var imageUri: Uri
@@ -100,7 +101,7 @@ class HasilMakanan : AppCompatActivity() {
     }
 
     private fun viewIngredients() {
-        val intent = Intent(this, Ingredients::class.java).apply {
+        val intent = Intent(this, DetailActivity::class.java).apply {
             putExtra("image_uri", imageUri.toString())
             putParcelableArrayListExtra("makanan_list", ArrayList(makananList))
         }

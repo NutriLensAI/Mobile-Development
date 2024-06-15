@@ -27,7 +27,7 @@ import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddFoodBinding
-import com.capstone.mobiledevelopment.nutrilens.view.hasil.HasilMakanan
+import com.capstone.mobiledevelopment.nutrilens.view.hasil.HasilMakananActivity
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.utils.getImageUri
@@ -271,7 +271,7 @@ class CameraFoodActivity : AppCompatActivity() {
     }
 
     private fun navigateToHasilMakanan(imageUri: Uri) {
-        val intent = Intent(this, HasilMakanan::class.java).apply {
+        val intent = Intent(this, HasilMakananActivity::class.java).apply {
             putExtra("image_uri", imageUri.toString())
         }
         startActivity(intent)

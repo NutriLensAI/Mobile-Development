@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
-    tools:context=".view.hasil.HasilMakanan">
+    tools:context=".view.hasil.HasilMakananActivity">
 
     <!-- Background Hijau -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,8 +55,8 @@
     <!-- Tombol X di kiri atas -->
     <ImageButton
         android:id="@+id/btn_close"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_margin="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:elevation="4dp"
@@ -86,7 +86,7 @@
                 android:layout_height="216dp"
                 android:contentDescription="@string/makanan_image_desc"
                 android:elevation="2dp"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitCenter" />
 
             <!-- Nama makanan dan tombol tambah -->
             <TextView
@@ -100,8 +100,8 @@
 
             <ImageButton
                 android:id="@+id/btn_add"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_add" />
@@ -185,19 +185,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Lingkaran Kcal -->
-            <com.github.lzyzsd.circleprogress.DonutProgress
-                android:id="@+id/circle_progress"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="8dp"
-                app:donut_finished_color="@android:color/holo_red_light"
-                app:donut_finished_stroke_width="8dp"
-                app:donut_progress="450"
-                app:donut_text="450 Kcal"
-                app:donut_text_color="@android:color/black"
-                app:donut_text_size="12sp" />
-
             <!-- Makro dan detail info nutrisi dalam LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -206,87 +193,140 @@
                 android:orientation="horizontal"
                 android:padding="16dp">
 
+                <FrameLayout
+                    android:layout_width="144dp"
+                    android:layout_height="122dp"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <ProgressBar
+                        android:id="@+id/carbsProgressBar"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_gravity="center"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="14"
+                        android:progressDrawable="@drawable/circular_progress_bar_blue" />
+
+                    <ProgressBar
+                        android:id="@+id/fatProgressBar"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="108dp"
+                        android:layout_height="108dp"
+                        android:layout_gravity="center"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="14"
+                        android:progressDrawable="@drawable/circular_progress_bar_orange" />
+
+                    <ProgressBar
+                        android:id="@+id/proteinProgressBar"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="144dp"
+                        android:layout_height="144dp"
+                        android:layout_gravity="center"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="14"
+                        android:progressDrawable="@drawable/circular_progress_bar_red" />
+                </FrameLayout>
+
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Carbs"
                         android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="14 g"
-                        android:textColor="@android:color/holo_blue_dark" />
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="60%"
-                        android:textColor="@android:color/holo_blue_dark" />
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Fat"
                         android:textColor="@android:color/holo_orange_dark"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="14 g"
-                        android:textColor="@android:color/holo_orange_dark" />
+                        android:textColor="@android:color/holo_orange_dark"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="14%"
-                        android:textColor="@android:color/holo_orange_dark" />
+                        android:textColor="@android:color/holo_orange_dark"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Protein"
                         android:textColor="@android:color/holo_red_dark"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="14 g"
-                        android:textColor="@android:color/holo_red_dark" />
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="26%"
-                        android:textColor="@android:color/holo_red_dark" />
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_nutritional_info"
@@ -324,33 +364,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:padding="4dp"
-                    android:text="Sugar" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="10 gr" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:padding="4dp"
                     android:text="Protein" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="10 gr" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:padding="4dp"
-                    android:text="Fiber" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -376,27 +390,16 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:padding="4dp"
-                    android:text="Cholesterol" />
+                    android:text="Calories" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
-                    android:text="10 gr" />
+                    android:text="10 kcal" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:padding="4dp"
-                    android:text="Natrium" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="10 gr" />
             </GridLayout>
+
 
             <!-- Tombol View Ingredients -->
             <Button
