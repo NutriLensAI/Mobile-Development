@@ -30,8 +30,6 @@ class ResepAdapter(
     override fun onBindViewHolder(holder: ResepViewHolder, position: Int) {
         val resep = resepList[position]
         holder.tvItemName.text = resep.Title
-        holder.tvItemIngredients.text = resep.Ingredients.replace("--", "\n")
-        holder.tvItemSteps.text = resep.Steps.replace("--", "\n")
 
         // Set background color based on position
         val color = Color.parseColor(colors[position % colors.size])
@@ -63,7 +61,5 @@ class ResepAdapter(
 
     class ResepViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvItemName: TextView = itemView.findViewById(R.id.tv_item_name)
-        val tvItemIngredients: TextView = itemView.findViewById(R.id.tv_item_ingredients)
-        val tvItemSteps: TextView = itemView.findViewById(R.id.tv_item_steps)
     }
 }
