@@ -82,9 +82,7 @@ class HasilMakananActivity : AppCompatActivity() {
         handlePrediction()
 
         viewModel.nutritions.observe(this) { nutritionList ->
-            matchedNutrition = nutritionList.find {
-                it.name?.contains(prediction ?: "", ignoreCase = true) ?: false
-            }
+            matchedNutrition = findMatchingNutrition(nutritionList, prediction)
             matchedNutrition?.let {
                 updateNutritionUI(it)
             }
@@ -125,7 +123,7 @@ class HasilMakananActivity : AppCompatActivity() {
         prediction?.let {
             if (confidence > 70) {
                 Toast.makeText(this, "Confidence: $confidence%", Toast.LENGTH_SHORT).show()
-            } else {
+            } else if (confidence < 30) {
                 showLowConfidenceTooltip()
             }
         }
@@ -153,15 +151,24 @@ class HasilMakananActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tv_protein_value).text = "${nutrition.proteins ?: 0} g"
 
         // Update ProgressBars
-        findViewById<ProgressBar>(R.id.carbsProgressBar).progress = (nutrition.carbohydrate ?: 0) * 100 / 100
-        findViewById<ProgressBar>(R.id.fatProgressBar).progress = (nutrition.fat ?: 0) * 100 / 100
-        findViewById<ProgressBar>(R.id.proteinProgressBar).progress = (nutrition.proteins ?: 0) * 100 / 100
+        findViewById<ProgressBar>(R.id.carbsProgressBar).progress = nutrition.carbohydrate ?: 0
+        findViewById<ProgressBar>(R.id.fatProgressBar).progress = nutrition.fat ?: 0
+        findViewById<ProgressBar>(R.id.proteinProgressBar).progress = nutrition.proteins ?: 0
 
         // Update Grid TextViews
         findViewById<TextView>(R.id.tv_carbs_value_grid).text = "${nutrition.carbohydrate ?: 0} gr"
         findViewById<TextView>(R.id.tv_fat_value_grid).text = "${nutrition.fat ?: 0} gr"
         findViewById<TextView>(R.id.tv_protein_value_grid).text = "${nutrition.proteins ?: 0} gr"
         findViewById<TextView>(R.id.tv_calories_value_grid).text = "${nutrition.calories ?: 0} kcal"
+    }
+
+    private fun findMatchingNutrition(
+        nutritionList: List<NutritionResponseItem>,
+        prediction: String?
+    ): NutritionResponseItem? {
+        return nutritionList.find {
+            it.name?.contains(prediction ?: "", ignoreCase = true) == true
+        }
     }
 
     private fun viewIngredients() {

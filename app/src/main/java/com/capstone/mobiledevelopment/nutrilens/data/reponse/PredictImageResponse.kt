@@ -3,18 +3,19 @@ package com.capstone.mobiledevelopment.nutrilens.data.reponse
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-import kotlinx.parcelize.RawValue
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class PredictImageResponse(
-	@SerializedName("prediction")
+
+	@field:SerializedName("prediction: ")
 	val prediction: String? = null,
 
-	@SerializedName("confidence")
+	@field:SerializedName("confidence: ")
 	val confidence: Double? = null,
 
 	@SerializedName("detail")
-	val detail: List<ValidationError>? = null
+val detail: List<ValidationError>? = null
 ) : Parcelable
 
 @Parcelize
