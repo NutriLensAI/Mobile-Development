@@ -17,8 +17,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import com.bumptech.glide.Glide
 import com.capstone.mobiledevelopment.nutrilens.R
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
-import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakananActivity
 import com.capstone.mobiledevelopment.nutrilens.view.resep.DetailActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
@@ -70,9 +70,9 @@ class HasilMakananActivity : AppCompatActivity() {
         val lunchButton: ImageButton = findViewById(R.id.lunch_button)
         val dinnerButton: ImageButton = findViewById(R.id.dinner_button)
 
-        breakfastButton.setOnClickListener { matchedNutrition?.let { sendMealData("breakfast", it) } }
-        lunchButton.setOnClickListener { matchedNutrition?.let { sendMealData("lunch", it) } }
-        dinnerButton.setOnClickListener { matchedNutrition?.let { sendMealData("dinner", it) } }
+        breakfastButton.setOnClickListener { addFoodToMeal("breakfast") }
+        lunchButton.setOnClickListener { addFoodToMeal("lunch") }
+        dinnerButton.setOnClickListener { addFoodToMeal("dinner") }
 
         val viewIngredientsButton: Button = findViewById(R.id.btn_view_ingredients)
         viewIngredientsButton.setOnClickListener { viewIngredients() }
@@ -108,16 +108,20 @@ class HasilMakananActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
 
-    private fun sendMealData(mealType: String, nutrition: FoodResponse) {
-        val intent = Intent(this, CatatanMakanan::class.java).apply {
-            putExtra("meal_type", mealType)
-            putExtra("nama_makanan", prediction)
-            putExtra("calories", nutrition.calories)
-            putExtra("carbs", nutrition.carbohydrate)
-            putExtra("fat", nutrition.fat)
-            putExtra("protein", nutrition.proteins)
-        }
-        startActivity(intent)
+    private fun addFoodToMeal(table: String) {
+        val token = viewModel.token.value ?: return
+        val food = matchedNutrition ?: return
+        val foodRequest = FoodRequest(
+            id = 0, // Let the server set the ID
+            user_id = 0, // Retrieve user_id from session if needed
+            food_id = food.id,
+            food_name = food.name,
+            calories = food.calories,
+            proteins = food.proteins,
+            fat = food.fat,
+            carbohydrate = food.carbohydrate
+        )
+        viewModel.addFoodToMeal(token, table, food.id, foodRequest)
     }
 
     private fun handlePrediction() {

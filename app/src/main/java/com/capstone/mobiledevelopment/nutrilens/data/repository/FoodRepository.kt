@@ -3,6 +3,7 @@ package com.capstone.mobiledevelopment.nutrilens.data.repository
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.PredictImageResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.PredictApiService
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
 import okhttp3.MultipartBody
@@ -30,6 +31,14 @@ class FoodRepository private constructor(
 
     suspend fun getNutritions(): List<FoodResponse> {
         return apiService.getFoodData()
+    }
+
+    suspend fun addFoodToMeal(token: String, table: String, id: Int, request: FoodRequest): FoodResponse {
+        return try {
+            apiService.addFoodToMeal(token, table, id, request)
+        } catch (e: Exception) {
+            throw RuntimeException("Error adding food to meal", e)
+        }
     }
 
     companion object {
