@@ -23,6 +23,7 @@ import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
+import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RecommendedFood
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UserProfileRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FavoriteRecipeAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
@@ -48,6 +49,7 @@ class PilihanMakananActivity : AppCompatActivity() {
     private lateinit var favoriteRecipeAdapter: FavoriteRecipeAdapter
     private lateinit var myRecipesAdapter: MyRecipesAdapter
     private lateinit var allFoodList: List<FoodResponse>
+    private lateinit var recommendedFoodList: List<FoodResponse>
     private lateinit var favoriteFoodList: MutableList<FavoriteRecipe>
     private lateinit var myRecipeList: MutableList<MyRecipe>
     private lateinit var db: StepDatabase
@@ -92,6 +94,32 @@ class PilihanMakananActivity : AppCompatActivity() {
         setupTabLayout()
     }
 
+    private fun convertToFoodResponse(recommendedFoods: List<RecommendedFood>): List<FoodResponse> {
+        return recommendedFoods.mapIndexed { index, it ->
+            FoodResponse(
+                id = index, // Memberikan id default
+                name = it.name,
+                calories = it.calories,
+                image = it.image ?: "", // Menangani nilai null untuk image
+                proteins = it.proteins,
+                fat = it.fat,
+                carbohydrate = it.carbohydrate
+            )
+        }
+    }
+
+
+    private fun updateRecommendedFoodList(recommendedFoods: List<RecommendedFood>) {
+        // Convert RecommendedFood to FoodResponse
+        val foodResponses = convertToFoodResponse(recommendedFoods)
+        recommendedFoodList = foodResponses
+        // Jika allFoodList sudah diinisialisasi, gabungkan list makanan yang direkomendasikan dengan semua makanan, rekomendasi di atas
+        if (::allFoodList.isInitialized) {
+            val combinedList = foodResponses + allFoodList
+            pilihanFoodAdapter.updateList(combinedList)
+        }
+    }
+
     private fun observeSession() {
         lifecycleScope.launch {
             val session = userPreference.getSession().first()
@@ -118,25 +146,29 @@ class PilihanMakananActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response = RetrofitInstance.api.showRecommendedFoods(request).execute()
-                // Log atau lakukan tindakan lain dengan respons di sini
-                response.body()?.forEach { food ->
-                    println("Recommended food: ${food.name}, Calories: ${food.calories}")
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        response.body()?.let { recommendedFoods ->
+                            updateRecommendedFoodList(recommendedFoods)
+                        }
+                    } else {
+                        Toast.makeText(this@PilihanMakananActivity, "Failed to fetch recommended foods", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
-                // Handle error here, maybe show a Toast message
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@PilihanMakananActivity, "Failed to fetch recommended foods", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: HttpException) {
                 e.printStackTrace()
-                // Handle error here, maybe show a Toast message
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@PilihanMakananActivity, "Failed to fetch recommended foods", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
 
     private fun setupSpinner() {
         val mealTypes = arrayOf("breakfasts", "lunchs", "dinners")
@@ -166,11 +198,16 @@ class PilihanMakananActivity : AppCompatActivity() {
                 val response = ApiConfig.getApiService().getFoodData()
                 withContext(Dispatchers.Main) {
                     allFoodList = response
-                    pilihanFoodAdapter.updateList(allFoodList)
+                    // Jika sudah ada data rekomendasi, update list makanan dengan menggabungkannya
+                    if (::recommendedFoodList.isInitialized) {
+                        val combinedList = recommendedFoodList + allFoodList
+                        pilihanFoodAdapter.updateList(combinedList)
+                    } else {
+                        pilihanFoodAdapter.updateList(allFoodList)
+                    }
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
-                // Handle error here, maybe show a Toast message
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@PilihanMakananActivity, "Failed to fetch food data", Toast.LENGTH_SHORT).show()
                 }
@@ -192,26 +229,16 @@ class PilihanMakananActivity : AppCompatActivity() {
                     carbohydrate = food.carbohydrate // Pastikan field ini ada di FoodResponse
                 )
 
-                val response =
-                    ApiConfig.getApiService().addFoodToMeal(token, table, food.id, foodRequest)
+                val response = ApiConfig.getApiService().addFoodToMeal(token, table, food.id, foodRequest)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@PilihanMakananActivity,
-                        "Food added successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@PilihanMakananActivity, "Food added successfully", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: HttpException) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@PilihanMakananActivity,
-                        "Failed to add food",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@PilihanMakananActivity, "Failed to add food", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
-                // Handle error here, maybe show a Toast message
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@PilihanMakananActivity, "Failed to add food", Toast.LENGTH_SHORT).show()
                 }
@@ -275,7 +302,12 @@ class PilihanMakananActivity : AppCompatActivity() {
                 when (tab?.position) {
                     0 -> {
                         recyclerView.adapter = pilihanFoodAdapter
-                        pilihanFoodAdapter.updateList(allFoodList)
+                        if (::recommendedFoodList.isInitialized) {
+                            val combinedList = recommendedFoodList + allFoodList
+                            pilihanFoodAdapter.updateList(combinedList)
+                        } else {
+                            pilihanFoodAdapter.updateList(allFoodList)
+                        }
                         fabAddRecipe.visibility = View.GONE
                     }
 
