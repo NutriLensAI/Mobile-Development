@@ -52,7 +52,6 @@ class SignupActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(animation: Animation?) {
                 binding.imageView.visibility = View.VISIBLE
-                binding.titleTextView.visibility = View.VISIBLE
                 binding.nameTextView.visibility = View.VISIBLE
                 binding.nameEditTextLayout.visibility = View.VISIBLE
                 binding.emailTextView.visibility = View.VISIBLE
@@ -71,10 +70,6 @@ class SignupActivity : AppCompatActivity() {
         imageViewAnimationSet.addAnimation(zoomInAnimation)
         imageViewAnimationSet.addAnimation(fadeInAnimation)
         binding.imageView.startAnimation(imageViewAnimationSet)
-
-        val titleTextViewAnimationSet = AnimationSet(true)
-        titleTextViewAnimationSet.addAnimation(fadeInAnimation)
-        binding.titleTextView.startAnimation(titleTextViewAnimationSet)
 
         val nameTextViewAnimationSet = AnimationSet(true)
         nameTextViewAnimationSet.addAnimation(fadeInAnimation)

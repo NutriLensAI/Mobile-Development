@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        passwordEditTextLayout = findViewById(R.id.passwordEditTextLayout)
+        passwordEditTextLayout = binding.passwordEditTextLayout
 
         setupView()
         setupAction()
@@ -56,8 +56,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onAnimationEnd(animation: Animation?) {
-                binding.titleTextView.visibility = View.VISIBLE
-                binding.messageTextView.visibility = View.VISIBLE
                 binding.emailTextView.visibility = View.VISIBLE
                 binding.emailEditTextLayout.visibility = View.VISIBLE
                 binding.passwordTextView.visibility = View.VISIBLE
@@ -73,14 +71,6 @@ class LoginActivity : AppCompatActivity() {
         imageViewAnimationSet.addAnimation(zoomInAnimation)
         imageViewAnimationSet.addAnimation(fadeInAnimation)
         binding.imageView.startAnimation(imageViewAnimationSet)
-
-        val titleTextViewAnimationSet = AnimationSet(true)
-        titleTextViewAnimationSet.addAnimation(fadeInAnimation)
-        binding.titleTextView.startAnimation(titleTextViewAnimationSet)
-
-        val descTextViewAnimationSet = AnimationSet(true)
-        descTextViewAnimationSet.addAnimation(fadeInAnimation)
-        binding.messageTextView.startAnimation(descTextViewAnimationSet)
 
         val emailTextViewAnimationSet = AnimationSet(true)
         emailTextViewAnimationSet.addAnimation(fadeInAnimation)
