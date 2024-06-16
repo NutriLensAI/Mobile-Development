@@ -98,7 +98,7 @@ class PilihanMakananActivity : AppCompatActivity() {
         return recommendedFoods.mapIndexed { index, it ->
             FoodResponse(
                 id = index, // Memberikan id default
-                name = it.name,
+                name = "${it.name} (Rekomendasi)", // Menambahkan teks rekomendasi
                 calories = it.calories,
                 image = it.image ?: "", // Menangani nilai null untuk image
                 proteins = it.proteins,
@@ -107,6 +107,7 @@ class PilihanMakananActivity : AppCompatActivity() {
             )
         }
     }
+
 
     private fun updateRecommendedFoodList(recommendedFoods: List<RecommendedFood>) {
         // Convert RecommendedFood to FoodResponse
