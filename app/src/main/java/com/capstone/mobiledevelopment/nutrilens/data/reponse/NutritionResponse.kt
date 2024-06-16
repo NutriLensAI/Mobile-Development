@@ -6,29 +6,30 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class NutritionResponse(
-
     @field:SerializedName("NutritionResponse")
     val nutritionResponse: List<NutritionResponseItem?>? = null
 ) : Parcelable
 
 @Parcelize
 data class NutritionResponseItem(
-
     @field:SerializedName("proteins")
-    val proteins: Int? = null,
+    val proteins: Double? = null,
 
     @field:SerializedName("name")
     val name: String? = null,
 
     @field:SerializedName("fat")
-    val fat: Int? = null,
+    val fat: Double? = null,
 
     @field:SerializedName("id")
     val id: Int? = null,
 
     @field:SerializedName("calories")
-    val calories: Int? = null,
+    val calories: Double? = null,
 
     @field:SerializedName("carbohydrate")
-    val carbohydrate: Int? = null
+    val carbohydrate: Double? = null,
+
+    @field:SerializedName("image")
+    val image: String? = null
 ) : Parcelable

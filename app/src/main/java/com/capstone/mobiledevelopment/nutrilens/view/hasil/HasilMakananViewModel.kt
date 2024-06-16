@@ -19,7 +19,7 @@ class HasilMakananViewModel(private val foodRepository: FoodRepository) : ViewMo
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val response = foodRepository.getFoodData()
+                val response = foodRepository.getNutritions()
                 _nutritions.value = response.nutritionResponse?.filterNotNull() ?: emptyList()
             } catch (e: Exception) {
                 // Handle the error

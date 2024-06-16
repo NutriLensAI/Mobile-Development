@@ -123,7 +123,7 @@ class HasilMakananActivity : AppCompatActivity() {
         prediction?.let {
             if (confidence > 70) {
                 Toast.makeText(this, "Confidence: $confidence%", Toast.LENGTH_SHORT).show()
-            } else if (confidence < 30) {
+            } else  {
                 showLowConfidenceTooltip()
             }
         }
@@ -146,20 +146,23 @@ class HasilMakananActivity : AppCompatActivity() {
 
     private fun updateNutritionUI(nutrition: NutritionResponseItem) {
         // Update TextViews
-        findViewById<TextView>(R.id.tv_carbs_value).text = "${nutrition.carbohydrate ?: 0} g"
-        findViewById<TextView>(R.id.tv_fat_value).text = "${nutrition.fat ?: 0} g"
-        findViewById<TextView>(R.id.tv_protein_value).text = "${nutrition.proteins ?: 0} g"
+        findViewById<TextView>(R.id.tv_carbs_value).text = "${nutrition.carbohydrate ?: 0.0} g"
+        findViewById<TextView>(R.id.tv_fat_value).text = "${nutrition.fat ?: 0.0} g"
+        findViewById<TextView>(R.id.tv_protein_value).text = "${nutrition.proteins ?: 0.0} g"
 
         // Update ProgressBars
-        findViewById<ProgressBar>(R.id.carbsProgressBar).progress = nutrition.carbohydrate ?: 0
-        findViewById<ProgressBar>(R.id.fatProgressBar).progress = nutrition.fat ?: 0
-        findViewById<ProgressBar>(R.id.proteinProgressBar).progress = nutrition.proteins ?: 0
+        findViewById<ProgressBar>(R.id.carbsProgressBar).progress =
+            ((nutrition.carbohydrate ?: 0.0) * 100).toInt()
+        findViewById<ProgressBar>(R.id.fatProgressBar).progress =
+            ((nutrition.fat ?: 0.0) * 100).toInt()
+        findViewById<ProgressBar>(R.id.proteinProgressBar).progress =
+            ((nutrition.proteins ?: 0.0) * 100).toInt()
 
         // Update Grid TextViews
-        findViewById<TextView>(R.id.tv_carbs_value_grid).text = "${nutrition.carbohydrate ?: 0} gr"
-        findViewById<TextView>(R.id.tv_fat_value_grid).text = "${nutrition.fat ?: 0} gr"
-        findViewById<TextView>(R.id.tv_protein_value_grid).text = "${nutrition.proteins ?: 0} gr"
-        findViewById<TextView>(R.id.tv_calories_value_grid).text = "${nutrition.calories ?: 0} kcal"
+        findViewById<TextView>(R.id.tv_carbs_value_grid).text = "${nutrition.carbohydrate ?: 0.0} gr"
+        findViewById<TextView>(R.id.tv_fat_value_grid).text = "${nutrition.fat ?: 0.0} gr"
+        findViewById<TextView>(R.id.tv_protein_value_grid).text = "${nutrition.proteins ?: 0.0} gr"
+        findViewById<TextView>(R.id.tv_calories_value_grid).text = "${nutrition.calories ?: 0.0} kcal"
     }
 
     private fun findMatchingNutrition(
