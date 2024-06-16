@@ -30,7 +30,14 @@ class PilihanFoodAdapter(
         val food = foodList[position]
         holder.foodName.text = food.name
         holder.foodCalories.text = "${food.calories} Cal"
-        Glide.with(holder.itemView.context).load(food.image).into(holder.foodImage)
+
+        // Load image from drawable resource
+        val context = holder.itemView.context
+        if (food.image.toIntOrNull() != null) {
+            holder.foodImage.setImageResource(food.image.toInt())
+        } else {
+            Glide.with(context).load(food.image).into(holder.foodImage)
+        }
 
         holder.addFoodIcon.setOnClickListener {
             onAddFoodClicked(food)

@@ -94,20 +94,35 @@ class PilihanMakananActivity : AppCompatActivity() {
         setupTabLayout()
     }
 
+    private fun getDrawableResourceId(index: Int): Int {
+        return when (index) {
+            0 -> R.drawable.drawable_1
+            1 -> R.drawable.drawable_2
+            2 -> R.drawable.drawable_3
+            3 -> R.drawable.drawable_4
+            4 -> R.drawable.drawable_5
+            5 -> R.drawable.drawable_6
+            6 -> R.drawable.drawable_7
+            7 -> R.drawable.drawable_8
+            8 -> R.drawable.drawable_9
+            9 -> R.drawable.drawable_10
+            else -> R.drawable.image_9 // default drawable in case of index > 9
+        }
+    }
+
     private fun convertToFoodResponse(recommendedFoods: List<RecommendedFood>): List<FoodResponse> {
         return recommendedFoods.mapIndexed { index, it ->
             FoodResponse(
                 id = index, // Memberikan id default
                 name = "${it.name} (Rekomendasi)", // Menambahkan teks rekomendasi
                 calories = it.calories,
-                image = it.image ?: "", // Menangani nilai null untuk image
+                image = getDrawableResourceId(index).toString(), // Menetapkan gambar dari drawable
                 proteins = it.proteins,
                 fat = it.fat,
                 carbohydrate = it.carbohydrate
             )
         }
     }
-
 
     private fun updateRecommendedFoodList(recommendedFoods: List<RecommendedFood>) {
         // Convert RecommendedFood to FoodResponse
