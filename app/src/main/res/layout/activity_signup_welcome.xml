@@ -70,7 +70,7 @@
         android:layout_width="377dp"
         android:layout_height="88dp"
         android:text="We will never post anything without your permission. We will collect personal information from and about you and use it for various purposes, including to customize your NutriLens experience."
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/continueButton"
