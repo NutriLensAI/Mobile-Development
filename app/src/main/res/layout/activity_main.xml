@@ -38,14 +38,15 @@
 
         <TextView
             android:id="@+id/helloTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="194dp"
+            android:layout_height="25dp"
             android:layout_marginStart="112dp"
             android:layout_marginTop="44dp"
+            android:fontFamily="@font/roboto_black"
             android:text="Hello, Pavel"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,6 +56,7 @@
             android:layout_height="48dp"
             android:layout_marginStart="112dp"
             android:layout_marginTop="68dp"
+            android:fontFamily="@font/roboto_black"
             android:text="NutriLens"
             android:textColor="@android:color/white"
             android:textSize="42sp"

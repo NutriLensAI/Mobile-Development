@@ -2,5 +2,6 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/droid_serif_bold</item>
+        <item>@font/roboto_black</item>
     </array>
 </resources>
