@@ -12,6 +12,8 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -92,6 +94,7 @@ class PilihanMakananActivity : AppCompatActivity() {
         observeSession()
         setupSearchBar()
         setupTabLayout()
+        setupView()
     }
 
     private fun getDrawableResourceId(index: Int): Int {
@@ -228,6 +231,18 @@ class PilihanMakananActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun setupView() {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
+        }
+        supportActionBar?.hide()
+
+        // Set status bar color to green
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
 
     private fun sendFoodData(table: String, food: FoodResponse) {
