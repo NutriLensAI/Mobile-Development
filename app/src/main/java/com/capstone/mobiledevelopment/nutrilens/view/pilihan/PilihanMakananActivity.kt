@@ -23,9 +23,9 @@ import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiConfig
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
-import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RecommendedFood
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UserProfileRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FavoriteRecipeAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.PilihanFoodAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.AddMyRecipes
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipe
@@ -47,7 +47,7 @@ class PilihanMakananActivity : AppCompatActivity() {
     private lateinit var pilihanFoodAdapter: PilihanFoodAdapter
     private lateinit var favoriteRecipeAdapter: FavoriteRecipeAdapter
     private lateinit var myRecipesAdapter: MyRecipesAdapter
-    private var allFoodList: MutableList<RecommendedFood> = mutableListOf()
+    private lateinit var allFoodList: List<FoodResponse>
     private lateinit var favoriteFoodList: MutableList<FavoriteRecipe>
     private lateinit var myRecipeList: MutableList<MyRecipe>
     private lateinit var db: StepDatabase
@@ -118,15 +118,9 @@ class PilihanMakananActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response = RetrofitInstance.api.showRecommendedFoods(request).execute()
-                // Update the food list with recommended foods
-                response.body()?.let { recommendedFoods ->
-                    val updatedRecommendedFoods = recommendedFoods.map {
-                        it.copy(isRecommended = true) // Menandai makanan sebagai rekomendasi
-                    }
-                    withContext(Dispatchers.Main) {
-                        allFoodList.addAll(0, updatedRecommendedFoods) // Add recommended foods at the top
-                        pilihanFoodAdapter.updateList(allFoodList)
-                    }
+                // Log atau lakukan tindakan lain dengan respons di sini
+                response.body()?.forEach { food ->
+                    println("Recommended food: ${food.name}, Calories: ${food.calories}")
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -171,18 +165,7 @@ class PilihanMakananActivity : AppCompatActivity() {
             try {
                 val response = ApiConfig.getApiService().getFoodData()
                 withContext(Dispatchers.Main) {
-                    val additionalFoods = response.map {
-                        RecommendedFood(
-                            name = it.name,
-                            calories = it.calories,
-                            proteins = it.proteins,
-                            fat = it.fat,
-                            carbohydrate = it.carbohydrate,
-                            image = it.image, // Menggunakan URL gambar dari API
-                            isRecommended = false // Menandai makanan sebagai non-rekomendasi
-                        )
-                    }
-                    allFoodList.addAll(additionalFoods)
+                    allFoodList = response
                     pilihanFoodAdapter.updateList(allFoodList)
                 }
             } catch (e: IOException) {
@@ -195,13 +178,13 @@ class PilihanMakananActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendFoodData(table: String, food: RecommendedFood) {
+    private fun sendFoodData(table: String, food: FoodResponse) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val foodRequest = FoodRequest(
                     id = 0, // Biarkan server yang menetapkan ID
                     user_id = 0, // Ambil user_id dari session
-                    food_id = 0, // Assuming there's no ID for RecommendedFood
+                    food_id = food.id,
                     food_name = food.name,
                     calories = food.calories,
                     proteins = food.proteins, // Pastikan field ini ada di FoodResponse
@@ -210,7 +193,7 @@ class PilihanMakananActivity : AppCompatActivity() {
                 )
 
                 val response =
-                    ApiConfig.getApiService().addFoodToMeal(token, table, 0, foodRequest)
+                    ApiConfig.getApiService().addFoodToMeal(token, table, food.id, foodRequest)
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@PilihanMakananActivity,

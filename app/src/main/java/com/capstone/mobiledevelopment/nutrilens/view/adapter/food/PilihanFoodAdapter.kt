@@ -1,6 +1,5 @@
 package com.capstone.mobiledevelopment.nutrilens.view.adapter.food
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RecommendedFood
 
 class PilihanFoodAdapter(
-    private var foodList: List<RecommendedFood>,
-    private val onAddFoodClicked: (RecommendedFood) -> Unit
+    private var foodList: List<FoodResponse>,
+    private val onAddFoodClicked: (FoodResponse) -> Unit
 ) : RecyclerView.Adapter<PilihanFoodAdapter.FoodViewHolder>() {
 
     class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,23 +28,9 @@ class PilihanFoodAdapter(
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val food = foodList[position]
-        holder.foodName.text = if (food.isRecommended) {
-            "${food.name} (Rekomendasi)"
-        } else {
-            food.name
-        }
-
+        holder.foodName.text = food.name
         holder.foodCalories.text = "${food.calories} Cal"
-
-        if (food.isRecommended) {
-            // Menggunakan gambar dari drawable untuk makanan rekomendasi
-            Glide.with(holder.itemView.context).load(R.drawable.image_9).into(holder.foodImage)
-        } else {
-            // Menggunakan URL gambar dari API untuk makanan non-rekomendasi
-            food.image?.let {
-                Glide.with(holder.itemView.context).load(it).into(holder.foodImage)
-            }
-        }
+        Glide.with(holder.itemView.context).load(food.image).into(holder.foodImage)
 
         holder.addFoodIcon.setOnClickListener {
             onAddFoodClicked(food)
@@ -57,7 +41,7 @@ class PilihanFoodAdapter(
         return foodList.size
     }
 
-    fun updateList(newList: List<RecommendedFood>) {
+    fun updateList(newList: List<FoodResponse>) {
         foodList = newList
         notifyDataSetChanged()
     }
