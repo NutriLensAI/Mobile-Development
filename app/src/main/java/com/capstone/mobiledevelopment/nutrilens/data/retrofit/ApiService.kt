@@ -2,21 +2,15 @@ package com.capstone.mobiledevelopment.nutrilens.data.retrofit
 
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.ChangeResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.LoginResponse
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.NutritionResponse
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.NutritionResponseItem
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.PredictImageResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
-import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Part
 import retrofit2.http.Path
 
 data class RegisterRequest(
@@ -128,7 +122,4 @@ interface ApiService {
 
     @POST("show-recommended-foods")
     fun showRecommendedFoods(@Body userProfileRequest: UserProfileRequest): Call<List<RecommendedFood>>
-
-    @GET("nutritions/data")
-    suspend fun getNutritions(): NutritionResponse
 }

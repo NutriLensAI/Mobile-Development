@@ -15,17 +15,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.mobiledevelopment.nutrilens.R
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.NutritionResponseItem
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.Makanan
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.macros.MakananAdapter
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
 import com.capstone.mobiledevelopment.nutrilens.view.catatan.CatatanMakanan
 import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakananActivity
 import com.capstone.mobiledevelopment.nutrilens.view.resep.DetailActivity
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
+
 
 class HasilMakananActivity : AppCompatActivity() {
     private val viewModel by viewModels<HasilMakananViewModel> {
@@ -34,7 +31,7 @@ class HasilMakananActivity : AppCompatActivity() {
     private lateinit var imageUri: Uri
     private var prediction: String? = null
     private var confidence: Double = 0.0
-    private var matchedNutrition: NutritionResponseItem? = null
+    private var matchedNutrition: FoodResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +51,9 @@ class HasilMakananActivity : AppCompatActivity() {
         }
 
         prediction?.let {
-            namaMakananTextView.text = it
+            val cleanedPrediction = cleanPrediction(it)
+            namaMakananTextView.text = cleanedPrediction
+            prediction = cleanedPrediction
         }
 
         val mealTimeLayout: LinearLayout = findViewById(R.id.meal_time_layout)
@@ -83,8 +82,10 @@ class HasilMakananActivity : AppCompatActivity() {
 
         viewModel.nutritions.observe(this) { nutritionList ->
             matchedNutrition = findMatchingNutrition(nutritionList, prediction)
-            matchedNutrition?.let {
-                updateNutritionUI(it)
+            if (matchedNutrition == null) {
+                showNutritionNotFoundTooltip()
+            } else {
+                updateNutritionUI(matchedNutrition!!)
             }
         }
 
@@ -107,7 +108,7 @@ class HasilMakananActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
 
-    private fun sendMealData(mealType: String, nutrition: NutritionResponseItem) {
+    private fun sendMealData(mealType: String, nutrition: FoodResponse) {
         val intent = Intent(this, CatatanMakanan::class.java).apply {
             putExtra("meal_type", mealType)
             putExtra("nama_makanan", prediction)
@@ -144,7 +145,7 @@ class HasilMakananActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun updateNutritionUI(nutrition: NutritionResponseItem) {
+    private fun updateNutritionUI(nutrition: FoodResponse) {
         // Update TextViews
         findViewById<TextView>(R.id.tv_carbs_value).text = "${nutrition.carbohydrate ?: 0.0} g"
         findViewById<TextView>(R.id.tv_fat_value).text = "${nutrition.fat ?: 0.0} g"
@@ -152,11 +153,11 @@ class HasilMakananActivity : AppCompatActivity() {
 
         // Update ProgressBars
         findViewById<ProgressBar>(R.id.carbsProgressBar).progress =
-            ((nutrition.carbohydrate ?: 0.0) * 100).toInt()
+            nutrition.carbohydrate.toInt()
         findViewById<ProgressBar>(R.id.fatProgressBar).progress =
-            ((nutrition.fat ?: 0.0) * 100).toInt()
+            nutrition.fat.toInt()
         findViewById<ProgressBar>(R.id.proteinProgressBar).progress =
-            ((nutrition.proteins ?: 0.0) * 100).toInt()
+            nutrition.proteins.toInt()
 
         // Update Grid TextViews
         findViewById<TextView>(R.id.tv_carbs_value_grid).text = "${nutrition.carbohydrate ?: 0.0} gr"
@@ -166,12 +167,26 @@ class HasilMakananActivity : AppCompatActivity() {
     }
 
     private fun findMatchingNutrition(
-        nutritionList: List<NutritionResponseItem>,
+        nutritionList: List<FoodResponse>,
         prediction: String?
-    ): NutritionResponseItem? {
+    ): FoodResponse? {
         return nutritionList.find {
-            it.name?.contains(prediction ?: "", ignoreCase = true) == true
+            it.name.contains(prediction ?: "", ignoreCase = true)
         }
+    }
+
+    private fun showNutritionNotFoundTooltip() {
+        AlertDialog.Builder(this)
+            .setTitle("Nutrition Not Found")
+            .setMessage("The nutrition information for the predicted food item was not found in the database.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun cleanPrediction(prediction: String): String {
+        return prediction.replace(Regex("[^A-Za-z0-9 ]"), " ").trim().split("\\s+".toRegex()).take(2).joinToString(" ")
     }
 
     private fun viewIngredients() {

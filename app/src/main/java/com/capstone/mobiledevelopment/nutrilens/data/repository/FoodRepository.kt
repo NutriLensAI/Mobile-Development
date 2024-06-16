@@ -1,11 +1,10 @@
 package com.capstone.mobiledevelopment.nutrilens.data.repository
 
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.NutritionResponse
-import com.capstone.mobiledevelopment.nutrilens.data.reponse.NutritionResponseItem
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.PredictImageResponse
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.UserFoodResponse
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.PredictApiService
+import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
 import okhttp3.MultipartBody
 
 class FoodRepository private constructor(
@@ -29,12 +28,8 @@ class FoodRepository private constructor(
         }
     }
 
-    suspend fun getNutritions(): NutritionResponse {
-        return try {
-            apiService.getNutritions()
-        } catch (e: Exception) {
-            throw RuntimeException("Error fetching nutritions", e)
-        }
+    suspend fun getNutritions(): List<FoodResponse> {
+        return apiService.getFoodData()
     }
 
     companion object {
