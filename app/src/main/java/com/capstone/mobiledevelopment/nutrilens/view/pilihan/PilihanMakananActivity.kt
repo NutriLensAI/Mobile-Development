@@ -108,7 +108,6 @@ class PilihanMakananActivity : AppCompatActivity() {
         }
     }
 
-
     private fun updateRecommendedFoodList(recommendedFoods: List<RecommendedFood>) {
         // Convert RecommendedFood to FoodResponse
         val foodResponses = convertToFoodResponse(recommendedFoods)
