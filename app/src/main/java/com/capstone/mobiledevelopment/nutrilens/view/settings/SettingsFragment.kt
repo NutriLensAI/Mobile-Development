@@ -126,10 +126,6 @@ class SettingsFragment : Fragment() {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }
 
-        binding.backButton.setOnClickListener {
-            activity?.finish()
-        }
-
         binding.profileImage.setOnClickListener {
             openGallery()
         }
