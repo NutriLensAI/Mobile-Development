@@ -23,6 +23,10 @@ import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakananActiv
 import com.capstone.mobiledevelopment.nutrilens.view.resep.DetailActivity
 import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepItem
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
+import java.io.IOException
 
 class HasilMakananActivity : AppCompatActivity() {
     private val viewModel by viewModels<HasilMakananViewModel> {
@@ -90,20 +94,19 @@ class HasilMakananActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.recipes.observe(this) { recipeList ->
-            matchedRecipe = findMatchingRecipe(recipeList, prediction)
-            if (matchedRecipe == null) {
-                showRecipeNotFoundTooltip()
-            }
+        // Load recipes from local JSON file
+        val recipes = loadRecipesFromAssets()
+        matchedRecipe = findMatchingRecipe(recipes, prediction)
+        if (matchedRecipe == null) {
+            showRecipeNotFoundTooltip()
         }
 
         viewModel.isLoading.observe(this) { isLoading ->
             // Show or hide loading indicator
         }
 
-        // Fetch the nutrition and recipe data
+        // Fetch the nutrition data
         viewModel.fetchNutritions()
-        viewModel.fetchRecipes()
     }
 
     private fun setupView() {
@@ -231,4 +234,21 @@ class HasilMakananActivity : AppCompatActivity() {
             showRecipeNotFoundTooltip()
         }
     }
+
+    private fun loadRecipesFromAssets(): List<ResepItem> {
+        val jsonString: String
+        try {
+            jsonString = assets.open("datarecipe.json").bufferedReader().use { it.readText() }
+        } catch (ioException: IOException) {
+            ioException.printStackTrace()
+            return emptyList()
+        }
+
+        val jsonObject = Gson().fromJson(jsonString, JsonObject::class.java)
+        val recipeArray = jsonObject.getAsJsonArray("recipeData")
+
+        val listRecipeType = object : TypeToken<List<ResepItem>>() {}.type
+        return Gson().fromJson(recipeArray, listRecipeType)
+    }
+
 }
