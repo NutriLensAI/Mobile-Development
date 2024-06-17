@@ -1,6 +1,7 @@
 package com.capstone.mobiledevelopment.nutrilens.view.camera
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -32,6 +33,7 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddFoodBinding
 import com.capstone.mobiledevelopment.nutrilens.view.add_story.CameraFoodViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.hasil.HasilMakananActivity
+import com.capstone.mobiledevelopment.nutrilens.view.utils.CustomInterpolator
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.utils.getImageUri
@@ -126,7 +128,7 @@ class CameraFoodActivity : AppCompatActivity() {
                 is Result.Success -> {
                     val prediction = result.value.prediction
                     val confidence = result.value.confidence
-                    // Pass the prediction result along with the image URI
+                    progressBar.progress = 100
                     navigateToHasilMakanan(capturedImageUri, prediction, confidence)
                 }
 
@@ -140,11 +142,22 @@ class CameraFoodActivity : AppCompatActivity() {
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 loadingOverlay.visibility = View.VISIBLE
-                progressBar.progress = 50
+                animateProgressBar(progressBar, 80, 3000) // Animates to 80% over 3 seconds
             } else {
                 loadingOverlay.visibility = View.GONE
             }
         }
+    }
+
+    private fun animateProgressBar(
+        progressBar: CircularProgressIndicator,
+        targetProgress: Int,
+        duration: Long
+    ) {
+        val animator = ObjectAnimator.ofInt(progressBar, "progress", 0, targetProgress)
+        animator.duration = duration
+        animator.interpolator = CustomInterpolator()
+        animator.start()
     }
 
     private fun updateFlashButtonIcon(flashButton: ImageButton) {

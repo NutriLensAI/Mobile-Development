@@ -96,7 +96,9 @@
             android:layout_gravity="center"
             android:indeterminate="false"
             app:indicatorColor="@color/green"
-            app:indicatorSize="150dp" />
+            app:indicatorSize="150dp"
+            app:trackColor="@color/white"
+            app:trackThickness="8dp" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
