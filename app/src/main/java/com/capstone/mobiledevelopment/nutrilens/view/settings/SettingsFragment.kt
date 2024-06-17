@@ -76,10 +76,10 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.profileName.text = viewModel.userEmail.value
 
         viewModel.fetchEmail()
         viewModel.fetchToken()
+        viewModel.fetchUsername()
 
         viewModel.getSession().observe(viewLifecycleOwner) { user ->
             if (!user.isLogin) {
@@ -122,6 +122,10 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        viewModel.username.observe(viewLifecycleOwner) { username ->
+            binding.profileName.text = "Halo, $username"
+        }
+
         binding.languageSetting.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }
@@ -130,7 +134,6 @@ class SettingsFragment : Fragment() {
             openGallery()
         }
 
-        observeEmail()
         setupView()
         setupAction()
         loadImageFromPreferences()
@@ -175,13 +178,6 @@ class SettingsFragment : Fragment() {
             }
         }
         (activity as? AppCompatActivity)?.supportActionBar?.hide()
-    }
-
-    private fun observeEmail() {
-        viewModel.userEmail.observe(viewLifecycleOwner) { userEmail ->
-            val greetingMessage = getString(R.string.greeting, userEmail)
-            binding.profileName.text = greetingMessage
-        }
     }
 
     private fun setupAction() {
