@@ -62,7 +62,7 @@ class ViewModelFactory(
             }
 
             modelClass.isAssignableFrom(HasilMakananViewModel::class.java) -> {
-                HasilMakananViewModel(foodRepository) as T
+                HasilMakananViewModel(foodRepository, userRepository) as T
             }
 
             modelClass.isAssignableFrom(CameraFoodViewModel::class.java) -> {
