@@ -115,7 +115,7 @@ class HasilMakananActivity : AppCompatActivity() {
             controller.isAppearanceLightStatusBars = true
         }
         supportActionBar?.hide()
-        window.statusBarColor = ContextCompat.getColor(this, R.color.green)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green2)
     }
 
     private fun addFoodToMeal(table: String) {
