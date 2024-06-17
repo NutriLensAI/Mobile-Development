@@ -23,6 +23,7 @@ import java.net.URL
 class HasilMakananViewModel(
     private val foodRepository: FoodRepository,
     private val userRepository: UserRepository
+
 ) : ViewModel() {
 
     private val _nutritions = MutableLiveData<List<FoodResponse>>()
@@ -39,6 +40,7 @@ class HasilMakananViewModel(
 
     private val _recipes = MutableLiveData<List<ResepItem>>()
     val recipes: LiveData<List<ResepItem>> get() = _recipes
+
 
     init {
         fetchToken()
