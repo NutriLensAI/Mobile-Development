@@ -225,14 +225,16 @@ class SettingsFragment : Fragment() {
     }
 
     private fun saveCroppedImageToPreferences(uri: Uri) {
-        val sharedPreferences = requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("profileImageUri", uri.toString())
         editor.apply()
     }
 
     private fun loadImageFromPreferences() {
-        val sharedPreferences = requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         val imageUriString = sharedPreferences.getString("profileImageUri", null)
         if (imageUriString != null) {
             val imageUri = Uri.parse(imageUriString)

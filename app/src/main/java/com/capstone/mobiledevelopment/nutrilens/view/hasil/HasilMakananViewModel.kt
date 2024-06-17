@@ -8,8 +8,15 @@ import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
+import com.capstone.mobiledevelopment.nutrilens.view.resep.RecipeData
+import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepItem
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 
 class HasilMakananViewModel(
     private val foodRepository: FoodRepository,
@@ -27,6 +34,9 @@ class HasilMakananViewModel(
 
     private val _addFoodResult = MutableLiveData<FoodResponse>()
     val addFoodResult: LiveData<FoodResponse> get() = _addFoodResult
+
+    private val _recipes = MutableLiveData<List<ResepItem>>()
+    val recipes: LiveData<List<ResepItem>> get() = _recipes
 
     init {
         fetchToken()
@@ -46,8 +56,7 @@ class HasilMakananViewModel(
                 val response = foodRepository.getNutritions()
                 _nutritions.value = response
             } catch (e: Exception) {
-                // Handle the error
-                _nutritions.value = emptyList() // Optionally, set an empty list on error
+                _nutritions.value = emptyList()
             } finally {
                 _isLoading.value = false
             }
@@ -61,10 +70,43 @@ class HasilMakananViewModel(
                 val response = foodRepository.addFoodToMeal(token, table, id, foodRequest)
                 _addFoodResult.value = response
             } catch (e: Exception) {
-                // Handle the error
             } finally {
                 _isLoading.value = false
             }
         }
+    }
+
+    fun fetchRecipes() {
+        _isLoading.value = true
+        viewModelScope.launch {
+            try {
+                val recipes = getRecipeDataFromUrl()
+                _recipes.postValue(recipes)
+            } catch (e: Exception) {
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    private suspend fun getRecipeDataFromUrl(): List<ResepItem> {
+        val urlString = "https://nutrilensai.github.io/datadummy/datarecipe.json"
+        var jsonString: String
+        try {
+            val url = URL(urlString)
+            val connection = url.openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.connect()
+
+            jsonString = connection.inputStream.bufferedReader().use { it.readText() }
+        } catch (ioException: IOException) {
+            ioException.printStackTrace()
+            return emptyList()
+        }
+
+        val gson = Gson()
+        val recipeType = object : TypeToken<RecipeData>() {}.type
+        val recipeData: RecipeData = gson.fromJson(jsonString, recipeType)
+        return recipeData.recipeData
     }
 }

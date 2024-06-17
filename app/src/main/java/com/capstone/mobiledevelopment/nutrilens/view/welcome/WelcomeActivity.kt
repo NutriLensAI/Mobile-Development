@@ -106,7 +106,13 @@ class WelcomeActivity : AppCompatActivity() {
     private fun loginAsGuest() {
         val userPreference = UserPreference.getInstance(dataStore)
         lifecycleScope.launch {
-            val guestUser = UserModel(email = "guest@guest.com", token = "guest_token", isLogin = true, username = "Guest", isGuest = true)
+            val guestUser = UserModel(
+                email = "guest@guest.com",
+                token = "guest_token",
+                isLogin = true,
+                username = "Guest",
+                isGuest = true
+            )
             userPreference.saveSession(guestUser)
             val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
             startActivity(intent)

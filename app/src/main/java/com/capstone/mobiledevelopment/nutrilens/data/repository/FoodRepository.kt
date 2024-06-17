@@ -33,7 +33,12 @@ class FoodRepository private constructor(
         return apiService.getFoodData()
     }
 
-    suspend fun addFoodToMeal(token: String, table: String, id: Int, request: FoodRequest): FoodResponse {
+    suspend fun addFoodToMeal(
+        token: String,
+        table: String,
+        id: Int,
+        request: FoodRequest
+    ): FoodResponse {
         return try {
             apiService.addFoodToMeal(token, table, id, request)
         } catch (e: Exception) {
@@ -45,7 +50,10 @@ class FoodRepository private constructor(
         @Volatile
         private var instance: FoodRepository? = null
 
-        fun getInstance(apiService: ApiService, predictApiService: PredictApiService): FoodRepository {
+        fun getInstance(
+            apiService: ApiService,
+            predictApiService: PredictApiService
+        ): FoodRepository {
             return synchronized(this) {
                 instance ?: FoodRepository(apiService, predictApiService).also { instance = it }
             }

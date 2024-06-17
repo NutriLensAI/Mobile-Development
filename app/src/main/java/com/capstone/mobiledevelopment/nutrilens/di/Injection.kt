@@ -18,7 +18,7 @@ object Injection {
     }
 
     fun provideFoodRepository(context: Context): FoodRepository {
-        val pref = UserPreference.getInstance(context.dataStore)
+        UserPreference.getInstance(context.dataStore)
         val apiService = ApiConfig.getApiService()
         val predictApiService = PredictApiConfig.getApiService()
         return FoodRepository.getInstance(apiService, predictApiService)

@@ -12,10 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.database.favorite.FavoriteRecipe
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
-import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityDetailBinding
-import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
+import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityDetailBinding
+import com.capstone.mobiledevelopment.nutrilens.view.welcome.WelcomeActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first

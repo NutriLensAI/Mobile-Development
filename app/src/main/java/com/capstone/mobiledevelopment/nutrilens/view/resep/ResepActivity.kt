@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +21,6 @@ import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserPreference
 import com.capstone.mobiledevelopment.nutrilens.data.pref.dataStore
 import com.capstone.mobiledevelopment.nutrilens.data.reponse.RegisterResponse
-import com.capstone.mobiledevelopment.nutrilens.data.retrofit.ApiService
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.RecommendedFood
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UserProfileRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.resep.ResepAdapter
@@ -147,20 +145,24 @@ class ResepActivity : AppCompatActivity() {
             activity_level = userProfile.activityLevel ?: ""
         )
 
-        RetrofitInstance.api.showRecommendedFoods(request).enqueue(object : Callback<List<RecommendedFood>> {
-            override fun onResponse(call: Call<List<RecommendedFood>>, response: Response<List<RecommendedFood>>) {
-                if (response.isSuccessful) {
-                    val recommendedFoods = response.body()
-                    // Handle the recommended foods list here
-                } else {
-                    // Handle the error case
+        RetrofitInstance.api.showRecommendedFoods(request)
+            .enqueue(object : Callback<List<RecommendedFood>> {
+                override fun onResponse(
+                    call: Call<List<RecommendedFood>>,
+                    response: Response<List<RecommendedFood>>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()
+                        // Handle the recommended foods list here
+                    } else {
+                        // Handle the error case
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<RecommendedFood>>, t: Throwable) {
-                // Handle the failure case
-            }
-        })
+                override fun onFailure(call: Call<List<RecommendedFood>>, t: Throwable) {
+                    // Handle the failure case
+                }
+            })
     }
 
     private fun setupView() {

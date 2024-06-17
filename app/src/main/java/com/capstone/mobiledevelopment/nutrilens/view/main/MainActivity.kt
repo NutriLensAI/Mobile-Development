@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var initialSensorSteps: Int? = null
     private var lastSavedSteps: Int = 0
     private val sharedPreferences by lazy {
-        getSharedPreferences("step_prefs", Context.MODE_PRIVATE)
+        getSharedPreferences("step_prefs", MODE_PRIVATE)
     }
 
     private var isGuestUser: Boolean = false
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         observeSession()
         setupView()
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
         initialSensorSteps = sharedPreferences.getInt("initialSensorSteps", -1)
         lastSavedSteps = sharedPreferences.getInt("lastSavedSteps", 0)
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun bindUserImageFromPreferences() {
-        val sharedPreferences = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
         val imageUriString = sharedPreferences.getString("profileImageUri", null)
         if (imageUriString != null) {
             val imageUri = Uri.parse(imageUriString)
@@ -390,7 +390,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     viewModel.fetchUserProfile(token)
                     viewModel.fetchMacros(token)
                 } else {
-                    Toast.makeText(this, "Please login to use this Macros feature", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Please login to use this Macros feature",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -446,23 +450,26 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_food -> {
-                        val intent = Intent(this@MainActivity, ResepActivity::class.java)
-                        intent.putExtra("selected_item", R.id.navigation_food)
-                        startActivity(intent)
-                        true
+                    val intent = Intent(this@MainActivity, ResepActivity::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_food)
+                    startActivity(intent)
+                    true
                 }
+
                 R.id.navigation_profile -> {
                     val intent = Intent(this@MainActivity, SettingsActivity::class.java)
                     intent.putExtra("selected_item", R.id.navigation_profile)
                     startActivity(intent)
                     false
-                    }
-                R.id.navigation_documents -> {
-                        val intent = Intent(this@MainActivity, CatatanMakanan::class.java)
-                        intent.putExtra("selected_item", R.id.navigation_documents)
-                        startActivity(intent)
-                        true
                 }
+
+                R.id.navigation_documents -> {
+                    val intent = Intent(this@MainActivity, CatatanMakanan::class.java)
+                    intent.putExtra("selected_item", R.id.navigation_documents)
+                    startActivity(intent)
+                    true
+                }
+
                 R.id.navigation_stats -> true
                 else -> false
             }

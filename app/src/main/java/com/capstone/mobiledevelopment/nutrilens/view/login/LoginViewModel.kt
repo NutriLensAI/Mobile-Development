@@ -84,6 +84,7 @@ class LoginViewModel(
                     "Login failed. Please try again."
                 }
             }
+
             else -> "Login failed. Please try again."
         }
         _loginResult.value = Result.Failure(Throwable(errorMessage))

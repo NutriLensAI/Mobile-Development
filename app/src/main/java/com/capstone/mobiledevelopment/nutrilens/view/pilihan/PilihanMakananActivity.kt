@@ -170,18 +170,30 @@ class PilihanMakananActivity : AppCompatActivity() {
                             updateRecommendedFoodList(recommendedFoods)
                         }
                     } else {
-                        Toast.makeText(this@PilihanMakananActivity, "Failed to fetch recommended foods", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@PilihanMakananActivity,
+                            "Failed to fetch recommended foods",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@PilihanMakananActivity, "Failed to fetch recommended foods", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@PilihanMakananActivity,
+                        "Failed to fetch recommended foods",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: HttpException) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@PilihanMakananActivity, "Failed to fetch recommended foods", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@PilihanMakananActivity,
+                        "Failed to fetch recommended foods",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -227,7 +239,11 @@ class PilihanMakananActivity : AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@PilihanMakananActivity, "Failed to fetch food data", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@PilihanMakananActivity,
+                        "Failed to fetch food data",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -259,18 +275,30 @@ class PilihanMakananActivity : AppCompatActivity() {
                     carbohydrate = food.carbohydrate // Pastikan field ini ada di FoodResponse
                 )
 
-                val response = ApiConfig.getApiService().addFoodToMeal(token, table, food.id, foodRequest)
+                ApiConfig.getApiService().addFoodToMeal(token, table, food.id, foodRequest)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@PilihanMakananActivity, "Food added successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@PilihanMakananActivity,
+                        "Food added successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: HttpException) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@PilihanMakananActivity, "Failed to add food", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@PilihanMakananActivity,
+                        "Failed to add food",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@PilihanMakananActivity, "Failed to add food", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@PilihanMakananActivity,
+                        "Failed to add food",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

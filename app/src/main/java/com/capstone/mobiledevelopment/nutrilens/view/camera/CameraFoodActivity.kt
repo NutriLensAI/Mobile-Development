@@ -9,6 +9,8 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -30,15 +32,15 @@ import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivityAddFoodBinding
 import com.capstone.mobiledevelopment.nutrilens.view.add_story.CameraFoodViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.hasil.HasilMakananActivity
+import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 import com.capstone.mobiledevelopment.nutrilens.view.utils.getImageUri
 import com.capstone.mobiledevelopment.nutrilens.view.utils.reduceFileImage
 import com.capstone.mobiledevelopment.nutrilens.view.utils.uriToFile
-import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
-
 
 class CameraFoodActivity : AppCompatActivity() {
     private val viewModel by viewModels<CameraFoodViewModel> {
@@ -49,6 +51,9 @@ class CameraFoodActivity : AppCompatActivity() {
     private var flashEnabled = false
     private lateinit var outputDirectory: File
     private lateinit var capturedImageUri: Uri
+
+    private lateinit var loadingOverlay: FrameLayout
+    private lateinit var progressBar: CircularProgressIndicator
 
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -113,6 +118,9 @@ class CameraFoodActivity : AppCompatActivity() {
             takePhoto()
         }
 
+        loadingOverlay = findViewById(R.id.loadingOverlay)
+        progressBar = findViewById(R.id.progressBar)
+
         viewModel.predictResult.observe(this) { result ->
             when (result) {
                 is Result.Success -> {
@@ -121,6 +129,7 @@ class CameraFoodActivity : AppCompatActivity() {
                     // Pass the prediction result along with the image URI
                     navigateToHasilMakanan(capturedImageUri, prediction, confidence)
                 }
+
                 is Result.Failure -> {
                     val error = result.error.message
                     showErrorDialog(error)
@@ -129,7 +138,12 @@ class CameraFoodActivity : AppCompatActivity() {
         }
 
         viewModel.isLoading.observe(this) { isLoading ->
-            // Show or hide loading indicator
+            if (isLoading) {
+                loadingOverlay.visibility = View.VISIBLE
+                progressBar.progress = 50
+            } else {
+                loadingOverlay.visibility = View.GONE
+            }
         }
     }
 

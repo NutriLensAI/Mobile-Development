@@ -21,8 +21,8 @@ import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
 import com.capstone.mobiledevelopment.nutrilens.view.pilihan.PilihanMakananActivity
 import com.capstone.mobiledevelopment.nutrilens.view.resep.DetailActivity
+import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepItem
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
-
 
 class HasilMakananActivity : AppCompatActivity() {
     private val viewModel by viewModels<HasilMakananViewModel> {
@@ -32,6 +32,7 @@ class HasilMakananActivity : AppCompatActivity() {
     private var prediction: String? = null
     private var confidence: Double = 0.0
     private var matchedNutrition: FoodResponse? = null
+    private var matchedRecipe: ResepItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +60,10 @@ class HasilMakananActivity : AppCompatActivity() {
         val mealTimeLayout: LinearLayout = findViewById(R.id.meal_time_layout)
         val addButton: ImageView = findViewById(R.id.btn_add)
         addButton.setOnClickListener {
-            if (mealTimeLayout.visibility == LinearLayout.GONE) {
-                mealTimeLayout.visibility = LinearLayout.VISIBLE
+            mealTimeLayout.visibility = if (mealTimeLayout.visibility == LinearLayout.GONE) {
+                LinearLayout.VISIBLE
             } else {
-                mealTimeLayout.visibility = LinearLayout.GONE
+                LinearLayout.GONE
             }
         }
 
@@ -89,22 +90,28 @@ class HasilMakananActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.recipes.observe(this) { recipeList ->
+            matchedRecipe = findMatchingRecipe(recipeList, prediction)
+            if (matchedRecipe == null) {
+                showRecipeNotFoundTooltip()
+            }
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             // Show or hide loading indicator
         }
 
-        // Fetch the nutrition data
+        // Fetch the nutrition and recipe data
         viewModel.fetchNutritions()
+        viewModel.fetchRecipes()
     }
 
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowCompat.getInsetsController(window, window.decorView).let { controller ->
-            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+            controller.isAppearanceLightStatusBars = true
         }
         supportActionBar?.hide()
-
-        // Set status bar color to green
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
 
@@ -112,8 +119,8 @@ class HasilMakananActivity : AppCompatActivity() {
         val token = viewModel.token.value ?: return
         val food = matchedNutrition ?: return
         val foodRequest = FoodRequest(
-            id = 0, // Let the server set the ID
-            user_id = 0, // Retrieve user_id from session if needed
+            id = 0,
+            user_id = 0,
             food_id = food.id,
             food_name = food.name,
             calories = food.calories,
@@ -128,7 +135,7 @@ class HasilMakananActivity : AppCompatActivity() {
         prediction?.let {
             if (confidence > 70) {
                 Toast.makeText(this, "Confidence: $confidence%", Toast.LENGTH_SHORT).show()
-            } else  {
+            } else {
                 showLowConfidenceTooltip()
             }
         }
@@ -150,12 +157,10 @@ class HasilMakananActivity : AppCompatActivity() {
     }
 
     private fun updateNutritionUI(nutrition: FoodResponse) {
-        // Update TextViews
         findViewById<TextView>(R.id.tv_carbs_value).text = "${nutrition.carbohydrate ?: 0.0} g"
         findViewById<TextView>(R.id.tv_fat_value).text = "${nutrition.fat ?: 0.0} g"
         findViewById<TextView>(R.id.tv_protein_value).text = "${nutrition.proteins ?: 0.0} g"
 
-        // Update ProgressBars
         findViewById<ProgressBar>(R.id.carbsProgressBar).progress =
             nutrition.carbohydrate.toInt()
         findViewById<ProgressBar>(R.id.fatProgressBar).progress =
@@ -163,7 +168,6 @@ class HasilMakananActivity : AppCompatActivity() {
         findViewById<ProgressBar>(R.id.proteinProgressBar).progress =
             nutrition.proteins.toInt()
 
-        // Update Grid TextViews
         findViewById<TextView>(R.id.tv_carbs_value_grid).text = "${nutrition.carbohydrate ?: 0.0} gr"
         findViewById<TextView>(R.id.tv_fat_value_grid).text = "${nutrition.fat ?: 0.0} gr"
         findViewById<TextView>(R.id.tv_protein_value_grid).text = "${nutrition.proteins ?: 0.0} gr"
@@ -179,6 +183,15 @@ class HasilMakananActivity : AppCompatActivity() {
         }
     }
 
+    private fun findMatchingRecipe(
+        recipeList: List<ResepItem>,
+        prediction: String?
+    ): ResepItem? {
+        return recipeList.find {
+            it.Title.contains(prediction ?: "", ignoreCase = true)
+        }
+    }
+
     private fun showNutritionNotFoundTooltip() {
         AlertDialog.Builder(this)
             .setTitle("Nutrition Not Found")
@@ -189,23 +202,31 @@ class HasilMakananActivity : AppCompatActivity() {
             .show()
     }
 
+    private fun showRecipeNotFoundTooltip() {
+        AlertDialog.Builder(this)
+            .setTitle("Recipe Not Found")
+            .setMessage("The recipe information for the predicted food item was not found in the database.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
     private fun cleanPrediction(prediction: String): String {
-        return prediction.replace(Regex("[^A-Za-z0-9 ]"), " ").trim().split("\\s+".toRegex()).take(2).joinToString(" ")
+        return prediction.replace(Regex("[^A-Za-z0-9 ]"), " ").trim().split("\\s+".toRegex())
+            .take(2).joinToString(" ")
     }
 
     private fun viewIngredients() {
-        val intent = Intent(this, DetailActivity::class.java).apply {
-            putExtra("image_uri", imageUri.toString())
-            putExtra("prediction", prediction)
-            putExtra("confidence", confidence)
-            // If matchedNutrition is not null, pass its details as well
-            matchedNutrition?.let {
-                putExtra("carbs", it.carbohydrate)
-                putExtra("fat", it.fat)
-                putExtra("protein", it.proteins)
-                putExtra("calories", it.calories)
+        matchedRecipe?.let {
+            val intent = Intent(this, DetailActivity::class.java).apply {
+                putExtra("EXTRA_TITLE", it.Title)
+                putExtra("EXTRA_INGREDIENTS", it.Ingredients)
+                putExtra("EXTRA_STEPS", it.Steps)
             }
+            startActivity(intent)
+        } ?: run {
+            showRecipeNotFoundTooltip()
         }
-        startActivity(intent)
     }
 }

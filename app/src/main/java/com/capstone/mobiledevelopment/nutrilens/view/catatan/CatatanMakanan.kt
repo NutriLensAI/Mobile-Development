@@ -66,7 +66,8 @@ class CatatanMakanan : AppCompatActivity() {
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowCompat.getInsetsController(window, window.decorView).let { controller ->
-            controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
         }
         supportActionBar?.hide()
 
@@ -121,14 +122,20 @@ class CatatanMakanan : AppCompatActivity() {
 
         // Update Macros
         meals.macros?.let { macros ->
-            binding.carbsProgressBar.progress = ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
-            binding.fatProgressBar.progress = ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
-            binding.proteinProgressBar.progress = ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
-            binding.totalCalories.text = "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
+            binding.carbsProgressBar.progress =
+                ((macros.totalCarbs ?: 0.0) * 100 / targetCarbsGrams).toInt()
+            binding.fatProgressBar.progress =
+                ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
+            binding.proteinProgressBar.progress =
+                ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
+            binding.totalCalories.text =
+                "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
 
-            binding.carbsValueTextView.text = formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
+            binding.carbsValueTextView.text =
+                formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
             binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0.0, targetFatGrams)
-            binding.proteinValueTextView.text = formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
+            binding.proteinValueTextView.text =
+                formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
         }
     }
 

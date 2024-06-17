@@ -8,24 +8,24 @@ import kotlinx.android.parcel.RawValue
 @Parcelize
 data class PredictImageResponse(
 
-	@field:SerializedName("prediction: ")
-	val prediction: String? = null,
+    @field:SerializedName("prediction: ")
+    val prediction: String? = null,
 
-	@field:SerializedName("confidence: ")
-	val confidence: Double? = null,
+    @field:SerializedName("confidence: ")
+    val confidence: Double? = null,
 
-	@SerializedName("detail")
-val detail: List<ValidationError>? = null
+    @SerializedName("detail")
+    val detail: List<ValidationError>? = null
 ) : Parcelable
 
 @Parcelize
 data class ValidationError(
-	@SerializedName("loc")
-	val loc: @RawValue List<Any>,
+    @SerializedName("loc")
+    val loc: @RawValue List<Any>,
 
-	@SerializedName("msg")
-	val msg: String,
+    @SerializedName("msg")
+    val msg: String,
 
-	@SerializedName("type")
-	val type: String
+    @SerializedName("type")
+    val type: String
 ) : Parcelable

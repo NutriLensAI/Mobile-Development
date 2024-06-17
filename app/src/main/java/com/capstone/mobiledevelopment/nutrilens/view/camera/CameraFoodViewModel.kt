@@ -9,9 +9,9 @@ import com.capstone.mobiledevelopment.nutrilens.data.reponse.PredictImageRespons
 import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.view.utils.Result
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.MediaType.Companion.toMediaType
 import java.io.File
 
 class CameraFoodViewModel(private val foodRepository: FoodRepository) : ViewModel() {
@@ -34,7 +34,8 @@ class CameraFoodViewModel(private val foodRepository: FoodRepository) : ViewMode
                 val response = foodRepository.predictImage(multipartBody)
                 if (response.detail != null) {
                     // Handle validation error
-                    _predictResult.value = Result.Failure(Throwable(response.detail.joinToString { it.msg }))
+                    _predictResult.value =
+                        Result.Failure(Throwable(response.detail.joinToString { it.msg }))
                 } else {
                     _predictResult.value = Result.Success(response)
                 }

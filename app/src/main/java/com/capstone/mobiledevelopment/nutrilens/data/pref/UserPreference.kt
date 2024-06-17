@@ -28,9 +28,9 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         return dataStore.data.map { preferences ->
             val email = preferences[EMAIL_KEY] ?: ""
             val token = preferences[TOKEN_KEY] ?: ""
-            val isLogin = preferences[IS_LOGIN_KEY] ?: false
+            val isLogin = preferences[IS_LOGIN_KEY] == true
             val username = preferences[USERNAME_KEY] ?: ""
-            val isGuest = preferences[IS_GUEST_KEY] ?: false
+            val isGuest = preferences[IS_GUEST_KEY] == true
             UserModel(email, token, isLogin, username, isGuest)
         }
     }
@@ -49,7 +49,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
 
     fun isGuestUser(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
-            preferences[IS_GUEST_KEY] ?: false
+            preferences[IS_GUEST_KEY] == true
         }
     }
 
