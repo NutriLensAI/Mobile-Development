@@ -5,8 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.FragmentInputDataBinding
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 
@@ -39,6 +42,7 @@ class InputDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
+        setupView()
     }
 
     private fun setupListeners() {
@@ -90,6 +94,17 @@ class InputDataFragment : Fragment() {
             arguments = Bundle().apply {
                 putString(ARG_TOKEN, token)
             }
+        }
+    }
+
+    private fun setupView() {
+        activity?.window?.let { window ->
+            WindowCompat.setDecorFitsSystemWindows(window, true)
+            WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
+                controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+            }
+            activity?.actionBar?.hide()
+            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green2)
         }
     }
 }

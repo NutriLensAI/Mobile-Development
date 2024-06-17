@@ -15,6 +15,8 @@ import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.canhub.cropper.CropImageContract
@@ -168,16 +170,13 @@ class SettingsFragment : Fragment() {
 
     private fun setupView() {
         activity?.window?.let { window ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                window.insetsController?.hide(WindowInsets.Type.statusBars())
-            } else {
-                window.setFlags(
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN
-                )
+            WindowCompat.setDecorFitsSystemWindows(window, true)
+            WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
+                controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
             }
+            activity?.actionBar?.hide()
+            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green2)
         }
-        (activity as? AppCompatActivity)?.supportActionBar?.hide()
     }
 
     private fun setupAction() {
@@ -245,4 +244,5 @@ class SettingsFragment : Fragment() {
             }
         }
     }
+
 }
