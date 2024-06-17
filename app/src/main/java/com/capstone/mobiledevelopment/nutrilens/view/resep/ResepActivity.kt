@@ -43,9 +43,9 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.BufferedReader
 import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
+import java.io.InputStreamReader
 
 class ResepActivity : AppCompatActivity() {
 
@@ -297,7 +297,7 @@ class ResepActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             progressBar.visibility = View.VISIBLE
             val loadedList = withContext(Dispatchers.IO) {
-                getRecipeDataFromUrl()
+                getRecipeDataFromAsset()
             }
             resepList = loadedList
             loadMoreData()
@@ -305,16 +305,11 @@ class ResepActivity : AppCompatActivity() {
         }
     }
 
-    private fun getRecipeDataFromUrl(): List<ResepItem> {
-        val urlString = "https://nutrilensai.github.io/datadummy/datarecipe.json"
-        var jsonString: String
+    private fun getRecipeDataFromAsset(): List<ResepItem> {
+        val jsonString: String
         try {
-            val url = URL(urlString)
-            val connection = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "GET"
-            connection.connect()
-
-            jsonString = connection.inputStream.bufferedReader().use { it.readText() }
+            val inputStream = assets.open("datarecipe.json")
+            jsonString = inputStream.bufferedReader().use { it.readText() }
         } catch (ioException: IOException) {
             ioException.printStackTrace()
             return emptyList()
@@ -325,4 +320,5 @@ class ResepActivity : AppCompatActivity() {
         val recipeData: RecipeData = gson.fromJson(jsonString, recipeType)
         return recipeData.recipeData
     }
+
 }
