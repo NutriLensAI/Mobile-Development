@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:background="#F5F5F5">
 
+        <!-- Background Hijau -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/headerLayout"
             android:layout_width="match_parent"
@@ -24,18 +25,20 @@
 
             <TextView
                 android:id="@+id/tv_dicoding"
-                android:layout_width="165dp"
-                android:layout_height="45dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_black"
                 android:text="Info Sleep"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="32sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintBottom_toTopOf="@id/appNameTextView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.152"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.22" />
 
             <TextView
                 android:id="@+id/appNameTextView"
@@ -48,37 +51,151 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.255"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_dicoding" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.684" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Clock TextView -->
-        <TextView
-            android:id="@+id/clockTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <!-- ScrollView for content -->
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:padding="16dp"
-            android:text="Sleep count\nPress the button to choose what hour you awake"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@id/scheduleButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/headerLayout" />
-
-        <Button
-            android:id="@+id/scheduleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/green"
-            android:text="Set Sleep Time"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/clockTextView" />
+            app:layout_constraintTop_toBottomOf="@id/headerLayout">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/clockTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="Sleep count\nPress the button to choose what hour you awake"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/scheduleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="@color/green"
+                    android:text="Set Sleep Time"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Informasi Tidur yang Cukup"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Tidur yang cukup sangat penting untuk menjaga kesehatan tubuh. Orang dewasa disarankan untuk tidur antara 7-9 jam setiap malam. Berikut adalah beberapa informasi mengenai pentingnya tidur dan tips untuk mendapatkan tidur yang berkualitas." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Manfaat Tidur yang Cukup"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="1. Memperbaiki fungsi otak: Tidur membantu memperkuat ingatan dan meningkatkan konsentrasi serta produktivitas." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="2. Meningkatkan kesehatan mental: Tidur yang cukup dapat membantu mengurangi risiko gangguan mental seperti depresi dan kecemasan." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="3. Meningkatkan sistem kekebalan tubuh: Tidur yang cukup dapat memperkuat sistem kekebalan tubuh, sehingga tubuh lebih tahan terhadap penyakit." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Tips untuk Mendapatkan Tidur yang Berkualitas"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="1. Cobalah untuk tidur dan bangun pada waktu yang sama setiap hari." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="2. Hindari konsumsi kafein dan makanan berat sebelum tidur." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="3. Buatlah suasana tidur yang nyaman, seperti mematikan lampu dan menjaga suhu ruangan yang sejuk." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="4. Hindari penggunaan gadget sebelum tidur karena cahaya biru dapat mengganggu kualitas tidur." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="5. Lakukan aktivitas fisik secara teratur untuk membantu tubuh lebih mudah tidur pada malam hari." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="6. Hindari tidur siang terlalu lama agar tidak mengganggu tidur malam." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="7. Jika sulit tidur, cobalah teknik relaksasi seperti meditasi atau pernapasan dalam sebelum tidur." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="8. Pastikan kasur dan bantal Anda nyaman dan mendukung postur tubuh yang baik selama tidur." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Mengikuti tips ini dapat membantu Anda mendapatkan tidur yang berkualitas dan menjaga kesehatan tubuh secara keseluruhan. Pastikan untuk menjaga pola tidur yang konsisten dan hindari kebiasaan yang dapat mengganggu tidur Anda." />
+
+            </LinearLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
