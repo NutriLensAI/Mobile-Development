@@ -71,9 +71,9 @@ class HasilMakananActivity : AppCompatActivity() {
         val lunchButton: ImageButton = findViewById(R.id.lunch_button)
         val dinnerButton: ImageButton = findViewById(R.id.dinner_button)
 
-        breakfastButton.setOnClickListener { addFoodToMeal("breakfast") }
-        lunchButton.setOnClickListener { addFoodToMeal("lunch") }
-        dinnerButton.setOnClickListener { addFoodToMeal("dinner") }
+        breakfastButton.setOnClickListener { addFoodToMeal("breakfasts") }
+        lunchButton.setOnClickListener { addFoodToMeal("lunchs") }
+        dinnerButton.setOnClickListener { addFoodToMeal("dinners") }
 
         val viewIngredientsButton: Button = findViewById(R.id.btn_view_ingredients)
         viewIngredientsButton.setOnClickListener { viewIngredients() }
