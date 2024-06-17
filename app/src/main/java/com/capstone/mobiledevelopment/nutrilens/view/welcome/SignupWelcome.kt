@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.view.signup.SignupActivity
@@ -26,5 +28,18 @@ class SignupWelcome : AppCompatActivity() {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
+        setupView()
+    }
+
+    private fun setupView() {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
+        }
+        supportActionBar?.hide()
+
+        // Set status bar color to green
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green2)
     }
 }

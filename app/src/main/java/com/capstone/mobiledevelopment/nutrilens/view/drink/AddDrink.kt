@@ -36,7 +36,7 @@ class AddDrink : AppCompatActivity() {
         supportActionBar?.hide()
 
         // Set status bar color to green
-        window.statusBarColor = ContextCompat.getColor(this, R.color.green)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green2)
     }
 
     private fun setupListeners() {

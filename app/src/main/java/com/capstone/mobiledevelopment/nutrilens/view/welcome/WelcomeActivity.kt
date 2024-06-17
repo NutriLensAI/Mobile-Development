@@ -10,6 +10,8 @@ import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.pref.UserModel
@@ -76,16 +78,15 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
         }
         supportActionBar?.hide()
+
+        // Set status bar color to green
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
     }
 
     private fun setupAction() {

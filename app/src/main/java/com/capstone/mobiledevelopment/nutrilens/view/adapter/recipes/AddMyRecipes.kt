@@ -5,6 +5,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -34,6 +36,7 @@ class AddMyRecipes : AppCompatActivity() {
         btnSave.setOnClickListener {
             addRecipeToDatabase()
         }
+        setupView()
     }
 
     private fun addRecipeToDatabase() {
@@ -61,5 +64,17 @@ class AddMyRecipes : AppCompatActivity() {
         } else {
             Log.w("AddMyRecipes", "Title, Ingredients, or Steps are empty")
         }
+    }
+
+    private fun setupView() {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+            controller.isAppearanceLightStatusBars =
+                true // Optional: Set status bar content to dark
+        }
+        supportActionBar?.hide()
+
+        // Set status bar color to green
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green2)
     }
 }
