@@ -87,6 +87,7 @@ dependencies {
     annotationProcessor(libs.compiler)
 
     //retrofit api
+    implementation(libs.gson)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
@@ -104,9 +105,6 @@ dependencies {
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.camera.extensions)
 
-    //circle progress
-    implementation(libs.circleprogress)
-
     //android Image Cropper
     implementation(libs.android.image.cropper)
 
@@ -117,10 +115,5 @@ dependencies {
     //room
     implementation(libs.androidx.room.ktx)
     ksp(libs.room.compiler)
-
-    //paging
-    implementation(libs.androidx.paging.runtime.ktx)
-    implementation(libs.androidx.room.paging)
-    implementation(libs.gson)
 
 }
