@@ -12,8 +12,10 @@ import com.capstone.mobiledevelopment.nutrilens.view.resep.RecipeData
 import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -80,7 +82,7 @@ class HasilMakananViewModel(
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val recipes = getRecipeDataFromUrl()
+                val recipes = withContext(Dispatchers.IO) { getRecipeDataFromUrl() }
                 _recipes.postValue(recipes)
             } catch (e: Exception) {
             } finally {
@@ -89,7 +91,7 @@ class HasilMakananViewModel(
         }
     }
 
-    private suspend fun getRecipeDataFromUrl(): List<ResepItem> {
+    private fun getRecipeDataFromUrl(): List<ResepItem> {
         val urlString = "https://nutrilensai.github.io/datadummy/datarecipe.json"
         var jsonString: String
         try {
