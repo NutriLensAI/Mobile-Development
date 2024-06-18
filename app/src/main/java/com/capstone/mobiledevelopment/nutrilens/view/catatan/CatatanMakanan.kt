@@ -221,6 +221,10 @@ class CatatanMakanan : AppCompatActivity() {
                 viewModel.fetchAllMeals(token)
             }
         }
+
+        viewModel.allMeals.observe(this) {
+            setupToggleButtonGroup() // Ensure toggle button group setup runs each time the data changes
+        }
     }
 
     private fun setupFab() {

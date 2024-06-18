@@ -51,14 +51,14 @@ class DinnerFragment : Fragment() {
             dinner.total?.carbs ?: 0.0,
             dinner.total?.fat ?: 0.0,
             dinner.total?.prot ?: 0.0,
-            dinner.total?.calories ?: 0.0,
+            (dinner.total?.calories ?: 0.0).toInt().toDouble(),
             dinner.data?.map {
                 FoodItem.FoodDetail(
                     it?.foodName ?: "",
                     it?.carbohydrate ?: 0.0,
                     it?.fat ?: 0.0,
                     it?.proteins ?: 0.0,
-                    it?.calories ?: 0.0
+                    (it?.calories ?: 0.0).toInt().toDouble()
                 )
             }?.toMutableList() ?: mutableListOf()
         )
