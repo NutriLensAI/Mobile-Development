@@ -15,14 +15,13 @@ import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCountDao
 import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepDatabase
 import com.capstone.mobiledevelopment.nutrilens.data.repository.StepRepository
-import io.data2viz.charts.chart.chart
-import io.data2viz.charts.chart.discrete
-import io.data2viz.charts.chart.mark.bar
-import io.data2viz.charts.chart.quantitative
-import io.data2viz.viz.VizContainerView
+import com.capstone.mobiledevelopment.nutrilens.view.utils.customview.StepChart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class InfoStepsFragment : Fragment() {
 
@@ -67,44 +66,39 @@ class InfoStepsFragment : Fragment() {
     private fun loadStepData(view: View) {
         lifecycleScope.launch {
             val dailySteps = withContext(Dispatchers.IO) {
-                stepRepository.getDailySteps().value ?: emptyList()
+                stepRepository.getDailySteps().value
             }
-            setupChart(view, dailySteps)
+            if (dailySteps.isNullOrEmpty()) {
+                // Use placeholder data
+                val placeholderData = listOf(
+                    StepCount(0, 3000, System.currentTimeMillis() - 86400000 * 6), // 6 days ago
+                    StepCount(0, 5000, System.currentTimeMillis() - 86400000 * 5), // 5 days ago
+                    StepCount(0, 7000, System.currentTimeMillis() - 86400000 * 4), // 4 days ago
+                    StepCount(0, 6000, System.currentTimeMillis() - 86400000 * 3), // 3 days ago
+                    StepCount(0, 8000, System.currentTimeMillis() - 86400000 * 2), // 2 days ago
+                    StepCount(0, 4000, System.currentTimeMillis() - 86400000 * 1), // 1 day ago
+                    StepCount(0, 9000, System.currentTimeMillis()) // today
+                )
+                loadStepChart(view, placeholderData.map {
+                    StepCountDao.DailySteps(it.stepCount, SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(
+                        Date(it.date)
+                    ))
+                })
+            } else {
+                loadStepChart(view, dailySteps)
+            }
         }
     }
 
-    private fun setupChart(view: View, dailySteps: List<StepCountDao.DailySteps>) {
-        val stepData = dailySteps.map {
-            StepCount(it.day.toInt(), it.steps)
-        }
+    private fun loadStepChart(view: View, dailySteps: List<StepCountDao.DailySteps>) {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-        // Create and configure the chart
-        val chartContainer = view.findViewById<FrameLayout>(R.id.chartContainer)
-        val vc = VizContainerView(requireContext()).apply {
-            layoutParams = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT
-            )
-        }
-
-        vc.chart(stepData) {
-            title = "Monthly Step Count"
-
-            // Create a discrete dimension for the formatted month
-            val month = discrete({ domain.formattedMonth }) {
-                name = "Month"
-            }
-
-            // Create a continuous numeric dimension for the step count
-            val steps = quantitative({ domain.stepCount.toDouble() }) {
-                name = "Steps Taken"
-            }
-
-            // Using a discrete dimension for the X-axis and a continuous one for the Y-axis
-            bar(month, steps)
-        }
-
-        chartContainer.removeAllViews()
-        chartContainer.addView(vc)
+        // Create and add the chart to the container
+        val stepChart = StepChart(requireContext(), dailySteps.map {
+            val date = dateFormat.parse(it.day)?.time ?: 0L
+            StepCount(0, it.steps, date)
+        })
+        view.findViewById<FrameLayout>(R.id.chartContainer).removeAllViews()
+        view.findViewById<FrameLayout>(R.id.chartContainer).addView(stepChart)
     }
 }
