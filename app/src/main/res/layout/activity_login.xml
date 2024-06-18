@@ -144,7 +144,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:text="@string/signup"
-        android:textColor="@color/navy"
+        android:textColor="#36383A"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

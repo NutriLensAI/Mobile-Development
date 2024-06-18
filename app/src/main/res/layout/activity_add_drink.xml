@@ -69,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name_of_the_drink"
+            android:textColor="#36383A"
             android:inputType="text"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -91,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/amount_ml"
+            android:textColor="#36383A"
             android:inputType="number"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -126,6 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/sugar_amount"
+            android:textColor="#36383A"
             android:inputType="number"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -164,6 +167,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:textColor="#36383A"
                 android:text="@string/satu_gelas_setara_dengan_200_ml_air"
                 android:textSize="18sp" />
 
@@ -172,23 +176,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:textColor="#36383A"
                 android:text="@string/minum_air_yang_cukup_sangat_penting_untuk_menjaga_kesehatan_tubuh_air_memiliki_banyak_manfaat_termasuk_menjaga_suhu_tubuh_melancarkan_pencernaan_mengangkut_nutrisi_dan_mengeluarkan_racun_dari_tubuh_namun_berapa_jumlah_air_yang_cukup_untuk_diminum_setiap_hari" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="8dp"
                 android:text="@string/menurut_institute_of_medicine_iom_rekomendasi_jumlah_konsumsi_air_harian_adalah_sebagai_berikut" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
                 android:text="@string/_1_untuk_pria_sekitar_3_7_liter_13_gelas_per_hari" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="8dp"
                 android:text="@string/_2_untuk_wanita_sekitar_2_7_liter_9_gelas_per_hari" />
 
@@ -196,6 +204,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:textColor="#36383A"
                 android:text="@string/faktor_faktor_yang_mempengaruhi_kebutuhan_air"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -204,16 +213,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
+                android:textColor="#36383A"
                 android:text="@string/_1_aktivitas_fisik_orang_yang_aktif_secara_fisik_atau_berolahraga_membutuhkan_lebih_banyak_air_untuk_menggantikan_cairan_yang_hilang_melalui_keringat" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
                 android:text="@string/_2_lingkungan_cuaca_panas_atau_lembab_meningkatkan_kebutuhan_tubuh_akan_cairan_untuk_mendinginkan_tubuh" />
 
             <TextView
                 android:layout_width="match_parent"
+                android:textColor="#36383A"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:text="@string/_3_kondisi_kesehatan_kondisi_seperti_demam_diare_atau_muntah_meningkatkan_kebutuhan_cairan_tubuh" />
@@ -221,12 +233,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="8dp"
                 android:text="4. Kehamilan atau Menyusui: Wanita hamil atau menyusui membutuhkan lebih banyak cairan untuk mendukung kebutuhan janin atau produksi ASI." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="8dp"
                 android:text="@string/tips_untuk_meningkatkan_asupan_air"
                 android:textSize="18sp"
@@ -235,36 +249,42 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
                 android:text="@string/_1_bawa_botol_air_ke_mana_pun_anda_pergi_agar_mudah_mengakses_air_setiap_saat" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
                 android:text="@string/_2_tambahkan_rasa_pada_air_dengan_potongan_buah_atau_daun_mint_untuk_membuatnya_lebih_menarik" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
                 android:text="@string/_3_tetapkan_tujuan_harian_untuk_minum_air_dan_gunakan_aplikasi_penghitung_air_untuk_melacak_asupan_harian_anda" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
                 android:text="@string/_4_minum_segelas_air_sebelum_dan_sesudah_makan_untuk_membantu_pencernaan_dan_mengontrol_asupan_kalori" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
                 android:text="@string/_5_gantilah_minuman_manis_atau_berkafein_dengan_air_untuk_mengurangi_asupan_gula_dan_kalori" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#36383A"
                 android:layout_marginBottom="16dp"
                 android:text="@string/meningkatkan_asupan_air_dapat_membantu_anda_merasa_lebih_segar_dan_berenergi_sepanjang_hari_jadikan_minum_air_sebagai_bagian_dari_rutinitas_harian_anda_untuk_menjaga_kesehatan_dan_kebugaran_tubuh" />
 

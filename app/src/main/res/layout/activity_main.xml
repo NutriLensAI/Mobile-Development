@@ -83,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Macros"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="bold" />
+                android:textColor="#36383A"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TextView
                 android:id="@+id/totalCalories"
@@ -92,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:paddingTop="8dp"
+                android:textColor="#36383A"
                 android:text="0/0 Calories"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
