@@ -1,3 +1,4 @@
+// StepCountDao.kt
 package com.capstone.mobiledevelopment.nutrilens.data.database.step
 
 import androidx.lifecycle.LiveData
@@ -29,4 +30,3 @@ interface StepCountDao {
         val month: String
     )
 }
-

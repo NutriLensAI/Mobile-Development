@@ -1,3 +1,4 @@
+// StepRepository.kt
 package com.capstone.mobiledevelopment.nutrilens.data.repository
 
 import androidx.lifecycle.LiveData
@@ -29,5 +30,3 @@ class StepRepository(private val stepCountDao: StepCountDao) {
         }
     }
 }
-
-
