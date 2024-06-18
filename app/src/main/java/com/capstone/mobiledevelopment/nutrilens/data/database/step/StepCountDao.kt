@@ -18,12 +18,14 @@ interface StepCountDao {
     @Query("SELECT SUM(step_count) FROM step_counts WHERE date >= :start AND date <= :end")
     suspend fun getSumStepCounts(start: Long, end: Long): Int
 
-    @Query("""
+    @Query(
+        """
         SELECT SUM(step_count) as steps, strftime('%w', date / 1000, 'unixepoch') as day 
         FROM step_counts 
         WHERE date BETWEEN :startOfWeek AND :endOfWeek 
         GROUP BY day
-    """)
+    """
+    )
     fun getWeeklySteps(startOfWeek: Long, endOfWeek: Long): LiveData<List<WeeklySteps>>
 
     @Query("DELETE FROM step_counts WHERE date < :lastSundayMidnight")

@@ -1,23 +1,8 @@
 <resources>
     <string name="app_name">NutriLens</string>
-    <string name="signup">Don\'t have an account? Sign Up.</string>
-    <string name="login">Masuk</string>
-    <string name="message_welcome_page">Health Innovation: Empowering Vulnerable Communities for Health and Well-being</string>
-    <string name="title_welcome_page">Selamat Datang Di NutriLens</string>
-    <string name="title_signup_page">Lengkapi data dirimu di bawah ini ya</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="message_login_page">Masukkan dulu datamu ya</string>
-    <string name="title_login_page">Sudah Siap Untuk Memulai Perubahan Di Hidup Kamu?</string>
+    <string name="message_welcome_page">Inovasi Kesehatan: Memberdayakan Masyarakat Rentan untuk Kesehatan dan Kesejahteraan</string>
     <string name="logout">Keluar</string>
-    <string name="judul">Judul story</string>
-    <string name="deskrip">Deskripsi story</string>
     <string name="gallery">Galeri</string>
-    <string name="camera">Kamera</string>
-    <string name="empty_image_warning">"Gambar Kosong "</string>
-    <string name="name">Nama</string>
-    <string name="password_error">Password tidak boleh kurang dari 8 karakter Password must not be less than 8 characters</string>
-    <string name="upload">Unggah</string>
     <string name="logout_message">Yakin ingin keluar ?</string>
     <string name="yes">Ya</string>
     <string name="success_dialog_message">Akun dengan %1$s sudah jadi nih. Yuk Kita Masuk Ke Aplikasi.</string>
@@ -29,30 +14,72 @@
     <string name="failure_dialog_button">Registrasi Ulang</string>
     <string name="login_success">login Berhasil</string>
     <string name="login_failed">Login Gagal</string>
-    <string name="upload_success">Upload Berhasil</string>
-    <string name="upload_failure">Upload Gagal</string>
-    <string name="tidak">Tidak</string>
-    <string name="ya">Ya</string>
-    <string name="greeting">Halo %1$s,</string>
-    <string name="location_enabled">Anda sedang melihat berita dan cerita sekitar lokasi anda</string>
-    <string name="location_disabled">Anda sedang melihat berita dan cerita di mana saja</string>
-    <string name="location_now">Pilih untuk mengganti lokasi</string>
-    <string name="togglebutton" translatable="false">ToggleButton</string>
-    <string name="dont_have_an_account">Don\'t have an account?</string>
-    <string name="sugar">Gula</string>
     <string name="info" translatable="false">info\n</string>
-    <string name="cholesterol">Kolesterol</string>
-    <string name="steps" translatable="false">steps\n</string>
-    <string name="drink">Jumlah Air</string>
     <string name="user_avatar" translatable="false">user_avatar</string>
     <string name="profile_image" translatable="false">profile_image</string>
     <string name="menu_image" translatable="false">menu_image\n</string>
-    <string name="close" translatable="false">close\n</string>
+    <string name="close" translatable="false">Tutup\n</string>
     <string name="flash" translatable="false">Flash</string>
     <string name="capture">Foto</string>
     <string name="makanan_image_desc" translatable="false">makanan_image_desc\n</string>
     <string name="lunch">Makan Siang</string>
+    <string name="dinner">Makan Malam</string>
+    <string name="breakfast">Makan Pagi</string>
+    <string name="translate">Bahasa</string>
+    <string name="resepmain">Recipes</string>
+    <string name="nutrilens">NutriLens</string>
+    <string name="add_drink">Tambah Minuman</string>
+    <string name="satu_gelas_setara_dengan_200_ml_air">Satu gelas setara dengan 200 ml air.</string>
+    <string name="minum_air_yang_cukup_sangat_penting_untuk_menjaga_kesehatan_tubuh_air_memiliki_banyak_manfaat_termasuk_menjaga_suhu_tubuh_melancarkan_pencernaan_mengangkut_nutrisi_dan_mengeluarkan_racun_dari_tubuh_namun_berapa_jumlah_air_yang_cukup_untuk_diminum_setiap_hari">Minum air yang cukup sangat penting untuk menjaga kesehatan tubuh. Air memiliki banyak manfaat, termasuk menjaga suhu tubuh, melancarkan pencernaan, mengangkut nutrisi, dan mengeluarkan racun dari tubuh. Namun, berapa jumlah air yang cukup untuk diminum setiap hari?</string>
+    <string name="menurut_institute_of_medicine_iom_rekomendasi_jumlah_konsumsi_air_harian_adalah_sebagai_berikut">Menurut Institute of Medicine (IOM), rekomendasi jumlah konsumsi air harian adalah sebagai berikut:</string>
+    <string name="_1_untuk_pria_sekitar_3_7_liter_13_gelas_per_hari">1. Untuk pria: sekitar 3.7 liter (13 gelas) per hari.</string>
+    <string name="_2_untuk_wanita_sekitar_2_7_liter_9_gelas_per_hari">2. Untuk wanita: sekitar 2.7 liter (9 gelas) per hari.</string>
+    <string name="faktor_faktor_yang_mempengaruhi_kebutuhan_air">Faktor-faktor yang Mempengaruhi Kebutuhan Air:</string>
+    <string name="_1_aktivitas_fisik_orang_yang_aktif_secara_fisik_atau_berolahraga_membutuhkan_lebih_banyak_air_untuk_menggantikan_cairan_yang_hilang_melalui_keringat">1. Aktivitas Fisik: Orang yang aktif secara fisik atau berolahraga membutuhkan lebih banyak air untuk menggantikan cairan yang hilang melalui keringat.</string>
+    <string name="_2_lingkungan_cuaca_panas_atau_lembab_meningkatkan_kebutuhan_tubuh_akan_cairan_untuk_mendinginkan_tubuh">2. Lingkungan: Cuaca panas atau lembab meningkatkan kebutuhan tubuh akan cairan untuk mendinginkan tubuh.</string>
+    <string name="_3_kondisi_kesehatan_kondisi_seperti_demam_diare_atau_muntah_meningkatkan_kebutuhan_cairan_tubuh">3. Kondisi Kesehatan: Kondisi seperti demam, diare, atau muntah meningkatkan kebutuhan cairan tubuh.</string>
+    <string name="tips_untuk_meningkatkan_asupan_air">Tips untuk Meningkatkan Asupan Air:</string>
+    <string name="_1_bawa_botol_air_ke_mana_pun_anda_pergi_agar_mudah_mengakses_air_setiap_saat">1. Bawa botol air ke mana pun Anda pergi agar mudah mengakses air setiap saat.</string>
+    <string name="_2_tambahkan_rasa_pada_air_dengan_potongan_buah_atau_daun_mint_untuk_membuatnya_lebih_menarik">2. Tambahkan rasa pada air dengan potongan buah atau daun mint untuk membuatnya lebih menarik.</string>
+    <string name="_3_tetapkan_tujuan_harian_untuk_minum_air_dan_gunakan_aplikasi_penghitung_air_untuk_melacak_asupan_harian_anda">3. Tetapkan tujuan harian untuk minum air dan gunakan aplikasi penghitung air untuk melacak asupan harian Anda.</string>
+    <string name="_4_minum_segelas_air_sebelum_dan_sesudah_makan_untuk_membantu_pencernaan_dan_mengontrol_asupan_kalori">4. Minum segelas air sebelum dan sesudah makan untuk membantu pencernaan dan mengontrol asupan kalori.</string>
+    <string name="_5_gantilah_minuman_manis_atau_berkafein_dengan_air_untuk_mengurangi_asupan_gula_dan_kalori">5. Gantilah minuman manis atau berkafein dengan air untuk mengurangi asupan gula dan kalori.</string>
+    <string name="meningkatkan_asupan_air_dapat_membantu_anda_merasa_lebih_segar_dan_berenergi_sepanjang_hari_jadikan_minum_air_sebagai_bagian_dari_rutinitas_harian_anda_untuk_menjaga_kesehatan_dan_kebugaran_tubuh">Meningkatkan asupan air dapat membantu Anda merasa lebih segar dan berenergi sepanjang hari. Jadikan minum air sebagai bagian dari rutinitas harian Anda untuk menjaga kesehatan dan kebugaran tubuh.</string>
+    <string name="sugar_amount">Jumlah gula</string>
+    <string name="amount_ml">Jumlah (ml)</string>
+    <string name="name_of_the_drink">Nama Minuman</string>
+    <string name="add_my_recipe">Tambah Resek Ku</string>
+    <string name="title">Judul Resep</string>
+    <string name="ingredients">Bahan - Bahan</string>
+    <string name="steps">Langkah - Langkah</string>
+    <string name="save">Simpan</string>
+    <string name="macros">Macros</string>
+    <string name="carbs">Carbs</string>
+    <string name="fat">Fat</string>
+    <string name="protein">Protein</string>
+    <string name="calories">Calories</string>
+    <string name="_0_g">0 g</string>
+    <string name="_0">0</string>
+    <string name="enter_food_data">Masukan Data Makanan</string>
+    <string name="morning">Pagi</string>
+    <string name="noon">Siang</string>
+    <string name="night">Malam</string>
+    <string name="drink">Minun</string>
+    <string name="extra_consum">Konsumsi Tambahan</string>
+    <string name="_0_ml">0 ml</string>
+    <string name="favorite">Kesukaan</string>
+    <string name="title_recipe">Judul Resep</string>
+    <string name="view_ingredients">Lihat Bahan - Bahan</string>
 
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="sugar_units">
+        <item>Grams</item>
+        <item>Tablespoons</item>
+    </string-array>
 
     <string-array name="meal_types">
         <item>Breakfast</item>
@@ -66,32 +93,4 @@
         <item>Active</item>
         <item>Very Active</item>
     </string-array>
-
-    <string name="dinner">Makan Malam</string>
-    <string name="breakfast">Makan Pagi</string>
-    <string name="take_a_picture">Ambil Foto</string>
-    <string name="translate">Bahasa</string>
-    <string name="resepmain">Recipes</string>
-    <string name="signup2">Daftar</string>
-    <string name="weight_hint">Weight</string>
-    <string name="height_hint">Height</string>
-    <string name="age_hint">Age</string>
-    <string name="sugar_info_image">"info sugar "</string>
-    <string name="steps_info_image">info steps</string>
-    <string name="drink_info_image">info minum\n</string>
-    <string name="cholesterol_info_image">info kolesterol\n</string>
-
-    <string-array name="gender_options">
-        <item>Male</item>
-        <item>Female</item>
-    </string-array>
-
-    <string-array name="sugar_units">
-        <item>Grams</item>
-        <item>Tablespoons</item>
-    </string-array>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="favorite">favorite\n</string>
-    <string name="guest">Guest Users</string>
 </resources>

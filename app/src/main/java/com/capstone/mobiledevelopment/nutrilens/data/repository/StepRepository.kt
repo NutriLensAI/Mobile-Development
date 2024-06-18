@@ -15,7 +15,10 @@ class StepRepository(private val stepCountDao: StepCountDao) {
         stepCountDao.insert(stepCount)
     }
 
-    fun getWeeklySteps(startOfWeek: Long, endOfWeek: Long): LiveData<List<StepCountDao.WeeklySteps>> {
+    fun getWeeklySteps(
+        startOfWeek: Long,
+        endOfWeek: Long
+    ): LiveData<List<StepCountDao.WeeklySteps>> {
         return stepCountDao.getWeeklySteps(startOfWeek, endOfWeek)
     }
 

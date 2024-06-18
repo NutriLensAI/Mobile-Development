@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Macros"
+                android:text="@string/macros"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold" />
 
@@ -62,7 +62,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Carbs"
+                        android:text="@string/carbs"
                         android:textColor="@android:color/holo_blue_light"
                         android:textSize="14sp" />
 
@@ -114,7 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Fat"
+                        android:text="@string/fat"
                         android:textColor="@android:color/holo_orange_light"
                         android:textSize="14sp" />
 
@@ -168,7 +168,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Protein"
+                        android:text="@string/protein"
                         android:textColor="@android:color/holo_red_light"
                         android:textSize="14sp" />
 
@@ -231,7 +231,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/green2"
-            android:text="Pagi" />
+            android:text="@string/morning" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_lunch"
@@ -239,7 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/green2"
-            android:text="Siang" />
+            android:text="@string/noon" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dinner"
@@ -247,7 +247,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/green2"
-            android:text="Malam" />
+            android:text="@string/night" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_drink"
@@ -255,7 +255,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/green2"
-            android:text="Drink" />
+            android:text="@string/drink" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <!-- Include Custom Bottom Navigation Layout -->
@@ -273,7 +273,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Input Data Makan"
+        android:text="@string/enter_food_data"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/macrosCard"
         app:layout_constraintTop_toBottomOf="@+id/macrosCard" />
@@ -303,7 +303,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:text="Breakfast"
+                android:text="@string/breakfast"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -321,7 +321,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Carbs"
+                    android:text="@string/carbs"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#33AFFF"
                     android:textSize="18sp" />
@@ -331,7 +331,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Fat"
+                    android:text="@string/fat"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FFA500"
                     android:textSize="18sp" />
@@ -341,7 +341,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Protein"
+                    android:text="@string/protein"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF6347"
                     android:textSize="18sp" />
@@ -351,7 +351,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Calories"
+                    android:text="@string/calories"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -369,7 +369,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 g"
+                    android:text="@string/_0_g"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -379,7 +379,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 g"
+                    android:text="@string/_0_g"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -389,7 +389,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 g"
+                    android:text="@string/_0_g"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -399,7 +399,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0"
+                    android:text="@string/_0"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -411,7 +411,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:text="Lunch"
+                android:text="@string/lunch"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -429,7 +429,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Carbs"
+                    android:text="@string/carbs"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#33AFFF"
                     android:textSize="18sp" />
@@ -439,7 +439,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Fat"
+                    android:text="@string/fat"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FFA500"
                     android:textSize="18sp" />
@@ -449,7 +449,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Protein"
+                    android:text="@string/protein"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF6347"
                     android:textSize="18sp" />
@@ -459,7 +459,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Calories"
+                    android:text="@string/calories"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -477,7 +477,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 g"
+                    android:text="@string/_0_g"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -487,7 +487,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 g"
+                    android:text="@string/_0_g"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -497,7 +497,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 g"
+                    android:text="@string/_0_g"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -507,7 +507,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0"
+                    android:text="@string/_0"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -519,7 +519,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:text="Dinner"
+                android:text="@string/dinner"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -537,7 +537,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Carbs"
+                    android:text="@string/carbs"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#33AFFF"
                     android:textSize="18sp" />
@@ -547,7 +547,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Fat"
+                    android:text="@string/fat"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FFA500"
                     android:textSize="18sp" />
@@ -557,7 +557,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Protein"
+                    android:text="@string/protein"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF6347"
                     android:textSize="18sp" />
@@ -567,7 +567,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Calories"
+                    android:text="@string/calories"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -585,7 +585,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 g"
+                    android:text="@string/_0_g"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -595,7 +595,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 g"
+                    android:text="@string/_0_g"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -605,7 +605,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 g"
+                    android:text="@string/_0_g"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -615,7 +615,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0"
+                    android:text="@string/_0"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -627,7 +627,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:text="Konsumsi Tambahan"
+                android:text="@string/extra_consum"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -645,7 +645,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Drink"
+                    android:text="@string/amount_ml"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#33AFFF"
                     android:textSize="18sp" />
@@ -655,7 +655,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Sugar"
+                    android:text="@string/sugar_amount"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FFA500"
                     android:textSize="18sp" />
@@ -674,7 +674,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 ml"
+                    android:text="@string/_0_ml"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -684,7 +684,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0 g"
+                    android:text="@string/_0_g"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
             </LinearLayout>

@@ -39,7 +39,7 @@
             android:id="@+id/appNameTextView"
             android:layout_width="187dp"
             android:layout_height="48dp"
-            android:text="NutriLens"
+            android:text="@string/nutriLens"
             android:textColor="@android:color/white"
             android:textSize="42sp"
             android:textStyle="bold"
@@ -136,7 +136,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Breakfast"
+                        android:text="@string/breakfast"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
 
@@ -158,7 +158,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Lunch"
+                        android:text="@string/lunch"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
 
@@ -180,7 +180,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dinner"
+                        android:text="@string/dinner"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
             </LinearLayout>
@@ -245,7 +245,7 @@
                         android:id="@+id/tv_carbs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Carbs"
+                        android:text="@string/carbs"
                         android:textColor="@android:color/holo_blue_dark"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -254,7 +254,7 @@
                         android:id="@+id/tv_carbs_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="14 g"
+                        android:text="@string/_0_g"
                         android:textColor="@android:color/holo_blue_dark"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -271,7 +271,7 @@
                         android:id="@+id/tv_fat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fat"
+                        android:text="@string/fat"
                         android:textColor="@android:color/holo_orange_dark"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -280,7 +280,7 @@
                         android:id="@+id/tv_fat_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="14 g"
+                        android:text="@string/_0_g"
                         android:textColor="@android:color/holo_orange_dark"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -297,7 +297,7 @@
                         android:id="@+id/tv_protein"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Protein"
+                        android:text="@string/protein"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -306,91 +306,13 @@
                         android:id="@+id/tv_protein_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="14 g"
+                        android:text="@string/_0_g"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_nutritional_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Nutritional Info"
-                android:textSize="16sp"
-                android:textStyle="bold" />
 
-            <GridLayout
-                android:id="@+id/ll_nutritional_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:columnCount="2"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/tv_carbs_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:padding="4dp"
-                    android:text="Carbs" />
-
-                <TextView
-                    android:id="@+id/tv_carbs_value_grid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="10 gr" />
-
-                <TextView
-                    android:id="@+id/tv_protein_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:padding="4dp"
-                    android:text="Protein" />
-
-                <TextView
-                    android:id="@+id/tv_protein_value_grid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="10 gr" />
-
-                <TextView
-                    android:id="@+id/tv_fat_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:padding="4dp"
-                    android:text="Fat" />
-
-                <TextView
-                    android:id="@+id/tv_fat_value_grid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="10 gr" />
-
-                <TextView
-                    android:id="@+id/tv_calories_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:padding="4dp"
-                    android:text="Calories" />
-
-                <TextView
-                    android:id="@+id/tv_calories_value_grid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="10 kcal" />
-
-            </GridLayout>
 
 
             <!-- Tombol View Ingredients -->
@@ -400,7 +322,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/green"
-                android:text="View ingredients"
+                android:text="@string/view_ingredients"
                 android:textColor="@android:color/white" />
 
             <!-- RecyclerView untuk daftar makanan -->

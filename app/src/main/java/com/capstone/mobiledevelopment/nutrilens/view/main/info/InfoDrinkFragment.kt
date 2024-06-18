@@ -9,20 +9,7 @@ import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import com.capstone.mobiledevelopment.nutrilens.R
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class InfoDrinkFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +27,9 @@ class InfoDrinkFragment : Fragment() {
     private fun setupView() {
         activity?.window?.let { window ->
             WindowCompat.setDecorFitsSystemWindows(window, true)
-            WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-                controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+            WindowCompat.getInsetsController(window, window.decorView).let { controller ->
+                controller.isAppearanceLightStatusBars =
+                    true // Optional: Set status bar content to dark
             }
             activity?.actionBar?.hide()
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green2)
@@ -50,12 +38,6 @@ class InfoDrinkFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            InfoDrinkFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = InfoDrinkFragment()
     }
 }

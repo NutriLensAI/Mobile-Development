@@ -2,10 +2,7 @@ package com.capstone.mobiledevelopment.nutrilens.view.welcome
 
 import android.content.Intent
 import android.graphics.drawable.AnimatedVectorDrawable
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
 import android.widget.TextView

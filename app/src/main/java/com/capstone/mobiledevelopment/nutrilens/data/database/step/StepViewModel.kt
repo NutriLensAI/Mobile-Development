@@ -40,7 +40,8 @@ class StepViewModel(private val stepRepository: StepRepository) : ViewModel() {
     }
 }
 
-class StepViewModelFactory(private val stepRepository: StepRepository) : ViewModelProvider.NewInstanceFactory() {
+class StepViewModelFactory(private val stepRepository: StepRepository) :
+    ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(StepViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
