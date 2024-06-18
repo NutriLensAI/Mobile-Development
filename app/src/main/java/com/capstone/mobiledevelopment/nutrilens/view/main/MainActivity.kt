@@ -159,7 +159,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             userProfile?.let {
                 val calculatedCalories = Utils.calculateTotalCalories(it)
                 checkUserProfileData(it)
-                binding.totalCalories.text = "$calculatedCalories Calories"
+                // Assuming you have a method to get the actual calories
+                val totalCalories = viewModel.macros.value?.totalCalories ?: 0.0
+                binding.totalCalories.text = "${formatDecimal(totalCalories)}/$calculatedCalories Calories"
             }
         }
 

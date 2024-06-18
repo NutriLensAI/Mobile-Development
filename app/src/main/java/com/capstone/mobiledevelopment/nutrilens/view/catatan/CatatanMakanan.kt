@@ -81,7 +81,8 @@ class CatatanMakanan : AppCompatActivity() {
         }
 
         viewModel.totalCalories.observe(this) { totalCalories ->
-            binding.totalCalories.text = "$totalCalories Calories"
+            val calculatedCalories = viewModel.totalCalories.value ?: 2400
+            binding.totalCalories.text = "${formatDecimal(totalCalories?.toDouble() ?: 0.0)}/$calculatedCalories Calories"
         }
 
         viewModel.isLoading.observe(this) { isLoading ->
@@ -90,12 +91,13 @@ class CatatanMakanan : AppCompatActivity() {
     }
 
     private fun updateMealsUI(meals: UserFoodResponse) {
-        val totalCalories = viewModel.totalCalories.value ?: 2400
+        val calculatedCalories = viewModel.totalCalories.value ?: 2400
 
         // Calculate target grams for each macro
-        val targetProteinGrams = (totalCalories * 0.15 / 4).toInt()
-        val targetCarbsGrams = (totalCalories * 0.60 / 4).toInt()
-        val targetFatGrams = (totalCalories * 0.15 / 9).toInt()
+        val targetProteinGrams = (calculatedCalories * 0.15 / 4).toInt()
+        val targetCarbsGrams = (calculatedCalories * 0.60 / 4).toInt()
+        val targetFatGrams = (calculatedCalories * 0.15 / 9).toInt()
+
         // Update Breakfast
         meals.breakfast?.let { breakfast ->
             binding.breakfastCarbs.text = formatDecimal(breakfast.total?.carbs ?: 0.0)
@@ -128,8 +130,9 @@ class CatatanMakanan : AppCompatActivity() {
                 ((macros.totalFat ?: 0.0) * 100 / targetFatGrams).toInt()
             binding.proteinProgressBar.progress =
                 ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
+            val actualCalories = macros.totalCalories ?: 0.0
             binding.totalCalories.text =
-                "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
+                "${formatDecimal(actualCalories)}/$calculatedCalories Calories"
 
             binding.carbsValueTextView.text =
                 formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
