@@ -25,12 +25,13 @@
 
             <TextView
                 android:id="@+id/tv_dicoding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="224dp"
+                android:layout_height="63dp"
+                android:fontFamily="@font/roboto_black"
                 android:text="Info Steps"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="32sp"
+                android:textSize="45sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -43,17 +44,17 @@
                 android:id="@+id/appNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_black"
                 android:text="NutriLens"
                 android:textColor="@android:color/white"
-                android:textSize="42sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.255"
+                app:layout_constraintHorizontal_bias="0.126"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.684" />
-
+                app:layout_constraintVertical_bias="0.715" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- ScrollView for content -->

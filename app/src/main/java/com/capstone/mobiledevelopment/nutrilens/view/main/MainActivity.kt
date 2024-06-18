@@ -438,7 +438,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         supportActionBar?.hide()
 
         // Set status bar color to green
-        window.statusBarColor = ContextCompat.getColor(this, R.color.green2)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green)
     }
 
     private fun setupBottomNavigation() {
