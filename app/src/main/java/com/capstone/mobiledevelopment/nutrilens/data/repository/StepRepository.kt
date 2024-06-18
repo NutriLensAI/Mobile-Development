@@ -13,6 +13,9 @@ class StepRepository private constructor(
         stepCountDao.insert(stepCount)
     }
 
+    fun getDailySteps(): LiveData<List<StepCountDao.DailySteps>> {
+        return stepCountDao.getDailySteps()
+    }
     companion object {
         @Volatile
         private var instance: StepRepository? = null

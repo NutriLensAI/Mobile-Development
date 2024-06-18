@@ -9,4 +9,7 @@ data class StepCount(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "step_count") val stepCount: Int,
     @ColumnInfo(name = "date") val date: Long = System.currentTimeMillis()
-)
+) {
+    val formattedMonth: String
+        get() = java.text.SimpleDateFormat("MMM yyyy", java.util.Locale.getDefault()).format(java.util.Date(date))
+}

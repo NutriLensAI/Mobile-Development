@@ -323,7 +323,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             ),
             MenuItem(
                 "Sleep",
-                R.drawable.ic_cholesterol,
+                R.drawable.ic_sleep,
                 "$sleepCount sessions",
                 "Number of sleep sessions"
             )

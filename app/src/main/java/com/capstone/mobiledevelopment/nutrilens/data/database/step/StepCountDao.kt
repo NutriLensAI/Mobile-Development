@@ -16,4 +16,12 @@ interface StepCountDao {
 
     @Query("SELECT SUM(step_count) FROM step_counts WHERE date >= :start AND date <= :end")
     suspend fun getSumStepCounts(start: Long, end: Long): Int
+
+    @Query("SELECT SUM(step_count) as steps, date(date / 1000, 'unixepoch') as day FROM step_counts GROUP BY day")
+    fun getDailySteps(): LiveData<List<DailySteps>>
+
+    data class DailySteps(
+        val steps: Int,
+        val day: String
+    )
 }

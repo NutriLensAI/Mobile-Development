@@ -73,13 +73,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <ImageView
+                <FrameLayout
+                    android:id="@+id/chartContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginBottom="16dp"
-                    android:contentDescription="@string/steps_info_image"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_steps_image" />
+                    android:layout_height="300dp"
+                    android:layout_marginBottom="16dp" />
 
                 <TextView
                     android:layout_width="match_parent"
