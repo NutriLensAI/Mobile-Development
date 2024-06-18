@@ -230,7 +230,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/green2"
             android:text="Pagi" />
 
         <com.google.android.material.button.MaterialButton
@@ -238,7 +238,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/green2"
             android:text="Siang" />
 
         <com.google.android.material.button.MaterialButton
@@ -246,7 +246,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/green2"
             android:text="Malam" />
 
         <com.google.android.material.button.MaterialButton
@@ -254,7 +254,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/green2"
             android:text="Drink" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
