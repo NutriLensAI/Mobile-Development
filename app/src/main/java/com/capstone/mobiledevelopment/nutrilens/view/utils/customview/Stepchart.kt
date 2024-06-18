@@ -14,7 +14,7 @@ class StepChart(context: Context, stepData: List<StepCount>) : VizContainerView(
 
     private val chart: Chart<StepCount> = chart(stepData) {
         size = Size(800.0, 800.0)
-        title = "Monthly Step Count"
+        title = "Weekly Step Count"
 
         // Create a discrete dimension for the formatted month
         val month = discrete({ domain.formattedMonth })

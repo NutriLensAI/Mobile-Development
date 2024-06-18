@@ -63,16 +63,26 @@ class InfoStepsFragment : Fragment() {
     }
 
     private fun loadStepData(view: View) {
-        stepViewModel.monthlySteps.observe(viewLifecycleOwner, Observer { monthlySteps ->
-            loadStepChart(view, monthlySteps)
+        stepViewModel.getWeeklySteps().observe(viewLifecycleOwner, Observer { weeklySteps ->
+            loadStepChart(view, weeklySteps)
         })
     }
 
-    private fun loadStepChart(view: View, monthlySteps: List<StepCountDao.MonthlySteps>) {
-        val dateFormat = SimpleDateFormat("yyyy-MM", Locale.getDefault())
+    private fun loadStepChart(view: View, weeklySteps: List<StepCountDao.WeeklySteps>) {
+        val dayOfWeekFormat = SimpleDateFormat("EEEE", Locale.getDefault())
 
-        val stepChart = StepChart(requireContext(), monthlySteps.map {
-            StepCount(0, it.steps, dateFormat.parse(it.month)?.time ?: 0L)
+        val stepChart = StepChart(requireContext(), weeklySteps.map {
+            val dayOfWeek = when (it.day) {
+                "0" -> "Sunday"
+                "1" -> "Monday"
+                "2" -> "Tuesday"
+                "3" -> "Wednesday"
+                "4" -> "Thursday"
+                "5" -> "Friday"
+                "6" -> "Saturday"
+                else -> "Unknown"
+            }
+            StepCount(0, it.steps, dayOfWeekFormat.parse(dayOfWeek)?.time ?: 0L)
         })
         view.findViewById<FrameLayout>(R.id.chartContainer).removeAllViews()
         view.findViewById<FrameLayout>(R.id.chartContainer).addView(stepChart)

@@ -19,14 +19,18 @@ interface StepCountDao {
     suspend fun getSumStepCounts(start: Long, end: Long): Int
 
     @Query("""
-        SELECT SUM(step_count) as steps, strftime('%Y-%m', date / 1000, 'unixepoch') as month 
+        SELECT SUM(step_count) as steps, strftime('%w', date / 1000, 'unixepoch') as day 
         FROM step_counts 
-        GROUP BY month
+        WHERE date BETWEEN :startOfWeek AND :endOfWeek 
+        GROUP BY day
     """)
-    fun getMonthlySteps(): LiveData<List<MonthlySteps>>
+    fun getWeeklySteps(startOfWeek: Long, endOfWeek: Long): LiveData<List<WeeklySteps>>
 
-    data class MonthlySteps(
+    @Query("DELETE FROM step_counts WHERE date < :lastSundayMidnight")
+    suspend fun deleteOldSteps(lastSundayMidnight: Long)
+
+    data class WeeklySteps(
         val steps: Int,
-        val month: String
+        val day: String
     )
 }
