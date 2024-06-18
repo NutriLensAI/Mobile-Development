@@ -35,17 +35,18 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Rounded"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="156dp"
         android:layout_marginEnd="32dp"
-        app:hintEnabled="true"
-        app:startIconDrawable="@drawable/ic_baseline_person_24"
-        app:startIconTint="@color/black"
         app:endIconMode="clear_text"
         app:endIconTint="@color/red"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        app:hintEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        app:startIconDrawable="@drawable/ic_baseline_person_24"
+        app:startIconTint="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_Register_Name"
@@ -132,9 +133,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/signupButton"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/signupButton"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
