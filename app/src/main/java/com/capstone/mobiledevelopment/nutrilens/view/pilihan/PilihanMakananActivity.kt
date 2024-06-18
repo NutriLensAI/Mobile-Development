@@ -55,7 +55,6 @@ class PilihanMakananActivity : AppCompatActivity() {
     private lateinit var favoriteFoodList: MutableList<FavoriteRecipe>
     private lateinit var myRecipeList: MutableList<MyRecipe>
     private lateinit var db: StepDatabase
-    private lateinit var fabAddRecipe: FloatingActionButton
     private lateinit var userPreference: UserPreference
     private lateinit var mealTypeSpinner: Spinner
     private var token: String = ""
@@ -81,12 +80,6 @@ class PilihanMakananActivity : AppCompatActivity() {
         favoriteRecipeAdapter = FavoriteRecipeAdapter(emptyList(), this)
         myRecipesAdapter = MyRecipesAdapter(emptyList(), this::deleteRecipe)
         recyclerView.adapter = pilihanFoodAdapter
-
-        fabAddRecipe = findViewById(R.id.fab_add_recipe)
-        fabAddRecipe.setOnClickListener {
-            val intent = Intent(this@PilihanMakananActivity, AddMyRecipes::class.java)
-            startActivity(intent)
-        }
 
         mealTypeSpinner = findViewById(R.id.meal_type_spinner)
         setupSpinner()
@@ -368,19 +361,11 @@ class PilihanMakananActivity : AppCompatActivity() {
                         } else {
                             pilihanFoodAdapter.updateList(allFoodList)
                         }
-                        fabAddRecipe.visibility = View.GONE
                     }
 
                     1 -> {
                         recyclerView.adapter = favoriteRecipeAdapter
                         fetchFavoriteRecipes()
-                        fabAddRecipe.visibility = View.GONE
-                    }
-
-                    2 -> {
-                        recyclerView.adapter = myRecipesAdapter
-                        fetchMyRecipes()
-                        fabAddRecipe.visibility = View.VISIBLE
                     }
                 }
             }

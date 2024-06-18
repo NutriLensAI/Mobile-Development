@@ -170,13 +170,6 @@ class HasilMakananActivity : AppCompatActivity() {
             nutrition.fat.toInt()
         findViewById<ProgressBar>(R.id.proteinProgressBar).progress =
             nutrition.proteins.toInt()
-
-        findViewById<TextView>(R.id.tv_carbs_value_grid).text =
-            "${nutrition.carbohydrate ?: 0.0} gr"
-        findViewById<TextView>(R.id.tv_fat_value_grid).text = "${nutrition.fat ?: 0.0} gr"
-        findViewById<TextView>(R.id.tv_protein_value_grid).text = "${nutrition.proteins ?: 0.0} gr"
-        findViewById<TextView>(R.id.tv_calories_value_grid).text =
-            "${nutrition.calories ?: 0.0} kcal"
     }
 
     private fun findMatchingNutrition(

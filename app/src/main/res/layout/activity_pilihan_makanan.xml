@@ -80,12 +80,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Favorite Foods" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_my_recipes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="My Recipes" />
     </com.google.android.material.tabs.TabLayout>
 
     <!-- RecyclerView -->
@@ -102,14 +96,4 @@
         tools:listitem="@layout/item_food" />
 
     <!-- Floating Action Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_recipe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="Add Recipe"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/green2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
