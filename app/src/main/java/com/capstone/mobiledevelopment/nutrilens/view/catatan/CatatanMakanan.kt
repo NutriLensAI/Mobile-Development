@@ -74,7 +74,6 @@ class CatatanMakanan : AppCompatActivity() {
         // Set status bar color to green
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
     }
-
     private fun observeViewModel() {
         viewModel.allMeals.observe(this) { meals ->
             updateMealsUI(meals)
@@ -82,7 +81,7 @@ class CatatanMakanan : AppCompatActivity() {
 
         viewModel.totalCalories.observe(this) { totalCalories ->
             val calculatedCalories = viewModel.totalCalories.value ?: 2400
-            binding.totalCalories.text = "${formatDecimal(totalCalories?.toDouble() ?: 0.0)}/$calculatedCalories Calories"
+            binding.totalCalories.text = "${totalCalories ?: 0}/$calculatedCalories Calories"
         }
 
         viewModel.isLoading.observe(this) { isLoading ->
@@ -103,7 +102,7 @@ class CatatanMakanan : AppCompatActivity() {
             binding.breakfastCarbs.text = formatDecimal(breakfast.total?.carbs ?: 0.0)
             binding.breakfastFat.text = formatDecimal(breakfast.total?.fat ?: 0.0)
             binding.breakfastProtein.text = formatDecimal(breakfast.total?.prot ?: 0.0)
-            binding.breakfastCalories.text = formatDecimal(breakfast.total?.calories ?: 0.0)
+            binding.breakfastCalories.text = (breakfast.total?.calories ?: 0.0).toInt().toString()
         }
 
         // Update Lunch
@@ -111,7 +110,7 @@ class CatatanMakanan : AppCompatActivity() {
             binding.lunchCarbs.text = formatDecimal(lunch.total?.carbs ?: 0.0)
             binding.lunchFat.text = formatDecimal(lunch.total?.fat ?: 0.0)
             binding.lunchProtein.text = formatDecimal(lunch.total?.prot ?: 0.0)
-            binding.lunchCalories.text = formatDecimal(lunch.total?.calories ?: 0.0)
+            binding.lunchCalories.text = (lunch.total?.calories ?: 0.0).toInt().toString()
         }
 
         // Update Dinner
@@ -119,7 +118,7 @@ class CatatanMakanan : AppCompatActivity() {
             binding.dinnerCarbs.text = formatDecimal(dinner.total?.carbs ?: 0.0)
             binding.dinnerFat.text = formatDecimal(dinner.total?.fat ?: 0.0)
             binding.dinnerProtein.text = formatDecimal(dinner.total?.prot ?: 0.0)
-            binding.dinnerCalories.text = formatDecimal(dinner.total?.calories ?: 0.0)
+            binding.dinnerCalories.text = (dinner.total?.calories ?: 0.0).toInt().toString()
         }
 
         // Update Macros
@@ -132,11 +131,12 @@ class CatatanMakanan : AppCompatActivity() {
                 ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
             val actualCalories = macros.totalCalories ?: 0.0
             binding.totalCalories.text =
-                "${formatDecimal(actualCalories)}/$calculatedCalories Calories"
+                "${actualCalories.toInt()}/$calculatedCalories Calories"
 
             binding.carbsValueTextView.text =
                 formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
-            binding.fatValueTextView.text = formatMacroText(macros.totalFat ?: 0.0, targetFatGrams)
+            binding.fatValueTextView.text =
+                formatMacroText(macros.totalFat ?: 0.0, targetFatGrams)
             binding.proteinValueTextView.text =
                 formatMacroText(macros.totalProteins ?: 0.0, targetProteinGrams)
         }

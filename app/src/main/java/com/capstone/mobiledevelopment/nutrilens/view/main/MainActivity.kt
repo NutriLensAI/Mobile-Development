@@ -160,8 +160,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 val calculatedCalories = Utils.calculateTotalCalories(it)
                 checkUserProfileData(it)
                 // Assuming you have a method to get the actual calories
-                val totalCalories = viewModel.macros.value?.totalCalories ?: 0.0
-                binding.totalCalories.text = "${formatDecimal(totalCalories)}/$calculatedCalories Calories"
+                val totalCalories = viewModel.macros.value?.totalCalories ?: 0
+                binding.totalCalories.text = "${totalCalories.toInt()}/$calculatedCalories Calories"
             }
         }
 
@@ -187,7 +187,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         binding.proteinProgressBar.progress =
             ((macros.totalProteins ?: 0.0) * 100 / targetProteinGrams).toInt()
         binding.totalCalories.text =
-            "${formatDecimal(macros.totalCalories ?: 0.0)}/$totalCalories Calories"
+            "${(macros.totalCalories ?: 0.0).toInt()}/$totalCalories Calories"
 
         binding.carbsValueTextView.text =
             formatMacroText(macros.totalCarbs ?: 0.0, targetCarbsGrams)
