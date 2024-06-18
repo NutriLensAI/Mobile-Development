@@ -230,7 +230,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/green2"
             android:text="Pagi" />
 
         <com.google.android.material.button.MaterialButton
@@ -370,6 +370,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 g"
+                    android:textColor="#33AFFF"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -380,6 +381,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 g"
+                    android:textColor="#FFA500"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -390,6 +392,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 g"
+                    android:textColor="#FF6347"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -478,6 +481,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 g"
+                    android:textColor="#33AFFF"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -488,6 +492,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 g"
+                    android:textColor="#FFA500"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -498,6 +503,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 g"
+                    android:textColor="#FF6347"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -586,6 +592,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 g"
+                    android:textColor="#33AFFF"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -596,6 +603,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 g"
+                    android:textColor="#FFA500"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -606,6 +614,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 g"
+                    android:textColor="#FF6347"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -675,6 +684,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 ml"
+                    android:textColor="#33AFFF"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
 
@@ -685,6 +695,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0 g"
+                    android:textColor="#FFA500"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="18sp" />
             </LinearLayout>
