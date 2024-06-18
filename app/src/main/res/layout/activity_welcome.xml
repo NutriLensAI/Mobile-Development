@@ -91,6 +91,6 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/avd_anim" />
+        app:srcCompat="@drawable/image_9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
