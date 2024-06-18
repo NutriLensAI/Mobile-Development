@@ -115,10 +115,12 @@ class PilihanMakananActivity : AppCompatActivity() {
                 image = getDrawableResourceId(index).toString(), // Menetapkan gambar dari drawable
                 proteins = it.proteins,
                 fat = it.fat,
-                carbohydrate = it.carbohydrate
+                carbohydrate = it.carbohydrate,
+                isRecommended = true // Menetapkan isRecommended ke true
             )
         }
     }
+
 
     private fun updateRecommendedFoodList(recommendedFoods: List<RecommendedFood>) {
         // Convert RecommendedFood to FoodResponse

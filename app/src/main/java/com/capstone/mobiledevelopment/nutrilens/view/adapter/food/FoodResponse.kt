@@ -7,6 +7,7 @@ data class FoodResponse(
     val fat: Double,
     val carbohydrate: Double,
     val name: String,
-    val image: String
+    val image: String,
+    val isRecommended: Boolean = false
 )
 

@@ -39,6 +39,9 @@ class PilihanFoodAdapter(
             Glide.with(context).load(food.image).into(holder.foodImage)
         }
 
+        // Set visibility of addFoodIcon based on isRecommended
+        holder.addFoodIcon.visibility = if (food.isRecommended) View.GONE else View.VISIBLE
+
         holder.addFoodIcon.setOnClickListener {
             onAddFoodClicked(food)
         }
