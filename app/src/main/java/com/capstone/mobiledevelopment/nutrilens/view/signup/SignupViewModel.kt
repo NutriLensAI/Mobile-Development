@@ -13,7 +13,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.HttpException
 
-class SignupViewModel(private val userRepository: UserRepository) : ViewModel() {
+class SignupViewModel( private val userRepository: UserRepository) : ViewModel() {
 
     private val _registrationResult = MutableLiveData<Result<RegisterResponse>>()
     val registrationResult: LiveData<Result<RegisterResponse>> = _registrationResult
@@ -46,7 +46,6 @@ class SignupViewModel(private val userRepository: UserRepository) : ViewModel() 
                     "Registration failed. Please try again."
                 }
             }
-
             else -> "Registration failed. Please try again."
         }
         _registrationResult.value = Result.Failure(Throwable(errorMessage))

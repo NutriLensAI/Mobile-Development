@@ -56,9 +56,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onAnimationEnd(animation: Animation?) {
-                binding.emailTextView.visibility = View.VISIBLE
                 binding.emailEditTextLayout.visibility = View.VISIBLE
-                binding.passwordTextView.visibility = View.VISIBLE
                 binding.passwordEditTextLayout.visibility = View.VISIBLE
             }
 
@@ -74,12 +72,10 @@ class LoginActivity : AppCompatActivity() {
 
         val emailTextViewAnimationSet = AnimationSet(true)
         emailTextViewAnimationSet.addAnimation(fadeInAnimation)
-        binding.emailTextView.startAnimation(emailTextViewAnimationSet)
         binding.emailEditTextLayout.startAnimation(emailTextViewAnimationSet)
 
         val passwordTextViewAnimationSet = AnimationSet(true)
         passwordTextViewAnimationSet.addAnimation(fadeInAnimation)
-        binding.passwordTextView.startAnimation(passwordTextViewAnimationSet)
         binding.passwordEditTextLayout.startAnimation(passwordTextViewAnimationSet)
 
         val signupButtonAnimationSet = AnimationSet(true)

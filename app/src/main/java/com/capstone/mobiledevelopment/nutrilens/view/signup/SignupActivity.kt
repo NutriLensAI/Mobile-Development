@@ -3,6 +3,8 @@ package com.capstone.mobiledevelopment.nutrilens.view.signup
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -12,8 +14,6 @@ import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.ActivitySignupBinding
 import com.capstone.mobiledevelopment.nutrilens.view.login.LoginActivity
@@ -54,11 +54,9 @@ class SignupActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(animation: Animation?) {
                 binding.imageView.visibility = View.VISIBLE
-                binding.nameTextView.visibility = View.VISIBLE
+                binding.titleTextView.visibility = View.VISIBLE
                 binding.nameEditTextLayout.visibility = View.VISIBLE
-                binding.emailTextView.visibility = View.VISIBLE
                 binding.emailEditTextLayout.visibility = View.VISIBLE
-                binding.passwordTextView.visibility = View.VISIBLE
                 binding.passwordEditTextLayout.visibility = View.VISIBLE
                 binding.signupButton.visibility = View.VISIBLE
             }
@@ -73,19 +71,20 @@ class SignupActivity : AppCompatActivity() {
         imageViewAnimationSet.addAnimation(fadeInAnimation)
         binding.imageView.startAnimation(imageViewAnimationSet)
 
+        val titleTextViewAnimationSet = AnimationSet(true)
+        titleTextViewAnimationSet.addAnimation(fadeInAnimation)
+        binding.titleTextView.startAnimation(titleTextViewAnimationSet)
+
         val nameTextViewAnimationSet = AnimationSet(true)
         nameTextViewAnimationSet.addAnimation(fadeInAnimation)
-        binding.nameTextView.startAnimation(nameTextViewAnimationSet)
         binding.nameEditTextLayout.startAnimation(nameTextViewAnimationSet)
 
         val emailTextViewAnimationSet = AnimationSet(true)
         emailTextViewAnimationSet.addAnimation(fadeInAnimation)
-        binding.emailTextView.startAnimation(emailTextViewAnimationSet)
         binding.emailEditTextLayout.startAnimation(emailTextViewAnimationSet)
 
         val passwordTextViewAnimationSet = AnimationSet(true)
         passwordTextViewAnimationSet.addAnimation(fadeInAnimation)
-        binding.passwordTextView.startAnimation(passwordTextViewAnimationSet)
         binding.passwordEditTextLayout.startAnimation(passwordTextViewAnimationSet)
 
         val signupButtonAnimationSet = AnimationSet(true)
@@ -95,15 +94,16 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
-            controller.isAppearanceLightStatusBars =
-                true // Optional: Set status bar content to dark
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
         }
         supportActionBar?.hide()
-
-        // Set status bar color to green
-        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
     }
 
     private fun setupAction() {
@@ -135,10 +135,7 @@ class SignupActivity : AppCompatActivity() {
                 showSuccessDialog(binding.edRegisterEmail.text.toString())
             } else {
                 val message = when (result) {
-                    is Result.Failure -> getString(R.string.registration_failed) + " [" + result.error.message + "]. " + getString(
-                        R.string.try_again
-                    )
-
+                    is Result.Failure -> getString(R.string.registration_failed) + " [" + result.error.message + "]. " + getString(R.string.try_again)
                     else -> getString(R.string.registration_failed) + ". " + getString(R.string.try_again)
                 }
                 showFailureDialog(message)
