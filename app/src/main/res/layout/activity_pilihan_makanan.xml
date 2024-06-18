@@ -66,8 +66,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_bar_container"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="@color/gray">
+        app:tabSelectedTextColor="@color/green"
+        app:tabTextColor="@color/gray"
+        app:tabIndicatorColor="@color/green"
+        app:tabIndicator="@drawable/tab_indicator_green">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_all"

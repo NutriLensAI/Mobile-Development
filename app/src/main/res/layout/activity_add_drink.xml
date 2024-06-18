@@ -54,11 +54,16 @@
     <!-- Drink Name TextInputLayout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/drinkNameTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Rounded"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/red"
+        app:hintEnabled="true"
+        app:boxStrokeColor="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerLayout">
@@ -69,19 +74,24 @@
             android:layout_height="wrap_content"
             android:hint="Name of the Drink"
             android:inputType="text"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Drink Amount TextInputLayout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/drinkAmountTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Rounded"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/red"
+        app:hintEnabled="true"
+        app:boxStrokeColor="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/drinkNameTextInputLayout">
 
@@ -91,6 +101,7 @@
             android:layout_height="wrap_content"
             android:hint="Amount (ml)"
             android:inputType="number"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,11 +122,16 @@
     <!-- Sugar Amount TextInputLayout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/sugarAmountTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Rounded"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/red"
+        app:hintEnabled="true"
+        app:boxStrokeColor="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sugarUnitSpinner">
@@ -126,6 +142,7 @@
             android:layout_height="wrap_content"
             android:hint="Sugar Amount"
             android:inputType="number"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
