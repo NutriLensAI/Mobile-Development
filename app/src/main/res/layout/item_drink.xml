@@ -63,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="#FFA500"
                 android:text="0 ml"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -72,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="#FF6347"
                 android:text="0 g"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
