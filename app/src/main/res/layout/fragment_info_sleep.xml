@@ -76,7 +76,7 @@
                     android:id="@+id/clockTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_black"
+                    android:fontFamily="sans-serif"
                     android:padding="16dp"
                     android:text="Sleep count\nPress the button to choose what hour you awake"
                     android:textAlignment="center"
@@ -85,12 +85,12 @@
 
                 <Button
                     android:id="@+id/scheduleButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="367dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
                     android:backgroundTint="@color/green"
-                    android:text="Set Sleep Time"
-                    android:layout_gravity="center" />
+                    android:text="Set Sleep Time" />
 
                 <TextView
                     android:layout_width="match_parent"

@@ -274,6 +274,10 @@ class ResepActivity : AppCompatActivity() {
                 return true
             }
         })
+
+        // Ensure the search view is expanded and focused by default
+        searchView.isIconified = false
+        searchView.clearFocus()
     }
 
     private fun filterRecipes(query: String) {
@@ -320,5 +324,4 @@ class ResepActivity : AppCompatActivity() {
         val recipeData: RecipeData = gson.fromJson(jsonString, recipeType)
         return recipeData.recipeData
     }
-
 }
