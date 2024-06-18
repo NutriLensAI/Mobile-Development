@@ -21,6 +21,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="0 g"
+        android:textColor="#33AFFF"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -30,6 +31,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="0 g"
+        android:textColor="#FFA500"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -39,6 +41,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="0 g"
+        android:textColor="#FF6347"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView

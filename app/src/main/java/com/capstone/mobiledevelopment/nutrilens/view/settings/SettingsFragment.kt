@@ -175,7 +175,7 @@ class SettingsFragment : Fragment() {
                 controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
             }
             activity?.actionBar?.hide()
-            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green2)
+            window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green)
         }
     }
 

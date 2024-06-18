@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Meal Title"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold" />
+            android:textColor="#36383A" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,6 +79,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="0 g"
+                android:textColor="#33AFFF"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -88,6 +89,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="0 g"
+                android:textColor="#FFA500"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -97,6 +99,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="0 g"
+                android:textColor="#FF6347"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
