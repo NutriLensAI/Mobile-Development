@@ -258,7 +258,7 @@ class PilihanMakananActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         // Set status bar color to green
-        window.statusBarColor = ContextCompat.getColor(this, R.color.green)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green2)
     }
 
     private fun sendFoodData(table: String, food: FoodResponse) {
