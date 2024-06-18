@@ -44,7 +44,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="4dp"
             android:text="Setting and Privacy"
-            android:textColor="@color/black"
+            android:textColor="#36383A"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -103,6 +103,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#36383A"
                     android:text="Email"
                     android:textSize="16sp" />
 
@@ -133,6 +134,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#36383A"
                     android:text="Password"
                     android:textSize="16sp" />
 
@@ -163,6 +165,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#36383A"
                     android:text="@string/translate"
                     android:textSize="16sp" />
 
@@ -194,6 +197,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Personal Info"
+                    android:textColor="#36383A"
                     android:textAlignment="textStart"
                     android:textSize="16sp"
                     android:typeface="normal" />
