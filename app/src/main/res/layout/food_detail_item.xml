@@ -10,7 +10,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="#36383A"
         android:gravity="center"
         android:text="Food Item"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -21,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="#36383A"
         android:text="0 g"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -31,7 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="#36383A"
         android:text="0 g"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -41,7 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="#36383A"
         android:text="0 g"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -50,7 +46,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="#36383A"
         android:gravity="center"
         android:text="0"
         android:textAppearance="?android:attr/textAppearanceSmall" />

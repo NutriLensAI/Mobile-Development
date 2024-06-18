@@ -24,7 +24,7 @@
             android:id="@+id/appNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nutrilens"
+            android:text="NutriLens"
             android:textColor="@android:color/white"
             android:textSize="42sp"
             android:textStyle="bold"
@@ -39,7 +39,7 @@
             android:id="@+id/tv_add_drink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_drink"
+            android:text="Add Drink"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="32sp"
@@ -68,8 +68,7 @@
             android:id="@+id/drinkNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/name_of_the_drink"
-            android:textColor="#36383A"
+            android:hint="Name of the Drink"
             android:inputType="text"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -91,8 +90,7 @@
             android:id="@+id/drinkAmountEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/amount_ml"
-            android:textColor="#36383A"
+            android:hint="Amount (ml)"
             android:inputType="number"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -127,8 +125,7 @@
             android:id="@+id/sugarAmountEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/sugar_amount"
-            android:textColor="#36383A"
+            android:hint="Sugar Amount"
             android:inputType="number"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -142,7 +139,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="@color/light_green"
-        android:text="@string/add_drink"
+        android:text="Add Drink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sugarAmountTextInputLayout" />
@@ -167,8 +164,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:textColor="#36383A"
-                android:text="@string/satu_gelas_setara_dengan_200_ml_air"
+                android:text="Satu gelas setara dengan 200 ml air."
                 android:textSize="18sp" />
 
             <!-- Informasi mengenai jumlah air yang baik bagi tubuh -->
@@ -176,36 +172,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:textColor="#36383A"
-                android:text="@string/minum_air_yang_cukup_sangat_penting_untuk_menjaga_kesehatan_tubuh_air_memiliki_banyak_manfaat_termasuk_menjaga_suhu_tubuh_melancarkan_pencernaan_mengangkut_nutrisi_dan_mengeluarkan_racun_dari_tubuh_namun_berapa_jumlah_air_yang_cukup_untuk_diminum_setiap_hari" />
+                android:text="Minum air yang cukup sangat penting untuk menjaga kesehatan tubuh. Air memiliki banyak manfaat, termasuk menjaga suhu tubuh, melancarkan pencernaan, mengangkut nutrisi, dan mengeluarkan racun dari tubuh. Namun, berapa jumlah air yang cukup untuk diminum setiap hari?" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#36383A"
                 android:layout_marginBottom="8dp"
-                android:text="@string/menurut_institute_of_medicine_iom_rekomendasi_jumlah_konsumsi_air_harian_adalah_sebagai_berikut" />
+                android:text="Menurut Institute of Medicine (IOM), rekomendasi jumlah konsumsi air harian adalah sebagai berikut:" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
-                android:text="@string/_1_untuk_pria_sekitar_3_7_liter_13_gelas_per_hari" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#36383A"
-                android:layout_marginBottom="8dp"
-                android:text="@string/_2_untuk_wanita_sekitar_2_7_liter_9_gelas_per_hari" />
+                android:text="1. Untuk pria: sekitar 3.7 liter (13 gelas) per hari." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:textColor="#36383A"
-                android:text="@string/faktor_faktor_yang_mempengaruhi_kebutuhan_air"
+                android:text="2. Untuk wanita: sekitar 2.7 liter (9 gelas) per hari." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Faktor-faktor yang Mempengaruhi Kebutuhan Air:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -213,80 +204,69 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:textColor="#36383A"
-                android:text="@string/_1_aktivitas_fisik_orang_yang_aktif_secara_fisik_atau_berolahraga_membutuhkan_lebih_banyak_air_untuk_menggantikan_cairan_yang_hilang_melalui_keringat" />
+                android:text="1. Aktivitas Fisik: Orang yang aktif secara fisik atau berolahraga membutuhkan lebih banyak air untuk menggantikan cairan yang hilang melalui keringat." />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#36383A"
-                android:layout_marginBottom="4dp"
-                android:text="@string/_2_lingkungan_cuaca_panas_atau_lembab_meningkatkan_kebutuhan_tubuh_akan_cairan_untuk_mendinginkan_tubuh" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:textColor="#36383A"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="@string/_3_kondisi_kesehatan_kondisi_seperti_demam_diare_atau_muntah_meningkatkan_kebutuhan_cairan_tubuh" />
+                android:text="2. Lingkungan: Cuaca panas atau lembab meningkatkan kebutuhan tubuh akan cairan untuk mendinginkan tubuh." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#36383A"
+                android:layout_marginBottom="4dp"
+                android:text="3. Kondisi Kesehatan: Kondisi seperti demam, diare, atau muntah meningkatkan kebutuhan cairan tubuh." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="4. Kehamilan atau Menyusui: Wanita hamil atau menyusui membutuhkan lebih banyak cairan untuk mendukung kebutuhan janin atau produksi ASI." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#36383A"
                 android:layout_marginBottom="8dp"
-                android:text="@string/tips_untuk_meningkatkan_asupan_air"
+                android:text="Tips untuk Meningkatkan Asupan Air:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
-                android:text="@string/_1_bawa_botol_air_ke_mana_pun_anda_pergi_agar_mudah_mengakses_air_setiap_saat" />
+                android:text="1. Bawa botol air ke mana pun Anda pergi agar mudah mengakses air setiap saat." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
-                android:text="@string/_2_tambahkan_rasa_pada_air_dengan_potongan_buah_atau_daun_mint_untuk_membuatnya_lebih_menarik" />
+                android:text="2. Tambahkan rasa pada air dengan potongan buah atau daun mint untuk membuatnya lebih menarik." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
-                android:text="@string/_3_tetapkan_tujuan_harian_untuk_minum_air_dan_gunakan_aplikasi_penghitung_air_untuk_melacak_asupan_harian_anda" />
+                android:text="3. Tetapkan tujuan harian untuk minum air dan gunakan aplikasi penghitung air untuk melacak asupan harian Anda." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
-                android:text="@string/_4_minum_segelas_air_sebelum_dan_sesudah_makan_untuk_membantu_pencernaan_dan_mengontrol_asupan_kalori" />
+                android:text="4. Minum segelas air sebelum dan sesudah makan untuk membantu pencernaan dan mengontrol asupan kalori." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#36383A"
                 android:layout_marginBottom="4dp"
-                android:text="@string/_5_gantilah_minuman_manis_atau_berkafein_dengan_air_untuk_mengurangi_asupan_gula_dan_kalori" />
+                android:text="5. Gantilah minuman manis atau berkafein dengan air untuk mengurangi asupan gula dan kalori." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#36383A"
                 android:layout_marginBottom="16dp"
-                android:text="@string/meningkatkan_asupan_air_dapat_membantu_anda_merasa_lebih_segar_dan_berenergi_sepanjang_hari_jadikan_minum_air_sebagai_bagian_dari_rutinitas_harian_anda_untuk_menjaga_kesehatan_dan_kebugaran_tubuh" />
+                android:text="Meningkatkan asupan air dapat membantu Anda merasa lebih segar dan berenergi sepanjang hari. Jadikan minum air sebagai bagian dari rutinitas harian Anda untuk menjaga kesehatan dan kebugaran tubuh." />
 
         </LinearLayout>
     </ScrollView>

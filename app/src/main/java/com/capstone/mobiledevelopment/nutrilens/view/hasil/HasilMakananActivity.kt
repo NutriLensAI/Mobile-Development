@@ -160,9 +160,9 @@ class HasilMakananActivity : AppCompatActivity() {
     }
 
     private fun updateNutritionUI(nutrition: FoodResponse) {
-        findViewById<TextView>(R.id.tv_carbs_value).text = "${nutrition.carbohydrate} g"
-        findViewById<TextView>(R.id.tv_fat_value).text = "${nutrition.fat} g"
-        findViewById<TextView>(R.id.tv_protein_value).text = "${nutrition.proteins} g"
+        findViewById<TextView>(R.id.tv_carbs_value).text = "${nutrition.carbohydrate ?: 0.0} g"
+        findViewById<TextView>(R.id.tv_fat_value).text = "${nutrition.fat ?: 0.0} g"
+        findViewById<TextView>(R.id.tv_protein_value).text = "${nutrition.proteins ?: 0.0} g"
 
         findViewById<ProgressBar>(R.id.carbsProgressBar).progress =
             nutrition.carbohydrate.toInt()
@@ -172,11 +172,11 @@ class HasilMakananActivity : AppCompatActivity() {
             nutrition.proteins.toInt()
 
         findViewById<TextView>(R.id.tv_carbs_value_grid).text =
-            "${nutrition.carbohydrate} gr"
-        findViewById<TextView>(R.id.tv_fat_value_grid).text = "${nutrition.fat} gr"
-        findViewById<TextView>(R.id.tv_protein_value_grid).text = "${nutrition.proteins} gr"
+            "${nutrition.carbohydrate ?: 0.0} gr"
+        findViewById<TextView>(R.id.tv_fat_value_grid).text = "${nutrition.fat ?: 0.0} gr"
+        findViewById<TextView>(R.id.tv_protein_value_grid).text = "${nutrition.proteins ?: 0.0} gr"
         findViewById<TextView>(R.id.tv_calories_value_grid).text =
-            "${nutrition.calories} kcal"
+            "${nutrition.calories ?: 0.0} kcal"
     }
 
     private fun findMatchingNutrition(

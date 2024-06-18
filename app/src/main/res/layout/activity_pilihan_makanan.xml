@@ -73,20 +73,17 @@
             android:id="@+id/tab_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#36383A"
             android:text="All" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_favorite_foods"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#36383A"
             android:text="Favorite Foods" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_my_recipes"
             android:layout_width="wrap_content"
-            android:textColor="#36383A"
             android:layout_height="wrap_content"
             android:text="My Recipes" />
     </com.google.android.material.tabs.TabLayout>

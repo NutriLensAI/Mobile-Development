@@ -74,9 +74,8 @@ class BreakfastFragment : Fragment() {
     private fun setupView() {
         activity?.window?.let { window ->
             WindowCompat.setDecorFitsSystemWindows(window, true)
-            WindowCompat.getInsetsController(window, window.decorView).let { controller ->
-                controller.isAppearanceLightStatusBars =
-                    true // Optional: Set status bar content to dark
+            WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
+                controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
             }
             activity?.actionBar?.hide()
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green2)

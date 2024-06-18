@@ -208,8 +208,7 @@ class CameraFoodActivity : AppCompatActivity() {
                     SimpleDateFormat(
                         FILENAME_FORMAT,
                         Locale.US
-                    ).format(System.currentTimeMillis()) + "_" + UUID.randomUUID()
-                        .toString() + ".jpg"
+                    ).format(System.currentTimeMillis()) + "_" + UUID.randomUUID().toString() + ".jpg"
                 )
                 put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

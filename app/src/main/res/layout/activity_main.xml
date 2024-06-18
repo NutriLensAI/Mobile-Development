@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:text="Macros"
                 android:textColor="#36383A"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/totalCalories"

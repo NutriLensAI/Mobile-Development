@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_black"
-            android:text="@string/add_my_recipe"
+            android:text="Add My Recipe"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="32sp"
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_black"
-            android:text="@string/nutrilens"
+            android:text="NutriLens"
             android:textColor="@android:color/white"
             android:textSize="42sp"
             android:textStyle="bold"
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/title"
+                android:hint="Title"
                 android:padding="16dp"
                 android:inputType="text" />
 
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/ingredients"
+                android:hint="Ingredients"
                 android:padding="16dp"
                 android:inputType="textMultiLine" />
 
@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/steps"
+                android:hint="Steps"
                 android:padding="16dp"
                 android:inputType="textMultiLine" />
 
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/green"
-                android:text="@string/save"
+                android:text="Save"
                 android:textColor="@android:color/white"
                 android:padding="16dp" />
         </LinearLayout>

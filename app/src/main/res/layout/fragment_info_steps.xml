@@ -27,12 +27,11 @@
                 android:id="@+id/tv_dicoding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_black"
                 android:text="Info Steps"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="32sp"
-                android:textStyle="bold|italic"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.152"
@@ -44,7 +43,6 @@
                 android:id="@+id/appNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_black"
                 android:text="NutriLens"
                 android:textColor="@android:color/white"
                 android:textSize="42sp"
@@ -73,11 +71,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <FrameLayout
-                    android:id="@+id/chartContainer"
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@string/steps_info_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_steps_image" />
 
                 <TextView
                     android:layout_width="match_parent"
