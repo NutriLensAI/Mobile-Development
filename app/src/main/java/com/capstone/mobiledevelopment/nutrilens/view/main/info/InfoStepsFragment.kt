@@ -31,7 +31,6 @@ class InfoStepsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_info_steps, container, false)
     }
 
@@ -39,7 +38,6 @@ class InfoStepsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupView()
 
-        // Initialize the database and repository
         val stepCountDao = Room.databaseBuilder(
             requireContext(),
             StepDatabase::class.java,
@@ -48,7 +46,6 @@ class InfoStepsFragment : Fragment() {
 
         stepRepository = StepRepository.getInstance(stepCountDao)
 
-        // Load the data and update the chart
         loadStepData(view)
     }
 
@@ -56,7 +53,7 @@ class InfoStepsFragment : Fragment() {
         activity?.window?.let { window ->
             WindowCompat.setDecorFitsSystemWindows(window, true)
             WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-                controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+                controller.isAppearanceLightStatusBars = true
             }
             activity?.actionBar?.hide()
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green2)
@@ -65,38 +62,36 @@ class InfoStepsFragment : Fragment() {
 
     private fun loadStepData(view: View) {
         lifecycleScope.launch {
-            val dailySteps = withContext(Dispatchers.IO) {
-                stepRepository.getDailySteps().value
+            val monthlySteps = withContext(Dispatchers.IO) {
+                stepRepository.getMonthlySteps().value
             }
-            if (dailySteps.isNullOrEmpty()) {
-                // Use placeholder data
+            if (monthlySteps.isNullOrEmpty()) {
                 val placeholderData = listOf(
-                    StepCount(0, 3000, System.currentTimeMillis() - 86400000 * 6), // 6 days ago
-                    StepCount(0, 5000, System.currentTimeMillis() - 86400000 * 5), // 5 days ago
-                    StepCount(0, 7000, System.currentTimeMillis() - 86400000 * 4), // 4 days ago
-                    StepCount(0, 6000, System.currentTimeMillis() - 86400000 * 3), // 3 days ago
-                    StepCount(0, 8000, System.currentTimeMillis() - 86400000 * 2), // 2 days ago
-                    StepCount(0, 4000, System.currentTimeMillis() - 86400000 * 1), // 1 day ago
-                    StepCount(0, 9000, System.currentTimeMillis()) // today
+                    StepCountDao.MonthlySteps(9000, "2023-01"),
+                    StepCountDao.MonthlySteps(8000, "2023-02"),
+                    StepCountDao.MonthlySteps(10000, "2023-03"),
+                    StepCountDao.MonthlySteps(7000, "2023-04"),
+                    StepCountDao.MonthlySteps(8500, "2023-05"),
+                    StepCountDao.MonthlySteps(9500, "2023-06"),
+                    StepCountDao.MonthlySteps(11000, "2023-07"),
+                    StepCountDao.MonthlySteps(12000, "2023-08"),
+                    StepCountDao.MonthlySteps(11500, "2023-09"),
+                    StepCountDao.MonthlySteps(10500, "2023-10"),
+                    StepCountDao.MonthlySteps(9800, "2023-11"),
+                    StepCountDao.MonthlySteps(10200, "2023-12")
                 )
-                loadStepChart(view, placeholderData.map {
-                    StepCountDao.DailySteps(it.stepCount, SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(
-                        Date(it.date)
-                    ))
-                })
+                loadStepChart(view, placeholderData)
             } else {
-                loadStepChart(view, dailySteps)
+                loadStepChart(view, monthlySteps)
             }
         }
     }
 
-    private fun loadStepChart(view: View, dailySteps: List<StepCountDao.DailySteps>) {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private fun loadStepChart(view: View, monthlySteps: List<StepCountDao.MonthlySteps>) {
+        val dateFormat = SimpleDateFormat("yyyy-MM", Locale.getDefault())
 
-        // Create and add the chart to the container
-        val stepChart = StepChart(requireContext(), dailySteps.map {
-            val date = dateFormat.parse(it.day)?.time ?: 0L
-            StepCount(0, it.steps, date)
+        val stepChart = StepChart(requireContext(), monthlySteps.map {
+            StepCount(0, it.steps, dateFormat.parse(it.month)?.time ?: 0L)
         })
         view.findViewById<FrameLayout>(R.id.chartContainer).removeAllViews()
         view.findViewById<FrameLayout>(R.id.chartContainer).addView(stepChart)

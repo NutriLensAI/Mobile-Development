@@ -5,7 +5,7 @@ import com.capstone.mobiledevelopment.nutrilens.data.database.step.StepCount
 import io.data2viz.charts.chart.Chart
 import io.data2viz.charts.chart.chart
 import io.data2viz.charts.chart.discrete
-import io.data2viz.charts.chart.mark.bar
+import io.data2viz.charts.chart.mark.line
 import io.data2viz.charts.chart.quantitative
 import io.data2viz.geom.Size
 import io.data2viz.viz.VizContainerView
@@ -25,7 +25,8 @@ class StepChart(context: Context, stepData: List<StepCount>) : VizContainerView(
         }
 
         // Using a discrete dimension for the X-axis and a continuous one for the Y-axis
-        bar(month, steps)
+        line(month, steps) {
+        }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {

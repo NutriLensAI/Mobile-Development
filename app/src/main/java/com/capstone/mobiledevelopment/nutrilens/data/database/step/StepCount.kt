@@ -11,5 +11,6 @@ data class StepCount(
     @ColumnInfo(name = "date") val date: Long = System.currentTimeMillis()
 ) {
     val formattedMonth: String
-        get() = java.text.SimpleDateFormat("MMM yyyy", java.util.Locale.getDefault()).format(java.util.Date(date))
+        get() = java.text.SimpleDateFormat("yyyy-MM", java.util.Locale.getDefault()).format(java.util.Date(date))
 }
+
