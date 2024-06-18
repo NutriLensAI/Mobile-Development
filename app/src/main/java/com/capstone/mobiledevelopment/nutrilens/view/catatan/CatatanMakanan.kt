@@ -74,6 +74,7 @@ class CatatanMakanan : AppCompatActivity() {
         // Set status bar color to green
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
     }
+
     private fun observeViewModel() {
         viewModel.allMeals.observe(this) { meals ->
             updateMealsUI(meals)
@@ -186,6 +187,7 @@ class CatatanMakanan : AppCompatActivity() {
                     val intent = Intent(this, InputCatatanActivity::class.java).apply {
                         putExtra("selected_fragment", selectedFragment)
                         putExtra("selected_meal", mealData)
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     }
                     startActivity(intent)
                 }
