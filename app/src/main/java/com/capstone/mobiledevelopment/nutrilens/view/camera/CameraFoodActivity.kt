@@ -43,6 +43,7 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.UUID
 
 class CameraFoodActivity : AppCompatActivity() {
     private val viewModel by viewModels<CameraFoodViewModel> {
@@ -207,7 +208,7 @@ class CameraFoodActivity : AppCompatActivity() {
                     SimpleDateFormat(
                         FILENAME_FORMAT,
                         Locale.US
-                    ).format(System.currentTimeMillis()) + ".jpg"
+                    ).format(System.currentTimeMillis()) + "_" + UUID.randomUUID().toString() + ".jpg"
                 )
                 put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
