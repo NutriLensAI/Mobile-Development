@@ -38,10 +38,13 @@ class DrinkFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
+        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
         // Fetch drink data
         fetchDrinkAndSugarData()
-
-        return view
     }
 
     private fun fetchDrinkAndSugarData() {

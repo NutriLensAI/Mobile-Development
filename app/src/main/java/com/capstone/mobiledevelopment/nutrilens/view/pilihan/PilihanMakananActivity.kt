@@ -265,14 +265,14 @@ class PilihanMakananActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val foodRequest = FoodRequest(
-                    id = 0, // Biarkan server yang menetapkan ID
-                    user_id = 0, // Ambil user_id dari session
+                    id = 0, // Let the server assign the ID
+                    user_id = 0, // Get user_id from session
                     food_id = food.id,
                     food_name = food.name,
                     calories = food.calories,
-                    proteins = food.proteins, // Pastikan field ini ada di FoodResponse
-                    fat = food.fat, // Pastikan field ini ada di FoodResponse
-                    carbohydrate = food.carbohydrate // Pastikan field ini ada di FoodResponse
+                    proteins = food.proteins,
+                    fat = food.fat,
+                    carbohydrate = food.carbohydrate
                 )
 
                 ApiConfig.getApiService().addFoodToMeal(token, table, food.id, foodRequest)
@@ -282,6 +282,8 @@ class PilihanMakananActivity : AppCompatActivity() {
                         "Food added successfully",
                         Toast.LENGTH_SHORT
                     ).show()
+                    // Finish this activity and return to CatatanMakananActivity
+                    finish()
                 }
             } catch (e: HttpException) {
                 withContext(Dispatchers.Main) {

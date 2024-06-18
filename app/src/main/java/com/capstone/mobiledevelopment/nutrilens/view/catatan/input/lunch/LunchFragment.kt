@@ -33,12 +33,15 @@ class LunchFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
+        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
         // Retrieve data from arguments
         arguments?.getParcelable<Lunch>("selected_meal")?.let { lunch ->
             updateFoodList(lunch)
         }
-
-        return view
     }
 
     private fun updateFoodList(lunch: Lunch) {
