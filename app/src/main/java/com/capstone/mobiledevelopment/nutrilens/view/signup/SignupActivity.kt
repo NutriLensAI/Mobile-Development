@@ -3,14 +3,13 @@ package com.capstone.mobiledevelopment.nutrilens.view.signup
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -111,6 +110,12 @@ class SignupActivity : AppCompatActivity() {
             val email = binding.edRegisterEmail.text.toString()
             val name = binding.edRegisterName.text.toString()
             val password = binding.edRegisterPassword.text.toString()
+
+            // Validate password length
+            if (password.length < 8) {
+                Toast.makeText(this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             // Register the user
             viewModel.register(name, email, password)

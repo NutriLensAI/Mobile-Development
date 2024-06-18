@@ -1,11 +1,8 @@
 package com.capstone.mobiledevelopment.nutrilens.view.login
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
@@ -49,20 +46,14 @@ class LoginActivity : AppCompatActivity() {
         val zoomInAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
         val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
 
-        // Add AnimationListener to fadeInAnimation to keep the TextView visible after animation
         fadeInAnimation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {
-                // Do nothing
-            }
-
+            override fun onAnimationStart(animation: Animation?) {}
             override fun onAnimationEnd(animation: Animation?) {
                 binding.emailEditTextLayout.visibility = View.VISIBLE
                 binding.passwordEditTextLayout.visibility = View.VISIBLE
             }
 
-            override fun onAnimationRepeat(animation: Animation?) {
-                // Do nothing
-            }
+            override fun onAnimationRepeat(animation: Animation?) {}
         })
 
         val imageViewAnimationSet = AnimationSet(true)
@@ -87,12 +78,9 @@ class LoginActivity : AppCompatActivity() {
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowCompat.getInsetsController(window, window.decorView).let { controller ->
-            controller.isAppearanceLightStatusBars =
-                true // Optional: Set status bar content to dark
+            controller.isAppearanceLightStatusBars = true
         }
         supportActionBar?.hide()
-
-        // Set status bar color to green
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
     }
 
@@ -101,22 +89,26 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
 
+            // Validate password length
+            if (password.length < 8) {
+                Toast.makeText(this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             // Show loading indicator when login button is clicked
             binding.progressBar.visibility = View.VISIBLE
 
             viewModel.login(email, password)
         }
 
-        // Observe isLoading LiveData here
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
-                binding.progressBar.visibility = View.VISIBLE // Show progress bar
+                binding.progressBar.visibility = View.VISIBLE
             } else {
-                binding.progressBar.visibility = View.GONE // Hide progress bar
+                binding.progressBar.visibility = View.GONE
             }
         }
 
-        // Add OnClickListener to signUpTextView to navigate to SignupActivity
         binding.signUpTextView.setOnClickListener {
             val intent = Intent(this, SignupWelcome::class.java)
             startActivity(intent)
@@ -128,27 +120,18 @@ class LoginActivity : AppCompatActivity() {
             if (result is Result.Success) {
                 binding.progressBar.visibility = View.GONE
 
-                // Extract token from the API response
                 val loginResponse = result.value
                 val token = loginResponse.token
 
-                // Save session using the token
                 viewModel.saveSession(token)
                 viewModel.sessionSaved.observe(this) { isSaved ->
                     if (isSaved) {
-                        // Navigate to MainActivity
                         navigateToMainActivity()
-                    } else {
-                        // Handle session save failure
                     }
                 }
             } else {
-                // Handle login failure
                 val message = when (result) {
-                    is Result.Failure -> getString(R.string.login_failed) + " [" + result.error.message + "]. " + getString(
-                        R.string.try_again
-                    )
-
+                    is Result.Failure -> getString(R.string.login_failed) + " [" + result.error.message + "]. " + getString(R.string.try_again)
                     else -> getString(R.string.login_failed) + ". " + getString(R.string.try_again)
                 }
                 showFailureToast(message)
