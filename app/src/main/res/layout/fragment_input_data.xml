@@ -21,20 +21,20 @@
 
         <TextView
             android:id="@+id/tv_dicoding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="288dp"
+            android:layout_height="66dp"
             android:fontFamily="@font/roboto_black"
             android:text="Personal Info"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="32sp"
-            android:textStyle="bold|italic"
+            android:textSize="40sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.152"
+            app:layout_constraintHorizontal_bias="0.12"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.22" />
+            app:layout_constraintVertical_bias="0.278" />
 
         <TextView
             android:id="@+id/appNameTextView"
@@ -43,14 +43,14 @@
             android:fontFamily="@font/roboto_black"
             android:text="NutriLens"
             android:textColor="@android:color/white"
-            android:textSize="42sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.255"
+            app:layout_constraintHorizontal_bias="0.126"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.684" />
+            app:layout_constraintVertical_bias="0.715" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -68,15 +68,15 @@
             android:text="Personal Info"
             android:textAlignment="center"
             android:textSize="34sp"
-            android:textStyle="bold"
+            android:textColor="#36383A"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="336dp"
+            android:layout_height="42dp"
             android:layout_marginTop="16dp"
             android:text="This app uses a sophisticated algorithm to recommend better results based on your input."
             android:textSize="16sp"
