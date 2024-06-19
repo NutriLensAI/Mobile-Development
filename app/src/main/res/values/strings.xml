@@ -228,8 +228,8 @@
     <string name="you_must_be_logged_in_to_use_this_feature">Anda harus login untuk menggunakan fitur ini.</string>
 
     <string-array name="gender_options">
-        <item>Laki-Laki</item>
-        <item>Perempuan</item>
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 
     <string-array name="sugar_units">
@@ -244,9 +244,9 @@
     </string-array>
 
     <string-array name="activity_level">
-        <item>Tidak banyak bergerak</item>
-        <item>Cukup Aktif</item>
-        <item>Aktif</item>
-        <item>Sangat Aktif</item>
+        <item>Not very active</item>
+        <item>Moderately Active</item>
+        <item>Active</item>
+        <item>Very Active</item>
     </string-array>
 </resources>
