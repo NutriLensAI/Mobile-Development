@@ -10,7 +10,6 @@
     tools:context=".view.main.MainActivity">
 
     <!-- Header with User Info -->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
@@ -34,28 +33,28 @@
 
         <TextView
             android:id="@+id/helloTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="264dp"
+            android:layout_height="38dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="44dp"
             android:fontFamily="@font/roboto_black"
-            android:text="@string/hello_user"
+            android:text="Hello, User!"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/userImageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/appNameTextView"
-            android:layout_width="261dp"
-            android:layout_height="62dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_black"
-            android:text="@string/what_have_you_eat_today"
+            android:text="What have you eat today?"
             android:textColor="@android:color/white"
-            android:textSize="24sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/userImageView"
             app:layout_constraintTop_toBottomOf="@+id/helloTextView" />
@@ -83,7 +82,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/macros"
+                android:text="Macros"
                 android:textColor="#36383A"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -94,7 +93,7 @@
                 android:layout_gravity="end"
                 android:paddingTop="8dp"
                 android:textColor="#36383A"
-                android:text="@string/_0_0_calories"
+                android:text="0/0 Calories"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <LinearLayout
@@ -116,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/carbs"
+                        android:text="Carbs"
                         android:textColor="@android:color/holo_blue_light"
                         android:textSize="14sp" />
 
@@ -145,7 +144,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:text="@string/_0_nof_n0_g_macros"
+                            android:text="0\nof\n0 g"
                             android:textAlignment="center"
                             android:textColor="@android:color/holo_blue_light"
                             android:textSize="14sp"
@@ -168,7 +167,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/fat"
+                        android:text="Fat"
                         android:textColor="@android:color/holo_orange_light"
                         android:textSize="14sp" />
 
@@ -199,7 +198,7 @@
                             android:layout_margin="10dp"
                             android:layout_marginStart="24dp"
                             android:layout_marginEnd="24dp"
-                            android:text="@string/_0_nof_n0_g_macros"
+                            android:text="0\nof\n0 g"
                             android:textAlignment="center"
                             android:textColor="@android:color/holo_orange_light"
                             android:textSize="14sp"
@@ -222,7 +221,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/protein"
+                        android:text="Protein"
                         android:textColor="@android:color/holo_red_light"
                         android:textSize="14sp" />
 
@@ -251,7 +250,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:text="@string/_0_nof_n0_g_macros"
+                            android:text="0\nof\n0 g"
                             android:textAlignment="center"
                             android:textColor="@android:color/holo_red_light"
                             android:textSize="14sp"
@@ -270,7 +269,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/macrosCardView">
@@ -285,14 +284,6 @@
     </androidx.core.widget.NestedScrollView>
 
     <!-- Include Custom Bottom Navigation Layout -->
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="55dp" />
-
     <include
         android:id="@+id/bottom_navigation"
         layout="@layout/bottom_navigation_layout"
