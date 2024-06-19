@@ -19,7 +19,7 @@
             android:id="@+id/drinkTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Drink"
+            android:text="@string/drink"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
@@ -36,9 +36,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Amount (ml)"
+                android:text="@string/amount_ml"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#FFA500" />
+                android:textColor="#33AFFF" />
 
             <TextView
                 android:layout_width="0dp"
@@ -47,7 +47,7 @@
                 android:gravity="center"
                 android:text="Sugar (g)"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#FF6347" />
+                android:textColor="#FFA500" />
         </LinearLayout>
 
         <!-- Nutrients Details -->
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#FFA500"
+                android:textColor="#33AFFF"
                 android:text="0 ml"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#FF6347"
+                android:textColor="#FFA500"
                 android:text="0 g"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>

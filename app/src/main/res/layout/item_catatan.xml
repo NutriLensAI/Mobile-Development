@@ -18,7 +18,7 @@
             android:id="@+id/mealTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Meal Title"
+            android:text="@string/food"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#36383A" />
 
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Carbs"
+                android:text="@string/carbs"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#33AFFF" />
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Fat"
+                android:text="@string/fat"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#FFA500" />
 
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Protein"
+                android:text="@string/protein"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#FF6347" />
 
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Calories"
+                android:text="@string/calories"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0 g"
+                android:text="@string/_0_g"
                 android:textColor="#33AFFF"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0 g"
+                android:text="@string/_0_g"
                 android:textColor="#FFA500"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0 g"
+                android:text="@string/_0_g"
                 android:textColor="#FF6347"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
+                android:text="@string/_0"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 

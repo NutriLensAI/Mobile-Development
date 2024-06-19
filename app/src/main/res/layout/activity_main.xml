@@ -33,28 +33,28 @@
 
         <TextView
             android:id="@+id/helloTextView"
-            android:layout_width="264dp"
-            android:layout_height="38dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="44dp"
             android:fontFamily="@font/roboto_black"
-            android:text="Hello, User!"
+            android:text="@string/hello_user"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/userImageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/appNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="261dp"
+            android:layout_height="62dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_black"
-            android:text="What have you eat today?"
+            android:text="@string/what_have_you_eat_today"
             android:textColor="@android:color/white"
-            android:textSize="15sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/userImageView"
             app:layout_constraintTop_toBottomOf="@+id/helloTextView" />
@@ -82,7 +82,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Macros"
+                android:text="@string/macros"
                 android:textColor="#36383A"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -93,7 +93,7 @@
                 android:layout_gravity="end"
                 android:paddingTop="8dp"
                 android:textColor="#36383A"
-                android:text="0/0 Calories"
+                android:text="@string/_0_0_calories"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <LinearLayout
@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Carbs"
+                        android:text="@string/carbs"
                         android:textColor="@android:color/holo_blue_light"
                         android:textSize="14sp" />
 
@@ -144,7 +144,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:text="0\nof\n0 g"
+                            android:text="@string/_0_nof_n0_g_macros"
                             android:textAlignment="center"
                             android:textColor="@android:color/holo_blue_light"
                             android:textSize="14sp"
@@ -167,7 +167,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Fat"
+                        android:text="@string/fat"
                         android:textColor="@android:color/holo_orange_light"
                         android:textSize="14sp" />
 
@@ -198,7 +198,7 @@
                             android:layout_margin="10dp"
                             android:layout_marginStart="24dp"
                             android:layout_marginEnd="24dp"
-                            android:text="0\nof\n0 g"
+                            android:text="@string/_0_nof_n0_g_macros"
                             android:textAlignment="center"
                             android:textColor="@android:color/holo_orange_light"
                             android:textSize="14sp"
@@ -221,7 +221,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Protein"
+                        android:text="@string/protein"
                         android:textColor="@android:color/holo_red_light"
                         android:textSize="14sp" />
 
@@ -250,7 +250,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:text="0\nof\n0 g"
+                            android:text="@string/_0_nof_n0_g_macros"
                             android:textAlignment="center"
                             android:textColor="@android:color/holo_red_light"
                             android:textSize="14sp"

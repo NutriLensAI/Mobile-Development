@@ -25,11 +25,11 @@
 
             <TextView
                 android:id="@+id/tv_dicoding"
-                android:layout_width="213dp"
+                android:layout_width="wrap_content"
                 android:layout_height="58dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/roboto_black"
-                android:text="Info Steps"
+                android:text="@string/info_steps"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="45sp"
@@ -46,7 +46,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="92dp"
                 android:fontFamily="@font/roboto_black"
-                android:text="NutriLens"
+                android:text="@string/app_name"
                 android:textColor="@android:color/white"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -81,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Jumlah Langkah Kaki yang Cukup dan Bagus untuk Tubuh"
+                    android:text="@string/jumlah_langkah_kaki_yang_cukup_dan_bagus_untuk_tubuh"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -89,13 +89,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Berjalan kaki adalah salah satu bentuk aktivitas fisik yang mudah dilakukan dan memiliki banyak manfaat bagi kesehatan. Dengan berjalan kaki secara rutin, Anda dapat meningkatkan kesehatan jantung, mengontrol berat badan, serta memperbaiki suasana hati dan energi. Namun, berapa jumlah langkah yang cukup dan bagus untuk tubuh?" />
+                    android:text="@string/berjalan_kaki_adalah_salah_satu_bentuk_aktivitas_fisik_yang_mudah_dilakukan_dan_memiliki_banyak_manfaat_bagi_kesehatan_dengan_berjalan_kaki_secara_rutin_anda_dapat_meningkatkan_kesehatan_jantung_mengontrol_berat_badan_serta_memperbaiki_suasana_hati_dan_energi_namun_berapa_jumlah_langkah_yang_cukup_dan_bagus_untuk_tubuh" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Penelitian menunjukkan bahwa berjalan setidaknya 10.000 langkah per hari dapat memberikan manfaat kesehatan yang signifikan. Angka ini setara dengan sekitar 8 kilometer atau 5 mil. Namun, beberapa studi juga menunjukkan bahwa bahkan berjalan sekitar 7.000 langkah per hari sudah cukup untuk memberikan manfaat kesehatan yang berarti." />
+                    android:text="@string/penelitian_menunjukkan_bahwa_berjalan_setidaknya_10_000_langkah_per_hari_dapat_memberikan_manfaat_kesehatan_yang_signifikan_angka_ini_setara_dengan_sekitar_8_kilometer_atau_5_mil_namun_beberapa_studi_juga_menunjukkan_bahwa_bahkan_berjalan_sekitar_7_000_langkah_per_hari_sudah_cukup_untuk_memberikan_manfaat_kesehatan_yang_berarti" />
 
                 <TextView
                     android:layout_width="match_parent"

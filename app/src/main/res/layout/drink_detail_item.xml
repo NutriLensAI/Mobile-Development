@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Drink Name"
+        android:text="@string/name_of_the_drink"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="0 ml"
+        android:text="@string/_0_ml"
         android:textColor="#FFA500"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -31,6 +31,6 @@
         android:layout_weight="1"
         android:textColor="#FF6347"
         android:gravity="center"
-        android:text="0 g"
+        android:text="@string/_0_g"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 </LinearLayout>

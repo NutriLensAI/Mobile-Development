@@ -21,11 +21,11 @@
 
         <TextView
             android:id="@+id/tv_dicoding"
-            android:layout_width="147dp"
+            android:layout_width="wrap_content"
             android:layout_height="63dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/roboto_black"
-            android:text="Dinner"
+            android:text="@string/dinner"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="45sp"

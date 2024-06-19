@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="@color/green"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -52,7 +52,7 @@
             android:id="@+id/ed_Login_Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username / Email"
+            android:hint="@string/username_email"
             android:inputType="textEmailAddress"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -82,7 +82,7 @@
             android:inputType="textPassword"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:hint="Password" />
+            android:hint="@string/password" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -93,7 +93,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/green"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Don't have an account? signup"
+        android:text="@string/don_t_have_an_account_signup"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/loginButton"

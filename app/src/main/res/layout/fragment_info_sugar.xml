@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Jumlah Konsumsi Gula yang Cukup"
+                    android:text="@string/jumlah_konsumsi_gula_yang_cukup"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -90,31 +90,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Konsumsi gula yang berlebihan dapat menyebabkan berbagai masalah kesehatan, seperti obesitas, diabetes tipe 2, dan penyakit jantung. Oleh karena itu, penting untuk memperhatikan jumlah konsumsi gula harian Anda." />
+                    android:text="@string/konsumsi_gula_yang_berlebihan_dapat_menyebabkan_berbagai_masalah_kesehatan_seperti_obesitas_diabetes_tipe_2_dan_penyakit_jantung_oleh_karena_itu_penting_untuk_memperhatikan_jumlah_konsumsi_gula_harian_anda" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Menurut American Heart Association (AHA), rekomendasi jumlah konsumsi gula harian adalah sebagai berikut:" />
+                    android:text="@string/menurut_american_heart_association_aha_rekomendasi_jumlah_konsumsi_gula_harian_adalah_sebagai_berikut" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="1. Untuk wanita: tidak lebih dari 6 sendok teh (25 gram atau sekitar 100 kalori) per hari." />
+                    android:text="@string/_1_untuk_wanita_tidak_lebih_dari_6_sendok_teh_25_gram_atau_sekitar_100_kalori_per_hari" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="2. Untuk pria: tidak lebih dari 9 sendok teh (38 gram atau sekitar 150 kalori) per hari." />
+                    android:text="@string/_2_untuk_pria_tidak_lebih_dari_9_sendok_teh_38_gram_atau_sekitar_150_kalori_per_hari" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Tips untuk Mengurangi Konsumsi Gula:"
+                    android:text="@string/tips_untuk_mengurangi_konsumsi_gula"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -122,37 +122,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="1. Kurangi minuman manis seperti soda, minuman energi, dan minuman manis lainnya." />
+                    android:text="@string/_1_kurangi_minuman_manis_seperti_soda_minuman_energi_dan_minuman_manis_lainnya" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="2. Pilih makanan ringan yang sehat seperti buah-buahan segar, sayuran, atau kacang-kacangan tanpa tambahan gula." />
+                    android:text="@string/_2_pilih_makanan_ringan_yang_sehat_seperti_buah_buahan_segar_sayuran_atau_kacang_kacangan_tanpa_tambahan_gula" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="3. Periksa label makanan untuk mengetahui kandungan gula tambahan." />
+                    android:text="@string/_3_periksa_label_makanan_untuk_mengetahui_kandungan_gula_tambahan" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="4. Gantilah gula dengan pemanis alami seperti madu atau stevia." />
+                    android:text="@string/_4_gantilah_gula_dengan_pemanis_alami_seperti_madu_atau_stevia" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="5. Buat makanan penutup sendiri dengan mengurangi jumlah gula dalam resep." />
+                    android:text="@string/_5_buat_makanan_penutup_sendiri_dengan_mengurangi_jumlah_gula_dalam_resep" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="Mengurangi konsumsi gula bisa menjadi tantangan, tetapi dengan kesadaran dan usaha yang tepat, Anda dapat menjalani gaya hidup yang lebih sehat. Ingatlah untuk selalu menjaga keseimbangan dalam pola makan Anda dan tetap aktif bergerak untuk menjaga kesehatan secara keseluruhan." />
+                    android:text="@string/mengurangi_konsumsi_gula_bisa_menjadi_tantangan_tetapi_dengan_kesadaran_dan_usaha_yang_tepat_anda_dapat_menjalani_gaya_hidup_yang_lebih_sehat_ingatlah_untuk_selalu_menjaga_keseimbangan_dalam_pola_makan_anda_dan_tetap_aktif_bergerak_untuk_menjaga_kesehatan_secara_keseluruhan" />
 
             </LinearLayout>
         </ScrollView>

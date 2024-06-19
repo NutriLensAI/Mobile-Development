@@ -25,7 +25,7 @@
             android:layout_height="58dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/roboto_black"
-            android:text="Personal Info"
+            android:text="@string/personal_info"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="45sp"
@@ -42,7 +42,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="172dp"
             android:fontFamily="@font/roboto_black"
-            android:text="NutriLens"
+            android:text="@string/app_name"
             android:textColor="@android:color/white"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -62,7 +62,7 @@
             android:layout_width="380dp"
             android:layout_height="43dp"
             android:layout_marginTop="16dp"
-            android:text="This app uses a sophisticated algorithm to recommend better results based on your input."
+            android:text="@string/this_app_uses_a_sophisticated_algorithm_to_recommend_better_results_based_on_your_input"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
@@ -93,7 +93,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Activity Level"
+                        android:text="@string/activity_level"
                         android:textSize="18sp" />
 
                     <Spinner
@@ -102,12 +102,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:entries="@array/activity_level" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:text="Explanation about Activity Level" />
                 </LinearLayout>
 
                 <!-- Personal Measurements -->
@@ -120,7 +114,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Personal Measurements"
+                        android:text="@string/personal_measurements"
                         android:textSize="18sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -133,7 +127,7 @@
                             android:id="@+id/tiWeight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Weight (KG)"
+                            android:hint="@string/weight_kg"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -147,7 +141,7 @@
                             android:id="@+id/tiHeight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Height (CM)"
+                            android:hint="@string/height_cm"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,7 +155,7 @@
                             android:id="@+id/tiAge"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Age (year)"
+                            android:hint="@string/age_year"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -177,7 +171,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Gender"
+                        android:text="@string/gender"
                         android:textSize="18sp" />
 
                     <Spinner
@@ -194,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:backgroundTint="@color/green"
-                    android:text="Save Info" />
+                    android:text="@string/save_info" />
 
             </LinearLayout>
         </ScrollView>

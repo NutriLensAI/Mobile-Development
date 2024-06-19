@@ -29,7 +29,7 @@
                 android:layout_height="63dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/roboto_black"
-                android:text="Info Sleep"
+                android:text="@string/info_sleep"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="45sp"
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
                     android:padding="16dp"
-                    android:text="Sleep count\nPress the button to choose what hour you awake"
+                    android:text="@string/sleep_count_press_the_button_to_choose_what_hour_you_awake"
                     android:textAlignment="center"
                     android:textColor="#36383A"
                     android:textSize="24sp" />
@@ -87,13 +87,13 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
                     android:backgroundTint="@color/green"
-                    android:text="Set Sleep Time" />
+                    android:text="@string/set_sleep_time" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Informasi Tidur yang Cukup"
+                    android:text="@string/informasi_tidur_yang_cukup"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -101,13 +101,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Tidur yang cukup sangat penting untuk menjaga kesehatan tubuh. Orang dewasa disarankan untuk tidur antara 7-9 jam setiap malam. Berikut adalah beberapa informasi mengenai pentingnya tidur dan tips untuk mendapatkan tidur yang berkualitas." />
+                    android:text="@string/tidur_yang_cukup_sangat_penting_untuk_menjaga_kesehatan_tubuh_orang_dewasa_disarankan_untuk_tidur_antara_7_9_jam_setiap_malam_berikut_adalah_beberapa_informasi_mengenai_pentingnya_tidur_dan_tips_untuk_mendapatkan_tidur_yang_berkualitas" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Manfaat Tidur yang Cukup"
+                    android:text="@string/manfaat_tidur_yang_cukup"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -115,25 +115,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="1. Memperbaiki fungsi otak: Tidur membantu memperkuat ingatan dan meningkatkan konsentrasi serta produktivitas." />
+                    android:text="@string/_1_memperbaiki_fungsi_otak_tidur_membantu_memperkuat_ingatan_dan_meningkatkan_konsentrasi_serta_produktivitas" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="2. Meningkatkan kesehatan mental: Tidur yang cukup dapat membantu mengurangi risiko gangguan mental seperti depresi dan kecemasan." />
+                    android:text="@string/_2_meningkatkan_kesehatan_mental_tidur_yang_cukup_dapat_membantu_mengurangi_risiko_gangguan_mental_seperti_depresi_dan_kecemasan" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="3. Meningkatkan sistem kekebalan tubuh: Tidur yang cukup dapat memperkuat sistem kekebalan tubuh, sehingga tubuh lebih tahan terhadap penyakit." />
+                    android:text="@string/_3_meningkatkan_sistem_kekebalan_tubuh_tidur_yang_cukup_dapat_memperkuat_sistem_kekebalan_tubuh_sehingga_tubuh_lebih_tahan_terhadap_penyakit" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Tips untuk Mendapatkan Tidur yang Berkualitas"
+                    android:text="@string/tips_untuk_mendapatkan_tidur_yang_berkualitas"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -141,55 +141,55 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="1. Cobalah untuk tidur dan bangun pada waktu yang sama setiap hari." />
+                    android:text="@string/_1_cobalah_untuk_tidur_dan_bangun_pada_waktu_yang_sama_setiap_hari" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="2. Hindari konsumsi kafein dan makanan berat sebelum tidur." />
+                    android:text="@string/_2_hindari_konsumsi_kafein_dan_makanan_berat_sebelum_tidur" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="3. Buatlah suasana tidur yang nyaman, seperti mematikan lampu dan menjaga suhu ruangan yang sejuk." />
+                    android:text="@string/_3_buatlah_suasana_tidur_yang_nyaman_seperti_mematikan_lampu_dan_menjaga_suhu_ruangan_yang_sejuk" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="4. Hindari penggunaan gadget sebelum tidur karena cahaya biru dapat mengganggu kualitas tidur." />
+                    android:text="@string/_6_hindari_tidur_siang_terlalu_lama_agar_tidak_mengganggu_tidur_malam" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="5. Lakukan aktivitas fisik secara teratur untuk membantu tubuh lebih mudah tidur pada malam hari." />
+                    android:text="@string/_5_lakukan_aktivitas_fisik_secara_teratur_untuk_membantu_tubuh_lebih_mudah_tidur_pada_malam_hari" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="6. Hindari tidur siang terlalu lama agar tidak mengganggu tidur malam." />
+                    android:text="@string/_6_hindari_tidur_siang_terlalu_lama_agar_tidak_mengganggu_tidur_malam" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="7. Jika sulit tidur, cobalah teknik relaksasi seperti meditasi atau pernapasan dalam sebelum tidur." />
+                    android:text="@string/_7_jika_sulit_tidur_cobalah_teknik_relaksasi_seperti_meditasi_atau_pernapasan_dalam_sebelum_tidur" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="8. Pastikan kasur dan bantal Anda nyaman dan mendukung postur tubuh yang baik selama tidur." />
+                    android:text="@string/_8_pastikan_kasur_dan_bantal_anda_nyaman_dan_mendukung_postur_tubuh_yang_baik_selama_tidur" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="Mengikuti tips ini dapat membantu Anda mendapatkan tidur yang berkualitas dan menjaga kesehatan tubuh secara keseluruhan. Pastikan untuk menjaga pola tidur yang konsisten dan hindari kebiasaan yang dapat mengganggu tidur Anda." />
+                    android:text="@string/mengikuti_tips_ini_dapat_membantu_anda_mendapatkan_tidur_yang_berkualitas_dan_menjaga_kesehatan_tubuh_secara_keseluruhan_pastikan_untuk_menjaga_pola_tidur_yang_konsisten_dan_hindari_kebiasaan_yang_dapat_mengganggu_tidur_anda" />
 
             </LinearLayout>
         </ScrollView>

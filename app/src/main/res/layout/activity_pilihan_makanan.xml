@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/search_bar_background"
-            android:hint="Search for a food"
+            android:hint="@string/search_for_a_food"
             android:padding="10dp" />
     </LinearLayout>
 

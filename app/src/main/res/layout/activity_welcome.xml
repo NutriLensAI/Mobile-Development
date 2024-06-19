@@ -9,17 +9,15 @@
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="318dp"
-        android:layout_height="98dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/title_welcome_page"
+        android:text="@string/nutrilens_welcome"
         android:textAlignment="center"
         android:textColor="#2C7865"
-        android:textSize="34sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -53,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/dark_green"
-        android:text="@string/signup2"
+        android:text="@string/register"
         app:layout_constraintEnd_toEndOf="@+id/loginButton"
         app:layout_constraintStart_toStartOf="@+id/loginButton"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
@@ -63,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Login as Guest"
+        android:text="@string/login_as_guest"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"

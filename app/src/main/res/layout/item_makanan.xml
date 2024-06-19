@@ -30,7 +30,7 @@
             android:id="@+id/tv_nama_makanan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bakso Urat"
+            android:text="@string/placeholder_food_name"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="450 Kcal"
+                android:text="@string/placeholder_450_kcal"
                 android:textStyle="bold" />
 
             <TextView
@@ -61,14 +61,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Carbs: 14g, Fat: 14g, Protein: 14g" />
+                android:text="@string/placeholder_carbs_14g_fat_14g_protein_14g" />
 
             <TextView
                 android:id="@+id/tv_macros_percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Carbs: 60%, Fat: 14%, Protein: 26%" />
+                android:text="@string/placeholder_carbs_60_fat_14_protein_26" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

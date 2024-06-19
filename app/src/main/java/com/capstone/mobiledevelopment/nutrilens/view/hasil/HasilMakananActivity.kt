@@ -169,16 +169,23 @@ class HasilMakananActivity : AppCompatActivity() {
     }
 
     private fun updateNutritionUI(nutrition: FoodResponse) {
+        val totalCalories = nutrition.calories ?: 0.0
+        val carbsCalories = (nutrition.carbohydrate ?: 0.0) * 4
+        val fatCalories = (nutrition.fat ?: 0.0) * 9
+        val proteinCalories = (nutrition.proteins ?: 0.0) * 4
+
+        val carbsPercentage = if (totalCalories > 0) (carbsCalories / totalCalories * 100).toInt() else 0
+        val fatPercentage = if (totalCalories > 0) (fatCalories / totalCalories * 100).toInt() else 0
+        val proteinPercentage = if (totalCalories > 0) (proteinCalories / totalCalories * 100).toInt() else 0
+
         findViewById<TextView>(R.id.tv_carbs_value).text = "${nutrition.carbohydrate ?: 0.0} g"
         findViewById<TextView>(R.id.tv_fat_value).text = "${nutrition.fat ?: 0.0} g"
         findViewById<TextView>(R.id.tv_protein_value).text = "${nutrition.proteins ?: 0.0} g"
+        findViewById<TextView>(R.id.tv_calories_value).text = "${totalCalories} KKal"
 
-        findViewById<ProgressBar>(R.id.carbsProgressBar).progress =
-            nutrition.carbohydrate.toInt()
-        findViewById<ProgressBar>(R.id.fatProgressBar).progress =
-            nutrition.fat.toInt()
-        findViewById<ProgressBar>(R.id.proteinProgressBar).progress =
-            nutrition.proteins.toInt()
+        findViewById<ProgressBar>(R.id.carbsProgressBar).progress = carbsPercentage
+        findViewById<ProgressBar>(R.id.fatProgressBar).progress = fatPercentage
+        findViewById<ProgressBar>(R.id.proteinProgressBar).progress = proteinPercentage
     }
 
     private fun findMatchingNutrition(

@@ -21,11 +21,11 @@
 
         <TextView
             android:id="@+id/tv_dicoding"
-            android:layout_width="327dp"
+            android:layout_width="wrap_content"
             android:layout_height="54dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/roboto_black"
-            android:text="Change Email"
+            android:text="@string/change_email"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="45sp"
@@ -40,9 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="188dp"
+            android:layout_marginEnd="32dp"
             android:fontFamily="@font/roboto_black"
-            android:text="NutriLens"
+            android:text="@string/app_name"
             android:textColor="@android:color/white"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -67,7 +67,7 @@
             android:layout_width="380dp"
             android:layout_height="43dp"
             android:layout_marginTop="16dp"
-            android:text="Enter your new email address below and confirm it to update your account settings."
+            android:text="@string/enter_your_new_email_address_below_and_confirm_it_to_update_your_account_settings"
             android:textAlignment="textStart"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
                 android:id="@+id/etNewEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="New Email"
+                android:hint="@string/new_email"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,7 +112,7 @@
                 android:id="@+id/etConfirmNewEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirm New Email"
+                android:hint="@string/confirm_new_email"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,7 +125,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
             android:backgroundTint="@color/green"
-            android:text="Update Email"
+            android:text="@string/update_email"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

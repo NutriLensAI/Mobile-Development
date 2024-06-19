@@ -25,7 +25,7 @@
             android:layout_height="58dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/roboto_black"
-            android:text="Personal Data"
+            android:text="@string/personal_info"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="45sp"
@@ -42,7 +42,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="180dp"
             android:fontFamily="@font/roboto_black"
-            android:text="NutriLens"
+            android:text="@string/app_name"
             android:textColor="@android:color/white"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -58,15 +58,12 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Explanation Text -->
-
-        <!-- Section for Activity Level -->
-
         <TextView
             android:id="@+id/explanationText"
             android:layout_width="380dp"
             android:layout_height="43dp"
             android:layout_marginTop="16dp"
-            android:text="This information is used for the app's algorithm to provide a personalized experience."
+            android:text="@string/this_information_is_used_for_the_app_s_algorithm_to_provide_a_personalized_experience"
             android:textAlignment="viewStart"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,6 +71,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Section for Activity Level -->
         <LinearLayout
             android:id="@+id/ActivityLevel"
             android:layout_width="match_parent"
@@ -91,15 +89,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Activity Level:" />
+                android:text="@string/activity_level" />
 
             <TextView
                 android:id="@+id/tvActivityLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="Choice" />
-
+                android:text="@string/choice" />
         </LinearLayout>
 
         <!-- Section for Weight -->
@@ -120,15 +117,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Weight:" />
+                android:text="@string/weight" />
 
             <TextView
                 android:id="@+id/tvWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="0 kg" />
-
+                android:text="@string/_0_kg" />
         </LinearLayout>
 
         <!-- Section for Height -->
@@ -149,15 +145,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Height:" />
+                android:text="@string/height" />
 
             <TextView
                 android:id="@+id/tvHeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="0 cm" />
-
+                android:text="@string/_0_cm" />
         </LinearLayout>
 
         <!-- Section for Age -->
@@ -178,15 +173,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Age:" />
+                android:text="@string/age" />
 
             <TextView
                 android:id="@+id/tvAge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="0 years" />
-
+                android:text="@string/_0_years" />
         </LinearLayout>
 
         <!-- Section for Gender -->
@@ -207,15 +201,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Gender:" />
+                android:text="@string/gender" />
 
             <TextView
                 android:id="@+id/tvGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="Choice" />
-
+                android:text="@string/choice" />
         </LinearLayout>
 
         <Button
@@ -226,7 +219,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
             android:backgroundTint="@color/green"
-            android:text="Change Personal Data"
+            android:text="@string/change_personal_data"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

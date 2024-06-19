@@ -4,22 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capstone.mobiledevelopment.nutrilens.BuildConfig
 import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
-import com.capstone.mobiledevelopment.nutrilens.view.resep.RecipeData
 import com.capstone.mobiledevelopment.nutrilens.view.resep.ResepItem
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
 
 class HasilMakananViewModel(
     private val foodRepository: FoodRepository,
@@ -80,37 +71,4 @@ class HasilMakananViewModel(
         }
     }
 
-    fun fetchRecipes() {
-        _isLoading.value = true
-        viewModelScope.launch {
-            try {
-                val recipes = withContext(Dispatchers.IO) { getRecipeDataFromUrl() }
-                _recipes.postValue(recipes)
-            } catch (e: Exception) {
-            } finally {
-                _isLoading.value = false
-            }
-        }
-    }
-
-    private fun getRecipeDataFromUrl(): List<ResepItem> {
-        val urlString = BuildConfig.API_BASE_URL
-        var jsonString: String
-        try {
-            val url = URL(urlString)
-            val connection = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "GET"
-            connection.connect()
-
-            jsonString = connection.inputStream.bufferedReader().use { it.readText() }
-        } catch (ioException: IOException) {
-            ioException.printStackTrace()
-            return emptyList()
-        }
-
-        val gson = Gson()
-        val recipeType = object : TypeToken<RecipeData>() {}.type
-        val recipeData: RecipeData = gson.fromJson(jsonString, recipeType)
-        return recipeData.recipeData
-    }
 }

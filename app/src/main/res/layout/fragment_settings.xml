@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="4dp"
-            android:text="Settings and Privacy"
+            android:text="@string/settings_and_privacy"
             android:textColor="#36383A"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="4dp"
-            android:text="Halo, User!"
+            android:text="@string/hello_user"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -102,7 +102,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Email"
+                    android:text="@string/email"
                     android:textSize="16sp" />
 
                 <ImageView
@@ -132,7 +132,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Password"
+                    android:text="@string/password"
                     android:textSize="16sp" />
 
                 <ImageView
@@ -192,7 +192,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Personal Info"
+                    android:text="@string/personal_info"
                     android:textAlignment="textStart"
                     android:textSize="16sp"
                     android:typeface="normal" />
