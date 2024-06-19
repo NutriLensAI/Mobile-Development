@@ -55,11 +55,8 @@ class HasilMakananActivity : AppCompatActivity() {
                 .into(imageView)
         }
 
-        val originalPrediction = prediction
         prediction?.let {
-            val cleanedPrediction = cleanPrediction(it)
-            namaMakananTextView.text = cleanedPrediction
-            prediction = cleanedPrediction
+            namaMakananTextView.text = it.trim()
         }
 
         val mealTimeLayout: LinearLayout = findViewById(R.id.meal_time_layout)
@@ -89,10 +86,7 @@ class HasilMakananActivity : AppCompatActivity() {
         viewModel.nutritions.observe(this) { nutritionList ->
             matchedNutrition = findMatchingNutrition(nutritionList, prediction)
             if (matchedNutrition == null) {
-                matchedNutrition = findMatchingNutrition(nutritionList, originalPrediction)
-                if (matchedNutrition == null) {
-                    showNutritionNotFoundTooltip()
-                }
+                showNutritionNotFoundTooltip()
             }
             if (matchedNutrition != null) {
                 updateNutritionUI(matchedNutrition!!)
@@ -103,10 +97,7 @@ class HasilMakananActivity : AppCompatActivity() {
         val recipes = loadRecipesFromAssets()
         matchedRecipe = findMatchingRecipe(recipes, prediction)
         if (matchedRecipe == null) {
-            matchedRecipe = findMatchingRecipe(recipes, originalPrediction)
-            if (matchedRecipe == null) {
-                showRecipeNotFoundTooltip()
-            }
+            showRecipeNotFoundTooltip()
         }
 
         viewModel.isLoading.observe(this) { isLoading ->
@@ -163,8 +154,6 @@ class HasilMakananActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun showLowConfidenceTooltip() {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.low_confidence))
@@ -205,7 +194,7 @@ class HasilMakananActivity : AppCompatActivity() {
         prediction: String?
     ): FoodResponse? {
         return nutritionList.find {
-            it.name.contains(prediction ?: "", ignoreCase = true)
+            it.name.contains(prediction?.trim() ?: "", ignoreCase = true)
         }
     }
 
@@ -214,7 +203,7 @@ class HasilMakananActivity : AppCompatActivity() {
         prediction: String?
     ): ResepItem? {
         return recipeList.find {
-            it.Title.contains(prediction ?: "", ignoreCase = true)
+            it.Title.contains(prediction?.trim() ?: "", ignoreCase = true)
         }
     }
 
@@ -236,11 +225,6 @@ class HasilMakananActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             .show()
-    }
-
-    private fun cleanPrediction(prediction: String): String {
-        return prediction.replace(Regex("[^A-Za-z0-9 ]"), " ").trim().split("\\s+".toRegex())
-            .take(2).joinToString(" ")
     }
 
     private fun viewIngredients() {
