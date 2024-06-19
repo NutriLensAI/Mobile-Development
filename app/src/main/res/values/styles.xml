@@ -12,7 +12,6 @@
         <item name="boxCornerRadiusBottomStart">12dp</item>
         <item name="boxCornerRadiusBottomEnd">12dp</item>
         <item name="boxStrokeColor">@color/green</item>
-        <item name="android:background">@drawable/rounded_box</item>
     </style>
 
 
