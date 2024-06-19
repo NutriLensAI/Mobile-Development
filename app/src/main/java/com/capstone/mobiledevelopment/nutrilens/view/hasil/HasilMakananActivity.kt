@@ -136,6 +136,7 @@ class HasilMakananActivity : AppCompatActivity() {
             carbohydrate = food.carbohydrate
         )
         viewModel.addFoodToMeal(token, table, food.id, foodRequest)
+        Toast.makeText(this, "Makanan kamu berhasil ditambahkan!", Toast.LENGTH_SHORT).show()
     }
 
     private fun handlePrediction() {
