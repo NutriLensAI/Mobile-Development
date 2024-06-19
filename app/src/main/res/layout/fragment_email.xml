@@ -58,21 +58,6 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Title: Change Email -->
-        <TextView
-            android:id="@+id/tvChangeEmail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="24dp"
-            android:gravity="center"
-            android:text="Change Email"
-            android:textSize="34sp"
-            android:textColor="#36383A"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Explanation Text -->
         <TextView
@@ -83,10 +68,10 @@
             android:text="Enter your new email address below and confirm it to update your account settings."
             android:textAlignment="textStart"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/tvChangeEmail"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tvChangeEmail"
-            app:layout_constraintTop_toBottomOf="@id/tvChangeEmail" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- New Email Input -->
         <com.google.android.material.textfield.TextInputLayout
