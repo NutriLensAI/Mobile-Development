@@ -198,13 +198,13 @@ class CatatanMakanan : AppCompatActivity() {
 
     private fun showLoginDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Kamu harus login untuk menggunakan fitur ini")
-        builder.setMessage("Silakan login untuk melanjutkan atau pilih Later untuk menggunakan akun guest.")
-        builder.setPositiveButton("Login Now") { dialog, _ ->
+        builder.setTitle(getString(R.string.kamu_harus_login_untuk_menggunakan_fitur_ini))
+        builder.setMessage(getString(R.string.silakan_login_untuk_melanjutkan_atau_pilih_later_untuk_menggunakan_akun_guest))
+        builder.setPositiveButton(getString(R.string.login_now)) { dialog, _ ->
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
-        builder.setNegativeButton("Later") { dialog, _ ->
+        builder.setNegativeButton(getString(R.string.later)) { dialog, _ ->
             dialog.dismiss()
         }
         builder.show()

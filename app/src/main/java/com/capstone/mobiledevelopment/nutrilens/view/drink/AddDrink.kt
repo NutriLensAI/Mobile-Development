@@ -46,12 +46,13 @@ class AddDrink : AppCompatActivity() {
             val sugarUnit = binding.sugarUnitSpinner.selectedItem.toString()
             val sugar = binding.sugarAmountEditText.text.toString().toIntOrNull() ?: 0
             val sugarInGrams =
-                if (sugarUnit == "Tablespoons") sugar * 13 else sugar // Assume 1 tablespoon = 13 grams
+                if (sugarUnit == getString(R.string.tablespoons)) sugar * 13 else sugar // Assume 1 tablespoon = 13 grams
 
             if (name.isNotEmpty() && amount > 0) {
                 saveDrink(name, amount, sugarInGrams)
             } else {
-                Toast.makeText(this, "Please fill in all fields correctly.", Toast.LENGTH_SHORT)
+                Toast.makeText(this,
+                    getString(R.string.please_fill_in_all_fields_correctly), Toast.LENGTH_SHORT)
                     .show()
             }
         }
@@ -64,7 +65,12 @@ class AddDrink : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@AddDrink,
-                        "Successfully added $name with $amount ml and $sugar g of sugar to the database.",
+                        getString(
+                            R.string.successfully_added_with_ml_and_g_of_sugar_to_the_database,
+                            name,
+                            amount,
+                            sugar
+                        ),
                         Toast.LENGTH_LONG
                     ).show()
                 }

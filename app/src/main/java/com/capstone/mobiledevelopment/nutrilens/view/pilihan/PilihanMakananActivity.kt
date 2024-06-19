@@ -1,6 +1,5 @@
 package com.capstone.mobiledevelopment.nutrilens.view.pilihan
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -30,13 +29,11 @@ import com.capstone.mobiledevelopment.nutrilens.data.retrofit.UserProfileRequest
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FavoriteRecipeAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.FoodResponse
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.food.PilihanFoodAdapter
-import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.AddMyRecipes
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipe
 import com.capstone.mobiledevelopment.nutrilens.view.adapter.recipes.MyRecipesAdapter
 import com.capstone.mobiledevelopment.nutrilens.view.main.MainViewModel
 import com.capstone.mobiledevelopment.nutrilens.view.resep.RetrofitInstance
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -110,7 +107,7 @@ class PilihanMakananActivity : AppCompatActivity() {
         return recommendedFoods.mapIndexed { index, it ->
             FoodResponse(
                 id = index, // Memberikan id default
-                name = "${it.name} (Rekomendasi)", // Menambahkan teks rekomendasi
+                name = getString(R.string.rekomendasi, it.name), // Menambahkan teks rekomendasi
                 calories = it.calories,
                 image = getDrawableResourceId(index).toString(), // Menetapkan gambar dari drawable
                 proteins = it.proteins,
@@ -167,7 +164,7 @@ class PilihanMakananActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(
                             this@PilihanMakananActivity,
-                            "Failed to fetch recommended foods",
+                            getString(R.string.failed_to_fetch_recommended_foods),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -177,7 +174,7 @@ class PilihanMakananActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@PilihanMakananActivity,
-                        "Failed to fetch recommended foods",
+                        getString(R.string.failed_to_fetch_recommended_foods),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -186,7 +183,7 @@ class PilihanMakananActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@PilihanMakananActivity,
-                        "Failed to fetch recommended foods",
+                        getString(R.string.failed_to_fetch_recommended_foods),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -275,7 +272,7 @@ class PilihanMakananActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@PilihanMakananActivity,
-                        "Food added successfully",
+                        getString(R.string.food_added_successfully),
                         Toast.LENGTH_SHORT
                     ).show()
                     // Finish this activity and return to CatatanMakananActivity
@@ -285,7 +282,7 @@ class PilihanMakananActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@PilihanMakananActivity,
-                        "Failed to add food",
+                        getString(R.string.failed_to_add_food),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -294,7 +291,7 @@ class PilihanMakananActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@PilihanMakananActivity,
-                        "Failed to add food",
+                        getString(R.string.failed_to_add_food),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

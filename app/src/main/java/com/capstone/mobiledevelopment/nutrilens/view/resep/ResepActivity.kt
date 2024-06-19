@@ -43,9 +43,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.BufferedReader
 import java.io.IOException
-import java.io.InputStreamReader
 
 class ResepActivity : AppCompatActivity() {
 
@@ -238,9 +236,9 @@ class ResepActivity : AppCompatActivity() {
 
     private fun showLoginDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Login Required")
-            .setMessage("You must be logged in to use this feature.")
-            .setPositiveButton("Login Now") { dialog, _ ->
+            .setTitle(getString(R.string.login_required))
+            .setMessage(getString(R.string.you_must_be_logged_in_to_use_this_feature))
+            .setPositiveButton(R.string.login_now) { dialog, _ ->
                 startActivity(Intent(this, LoginActivity::class.java))
                 dialog.dismiss()
             }

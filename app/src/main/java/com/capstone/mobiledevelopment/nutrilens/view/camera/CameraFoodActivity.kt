@@ -74,7 +74,7 @@ class CameraFoodActivity : AppCompatActivity() {
             }
         } else {
             val exception = result.error
-            Log.e(TAG, "Crop failed: ${exception?.message}", exception)
+            Log.e(TAG, getString(R.string.crop_failed, exception?.message), exception)
         }
     }
 
@@ -155,7 +155,8 @@ class CameraFoodActivity : AppCompatActivity() {
         targetProgress: Int,
         duration: Long
     ) {
-        val animator = ObjectAnimator.ofInt(progressBar, "progress", 0, targetProgress)
+        val animator = ObjectAnimator.ofInt(progressBar,
+            getString(R.string.progress), 0, targetProgress)
         animator.duration = duration
         animator.interpolator = CustomInterpolator()
         animator.start()
@@ -189,7 +190,7 @@ class CameraFoodActivity : AppCompatActivity() {
                     this, cameraSelector, preview, imageCapture
                 )
             } catch (exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
+                Log.e(TAG, getString(R.string.use_case_binding_failed), exc)
             }
         }, ContextCompat.getMainExecutor(this))
     }
@@ -222,17 +223,17 @@ class CameraFoodActivity : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
-                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                    Log.e(getString(R.string.photo_capture_failed), exc.toString())
                     Toast.makeText(
                         baseContext,
-                        "Photo capture failed: ${exc.message}",
+                        getString(R.string.photo_capture_failed, exc.message),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = output.savedUri ?: capturedImageUri
-                    val msg = "Photo capture succeeded: $savedUri"
+                    val msg = getString(R.string.photo_capture_succeeded, savedUri)
                     Log.d(TAG, msg)
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     // Start cropping the captured image
@@ -314,7 +315,8 @@ class CameraFoodActivity : AppCompatActivity() {
             if (allPermissionsGranted()) {
                 startCamera()
             } else {
-                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT)
+                Toast.makeText(this,
+                    getString(R.string.permissions_not_granted_by_the_user), Toast.LENGTH_SHORT)
                     .show()
                 finish()
             }

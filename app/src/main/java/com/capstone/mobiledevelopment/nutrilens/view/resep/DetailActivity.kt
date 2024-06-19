@@ -128,8 +128,8 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showLoginDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Kamu harus login untuk menggunakan fitur ini")
-        builder.setMessage("Silakan login untuk melanjutkan atau pilih Later untuk menggunakan akun guest.")
+        builder.setTitle(getString(R.string.kamu_harus_login_untuk_menggunakan_fitur_ini))
+        builder.setMessage(R.string.silakan_login_untuk_melanjutkan_atau_pilih_later_untuk_menggunakan_akun_guest)
         builder.setPositiveButton("Login Now") { dialog, _ ->
             val intent = Intent(this, WelcomeActivity::class.java)
             startActivity(intent)

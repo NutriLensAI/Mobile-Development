@@ -137,16 +137,18 @@ class HasilMakananActivity : AppCompatActivity() {
                 carbohydrate = food.carbohydrate
             )
             viewModel.addFoodToMeal(token, table, food.id, foodRequest)
-            Toast.makeText(this, "Makanan kamu berhasil ditambahkan!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.makanan_kamu_berhasil_ditambahkan), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Nutrisi Makanan kamu tidak ada di database kami :(", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.nutrisi_makanan_kamu_tidak_ada_di_database_kami), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun handlePrediction() {
         prediction?.let {
             if (confidence > 70) {
-                Toast.makeText(this, "Confidence: $confidence%", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.confidence, confidence), Toast.LENGTH_SHORT).show()
             } else {
                 showLowConfidenceTooltip()
             }
@@ -155,9 +157,9 @@ class HasilMakananActivity : AppCompatActivity() {
 
     private fun showLowConfidenceTooltip() {
         AlertDialog.Builder(this)
-            .setTitle("Low Confidence")
-            .setMessage("Confidence is low. Do you want to manually input the food?")
-            .setPositiveButton("Yes") { dialog, _ ->
+            .setTitle(getString(R.string.low_confidence))
+            .setMessage(getString(R.string.confidence_is_low_do_you_want_to_manually_input_the_food))
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
                 val intent = Intent(this, PilihanMakananActivity::class.java)
                 startActivity(intent)
                 dialog.dismiss()
@@ -208,8 +210,8 @@ class HasilMakananActivity : AppCompatActivity() {
 
     private fun showNutritionNotFoundTooltip() {
         AlertDialog.Builder(this)
-            .setTitle("Nutrition Not Found")
-            .setMessage("The nutrition information for the predicted food item was not found in the database.")
+            .setTitle(getString(R.string.nutrition_not_found))
+            .setMessage(getString(R.string.the_nutrition_information_for_the_predicted_food_item_was_not_found_in_the_database))
             .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
             }
@@ -218,8 +220,8 @@ class HasilMakananActivity : AppCompatActivity() {
 
     private fun showRecipeNotFoundTooltip() {
         AlertDialog.Builder(this)
-            .setTitle("Recipe Not Found")
-            .setMessage("The recipe information for the predicted food item was not found in the database.")
+            .setTitle(getString(R.string.recipe_not_found))
+            .setMessage(getString(R.string.the_recipe_information_for_the_predicted_food_item_was_not_found_in_the_database))
             .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
             }

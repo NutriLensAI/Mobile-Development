@@ -95,7 +95,8 @@ class LoginActivity : AppCompatActivity() {
 
             // Validate password length
             if (password.length < 8) {
-                Toast.makeText(this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.password_must_be_at_least_8_characters), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

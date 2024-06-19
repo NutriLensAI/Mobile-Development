@@ -142,8 +142,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private fun showLoginDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Kamu harus login untuk menggunakan fitur lengkapnya!")
-        builder.setMessage("Silakan login untuk melanjutkan atau pilih Later untuk menggunakan akun guest.")
+        builder.setTitle(getString(R.string.kamu_harus_login_untuk_menggunakan_fitur_lengkapnya))
+        builder.setMessage(getString(R.string.silakan_login_untuk_melanjutkan_atau_pilih_later_untuk_menggunakan_akun_guest))
         builder.setPositiveButton("Login Now") { dialog, _ ->
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -212,9 +212,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private fun showUserProfileTooltip() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Complete Your Profile")
-        builder.setMessage("Personal data is still empty. You must fill it to have the fullest experience.")
-        builder.setPositiveButton("Fill Now") { dialog, _ ->
+        builder.setTitle(getString(R.string.complete_your_profile))
+        builder.setMessage(getString(R.string.personal_data_is_still_empty_you_must_fill_it_to_have_the_fullest_experience))
+        builder.setPositiveButton(getString(R.string.fill_now)) { dialog, _ ->
             // Navigate to settings activity with PersonalFragment
             val intent = Intent(this, SettingsActivity::class.java).apply {
                 putExtra("selected_item", R.id.navigation_profile)
@@ -223,7 +223,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             startActivity(intent)
             dialog.dismiss()
         }
-        builder.setNegativeButton("Later") { dialog, _ ->
+        builder.setNegativeButton(getString(R.string.later)) { dialog, _ ->
             dialog.dismiss()
         }
         builder.show()
@@ -267,7 +267,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 apiAvailability.getErrorDialog(this, resultCode, REQUEST_CODE_UPDATE_PLAY_SERVICES)
                     ?.show()
             } else {
-                Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.this_device_is_not_supported), Toast.LENGTH_SHORT).show()
                 finish()
             }
         } else {
@@ -307,25 +308,25 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 "Drink",
                 R.drawable.ic_drink,
                 "$totalDrinkAmount ml",
-                "How much should you drink every day?"
+                getString(R.string.how_much_should_you_drink_every_day)
             ),
             MenuItem(
                 "Sugar",
                 R.drawable.ic_sugar,
                 "$totalSugarAmount g",
-                "How much sugar per day?"
+                getString(R.string.how_much_sugar_per_day)
             ),
             MenuItem(
                 "Steps",
                 R.drawable.ic_steps,
                 "$currentSteps",
-                "How much should you walk every day?"
+                getString(R.string.how_much_should_you_walk_every_day)
             ),
             MenuItem(
                 "Sleep",
                 R.drawable.ic_sleep,
                 "$sleepCount sessions",
-                "Number of sleep sessions"
+                getString(R.string.number_of_sleep_sessions)
             )
         )
 
@@ -393,7 +394,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 } else {
                     Toast.makeText(
                         this,
-                        "Please login to use this Macros feature",
+                        getString(R.string.please_login_to_use_this_macros_feature),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
