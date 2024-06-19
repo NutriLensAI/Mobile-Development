@@ -124,19 +124,23 @@ class HasilMakananActivity : AppCompatActivity() {
 
     private fun addFoodToMeal(table: String) {
         val token = viewModel.token.value ?: return
-        val food = matchedNutrition ?: return
-        val foodRequest = FoodRequest(
-            id = 0,
-            user_id = 0,
-            food_id = food.id,
-            food_name = food.name,
-            calories = food.calories,
-            proteins = food.proteins,
-            fat = food.fat,
-            carbohydrate = food.carbohydrate
-        )
-        viewModel.addFoodToMeal(token, table, food.id, foodRequest)
-        Toast.makeText(this, "Makanan kamu berhasil ditambahkan!", Toast.LENGTH_SHORT).show()
+        val food = matchedNutrition
+        if (food != null) {
+            val foodRequest = FoodRequest(
+                id = 0,
+                user_id = 0,
+                food_id = food.id,
+                food_name = food.name,
+                calories = food.calories,
+                proteins = food.proteins,
+                fat = food.fat,
+                carbohydrate = food.carbohydrate
+            )
+            viewModel.addFoodToMeal(token, table, food.id, foodRequest)
+            Toast.makeText(this, "Makanan kamu berhasil ditambahkan!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Nutrisi Makanan kamu tidak ada di database kami :(", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun handlePrediction() {
@@ -248,5 +252,4 @@ class HasilMakananActivity : AppCompatActivity() {
         val listRecipeType = object : TypeToken<List<ResepItem>>() {}.type
         return Gson().fromJson(recipeArray, listRecipeType)
     }
-
 }

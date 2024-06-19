@@ -207,7 +207,7 @@
                         android:layout_gravity="center"
                         android:indeterminate="false"
                         android:max="100"
-                        android:progress="14"
+                        android:progress="0"
                         android:progressDrawable="@drawable/circular_progress_bar_blue" />
 
                     <ProgressBar
@@ -218,7 +218,7 @@
                         android:layout_gravity="center"
                         android:indeterminate="false"
                         android:max="100"
-                        android:progress="14"
+                        android:progress="0"
                         android:progressDrawable="@drawable/circular_progress_bar_orange" />
 
                     <ProgressBar
@@ -229,7 +229,7 @@
                         android:layout_gravity="center"
                         android:indeterminate="false"
                         android:max="100"
-                        android:progress="14"
+                        android:progress="0"
                         android:progressDrawable="@drawable/circular_progress_bar_red" />
                 </FrameLayout>
 
@@ -254,7 +254,7 @@
                         android:id="@+id/tv_carbs_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="14 g"
+                        android:text="0 g"
                         android:textColor="@android:color/holo_blue_dark"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -280,7 +280,7 @@
                         android:id="@+id/tv_fat_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="14 g"
+                        android:text="0 g"
                         android:textColor="@android:color/holo_orange_dark"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -306,7 +306,7 @@
                         android:id="@+id/tv_protein_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="14 g"
+                        android:text="0 g"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="18sp" />
                 </LinearLayout>
