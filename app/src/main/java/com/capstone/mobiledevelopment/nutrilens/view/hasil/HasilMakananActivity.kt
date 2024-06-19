@@ -55,6 +55,7 @@ class HasilMakananActivity : AppCompatActivity() {
                 .into(imageView)
         }
 
+        val originalPrediction = prediction
         prediction?.let {
             val cleanedPrediction = cleanPrediction(it)
             namaMakananTextView.text = cleanedPrediction
@@ -88,8 +89,12 @@ class HasilMakananActivity : AppCompatActivity() {
         viewModel.nutritions.observe(this) { nutritionList ->
             matchedNutrition = findMatchingNutrition(nutritionList, prediction)
             if (matchedNutrition == null) {
-                showNutritionNotFoundTooltip()
-            } else {
+                matchedNutrition = findMatchingNutrition(nutritionList, originalPrediction)
+                if (matchedNutrition == null) {
+                    showNutritionNotFoundTooltip()
+                }
+            }
+            if (matchedNutrition != null) {
                 updateNutritionUI(matchedNutrition!!)
             }
         }
@@ -98,7 +103,10 @@ class HasilMakananActivity : AppCompatActivity() {
         val recipes = loadRecipesFromAssets()
         matchedRecipe = findMatchingRecipe(recipes, prediction)
         if (matchedRecipe == null) {
-            showRecipeNotFoundTooltip()
+            matchedRecipe = findMatchingRecipe(recipes, originalPrediction)
+            if (matchedRecipe == null) {
+                showRecipeNotFoundTooltip()
+            }
         }
 
         viewModel.isLoading.observe(this) { isLoading ->
