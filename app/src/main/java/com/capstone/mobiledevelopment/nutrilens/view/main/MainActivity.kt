@@ -318,7 +318,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             MenuItem(
                 "Steps",
                 R.drawable.ic_steps,
-                "$currentSteps/10,000 steps",
+                "$currentSteps",
                 "How much should you walk every day?"
             ),
             MenuItem(

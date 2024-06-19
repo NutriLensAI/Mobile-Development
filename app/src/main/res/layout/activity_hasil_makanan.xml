@@ -204,13 +204,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="center|top"
+                    android:orientation="horizontal">
 
                     <FrameLayout
                         android:layout_width="144dp"
@@ -256,7 +256,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center_horizontal|center_vertical"
+                        android:gravity="center|top"
                         android:orientation="vertical"
                         android:padding="8dp">
 
@@ -264,7 +264,7 @@
                             android:id="@+id/tv_carbs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Carbs"
+                            android:text="@string/carbs"
                             android:textColor="@android:color/holo_blue_dark"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -290,7 +290,7 @@
                             android:id="@+id/tv_fat"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Fat"
+                            android:text="@string/fat"
                             android:textColor="@android:color/holo_orange_dark"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -316,7 +316,7 @@
                             android:id="@+id/tv_protein"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Protein"
+                            android:text="@string/protein"
                             android:textColor="@android:color/holo_red_dark"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -336,24 +336,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center"
-                    android:paddingTop="16dp">
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp">
 
                     <TextView
                         android:id="@+id/tv_calories_label"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Calories :"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:text="@string/calories"
                         android:textColor="@android:color/black"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_calories_value"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="0 KKal"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/_0"
                         android:textColor="@android:color/black"
                         android:textSize="22sp"
                         android:textStyle="bold" />
