@@ -27,6 +27,12 @@ android {
             "PREDICT_API_ENDPOINT",
             "\"https://ml-api-sla6c4qvsq-et.a.run.app/\""
         )
+
+        buildConfigField(
+            "String",
+            "API_BASE_URL",
+            "\"https://nutrilensai.github.io/datadummy/datarecipe.json\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.capstone.mobiledevelopment.nutrilens.BuildConfig
 import com.capstone.mobiledevelopment.nutrilens.data.repository.FoodRepository
 import com.capstone.mobiledevelopment.nutrilens.data.repository.UserRepository
 import com.capstone.mobiledevelopment.nutrilens.data.retrofit.FoodRequest
@@ -40,7 +41,6 @@ class HasilMakananViewModel(
 
     private val _recipes = MutableLiveData<List<ResepItem>>()
     val recipes: LiveData<List<ResepItem>> get() = _recipes
-
 
     init {
         fetchToken()
@@ -94,7 +94,7 @@ class HasilMakananViewModel(
     }
 
     private fun getRecipeDataFromUrl(): List<ResepItem> {
-        val urlString = "https://nutrilensai.github.io/datadummy/datarecipe.json"
+        val urlString = BuildConfig.API_BASE_URL
         var jsonString: String
         try {
             val url = URL(urlString)
