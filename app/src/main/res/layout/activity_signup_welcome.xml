@@ -55,14 +55,14 @@
     <Button
         android:id="@+id/continueButton"
         android:layout_width="320dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="36dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:text="@string/lanjut"
         android:textColor="@android:color/white"
         app:cornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subtitleTextView" />
 
@@ -70,6 +70,7 @@
         android:id="@+id/privacyTextView"
         android:layout_width="377dp"
         android:layout_height="88dp"
+        android:layout_marginTop="16dp"
         android:text="@string/we_will_never_post_anything_without_your_permission_we_will_collect_personal_information_from_and_about_you_and_use_it_for_various_purposes_including_to_customize_your_nutrilens_experience"
         android:textColor="@color/green"
         android:textSize="14sp"
@@ -77,6 +78,7 @@
         app:layout_constraintEnd_toEndOf="@+id/continueButton"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="@+id/continueButton"
+        app:layout_constraintTop_toBottomOf="@+id/continueButton"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

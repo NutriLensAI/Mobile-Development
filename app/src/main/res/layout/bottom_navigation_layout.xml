@@ -15,7 +15,7 @@
         android:focusable="true"
         android:src="@drawable/lucide_scan"
         app:backgroundTint="@color/teal_200"
-        app:elevation="6dp"
+        app:elevation="12dp"
         app:fabSize="auto"
         app:layout_anchor="@+id/customBottomBar"
         app:layout_anchorGravity="center"

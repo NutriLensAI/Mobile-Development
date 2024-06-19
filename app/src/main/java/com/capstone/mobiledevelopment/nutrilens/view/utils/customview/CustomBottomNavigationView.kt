@@ -40,9 +40,9 @@ class CustomBottomNavigationView @JvmOverloads constructor(
         mPaint.color = ContextCompat.getColor(context, R.color.white)
         setBackgroundColor(Color.TRANSPARENT)
 
-        // Set the shadow layer for the paint
-        mPaint.setShadowLayer(10f, 0f, -5f, Color.GRAY) // Adjust the values as needed
-        setLayerType(LAYER_TYPE_SOFTWARE, mPaint) // Enable software rendering to allow shadow layer
+//        // Set the shadow layer for the paint
+//        mPaint.setShadowLayer(10f, 0f, -5f, Color.GRAY) // Adjust the values as needed
+//        setLayerType(LAYER_TYPE_SOFTWARE, mPaint) // Enable software rendering to allow shadow layer
     }
 
     override fun getMaxItemCount(): Int {

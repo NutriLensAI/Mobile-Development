@@ -273,7 +273,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/input_data_makan"
+        android:text="@string/enter_food_data"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/macrosCard"
         app:layout_constraintTop_toBottomOf="@+id/macrosCard" />
@@ -717,7 +717,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="90dp" />
+        app:layout_constraintGuide_end="55dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
