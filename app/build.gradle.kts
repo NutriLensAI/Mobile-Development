@@ -31,8 +31,14 @@ android {
         buildConfigField(
             "String",
             "API_BASE_URL",
-            "\"https://nutrilensai.github.io/datadummy/datarecipe.json\"")
+            "\"https://nutrilensai.github.io/datadummy/datarecipe.json\""
+        )
 
+        buildConfigField(
+            "String",
+            "BASE_URL",
+            "\"https://ml-api-sla6c4qvsq-et.a.run.app/\""
+        )
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
