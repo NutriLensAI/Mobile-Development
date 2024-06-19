@@ -61,10 +61,12 @@ class InfoSugarFragment : Fragment() {
         activity?.window?.let { window ->
             WindowCompat.setDecorFitsSystemWindows(window, true)
             WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
-                controller.isAppearanceLightStatusBars = true // Optional: Set status bar content to dark
+                controller.isAppearanceLightStatusBars = true // Set status bar content to dark
+                controller.isAppearanceLightNavigationBars = true // Set navigation bar content to dark
             }
             activity?.actionBar?.hide()
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green)
+            window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.white) // Change navigation bar color
         }
     }
 }
