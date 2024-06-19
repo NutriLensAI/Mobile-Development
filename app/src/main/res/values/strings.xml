@@ -202,7 +202,7 @@
     <string name="successfully_added_with_ml_and_g_of_sugar_to_the_database">Berhasil ditambahkan %1$s dengan %2$i ml dan %3$i g gula ke database.</string>
     <string name="makanan_kamu_berhasil_ditambahkan">Makanan Anda berhasil ditambahkan!</string>
     <string name="nutrisi_makanan_kamu_tidak_ada_di_database_kami">Nutrisi Makanan Anda belum ada di database kami :(</string>
-    <string name="confidence">Confidence: %1$s%</string>
+    <string name="confidence">Confidence: %1$.2f%%</string>
     <string name="low_confidence">Confidence Rendah</string>
     <string name="confidence_is_low_do_you_want_to_manually_input_the_food">Confidence rendah. Apakah Anda ingin memasukkan makanan secara manual?</string>
     <string name="nutrition_not_found">Nutrisi Tidak Ditemukan</string>

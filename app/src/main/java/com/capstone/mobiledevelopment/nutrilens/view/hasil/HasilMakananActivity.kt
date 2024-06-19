@@ -163,6 +163,8 @@ class HasilMakananActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun showLowConfidenceTooltip() {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.low_confidence))
