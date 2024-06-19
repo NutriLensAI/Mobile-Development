@@ -77,11 +77,15 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupView() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowCompat.getInsetsController(window, window.decorView).let { controller ->
-            controller.isAppearanceLightStatusBars = true
+        WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
+            controller.isAppearanceLightStatusBars = true // Set status bar content to dark
+            controller.isAppearanceLightNavigationBars = true // Set navigation bar content to dark
         }
         supportActionBar?.hide()
+
+        // Set status bar color to white
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+        window.navigationBarColor = ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
     }
 
     private fun setupAction() {
