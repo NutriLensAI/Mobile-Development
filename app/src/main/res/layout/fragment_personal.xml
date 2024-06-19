@@ -58,20 +58,22 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Explanation Text -->
+
+        <!-- Section for Activity Level -->
+
         <TextView
             android:id="@+id/explanationText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="380dp"
+            android:layout_height="43dp"
             android:layout_marginTop="16dp"
             android:text="This information is used for the app's algorithm to provide a personalized experience."
             android:textAlignment="viewStart"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"  />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Section for Activity Level -->
         <LinearLayout
             android:id="@+id/ActivityLevel"
             android:layout_width="match_parent"

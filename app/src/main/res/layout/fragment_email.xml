@@ -60,20 +60,21 @@
         <!-- Title: Change Email -->
 
         <!-- Explanation Text -->
+
+        <!-- New Email Input -->
         <TextView
             android:id="@+id/tvExplanation"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="380dp"
+            android:layout_height="43dp"
             android:layout_marginTop="16dp"
             android:text="Enter your new email address below and confirm it to update your account settings."
             android:textAlignment="textStart"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- New Email Input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilNewEmail"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Rounded"
