@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
@@ -56,19 +57,19 @@ class EmailFragment : Fragment() {
                     viewModel.updateEmail(newEmail, it) { success, message ->
                         if (success) {
                             Log.d("EmailFragment", "Email updated successfully: $message")
-                            // Handle successful email update (e.g., show a success message)
+                            Toast.makeText(requireContext(), "Change Email Success!", Toast.LENGTH_SHORT).show()
                         } else {
                             Log.e("EmailFragment", "Failed to update email: $message")
-                            // Handle failed email update (e.g., show an error message)
+                            Toast.makeText(requireContext(), "Change Email Failed!", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } ?: run {
                     Log.e("EmailFragment", "Token is null")
-                    // Handle token fetch failure (e.g., show an error message)
+                    Toast.makeText(requireContext(), "Change Email Failed!", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Log.e("EmailFragment", "Email mismatch")
-                // Handle email mismatch (e.g., show an error message)
+                Toast.makeText(requireContext(), "Emails do not match!", Toast.LENGTH_SHORT).show()
             }
         }
     }
