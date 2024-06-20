@@ -67,12 +67,7 @@ class AddDrink : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@AddDrink,
-                        getString(
-                            R.string.successfully_added_with_ml_and_g_of_sugar_to_the_database,
-                            name,
-                            amount,
-                            sugar
-                        ),
+                        "Successfully added $name with $amount ml and $sugar g of sugar to the database.",
                         Toast.LENGTH_LONG
                     ).show()
                 }
