@@ -52,6 +52,11 @@ class PasswordFragment : Fragment() {
             val newPassword = binding.etNewPassword.text.toString()
             val confirmPassword = binding.etConfirmNewPassword.text.toString()
 
+            if (newPassword.length < 8) {
+                Toast.makeText(requireContext(), "Password must be at least 8 characters long!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (newPassword == confirmPassword) {
                 Log.d("PasswordFragment", "Updating password with token: $token")
                 token?.let {
