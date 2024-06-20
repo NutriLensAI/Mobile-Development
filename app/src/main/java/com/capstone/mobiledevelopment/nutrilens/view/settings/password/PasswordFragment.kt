@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
@@ -56,19 +57,19 @@ class PasswordFragment : Fragment() {
                     viewModel.updatePassword(newPassword, it) { success, message ->
                         if (success) {
                             Log.d("PasswordFragment", "Password updated successfully: $message")
-                            // Handle successful password update (e.g., show a success message)
+                            Toast.makeText(requireContext(), "Change Password Success!", Toast.LENGTH_SHORT).show()
                         } else {
                             Log.e("PasswordFragment", "Failed to update password: $message")
-                            // Handle failed password update (e.g., show an error message)
+                            Toast.makeText(requireContext(), "Change Password Failed!", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } ?: run {
                     Log.e("PasswordFragment", "Token is null")
-                    // Handle token fetch failure (e.g., show an error message)
+                    Toast.makeText(requireContext(), "Change Password Failed!", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Log.e("PasswordFragment", "Password mismatch")
-                // Handle password mismatch (e.g., show an error message)
+                Toast.makeText(requireContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show()
             }
         }
     }
