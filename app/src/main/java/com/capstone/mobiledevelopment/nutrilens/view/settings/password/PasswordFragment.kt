@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.FragmentPasswordBinding
+import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsFragment
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 
 class PasswordFragment : Fragment() {
@@ -58,6 +59,7 @@ class PasswordFragment : Fragment() {
                         if (success) {
                             Log.d("PasswordFragment", "Password updated successfully: $message")
                             Toast.makeText(requireContext(), "Change Password Success!", Toast.LENGTH_SHORT).show()
+                            navigateToSettingsFragment()
                         } else {
                             Log.e("PasswordFragment", "Failed to update password: $message")
                             Toast.makeText(requireContext(), "Change Password Failed!", Toast.LENGTH_SHORT).show()
@@ -72,6 +74,13 @@ class PasswordFragment : Fragment() {
                 Toast.makeText(requireContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun navigateToSettingsFragment() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, SettingsFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onDestroyView() {
