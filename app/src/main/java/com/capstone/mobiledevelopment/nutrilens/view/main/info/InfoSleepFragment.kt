@@ -1,5 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.view.main.info
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,9 @@ import com.capstone.mobiledevelopment.nutrilens.data.database.sleep.SleepDatabas
 import com.capstone.mobiledevelopment.nutrilens.view.utils.worker.SleepWorker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
@@ -63,8 +66,26 @@ class InfoSleepFragment : Fragment() {
         timePicker.addOnPositiveButtonClickListener {
             val selectedHour = timePicker.hour
             val selectedMinute = timePicker.minute
+            saveSleepTime(selectedHour, selectedMinute)
             scheduleSleepWorker(selectedHour, selectedMinute)
+            calculateAndDisplayTotalSleepDuration()
         }
+    }
+
+    private fun saveSleepTime(hour: Int, minute: Int) {
+        val sharedPreferences = requireContext().getSharedPreferences("SleepPrefs", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putInt("HOUR", hour)
+            putInt("MINUTE", minute)
+            apply()
+        }
+    }
+
+    private fun loadSleepTime(): Pair<Int, Int> {
+        val sharedPreferences = requireContext().getSharedPreferences("SleepPrefs", Context.MODE_PRIVATE)
+        val hour = sharedPreferences.getInt("HOUR", -1)
+        val minute = sharedPreferences.getInt("MINUTE", -1)
+        return Pair(hour, minute)
     }
 
     private fun scheduleSleepWorker(hour: Int, minute: Int) {
@@ -95,7 +116,35 @@ class InfoSleepFragment : Fragment() {
 
         // Update the clockTextView to show the selected time
         val timeText = String.format("%02d:%02d", hour, minute)
-        clockTextView.text = "Sleep count\n$timeText"
+        clockTextView.text = "Sleep time set: $timeText"
+    }
+
+    private fun calculateTotalSleepDuration(setHour: Int, setMinute: Int, sleepCount: Int): Long {
+        val setSleepTimeInMillis = (setHour * 60 * 60 * 1000 + setMinute * 60 * 1000).toLong()
+        val sleepDurationPerDay = 24 * 60 * 60 * 1000 - setSleepTimeInMillis
+        return sleepDurationPerDay * sleepCount
+    }
+
+    private fun calculateAndDisplayTotalSleepDuration() {
+        val (setHour, setMinute) = loadSleepTime()
+        if (setHour != -1 && setMinute != -1) {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val sleepDataDao = SleepDatabase.getDatabase(requireContext()).sleepDataDao()
+                val sleepCount = sleepDataDao.getTotalSleepCount() ?: 0
+                val totalSleepDuration = calculateTotalSleepDuration(setHour, setMinute, sleepCount)
+                withContext(Dispatchers.Main) {
+                    val hours = totalSleepDuration / (60 * 60 * 1000)
+                    val minutes = (totalSleepDuration % (60 * 60 * 1000)) / (60 * 1000)
+                    val timeText = String.format("%02d:%02d", setHour, setMinute)
+                    clockTextView.text = getString(
+                        R.string.sleep_time_set_total_sleep_duration_h_m,
+                        timeText,
+                        hours,
+                        minutes
+                    )
+                }
+            }
+        }
     }
 
     companion object {
@@ -106,6 +155,7 @@ class InfoSleepFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
+        calculateAndDisplayTotalSleepDuration()
     }
 
     private fun setupView() {

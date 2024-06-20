@@ -225,8 +225,9 @@
     <string name="failed_to_add_food">Gagal menambahkan makanan</string>
     <string name="login_required">Login Diperlukan</string>
     <string name="you_must_be_logged_in_to_use_this_feature">Anda harus login untuk menggunakan fitur ini.</string>
-    <string name="successfully_added_with_ml_and_g_of_sugar_to_the_database">Berhasil ditambahkan %1$s dengan %2$i ml dan %3$i g gula ke database.</string>
+    <string name="successfully_added_with_ml_and_g_of_sugar_to_the_database">Berhasil ditambahkan %1$s dengan %2$d ml dan %3$d g gula ke database.</string>
     <string name="hello_guest">Hello, Tamu!</string>
+    <string name="sleep_time_set_total_sleep_duration_h_m">Set Waktu Tidur: %1$s\nTotal Durasi Tidur: %2$dh %3$dm</string>
 
     <string-array name="gender_options">
         <item>Male</item>
