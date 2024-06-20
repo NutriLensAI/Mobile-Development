@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.capstone.mobiledevelopment.nutrilens.R
 import com.capstone.mobiledevelopment.nutrilens.databinding.FragmentEmailBinding
+import com.capstone.mobiledevelopment.nutrilens.view.settings.SettingsFragment
 import com.capstone.mobiledevelopment.nutrilens.view.utils.ViewModelFactory
 
 class EmailFragment : Fragment() {
@@ -58,6 +59,7 @@ class EmailFragment : Fragment() {
                         if (success) {
                             Log.d("EmailFragment", "Email updated successfully: $message")
                             Toast.makeText(requireContext(), "Change Email Success!", Toast.LENGTH_SHORT).show()
+                            navigateToSettingsFragment()
                         } else {
                             Log.e("EmailFragment", "Failed to update email: $message")
                             Toast.makeText(requireContext(), "Change Email Failed!", Toast.LENGTH_SHORT).show()
@@ -72,6 +74,13 @@ class EmailFragment : Fragment() {
                 Toast.makeText(requireContext(), "Emails do not match!", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun navigateToSettingsFragment() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, SettingsFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onDestroyView() {
