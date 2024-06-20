@@ -53,7 +53,11 @@ class PasswordFragment : Fragment() {
             val confirmPassword = binding.etConfirmNewPassword.text.toString()
 
             if (newPassword.length < 8) {
-                Toast.makeText(requireContext(), "Password must be at least 8 characters long!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Password must be at least 8 characters long!",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
@@ -63,20 +67,30 @@ class PasswordFragment : Fragment() {
                     viewModel.updatePassword(newPassword, it) { success, message ->
                         if (success) {
                             Log.d("PasswordFragment", "Password updated successfully: $message")
-                            Toast.makeText(requireContext(), "Change Password Success!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Change Password Success!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             navigateToSettingsFragment()
                         } else {
                             Log.e("PasswordFragment", "Failed to update password: $message")
-                            Toast.makeText(requireContext(), "Change Password Failed!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Change Password Failed!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 } ?: run {
                     Log.e("PasswordFragment", "Token is null")
-                    Toast.makeText(requireContext(), "Change Password Failed!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Change Password Failed!", Toast.LENGTH_SHORT)
+                        .show()
                 }
             } else {
                 Log.e("PasswordFragment", "Password mismatch")
-                Toast.makeText(requireContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Passwords do not match!", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -108,11 +122,15 @@ class PasswordFragment : Fragment() {
             WindowCompat.setDecorFitsSystemWindows(window, true)
             WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
                 controller.isAppearanceLightStatusBars = true // Set status bar content to dark
-                controller.isAppearanceLightNavigationBars = true // Set navigation bar content to dark
+                controller.isAppearanceLightNavigationBars =
+                    true // Set navigation bar content to dark
             }
             activity?.actionBar?.hide()
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green)
-            window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.white) // Change navigation bar color
+            window.navigationBarColor = ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            ) // Change navigation bar color
         }
     }
 }

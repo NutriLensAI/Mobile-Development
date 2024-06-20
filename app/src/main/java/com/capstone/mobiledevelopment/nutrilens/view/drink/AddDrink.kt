@@ -1,7 +1,6 @@
 package com.capstone.mobiledevelopment.nutrilens.view.drink
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -52,8 +51,10 @@ class AddDrink : AppCompatActivity() {
             if (name.isNotEmpty() && amount > 0) {
                 saveDrink(name, amount, sugarInGrams)
             } else {
-                Toast.makeText(this,
-                    getString(R.string.please_fill_in_all_fields_correctly), Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    this,
+                    getString(R.string.please_fill_in_all_fields_correctly), Toast.LENGTH_SHORT
+                )
                     .show()
             }
         }
@@ -66,7 +67,12 @@ class AddDrink : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@AddDrink,
-                        "Successfully added $name with $amount ml and $sugar g of sugar to the database.",
+                        getString(
+                            R.string.successfully_added_with_ml_and_g_of_sugar_to_the_database,
+                            name,
+                            amount,
+                            sugar
+                        ),
                         Toast.LENGTH_LONG
                     ).show()
                 }

@@ -199,7 +199,6 @@
     <string name="later">Nanti</string>
     <string name="tablespoons">Sendok Makan</string>
     <string name="please_fill_in_all_fields_correctly">Harap isi semua kolom dengan benar.</string>
-    <string name="successfully_added_with_ml_and_g_of_sugar_to_the_database">Berhasil ditambahkan %1$s dengan %2$i ml dan %3$i g gula ke database.</string>
     <string name="makanan_kamu_berhasil_ditambahkan">Makanan Anda berhasil ditambahkan!</string>
     <string name="nutrisi_makanan_kamu_tidak_ada_di_database_kami">Nutrisi Makanan Anda belum ada di database kami :(</string>
     <string name="confidence">Akurasi: %1$.2f%%</string>
@@ -226,6 +225,8 @@
     <string name="failed_to_add_food">Gagal menambahkan makanan</string>
     <string name="login_required">Login Diperlukan</string>
     <string name="you_must_be_logged_in_to_use_this_feature">Anda harus login untuk menggunakan fitur ini.</string>
+    <string name="successfully_added_with_ml_and_g_of_sugar_to_the_database">Berhasil ditambahkan %1$s dengan %2$i ml dan %3$i g gula ke database.</string>
+    <string name="hello_guest">Hello, Tamu!</string>
 
     <string-array name="gender_options">
         <item>Male</item>

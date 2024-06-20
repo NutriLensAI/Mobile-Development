@@ -2,10 +2,7 @@ package com.capstone.mobiledevelopment.nutrilens.view.welcome
 
 import android.content.Intent
 import android.graphics.drawable.AnimatedVectorDrawable
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -87,7 +84,8 @@ class WelcomeActivity : AppCompatActivity() {
 
         // Set status bar color to white
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
-        window.navigationBarColor = ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
+        window.navigationBarColor =
+            ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
     }
 
     private fun setupAction() {
@@ -108,7 +106,13 @@ class WelcomeActivity : AppCompatActivity() {
     private fun loginAsGuest() {
         val userPreference = UserPreference.getInstance(dataStore)
         lifecycleScope.launch {
-            val guestUser = UserModel(email = "guest@guest.com", token = "guest_token", isLogin = true, username = "Guest", isGuest = true)
+            val guestUser = UserModel(
+                email = "guest@guest.com",
+                token = "guest_token",
+                isLogin = true,
+                username = "Guest",
+                isGuest = true
+            )
             userPreference.saveSession(guestUser)
             val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
             startActivity(intent)

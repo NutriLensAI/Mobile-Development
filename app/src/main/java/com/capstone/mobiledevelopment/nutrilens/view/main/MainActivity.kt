@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             isGuestUser = isGuest
             if (isGuest) {
                 // Jalankan logika untuk guest user
-                binding.helloTextView.text = "Hello, Guest!"
+                binding.helloTextView.text = getString(R.string.hello_guest)
             }
         }
 
@@ -267,8 +267,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 apiAvailability.getErrorDialog(this, resultCode, REQUEST_CODE_UPDATE_PLAY_SERVICES)
                     ?.show()
             } else {
-                Toast.makeText(this,
-                    getString(R.string.this_device_is_not_supported), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.this_device_is_not_supported), Toast.LENGTH_SHORT
+                ).show()
                 finish()
             }
         } else {
@@ -440,7 +442,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         // Set status bar color to white
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
-        window.navigationBarColor = ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
+        window.navigationBarColor =
+            ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
     }
 
     private fun setupBottomNavigation() {

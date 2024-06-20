@@ -77,7 +77,8 @@ class DetailActivity : AppCompatActivity() {
 
         // Set status bar color to white
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
-        window.navigationBarColor = ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
+        window.navigationBarColor =
+            ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
     }
 
     private fun updateFavoriteButton() {

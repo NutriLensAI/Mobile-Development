@@ -159,7 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="@string/_6_hindari_tidur_siang_terlalu_lama_agar_tidak_mengganggu_tidur_malam" />
+                    android:text="@string/_4_hindari_penggunaan_gadget_sebelum_tidur_karena_cahaya_biru_dapat_mengganggu_kualitas_tidur" />
 
                 <TextView
                     android:layout_width="match_parent"

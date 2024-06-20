@@ -155,8 +155,10 @@ class CameraFoodActivity : AppCompatActivity() {
         targetProgress: Int,
         duration: Long
     ) {
-        val animator = ObjectAnimator.ofInt(progressBar,
-            getString(R.string.progress), 0, targetProgress)
+        val animator = ObjectAnimator.ofInt(
+            progressBar,
+            getString(R.string.progress), 0, targetProgress
+        )
         animator.duration = duration
         animator.interpolator = CustomInterpolator()
         animator.start()
@@ -209,7 +211,8 @@ class CameraFoodActivity : AppCompatActivity() {
                     SimpleDateFormat(
                         FILENAME_FORMAT,
                         Locale.US
-                    ).format(System.currentTimeMillis()) + "_" + UUID.randomUUID().toString() + ".jpg"
+                    ).format(System.currentTimeMillis()) + "_" + UUID.randomUUID()
+                        .toString() + ".jpg"
                 )
                 put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -315,8 +318,10 @@ class CameraFoodActivity : AppCompatActivity() {
             if (allPermissionsGranted()) {
                 startCamera()
             } else {
-                Toast.makeText(this,
-                    getString(R.string.permissions_not_granted_by_the_user), Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    this,
+                    getString(R.string.permissions_not_granted_by_the_user), Toast.LENGTH_SHORT
+                )
                     .show()
                 finish()
             }

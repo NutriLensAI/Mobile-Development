@@ -31,8 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/macros"
-                android:textColor="#36383A"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#36383A" />
 
             <TextView
                 android:id="@+id/totalCalories"
@@ -305,8 +305,8 @@
                 android:paddingBottom="16dp"
                 android:text="@string/breakfast"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="24sp"
-                android:textColor="#36383A" />
+                android:textColor="#36383A"
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:id="@+id/breakfastHeader"
@@ -320,14 +320,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:ellipsize="end"
                     android:gravity="center"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@string/carbs"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#33AFFF"
-                    android:textSize="18sp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -373,8 +373,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_g"
-                    android:textColor="#33AFFF"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33AFFF"
                     android:textSize="18sp" />
 
                 <TextView
@@ -384,8 +384,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_g"
-                    android:textColor="#FFA500"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFA500"
                     android:textSize="18sp" />
 
                 <TextView
@@ -395,8 +395,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_g"
-                    android:textColor="#FF6347"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF6347"
                     android:textSize="18sp" />
 
                 <TextView
@@ -419,8 +419,8 @@
                 android:paddingBottom="16dp"
                 android:text="@string/lunch"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="24sp"
-                android:textColor="#36383A" />
+                android:textColor="#36383A"
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:id="@+id/lunchHeader"
@@ -434,14 +434,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:ellipsize="end"
                     android:gravity="center"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@string/carbs"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#33AFFF"
-                    android:textSize="18sp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -487,8 +487,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_g"
-                    android:textColor="#33AFFF"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33AFFF"
                     android:textSize="18sp" />
 
                 <TextView
@@ -498,8 +498,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_g"
-                    android:textColor="#FFA500"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFA500"
                     android:textSize="18sp" />
 
                 <TextView
@@ -509,8 +509,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_g"
-                    android:textColor="#FF6347"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF6347"
                     android:textSize="18sp" />
 
                 <TextView
@@ -533,8 +533,8 @@
                 android:paddingBottom="16dp"
                 android:text="Dinner"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="24sp"
-                android:textColor="#36383A" />
+                android:textColor="#36383A"
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:id="@+id/dinnerHeader"
@@ -548,14 +548,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:ellipsize="end"
                     android:gravity="center"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@string/carbs"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#33AFFF"
-                    android:textSize="18sp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -601,8 +601,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_g"
-                    android:textColor="#33AFFF"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33AFFF"
                     android:textSize="18sp" />
 
                 <TextView
@@ -612,8 +612,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_g"
-                    android:textColor="#FFA500"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFA500"
                     android:textSize="18sp" />
 
                 <TextView
@@ -623,8 +623,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_g"
-                    android:textColor="#FF6347"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF6347"
                     android:textSize="18sp" />
 
                 <TextView
@@ -647,8 +647,8 @@
                 android:paddingBottom="16dp"
                 android:text="@string/drink"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="24sp"
-                android:textColor="#36383A" />
+                android:textColor="#36383A"
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:id="@+id/drinkHeader"
@@ -693,8 +693,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_ml"
-                    android:textColor="#33AFFF"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33AFFF"
                     android:textSize="18sp" />
 
                 <TextView
@@ -704,8 +704,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/_0_g"
-                    android:textColor="#FFA500"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFA500"
                     android:textSize="18sp" />
             </LinearLayout>
 

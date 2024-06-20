@@ -43,6 +43,7 @@ class InfoStepsFragment : Fragment() {
                 }
             }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
@@ -53,11 +54,15 @@ class InfoStepsFragment : Fragment() {
             WindowCompat.setDecorFitsSystemWindows(window, true)
             WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
                 controller.isAppearanceLightStatusBars = true // Set status bar content to dark
-                controller.isAppearanceLightNavigationBars = true // Set navigation bar content to dark
+                controller.isAppearanceLightNavigationBars =
+                    true // Set navigation bar content to dark
             }
             activity?.actionBar?.hide()
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green)
-            window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.white) // Change navigation bar color
+            window.navigationBarColor = ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            ) // Change navigation bar color
         }
     }
 }

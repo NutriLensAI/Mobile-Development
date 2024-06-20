@@ -173,7 +173,8 @@ class ResepActivity : AppCompatActivity() {
 
         // Set status bar color to white
         window.statusBarColor = ContextCompat.getColor(this, R.color.green2)
-        window.navigationBarColor = ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
+        window.navigationBarColor =
+            ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
     }
 
     private fun setupBottomNavigationView() {

@@ -199,7 +199,6 @@
     <string name="later">Later</string>
     <string name="tablespoons">Tablespoons</string>
     <string name="please_fill_in_all_fields_correctly">Please fill in all fields correctly.</string>
-    <string name="successfully_added_with_ml_and_g_of_sugar_to_the_database">Successfully added %1$s with %2$i ml and %3$i g of sugar to the database.</string>
     <string name="makanan_kamu_berhasil_ditambahkan">Your food has been successfully added!</string>
     <string name="nutrisi_makanan_kamu_tidak_ada_di_database_kami">The nutrition of your food is not in our database :(</string>
     <string name="confidence">Accuracy: %1$.2f%%</string>
@@ -226,6 +225,8 @@
     <string name="failed_to_add_food">Failed to add food</string>
     <string name="login_required">Login Required</string>
     <string name="you_must_be_logged_in_to_use_this_feature">You must be logged in to use this feature.</string>
+    <string name="successfully_added_with_ml_and_g_of_sugar_to_the_database">Successfully added %1$s with %2$i ml and %3$i g of sugar to the database.</string>
+    <string name="hello_guest">Hello, Guest!</string>
 
     <string-array name="gender_options">
         <item>Male</item>

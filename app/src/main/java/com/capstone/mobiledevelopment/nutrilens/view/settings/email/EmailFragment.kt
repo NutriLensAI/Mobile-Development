@@ -58,16 +58,25 @@ class EmailFragment : Fragment() {
                     viewModel.updateEmail(newEmail, it) { success, message ->
                         if (success) {
                             Log.d("EmailFragment", "Email updated successfully: $message")
-                            Toast.makeText(requireContext(), "Change Email Success!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Change Email Success!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             navigateToSettingsFragment()
                         } else {
                             Log.e("EmailFragment", "Failed to update email: $message")
-                            Toast.makeText(requireContext(), "Change Email Failed!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Change Email Failed!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 } ?: run {
                     Log.e("EmailFragment", "Token is null")
-                    Toast.makeText(requireContext(), "Change Email Failed!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Change Email Failed!", Toast.LENGTH_SHORT)
+                        .show()
                 }
             } else {
                 Log.e("EmailFragment", "Email mismatch")
@@ -103,11 +112,15 @@ class EmailFragment : Fragment() {
             WindowCompat.setDecorFitsSystemWindows(window, true)
             WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
                 controller.isAppearanceLightStatusBars = true // Set status bar content to dark
-                controller.isAppearanceLightNavigationBars = true // Set navigation bar content to dark
+                controller.isAppearanceLightNavigationBars =
+                    true // Set navigation bar content to dark
             }
             activity?.actionBar?.hide()
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green)
-            window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.white) // Change navigation bar color
+            window.navigationBarColor = ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            ) // Change navigation bar color
         }
     }
 }

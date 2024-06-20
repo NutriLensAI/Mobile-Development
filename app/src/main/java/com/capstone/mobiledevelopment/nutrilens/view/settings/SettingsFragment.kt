@@ -3,18 +3,14 @@ package com.capstone.mobiledevelopment.nutrilens.view.settings
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
@@ -173,11 +169,15 @@ class SettingsFragment : Fragment() {
             WindowCompat.setDecorFitsSystemWindows(window, true)
             WindowCompat.getInsetsController(window, window.decorView)?.let { controller ->
                 controller.isAppearanceLightStatusBars = true // Set status bar content to dark
-                controller.isAppearanceLightNavigationBars = true // Set navigation bar content to dark
+                controller.isAppearanceLightNavigationBars =
+                    true // Set navigation bar content to dark
             }
             activity?.actionBar?.hide()
             window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.green)
-            window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.white) // Change navigation bar color
+            window.navigationBarColor = ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            ) // Change navigation bar color
         }
     }
 

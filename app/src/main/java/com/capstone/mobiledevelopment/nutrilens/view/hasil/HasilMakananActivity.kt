@@ -118,7 +118,8 @@ class HasilMakananActivity : AppCompatActivity() {
 
         // Set status bar color to white
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
-        window.navigationBarColor = ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
+        window.navigationBarColor =
+            ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
     }
 
     private fun addFoodToMeal(table: String) {
@@ -136,18 +137,24 @@ class HasilMakananActivity : AppCompatActivity() {
                 carbohydrate = food.carbohydrate
             )
             viewModel.addFoodToMeal(token, table, food.id, foodRequest)
-            Toast.makeText(this,
-                getString(R.string.makanan_kamu_berhasil_ditambahkan), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.makanan_kamu_berhasil_ditambahkan), Toast.LENGTH_SHORT
+            ).show()
         } else {
-            Toast.makeText(this,
-                getString(R.string.nutrisi_makanan_kamu_tidak_ada_di_database_kami), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.nutrisi_makanan_kamu_tidak_ada_di_database_kami),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     private fun handlePrediction() {
         prediction?.let {
             if (confidence > 70) {
-                Toast.makeText(this, getString(R.string.confidence, confidence), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.confidence, confidence), Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 showLowConfidenceTooltip()
             }
@@ -175,9 +182,12 @@ class HasilMakananActivity : AppCompatActivity() {
         val fatCalories = (nutrition.fat ?: 0.0) * 9
         val proteinCalories = (nutrition.proteins ?: 0.0) * 4
 
-        val carbsPercentage = if (totalCalories > 0) (carbsCalories / totalCalories * 100).toInt() else 0
-        val fatPercentage = if (totalCalories > 0) (fatCalories / totalCalories * 100).toInt() else 0
-        val proteinPercentage = if (totalCalories > 0) (proteinCalories / totalCalories * 100).toInt() else 0
+        val carbsPercentage =
+            if (totalCalories > 0) (carbsCalories / totalCalories * 100).toInt() else 0
+        val fatPercentage =
+            if (totalCalories > 0) (fatCalories / totalCalories * 100).toInt() else 0
+        val proteinPercentage =
+            if (totalCalories > 0) (proteinCalories / totalCalories * 100).toInt() else 0
 
         findViewById<TextView>(R.id.tv_carbs_value).text = "${nutrition.carbohydrate ?: 0.0} g"
         findViewById<TextView>(R.id.tv_fat_value).text = "${nutrition.fat ?: 0.0} g"

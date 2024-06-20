@@ -21,16 +21,16 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/_0_ml"
-        android:textColor="#FFA500"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFA500" />
 
     <TextView
         android:id="@+id/drinkSugar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="#FF6347"
         android:gravity="center"
         android:text="@string/_0_g"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FF6347" />
 </LinearLayout>

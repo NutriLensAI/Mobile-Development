@@ -13,9 +13,6 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
         maven {
-            url = uri("https://maven.pkg.jetbrains.space/data2viz/p/maven/dev")
-        }
-        maven {
             url = uri("https://maven.pkg.jetbrains.space/data2viz/p/maven/public")
         }
     }

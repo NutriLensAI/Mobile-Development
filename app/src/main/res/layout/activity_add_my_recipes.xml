@@ -75,8 +75,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/title"
-                android:padding="16dp"
-                android:inputType="text" />
+                android:inputType="text"
+                android:padding="16dp" />
 
             <EditText
                 android:id="@+id/etIngredients"
@@ -84,8 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/ingredients"
-                android:padding="16dp"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:padding="16dp" />
 
             <EditText
                 android:id="@+id/etSteps"
@@ -93,8 +93,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/steps"
-                android:padding="16dp"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:padding="16dp" />
 
             <Button
                 android:id="@+id/btnSave"
@@ -102,9 +102,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/green"
+                android:padding="16dp"
                 android:text="@string/save"
-                android:textColor="@android:color/white"
-                android:padding="16dp" />
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </ScrollView>
 

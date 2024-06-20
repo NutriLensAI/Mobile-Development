@@ -63,9 +63,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#33AFFF"
                 android:text="0 ml"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#33AFFF" />
 
             <TextView
                 android:id="@+id/drinkSugarValue"
@@ -73,9 +73,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#FFA500"
                 android:text="0 g"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#FFA500" />
         </LinearLayout>
 
         <!-- Divider -->

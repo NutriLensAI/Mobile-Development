@@ -21,8 +21,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/_0_g"
-        android:textColor="#33AFFF"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#33AFFF" />
 
     <TextView
         android:id="@+id/foodFat"
@@ -31,8 +31,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/_0_g"
-        android:textColor="#FFA500"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFA500" />
 
     <TextView
         android:id="@+id/foodProtein"
@@ -41,8 +41,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/_0_g"
-        android:textColor="#FF6347"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FF6347" />
 
     <TextView
         android:id="@+id/foodCalories"

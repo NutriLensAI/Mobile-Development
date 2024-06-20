@@ -15,8 +15,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        // Enable MultiDex
-        multiDexEnabled = true
         buildConfigField(
             "String",
             "ENDPOINT",
@@ -130,8 +128,4 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.room.compiler)
 
-    //chart
-    implementation (libs.core)
-    implementation (libs.viz)
-    coreLibraryDesugaring (libs.desugar.jdk.libs)
 }

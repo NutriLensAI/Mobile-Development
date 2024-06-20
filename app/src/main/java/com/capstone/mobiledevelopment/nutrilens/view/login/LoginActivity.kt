@@ -85,7 +85,8 @@ class LoginActivity : AppCompatActivity() {
 
         // Set status bar color to white
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
-        window.navigationBarColor = ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
+        window.navigationBarColor =
+            ContextCompat.getColor(this, android.R.color.white) // Set navigation bar color to white
     }
 
     private fun setupAction() {
@@ -95,8 +96,10 @@ class LoginActivity : AppCompatActivity() {
 
             // Validate password length
             if (password.length < 8) {
-                Toast.makeText(this,
-                    getString(R.string.password_must_be_at_least_8_characters), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.password_must_be_at_least_8_characters), Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
@@ -136,7 +139,10 @@ class LoginActivity : AppCompatActivity() {
                 }
             } else {
                 val message = when (result) {
-                    is Result.Failure -> getString(R.string.login_failed) + " [" + result.error.message + "]. " + getString(R.string.try_again)
+                    is Result.Failure -> getString(R.string.login_failed) + " [" + result.error.message + "]. " + getString(
+                        R.string.try_again
+                    )
+
                     else -> getString(R.string.login_failed) + ". " + getString(R.string.try_again)
                 }
                 showFailureToast(message)
